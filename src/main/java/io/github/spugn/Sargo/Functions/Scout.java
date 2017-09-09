@@ -159,7 +159,7 @@ public class Scout
         for(int i = 0 ; i < 11 ; i++)
         {
             /* FIXME - DEBUG MESSAGE */
-            //System.out.println(characters.get(i).toString());
+            System.out.println(characters.get(i).toString());
 
             imageStrings[i] = characters.get(i).getImagePath();
         }
@@ -471,6 +471,11 @@ public class Scout
         else if (CHOICE.equalsIgnoreCase("multi") || CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("11"))
         {
             scoutMenu.setPullType(Text.MULTI_PULL.get());
+            scoutMenu.setBannerType(SELECTED_BANNER.bannerTypeToString());
+
+            /* TODO REPLACE WITH USER DATA ONCE IMPLEMENTED */
+            //scoutMenu.setTypeData("");
+            scoutMenu.setTypeData("0");
         }
     }
 

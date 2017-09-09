@@ -18,7 +18,9 @@ public enum Text
 
     /* BANNER LIST INTERFACE */
     BANNER_LIST_TITLE("Banner List"),
-    BANNER_LIST_FOOTER("Use 'scout [Banner ID]' for more info."),
+    BANNER_LIST_BANNER_COUNT(" banners available."),
+    BANNER_LIST_BANNER_HEADER("- Banners - "),
+    BANNER_LIST_FOOTER("'scout [Banner ID]' for more banner info.  |  'scout p[page]' to view another page."),
 
     /* BANNER INFO INTERFACE */
     BANNER_INFO_CHARACTER_COUNT(" characters available."),

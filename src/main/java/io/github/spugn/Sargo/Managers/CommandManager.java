@@ -67,12 +67,43 @@ public class CommandManager
                     }
                     else
                     {
-                        new BannerInfo(CLIENT, CHANNEL);
+                        new BannerInfo(CLIENT, CHANNEL, "1");
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                    if (commandLine.getArgumentCount() >= 1)
+                    {
+                        try
+                        {
+                            int pageNumber = Integer.parseInt(commandLine.getArgument(1).charAt(1) + "");
+                            char pChar = commandLine.getArgument(1).charAt(0);
+
+                            if (pChar == 'p' || pChar == 'P')
+                            {
+                                new BannerInfo(CLIENT, CHANNEL, String.valueOf(pageNumber));
+                            }
+                            else
+                            {
+                                /* FIRST CHARACTER IS NOT 'P' */
+                                new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                            }
+                        }
+                        catch (NumberFormatException f)
+                        {
+                            /* SECOND CHARACTER IS NOT AN INT */
+                            new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                        }
+                        catch (NullPointerException f)
+                        {
+                            /* SECOND CHARACTER IS NOT AN INT */
+                            new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                        }
+                    }
+                    else
+                    {
+                        new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                    }
                 }
 
             }

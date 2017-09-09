@@ -12,19 +12,9 @@ public enum Images
     ARGO_SMUG("images/Argo/Argo_Smug.png"),
     ARGO_FLOWERS("images/Argo/Argo_Flowers.png"),
 
-    /* images/Items/ */
-    MEMORY_DIAMOND("images/Items/Memory_Diamond.png"),
-    HACKING_CRYSTAL("https://i.imgur.com/1hwvwfP.png"),
-    GOLD_LARGE("https://i.imgur.com/Z5ynBaX.png"),
-
     /* images/Miscellaneous/ */
     SCOUT_ICON("images/Miscellaneous/Scout_Icon.png"),
-    MEMORY_DIAMOND_ICON("https://i.imgur.com/KZzkrLd.png"),
-
-    /* images/Weapon Chest/ */
-    BROWN_CHEST("https://i.imgur.com/U1ZdX6L.png"),
-    BLUE_CHEST("https://i.imgur.com/5QgeJOD.png"),
-    RED_CHEST("https://i.imgur.com/1peRhZ8.png"),
+    MEMORY_DIAMOND_ICON("images/Miscellaneous/Memory_Diamond_Icon.png"),
 
     /* END OF IMAGES */
     ;

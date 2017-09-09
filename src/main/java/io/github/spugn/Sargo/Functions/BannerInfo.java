@@ -8,9 +8,7 @@ import io.github.spugn.sdevkit.Discord.Discord4J.Message;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IChannel;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class BannerInfo
 {
@@ -26,7 +24,9 @@ public class BannerInfo
 
     private int bannerID;
 
-    public BannerInfo(IDiscordClient client, IChannel channel)
+    private int page;
+
+    public BannerInfo(IDiscordClient client, IChannel channel, String page)
     {
         CLIENT = client;
         CHANNEL = channel;
@@ -34,6 +34,12 @@ public class BannerInfo
         /* READ Banners.xml */
         BannerParser bannersXML = new BannerParser();
         BANNERS = bannersXML.readConfig(Files.BANNER_XML.get());
+
+        this.page = Integer.parseInt(page);
+        if (this.page < 1)
+        {
+            this.page = 1;
+        }
 
         listBanners();
     }
@@ -60,16 +66,61 @@ public class BannerInfo
 
     private void listBanners()
     {
+        /* TODO - IMPLEMENT PAGINATE */
+
+        /* TODO - REPLACE THIS WITH GIVEN PAGE NUMBER */
+        //int page = 1;
+
+
+        BannerListMenu menu = new BannerListMenu();
+        menu.setBannerCount(BANNERS.size());
+        int pageLength = 10;
+
+        SortedMap<Integer, String> bannerList = new TreeMap<>();
+
+        for (Banner b : BANNERS)
+        {
+            bannerList.put(Integer.parseInt(b.getBannerID()), b.getBannerName());
+        }
+
+        String message = "";
+        if (page > (((bannerList.size() % pageLength) == 0) ? bannerList.size() / pageLength : (bannerList.size() / pageLength) + 1))
+            page = (((bannerList.size() % pageLength) == 0) ? bannerList.size() / pageLength : (bannerList.size() / pageLength) + 1);
+
+        menu.setCurrentPage(page);
+        menu.setHighestPage(((bannerList.size() % pageLength) == 0) ? bannerList.size() / pageLength : (bannerList.size() / pageLength) + 1);
+        menu.setBannerCount(bannerList.size());
+
+        int i = 0, k = 0;
+        page--;
+
+        for(final Map.Entry<Integer, String> e : bannerList.entrySet())
+        {
+            k++;
+            if ((((page * pageLength) + i + 1) == k) && (k != (( page * pageLength) + pageLength + 1)))
+            {
+                i++;
+                message += "**" + e.getKey() + "**) *" + e.getValue() + "*\n";
+            }
+        }
+
+        menu.setBannerList(message);
+        CHANNEL.sendMessage(menu.get().build());
+
+        //paginate(bannerList, page, 10);
+
+        /*
         String s = "";
         for(Banner banner : BANNERS)
         {
-            s += "\n" + banner.getBannerID() + ") ***" + banner.getBannerName() + "***";
+            s += "\n" + banner.getBannerID() + ") **" + banner.getBannerName() + "**";
         }
 
         BannerListMenu menu = new BannerListMenu();
         menu.setBannerCount(BANNERS.size());
         menu.setBannerList(s);
-        CHANNEL.sendMessage(menu.get().build());
+
+        */
     }
 
     private void getBannerInfo()
@@ -86,6 +137,9 @@ public class BannerInfo
             menu.setCharacterAmount(banner.getCharacters().size());
             menu.setBannerID(bannerID);
             menu.setImageURL(new GitHubImage(banner.getCharacters().get(charIndex).getImagePath()).getURL());
+
+            /* FIXME - IMAGE URL DEBUG MESSAGE */
+            //System.out.println(new GitHubImage(banner.getCharacters().get(charIndex).getImagePath()).getURL());
 
             /* CREATE CHARACTER LIST */
             String charList = "";
