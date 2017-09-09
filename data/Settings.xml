@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <!-->
+    BOT SETTINGS
+        Token: Token for the bot that's running the program.
+        UseMention: Commands are called via '@Bot <command>' if true.
+        CommandPrefix: If UseMention is false, commands are called via '<prefix><command>'.
+        DeleteUserMessage: If true, the bot deletes the message that the player used to call it.
+    <-->
+    <BotSettings>
+        <Token>MzA5NjIwMjcxNjIxMzQxMTg1.DJIaZg.3dXjqMPhzwW43QwAqJUrjnIsiyU</Token>
+        <UseMention>true</UseMention>
+        <CommandPrefix>-</CommandPrefix>
+        <DeleteUserMessage>false</DeleteUserMessage>
+    </BotSettings>
+
+    <!--> GACHAPON RATES <-->
+    <BaseRates>
+        <two>0.69</two>
+        <three>0.25</three>
+        <four>0.04</four>
+        <five>0.02</five>
+    </BaseRates>
+</settings>
