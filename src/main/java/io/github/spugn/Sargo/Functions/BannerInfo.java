@@ -10,12 +10,14 @@ import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BannerInfo
 {
     private static IDiscordClient CLIENT;
     private static IChannel CHANNEL;
     private static List<Banner> BANNERS;
+    private final String GITHUB_IMAGE = "https://raw.githubusercontent.com/Expugn/S-argo/master/";
 
     private int copper;
     private int silver;
@@ -76,11 +78,14 @@ public class BannerInfo
         {
             Banner banner = BANNERS.get(bannerID);
             BannerInfoMenu menu = new BannerInfoMenu();
+            Random rng = new Random();
+            int charIndex = rng.nextInt(banner.getCharacters().size());
 
             menu.setBannerType(banner.bannerTypeToString());
             menu.setBannerName(banner.getBannerName());
             menu.setCharacterAmount(banner.getCharacters().size());
             menu.setBannerID(bannerID);
+            menu.setImageURL(new GitHubImage(banner.getCharacters().get(charIndex).getImagePath()).getURL());
 
             /* CREATE CHARACTER LIST */
             String charList = "";
@@ -120,9 +125,6 @@ public class BannerInfo
             ratesList += "[4 ★] " + gold + "%\n";
             ratesList += "[3 ★] " + silver + "%\n";
             ratesList += "[2 ★] " + copper + "%\n";
-
-
-
 
             menu.setRatesList(ratesList);
 

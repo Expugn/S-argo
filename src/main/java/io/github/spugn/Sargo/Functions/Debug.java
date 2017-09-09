@@ -99,16 +99,15 @@ public class Debug
         ScoutMenu scoutMenu = new ScoutMenu();
 
         scoutMenu.setArgoText(Text.ARGO_3.get());
-        scoutMenu.setThumbnail(Images.ARGO_SMUG.getUrl());
+        scoutMenu.setThumbnail(Images.ARGO_FLOWERS.getUrl());
         //scoutMenu.setBannerName(Text.START_DASHV2.get());
         scoutMenu.setPullType(Text.MULTI_PULL.get());
 
         CHANNEL.sendMessage(scoutMenu.get().build());
 
+        /*
         try
         {
-            /* GENERATE TEST IMAGE ARRAY */
-            //File black_swordsman = new File("images/Characters/Start Dash/Black_Swordsman.png");
             File platinum_placeholder = new File("images/Characters/Placeholders/Platinum.png");
             String imageStrings[] = new String[11];
             for (int i = 0 ; i < 11 ; i++)
@@ -131,5 +130,6 @@ public class Debug
         {
             System.out.println("IOException");
         }
+        */
     }
 }

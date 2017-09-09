@@ -11,6 +11,7 @@ public class BannerInfoMenu
     private String characterList;
     private String ratesList;
     private int bannerID;
+    private String imageURL;
 
     public BannerInfoMenu()
     {
@@ -22,7 +23,7 @@ public class BannerInfoMenu
         builder.withAuthorName("[" + bannerType + "] " + bannerName);
         builder.withDesc(characterAmount + Text.BANNER_INFO_CHARACTER_COUNT.get());
         builder.withColor(0, 153, 153);
-        builder.withThumbnail(Images.valueOf("BANNER_" + (bannerID + 1)).getUrl());
+        builder.withThumbnail(imageURL);
 
         builder.appendField(Text.BANNER_INFO_CHARACTER_HEADER.get(), characterList, false);
 
@@ -65,5 +66,10 @@ public class BannerInfoMenu
     public void setBannerID(int bannerID)
     {
         this.bannerID = bannerID;
+    }
+
+    public void setImageURL(String imageURL)
+    {
+        this.imageURL = imageURL;
     }
 }

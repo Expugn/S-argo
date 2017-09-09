@@ -26,16 +26,14 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-<<<<<<< HEAD
-# Private Settings file
-data/Settings.xml
 .gitignore
 data/Users/
 modules/
 src/main/resources/
 src/test/
 target/generated-sources/
-=======
+
 # Personal Settings File
 data/Settings.xml
->>>>>>> parent of 630daa3... Initial commit
+
+target/
