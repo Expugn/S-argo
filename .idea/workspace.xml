@@ -1,132 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a2796fab-1f53-406f-8e84-1d79324c2651" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Argo/Argo_Flowers.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Argo/Argo_Grin.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Argo/Argo_Smile.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Argo/Argo_Smug.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Cool-Headed_Sniper.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Fairy_Blacksmith.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Fairy_Dragon_Tamer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Skill_Connect.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Undine_Healer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Agil.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Argo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Asuna.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Corvatz.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Diavel.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Kagemune.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Kibaou.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Kirito.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Klein.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Lisbeth.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Philia.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Rosalia.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Sachi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Sasha.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Sigurd.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Silica.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Sinon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Strea.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Thinker.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Yolko.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Copper/Yulier.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Placeholders/Copper.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Placeholders/Gold.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Placeholders/Gray.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Placeholders/Owned_Character_Shade.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Placeholders/Platinum.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Placeholders/Silver.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Agile_Kitty_Silica.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Apprentice_Blacksmith_Lisbeth.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Battle_Smith_Lisbeth.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Cat-Eared_Archer_Sinon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Cat_Sith_Info_Broker_Argo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Floor-Clearing_Demon_Asuna.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Guild_Commander_Heathcliff.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Information_Broker_Argo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Item_Master_Rain.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Katana_Master_Klein.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Mysterious_Warrior_Yuuki.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Party_Mascot_Silica.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Salamander_Samurai_Klein.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Solo_Kirito.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Spriggan_Kirito.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Spriggan_Seeker_Philia.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Stalwart_Tank_Agil.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Sword_&amp;_Shield_Sachi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/The_Young_Pooka_Seven.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Uninhibited_Fairy_Strea.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/Wind_Mage_Leafa.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/World_of_Guns_Sinon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/_Alicia_Rue.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/_Eugene.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/_Kuradeel.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/_Lux.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/_Red-Eyed_XaXa.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/_Sakuya.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/_Siune.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Silver/_Sumeragi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Black_Swordsman.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Brawny_Axeman.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Dragon_Tamer.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Furinkazan.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Goddess_of_Death.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Lightning_Flash.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/MHCP-002.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Mace_Master.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Multi-Wielder.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Star_Scientist.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Storm_Mage.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Treasure_Hunter.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Characters/Start Dash/Zekken.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Items/Gold_Large.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Items/Hacking_Crystal.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Items/Memory_Diamond.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Miscellaneous/Scout_Icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Scout Backgrounds/Multi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Scout Backgrounds/Single.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Weapon Chest/Blue_Chest.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Weapon Chest/Brown_Chest.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/images/Weapon Chest/Red_Chest.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitattributes" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/sdevkit.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/LICENSE" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/S-argo.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/data/Banners.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/BannerInfo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Debug.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Help.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Info.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Reset.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Shop.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Listeners/MessageListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Listeners/ReactionListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Managers/CommandManager.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/Banner.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/BannerInfoMenu.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/BannerListMenu.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/Character.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/CopperCharacter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/Files.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/Images.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/ScoutMenu.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/SilverCharacter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/Text.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Sargo.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/BannerParser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/SettingsParser.java" />
-    </list>
+    <list default="true" id="a2796fab-1f53-406f-8e84-1d79324c2651" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -138,16 +13,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Banners.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/Banners.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="7" lean-forward="false" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Debug.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Debug.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -259,15 +124,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="595">
-                <caret line="35" column="96" lean-forward="false" selection-start-line="35" selection-start-column="96" selection-end-line="35" selection-end-column="96" />
+                <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
                 <folding />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Settings.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/data/Settings.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="11" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -345,7 +220,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="301" />
+    <option name="x" value="317" />
     <option name="y" value="40" />
     <option name="width" value="1551" />
     <option name="height" value="941" />
@@ -602,7 +477,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="301" y="40" width="1551" height="941" extended-state="0" />
+    <frame x="317" y="40" width="1551" height="941" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -929,14 +804,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/Settings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="11" lean-forward="true" selection-start-line="23" selection-start-column="11" selection-end-line="23" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/ScoutMenu.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="349">
@@ -1085,7 +952,7 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="595">
-            <caret line="35" column="96" lean-forward="false" selection-start-line="35" selection-start-column="96" selection-end-line="35" selection-end-column="96" />
+            <caret line="35" column="13" lean-forward="true" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
             <folding />
           </first_editor>
           <second_editor />
@@ -1094,6 +961,14 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/Settings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="23" selection-end-column="11" />
           <folding />
         </state>
       </provider>
