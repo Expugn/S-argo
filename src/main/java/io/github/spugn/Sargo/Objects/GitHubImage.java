@@ -12,7 +12,14 @@ public class GitHubImage
 
     public String getURL()
     {
-        /* REPLACE ALL SPACES WITH '%20' AND RETURN */
-        return (GITHUB_IMAGE + filePath).replaceAll(" ", "%20");
+        String url = GITHUB_IMAGE + filePath;
+
+        /* REPLACE ALL SPACES WITH %20 */
+        url = url.replaceAll(" ", "%20");
+
+        /* REPLACE ALL ★ WITH %E2%98%85 */
+        url = url.replaceAll("★", "%E2%98%85");
+
+        return url;
     }
 }
