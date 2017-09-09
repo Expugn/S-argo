@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<banners>
+    <Banner id = "1">
+        <name>Start Dash</name>
+        <type>0</type>
+
+        <!--> CHARACTER LIST <-->
+        <Character prefix="Black Swordsman" char="Kirito" rarity="4"/>
+        <Character prefix="Lightning Flash" char="Asuna" rarity="4"/>
+        <Character prefix="Brawny Axeman" char="Agil" rarity="4"/>
+        <Character prefix="Furinkazan" char="Klein" rarity="4"/>
+        <Character prefix="Dragon Tamer" char="Silica" rarity="4"/>
+        <Character prefix="Mace Master" char="Lisbeth" rarity="4"/>
+        <Character prefix="Storm Mage" char="Leafa" rarity="4"/>
+        <Character prefix="Goddess of Death" char="Sinon" rarity="4"/>
+        <Character prefix="Zekken" char="Yuuki" rarity="4"/>
+        <Character prefix="Treasure Hunter" char="Philia" rarity="4"/>
+        <Character prefix="MHCP-002" char="Strea" rarity="4"/>
+        <Character prefix="Multi-Wielder" char="Rain" rarity="4"/>
+        <Character prefix="Star Scientist" char="Seven" rarity="4"/>
+    </Banner>
+
+    <Banner id="2">
+        <name>Alfheim Online Reborn</name>
+        <type>0</type>
+
+        <!--> CHARACTER LIST <-->
+        <Character prefix="Skill Connect" char="Kirito" rarity="4"/>
+        <Character prefix="Undine Healer" char="Asuna" rarity="4"/>
+        <Character prefix="Fairy Dragon Tamer" char="Silica" rarity="4"/>
+        <Character prefix="Cool-Headed Sniper" char="Sinon" rarity="4"/>
+        <Character prefix="Fairy Blacksmith" char="Lisbeth" rarity="4"/>
+    </Banner>
+</banners>

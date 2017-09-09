@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sdevkit">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/workspace/S-devKit/target/sdevkit.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/workspace/S-devKit/target/sdevkit.jar!/" />
+    </SOURCES>
+  </library>
+</component>
