@@ -8,7 +8,7 @@
         DeleteUserMessage: If true, the bot deletes the message that the player used to call it.
     <-->
     <BotSettings>
-        <Token>MzA5NjIwMjcxNjIxMzQxMTg1.DJIaZg.3dXjqMPhzwW43QwAqJUrjnIsiyU</Token>
+        <Token>YOURBOTTOKENHERE</Token>
         <UseMention>true</UseMention>
         <CommandPrefix>-</CommandPrefix>
         <DeleteUserMessage>false</DeleteUserMessage>
