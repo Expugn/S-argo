@@ -45,6 +45,10 @@ public class UserParser
     private int hackingCrystals;
     private SortedMap<String, Integer> bannerInfo;
     private List<Character> characterBox;
+    private int cC;
+    private int sC;
+    private int gC;
+    private int pC;
 
     public UserParser(String discordID)
     {
@@ -53,6 +57,11 @@ public class UserParser
 
         FILE_PATH = "data/Users/USER_" + discordID + ".xml";
         USER_DIR_FILE_PATH = "data/Users";
+
+        cC = 0;
+        sC = 0;
+        gC = 0;
+        pC = 0;
 
         makeDirectory();
         createNewUser();
@@ -91,6 +100,26 @@ public class UserParser
     public List<Character> getCharacterBox()
     {
         return characterBox;
+    }
+
+    public int getCopperCount()
+    {
+        return cC;
+    }
+
+    public int getSilverCount()
+    {
+        return sC;
+    }
+
+    public int getGoldCount()
+    {
+        return gC;
+    }
+
+    public int getPlatinumCount()
+    {
+        return pC;
     }
 
     public void setMemoryDiamonds(int memoryDiamonds)
@@ -218,6 +247,29 @@ public class UserParser
 
                         /* ADD CHARACTER TO CHARACTER LIST */
                         characterBox.add(character);
+                    }
+                }
+            }
+            /* GO THROUGH CHARACTER BOX AND COUNT CHARACTERS */
+            if (!characterBox.isEmpty())
+            {
+                for (Character c : characterBox)
+                {
+                    if (Integer.parseInt(c.getRarity()) == 5)
+                    {
+                        pC++;
+                    }
+                    else if (Integer.parseInt(c.getRarity()) == 4)
+                    {
+                        gC++;
+                    }
+                    else if (Integer.parseInt(c.getRarity()) == 3)
+                    {
+                        sC++;
+                    }
+                    else if (Integer.parseInt(c.getRarity()) == 2)
+                    {
+                        cC++;
                     }
                 }
             }
