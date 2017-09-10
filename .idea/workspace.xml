@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2796fab-1f53-406f-8e84-1d79324c2651" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/Banners.xml" afterPath="$PROJECT_DIR$/data/Banners.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,8 +18,8 @@
       <file leaf-file-name="Banners.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/data/Banners.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5092">
-              <caret line="51" column="69" lean-forward="false" selection-start-line="51" selection-start-column="69" selection-end-line="51" selection-end-column="69" />
+            <state relative-caret-position="331">
+              <caret line="379" column="33" lean-forward="true" selection-start-line="379" selection-start-column="33" selection-end-line="379" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -29,8 +28,8 @@
       <file leaf-file-name="UserParser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="247" column="61" lean-forward="false" selection-start-line="247" selection-start-column="61" selection-end-line="247" selection-end-column="61" />
+            <state relative-caret-position="194">
+              <caret line="266" column="10" lean-forward="true" selection-start-line="266" selection-start-column="10" selection-end-line="266" selection-end-column="10" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2032#2033#0" expanded="true" />
@@ -241,8 +240,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-189" />
-    <option name="y" value="60" />
+    <option name="x" value="57" />
+    <option name="y" value="42" />
     <option name="width" value="1050" />
     <option name="height" value="938" />
   </component>
@@ -521,7 +520,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-189" y="60" width="1050" height="938" extended-state="0" />
+    <frame x="57" y="42" width="1050" height="938" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -963,10 +962,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/Users/USER_182259866201620482.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="101" column="19" lean-forward="false" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="247" column="61" lean-forward="false" selection-start-line="247" selection-start-column="61" selection-end-line="247" selection-end-column="61" />
+        <state relative-caret-position="194">
+          <caret line="266" column="10" lean-forward="true" selection-start-line="266" selection-start-column="10" selection-end-line="266" selection-end-column="10" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#2032#2033#0" expanded="true" />
@@ -999,18 +1006,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/Users/USER_182259866201620482.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="101" column="19" lean-forward="false" selection-start-line="101" selection-start-column="19" selection-end-line="101" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/data/Banners.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5092">
-          <caret line="51" column="69" lean-forward="false" selection-start-line="51" selection-start-column="69" selection-end-line="51" selection-end-column="69" />
+        <state relative-caret-position="331">
+          <caret line="379" column="33" lean-forward="true" selection-start-line="379" selection-start-column="33" selection-end-line="379" selection-end-column="33" />
           <folding />
         </state>
       </provider>
