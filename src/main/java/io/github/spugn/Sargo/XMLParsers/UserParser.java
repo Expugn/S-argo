@@ -13,6 +13,7 @@ public class UserParser
 {
     /* Data Tags */
     private static String FILE_PATH;
+    private static String USER_DIR_FILE_PATH;
 
     static final String MEMORY_DIAMONDS = "memoryDiamonds";
     static final String MONEY_SPENT = "moneySpent";
@@ -51,7 +52,9 @@ public class UserParser
         characterBox = new ArrayList<>();
 
         FILE_PATH = "data/Users/USER_" + discordID + ".xml";
+        USER_DIR_FILE_PATH = "data/Users";
 
+        makeDirectory();
         createNewUser();
         readConfig();
     }
@@ -113,6 +116,16 @@ public class UserParser
     public void addCharacter(Character character)
     {
         characterBox.add(character);
+    }
+
+    private void makeDirectory()
+    {
+        File userDir = new File(USER_DIR_FILE_PATH);
+
+        if (!userDir.exists())
+        {
+            userDir.mkdir();
+        }
     }
 
     private void readConfig()
@@ -427,6 +440,21 @@ public class UserParser
         XMLEventFactory eventFactory = XMLEventFactory.newInstance();
         XMLEvent end = eventFactory.createDTD("\n");
         XMLEvent tab = eventFactory.createDTD("\t");
+
+        /* BUBBLE SORT CHARACTER ARRAY */
+        Character tempCharacter;
+        for (int a = 0 ; a < characterBox.size() + 1 ; a++)
+        {
+            for (int b = 1 ; b < characterBox.size() ; b++)
+            {
+                if (Integer.parseInt(characterBox.get(b-1).getRarity()) <= Integer.parseInt(characterBox.get(b).getRarity()))
+                {
+                    tempCharacter = characterBox.get(b-1);
+                    characterBox.set(b-1, characterBox.get(b));
+                    characterBox.set(b, tempCharacter);
+                }
+            }
+        }
 
         /* WRITE characterBox START NODE*/
         eventWriter.add(tab);

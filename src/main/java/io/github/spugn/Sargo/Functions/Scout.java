@@ -68,6 +68,7 @@ public class Scout
     private int rcGet;
     private boolean guaranteeOnePlatinum;
     private boolean guaranteedScout;
+    private File tempUserDirectory;
 
     public Scout(IDiscordClient client, IChannel channel, int bannerID, String choice, String discordID)
     {
@@ -127,6 +128,10 @@ public class Scout
         /* CHECK IF REQUESTED BANNER IS AVAILABLE */
         if (BANNER_ID < BANNERS.size())
         {
+            /* MAKE TEMPORARY IMAGE FOLDER */
+            tempUserDirectory = new File("images/temp_" + DISCORD_ID);
+            tempUserDirectory.mkdir();
+
             /* GET BANNER AND CHARACTER DATA. ALSO ADJUST RATES IF NEEDED */
             if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
             {
@@ -204,6 +209,8 @@ public class Scout
 
                         /* SAVE USER DATA */
                         USER.saveData();
+
+                        deleteTempDirectory();
                         return;
                     }
                     else
@@ -232,6 +239,8 @@ public class Scout
 
             /* SAVE USER DATA */
             USER.saveData();
+
+            deleteTempDirectory();
         }
         else
         {
@@ -240,16 +249,25 @@ public class Scout
         }
     }
 
+    private void deleteTempDirectory()
+    {
+        String[] entries = tempUserDirectory.list();
+        for (String s : entries)
+        {
+            File currentFile = new File(tempUserDirectory.getPath(), s);
+            currentFile.delete();
+        }
+        tempUserDirectory.delete();
+    }
+
     private void singlePull()
     {
         /* GET CHARACTER */
         characters.add(getCharacter(scout()));
 
-        /* FIXME - DEBUG MESSAGE */
-        System.out.println(characters.get(0).toString());
-
         /* SAVE IMAGE STRING AND RARITY OF CHARACTER */
-        imageString = characters.get(0).getImagePath();
+        //imageString = characters.get(0).getImagePath();
+        generateImageString();
         highestRarity = Integer.parseInt(characters.get(0).getRarity());
     }
 
@@ -278,16 +296,167 @@ public class Scout
         }
 
         /* GENERATE IMAGE STRINGS */
+        /*
         for(int i = 0 ; i < 11 ; i++)
         {
-            /* FIXME - DEBUG MESSAGE */
             System.out.println(characters.get(i).toString());
 
             imageStrings[i] = characters.get(i).getImagePath();
         }
+        */
+        generateImageStrings();
 
         /* SAVE HIGHEST RARITY CHARACTER */
         highestRarity = Integer.parseInt(characters.get(0).getRarity());
+    }
+
+    private void generateImageString()
+    {
+        /* GET USER CHARACTERS */
+        //List<Character> userCharacterBox = USER.getCharacterBox();
+
+        /* CHARACTER BOX IS NOT EMPTY */
+        if (!USER.getCharacterBox().isEmpty())
+        {
+            /* ITERATE THROUGH CHARACTERS, CHECK IF DUPLICATE EXISTS */
+            for (Character userCharacter : USER.getCharacterBox())
+            {
+                /* CHARACTER IS A DUPLICATE */
+                if (userCharacter.getPrefix().equals(characters.get(0).getPrefix()))
+                {
+                    /* TODO - GIVE HACKING CRYSTALS DEPENDING ON RARITY */
+                    giveHackingCrystals(characters.get(0));
+                    try
+                    {
+                        /* GET BACKGROUND AND CREATE NEW IMAGE */
+                        Image characterImage = ImageIO.read(new File(characters.get(0).getImagePath()));
+                        BufferedImage result = new BufferedImage(characterImage.getWidth(null), characterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+                        /* DRAW BACKGROUND ON NEW IMAGE */
+                        Graphics g = result.getGraphics();
+                        g.drawImage(characterImage, 0, 0, null);
+
+                        /* READ IMAGE STRING */
+                        BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
+
+                        /* DRAW SHADE OVER CHARACTER IMAGE */
+                        g.drawImage(bi, 0, 0, null);
+
+                        /* WRITE TO TEMPORARY DIRECTORY AND SAVE FILE PATH */
+                        ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + 0 + ".png"));
+                        imageString = tempUserDirectory + "/temp_" + 0 + ".png";
+                        return;
+                    }
+                    catch (IOException e)
+                    {
+                        new Message(CLIENT, CHANNEL, Text.SCOUT_IMAGE_GEN_ERROR.get(), true, 255, 0, 0);
+                        e.printStackTrace();
+                    }
+                }
+            }
+            /* NO DUPLICATES FOUND */
+            USER.addCharacter(characters.get(0));
+            imageString = characters.get(0).getImagePath();
+        }
+        else
+        {
+            /* CHARACTER BOX IS EMPTY, NO DUPLICATES EXIST. */
+            USER.addCharacter(characters.get(0));
+            imageString = characters.get(0).getImagePath();
+        }
+
+    }
+
+    private void generateImageStrings()
+    {
+        /* GET USER CHARACTERS */
+        //List<Character> userCharacterBox = USER.getCharacterBox();
+        boolean foundDuplicate = false;
+
+        /* GO THROUGH SCOUTED CHARACTERS */
+        for (int i = 0 ; i < 11 ; i++)
+        {
+            /* CHARACTER BOX IS NOT EMPTY */
+            if (!USER.getCharacterBox().isEmpty())
+            {
+                /* ITERATE THROUGH CHARACTERS, CHECK IF DUPLICATE EXISTS */
+                for (Character userCharacter : USER.getCharacterBox())
+                {
+                    /* CHARACTER IS A DUPLICATE */
+                    if (userCharacter.getPrefix().equals(characters.get(i).getPrefix()) && userCharacter.getName().equals(characters.get(i).getName()))
+                    {
+                        foundDuplicate = true;
+                        /* TODO - GIVE HACKING CRYSTALS DEPENDING ON RARITY */
+                        giveHackingCrystals(characters.get(i));
+                        try
+                        {
+                            /* GET BACKGROUND AND CREATE NEW IMAGE */
+                            Image scout_background = ImageIO.read(new File(characters.get(i).getImagePath()));
+                            BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+                            /* DRAW BACKGROUND ON NEW IMAGE */
+                            Graphics g = result.getGraphics();
+                            g.drawImage(scout_background, 0, 0, null);
+
+                            /* READ IMAGE STRING */
+                            BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
+                            g.drawImage(bi, 0, 0, null);
+
+                            /* WRITE TO TEMPORARY DIRECTORY AND SAVE FILE PATH */
+                            ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + i + ".png"));
+                            imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
+                        }
+                        catch (IOException e)
+                        {
+                            new Message(CLIENT, CHANNEL, Text.SCOUT_IMAGE_GEN_ERROR.get(), true, 255, 0, 0);
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                /* DUPLICATE CHARACTER NOT FOUND */
+                if (!foundDuplicate)
+                {
+                    USER.addCharacter(characters.get(i));
+                    imageStrings[i] = characters.get(i).getImagePath();
+                }
+                foundDuplicate = false;
+            }
+            else
+            {
+                /* CHARACTER BOX IS EMPTY, NO DUPLICATES EXIST. */
+                USER.addCharacter(characters.get(i));
+                imageStrings[i] = characters.get(i).getImagePath();
+            }
+        }
+    }
+
+    private void giveHackingCrystals(Character c)
+    {
+        /* GET USER HACKING CRYSTALS */
+        int userHC = USER.getHackingCrystals();
+
+        /* GRANT HACKING CRYSTALS BASED ON CHARACTER RARITY */
+        switch(Integer.parseInt(c.getRarity()))
+        {
+            case 2:
+                userHC += 1;
+                break;
+            case 3:
+                userHC += 2;
+                break;
+            case 4:
+                userHC += 50;
+                break;
+            case 5:
+                userHC += 100;
+                break;
+            default:
+                userHC += 1;
+                break;
+        }
+
+        /* SAVE HACKING CRYSTAL COUNT */
+        USER.setHackingCrystals(userHC);
     }
 
     private Character getCharacter(int rarity)
@@ -364,6 +533,9 @@ public class Scout
                     break;
             }
         }
+
+        /* FIXME - DEBUG MESSAGE THAT READS CHARACTER DATA */
+        System.out.println(character.toString());
 
         return character;
     }
@@ -486,7 +658,7 @@ public class Scout
             g.drawImage(bi, x, y, null);
 
             /* SAVE IMAGE AS "images/latest_result.png" */
-            ImageIO.write(result, "png", new File(Files.SCOUT_RESULT.get()));
+            ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
         }
         catch (IOException e)
         {
@@ -527,7 +699,7 @@ public class Scout
             }
 
             /* SAVE IMAGE AS "images/latest_result.png" */
-            ImageIO.write(result, "png", new File(Files.SCOUT_RESULT.get()));
+            ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
         }
         catch (IOException e)
         {
@@ -538,7 +710,7 @@ public class Scout
 
     private int scout()
     {
-        /* FIXME - DEBUG MESSAGE */
+        /* FIXME - DEBUG MESSAGE THAT READS RATES */
         //System.out.println("c " + copper);
         //System.out.println("s " + silver);
         //System.out.println("g " + gold);
@@ -717,10 +889,7 @@ public class Scout
         {
             /* SEND SCOUT MENU AND SCOUT RESULT IMAGE*/
             CHANNEL.sendMessage(scoutMenu.get().build());
-            CHANNEL.sendFile(new File(Files.SCOUT_RESULT.get()));
-
-            /* DELETE SCOUT RESULT IMAGE */
-            new File(Files.SCOUT_RESULT.get()).delete();
+            CHANNEL.sendFile(new File(tempUserDirectory + "/results.png"));
         }
         catch (FileNotFoundException e)
         {
