@@ -72,7 +72,7 @@ public class CommandManager
                 }
                 catch (NumberFormatException e)
                 {
-                    if (commandLine.getArgumentCount() >= 1)
+                    if (commandLine.getArgumentCount() == 1)
                     {
                         try
                         {
@@ -125,7 +125,7 @@ public class CommandManager
             else if (commandLine.getCommand().equalsIgnoreCase("debug"))
             {
                 /* TODO - RESTRICT ACCESS */
-                new Debug(CLIENT, CHANNEL);
+                new Debug(CLIENT, CHANNEL, MESSAGE.getAuthor().getStringID());
             }
             else
             {

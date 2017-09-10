@@ -3,6 +3,7 @@ package io.github.spugn.Sargo.Functions;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.UserParser;
 import io.github.spugn.sdevkit.Discord.Discord4J.Message;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IChannel;
@@ -17,11 +18,14 @@ public class Debug
 {
     private static IDiscordClient CLIENT;
     private static IChannel CHANNEL;
+    private String discordID;
 
-    public Debug(IDiscordClient client, IChannel channel)
+    public Debug(IDiscordClient client, IChannel channel, String discordID)
     {
         CLIENT = client;
         CHANNEL = channel;
+
+        this.discordID = discordID;
 
         run();
     }
@@ -32,6 +36,17 @@ public class Debug
         //new SilverCharacter().systemReadImagePaths();
         //testRates(11);
         //testScoutMenu();
+        //new UserParser("testid");
+        UserParser user = new UserParser(discordID);
+
+        System.out.println(user.getMemoryDiamonds());
+        //System.out.println(user.getMoneySpent());
+        //System.out.println(user.getHackingCrystals());
+
+        user.setMemoryDiamonds(user.getMemoryDiamonds() + 250);
+        System.out.println(user.getMemoryDiamonds());
+
+        user.saveData();
     }
 
     private void testRates(int amount)
