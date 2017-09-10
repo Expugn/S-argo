@@ -73,18 +73,4 @@ public class Banner
     {
         return bannerID + ") " + bannerName;
     }
-
-    public String toDetailedString()
-    {
-        String s = bannerID + ") " + bannerName + "\n";
-        s += "\tType: " + bannerTypeToString();
-
-        for (Character character : characters)
-        {
-            s += "\n";
-            s += "- " + character.toString();
-        }
-
-        return s;
-    }
 }
