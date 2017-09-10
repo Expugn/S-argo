@@ -139,6 +139,9 @@ public class Scout
             }
             setupBanner();
 
+            /* FIXME - MESSAGE THAT READS SCOUT RATES */
+            //CHANNEL.sendMessage(new WarningMessage("RATES", "2 - " + copper + "\n3 - " + silver + "\n4 - " + gold + "\n5 - " + platinum).get().build());
+
             if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
             {
                 /* PULL AND DRAW SCOUT RESULT IMAGE */
@@ -215,21 +218,19 @@ public class Scout
                     }
                     else
                     {
-                        /* TODO - ALERT PLAYER THAT THEY DO NOT HAVE ENOUGH RECORD CRYSTALS */
-                        new Message(CLIENT, CHANNEL, "You do not have enough record crystals", true, 255, 0, 0);
+                        CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need 10 record crystals to do a guaranteed scout.").get().build());
                         return;
                     }
                 }
                 else
                 {
-                    /* TODO - ALERT PLAYER THAT BANNER IS NOT RECORD CRYSTAL */
-                    new Message(CLIENT, CHANNEL, "This banner does not have a guaranteed scout", true, 255, 0, 0);
+                    CHANNEL.sendMessage(new WarningMessage("NO GUARANTEED SCOUT", "This banner does not have a guaranteed scout.").get().build());
                     return;
                 }
             }
             else
             {
-                new Message(CLIENT, CHANNEL, Text.SCOUT_UNKNOWN_TYPE.get(), true, 255, 0, 0);
+                CHANNEL.sendMessage(new WarningMessage("UNKNOWN SCOUT TYPE", "Use 'scout [Banner ID] [s|m|g]'.").get().build());
                 return;
             }
 
@@ -244,7 +245,7 @@ public class Scout
         }
         else
         {
-            new Message(CLIENT, CHANNEL, Text.SCOUT_UNKNOWN_BANNER.get(), true, 255, 0, 0);
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
             return;
         }
     }
@@ -336,8 +337,7 @@ public class Scout
                     }
                     catch (IOException e)
                     {
-                        new Message(CLIENT, CHANNEL, Text.SCOUT_IMAGE_GEN_ERROR.get(), true, 255, 0, 0);
-                        e.printStackTrace();
+                        CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
                     }
                 }
             }
@@ -392,8 +392,7 @@ public class Scout
                         }
                         catch (IOException e)
                         {
-                            new Message(CLIENT, CHANNEL, Text.SCOUT_IMAGE_GEN_ERROR.get(), true, 255, 0, 0);
-                            e.printStackTrace();
+                            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
                         }
                     }
                 }
@@ -517,10 +516,6 @@ public class Scout
                     break;
             }
         }
-
-        /* FIXME - DEBUG MESSAGE THAT READS CHARACTER DATA */
-        System.out.println(character.toString());
-
         return character;
     }
 
@@ -646,8 +641,7 @@ public class Scout
         }
         catch (IOException e)
         {
-            new Message(CLIENT, CHANNEL, Text.SCOUT_IMAGE_GEN_ERROR.get(), true, 255, 0, 0);
-            e.printStackTrace();
+            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
         }
     }
 
@@ -687,19 +681,12 @@ public class Scout
         }
         catch (IOException e)
         {
-            new Message(CLIENT, CHANNEL, Text.SCOUT_IMAGE_GEN_ERROR.get(), true, 255, 0, 0);
-            e.printStackTrace();
+            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
         }
     }
 
     private int scout()
     {
-        /* FIXME - DEBUG MESSAGE THAT READS RATES */
-        //System.out.println("c " + copper);
-        //System.out.println("s " + silver);
-        //System.out.println("g " + gold);
-        //System.out.println("p " + platinum);
-
         if (guaranteeOnePlatinum)
         {
            guaranteeOnePlatinum = false;
@@ -877,7 +864,7 @@ public class Scout
         }
         catch (FileNotFoundException e)
         {
-            new Message(CLIENT, CHANNEL, Text.SCOUT_MISSING_RESULT_IMAGE_ERROR.get(), true, 255, 0, 0);
+            CHANNEL.sendMessage(new WarningMessage("IMAGE NOT FOUND", "Unable to display scout result.").get().build());
         }
 
     }

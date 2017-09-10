@@ -1,10 +1,8 @@
 package io.github.spugn.Sargo.Managers;
 
-import io.github.spugn.Sargo.Functions.BannerInfo;
-import io.github.spugn.Sargo.Functions.Debug;
-import io.github.spugn.Sargo.Functions.Help;
-import io.github.spugn.Sargo.Functions.Scout;
+import io.github.spugn.Sargo.Functions.*;
 import io.github.spugn.Sargo.Objects.Text;
+import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import io.github.spugn.sdevkit.Command.CommandLine;
 import io.github.spugn.sdevkit.Discord.Discord4J.DiscordCommand;
@@ -87,22 +85,30 @@ public class CommandManager
                             {
                                 /* FIRST CHARACTER IS NOT 'P' */
                                 new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
                             }
                         }
                         catch (NumberFormatException f)
                         {
                             /* SECOND CHARACTER IS NOT AN INT */
-                            new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                            //new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                            CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please provide a page number after 'p'.").get().build());
                         }
                         catch (NullPointerException f)
                         {
                             /* SECOND CHARACTER IS NOT AN INT */
-                            new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                            //new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                            CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please provide a page number after 'p'.").get().build());
+                        }
+                        catch (StringIndexOutOfBoundsException f)
+                        {
+                            CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please provide a page number after 'p'.").get().build());
                         }
                     }
                     else
                     {
-                        new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                        //new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
+                        CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
                     }
                 }
 
@@ -117,10 +123,21 @@ public class CommandManager
             {
                 /* TODO - GET AND DISPLAY USER DATA */
             }
-            /* RESET | "@bot reset" */
+            /* RESET | "@bot reset [y]" */
             else if (commandLine.getCommand().equalsIgnoreCase("reset"))
             {
                 /* TODO - ERASE PLAYER DATA */
+                if (commandLine.getArgumentCount() >= 1)
+                {
+                    if (commandLine.getArgument(1).equalsIgnoreCase("y") ||commandLine.getArgument(1).equalsIgnoreCase("yes"))
+                    {
+                        new Reset(CHANNEL, DISCORD_ID);
+                    }
+                }
+                else
+                {
+                    new Reset(CHANNEL);
+                }
             }
             else if (commandLine.getCommand().equalsIgnoreCase("debug"))
             {
@@ -129,7 +146,8 @@ public class CommandManager
             }
             else
             {
-                new Message(CLIENT, CHANNEL, Text.UNKNOWN_COMMAND.get(), true, 255, 0, 0);
+                //new Message(CLIENT, CHANNEL, Text.UNKNOWN_COMMAND.get(), true, 255, 0, 0);
+                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Unknown command. Use 'help' for a list of commands.").get().build());
             }
         }
     }
@@ -138,7 +156,8 @@ public class CommandManager
     {
         if (settings.isErrorInRates())
         {
-            new Message(CLIENT, CHANNEL, Text.SCOUT_RATE_ERROR.get(), true, 255, 0, 0);
+            //new Message(CLIENT, CHANNEL, Text.SCOUT_RATE_ERROR.get(), true, 255, 0, 0);
+            CHANNEL.sendMessage(new WarningMessage("SCOUT RATE ERROR", "Scout rates do not add up to 1.0. Please review your settings file.").get().build());
         }
     }
 }
