@@ -19,6 +19,9 @@ public class ScoutMenu
     private String footerText = Text.MD_REMAINING.get();
     private String typeData = "";
     private String bannerType = "";
+    private int mdRemain = 0;
+    private int rcGet = 0;
+    private boolean guaranteedScout = false;
 
 
     public ScoutMenu()
@@ -33,9 +36,14 @@ public class ScoutMenu
         /*
             NORMAL MULTI = "[Normal] - Multi Pull"
             STEP UP MULTI = "[Step Up] - Step <Step #>"
-            RECORD CRYSTAL = "[Record Crystal] - <Amount> Record Crystals"
+            RECORD CRYSTAL = "[Record Crystal] - +<Amount Get> Record Crystals (<Amount Total>)"
+            GUARANTEED SCOUT = "[Guaranteed Scout] - <Amount Total> Record Crystals Left"
          */
-        if (bannerType.equalsIgnoreCase("Normal"))
+        if (guaranteedScout)
+        {
+            builder.withTitle("[Guaranteed Scout] - " + typeData + " Record Crystals Left");
+        }
+        else if (bannerType.equalsIgnoreCase("Normal"))
         {
             typeData = "Multi Pull";
             builder.withTitle("[" + bannerType + "] - " + typeData);
@@ -46,7 +54,7 @@ public class ScoutMenu
         }
         else if (bannerType.equalsIgnoreCase("Record Crystal"))
         {
-            builder.withTitle("[" + bannerType + "] - " + typeData + " Record Crystals");
+            builder.withTitle("[" + bannerType + "] - +" + rcGet + " Record Crystals (" + typeData + ")");
         }
         else
         {
@@ -58,7 +66,7 @@ public class ScoutMenu
         builder.withColor(244, 233, 167);
         builder.withThumbnail(thumbnail);
         builder.withFooterIcon(footerIcon);
-        builder.withFooterText("<Amount> " + footerText);
+        builder.withFooterText(mdRemain + " " + footerText);
     }
 
     public EmbedBuilder get()
@@ -95,5 +103,20 @@ public class ScoutMenu
     public void setBannerType(String bannerType)
     {
         this.bannerType = bannerType;
+    }
+
+    public void setRcGet(int rcGet)
+    {
+        this.rcGet = rcGet;
+    }
+
+    public void setMdRemain(int mdRemain)
+    {
+        this.mdRemain = mdRemain;
+    }
+
+    public void setGuaranteedScout(boolean guaranteedScout)
+    {
+        this.guaranteedScout = guaranteedScout;
     }
 }

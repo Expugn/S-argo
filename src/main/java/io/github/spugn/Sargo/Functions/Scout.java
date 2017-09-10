@@ -4,6 +4,7 @@ import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.UserParser;
 import io.github.spugn.sdevkit.Discord.Discord4J.Message;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IChannel;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.SortedMap;
 
 public class Scout
 {
@@ -25,16 +27,26 @@ public class Scout
     private static int BANNER_ID;
     private static String CHOICE;
     private static List<Banner> BANNERS;
+    private static String DISCORD_ID;
 
     private static Banner SELECTED_BANNER;
     private static List<Character> BANNER_CHARACTERS;
     private static Random RNG;
+
+    private static UserParser USER;
+
+    private List<Integer> goldBanners;
 
     /* RATES */
     private double copper;
     private double silver;
     private double gold;
     private double platinum;
+
+    private int bannerType;
+
+    /* bannerTypeData: INFORMATION ON WHAT STEP THE USER IS ON / HOW MANY RECORD CRYSTALS THEY HAVE */
+    private int bannerTypeData;
 
     /* PLACEHOLDERS */
     private static File PLATINUM_PH;
@@ -52,20 +64,48 @@ public class Scout
     private List<Character> characters;
     private List<Character> goldCharacters;
     private List<Character> platinumCharacters;
+    private List<Double> recordCrystalRates;
+    private int rcGet;
+    private boolean guaranteeOnePlatinum;
+    private boolean guaranteedScout;
 
-    public Scout(IDiscordClient client, IChannel channel, int bannerID, String choice)
+    public Scout(IDiscordClient client, IChannel channel, int bannerID, String choice, String discordID)
     {
         CLIENT = client;
         CHANNEL = channel;
         BANNER_ID = bannerID - 1;
         CHOICE = choice;
         RNG = new Random(System.currentTimeMillis());
+        DISCORD_ID = discordID;
 
-        /* READ Banners.xml */
+        init();
+
+        run();
+    }
+
+    private void init()
+    {
+        /* OPEN SETTINGS FILE */
+        SettingsParser settings = new SettingsParser();
+
+        /* GET RATES */
+        copper = settings.getTwoRates();
+        silver = settings.getThreeRates();
+        gold = settings.getFourRates();
+        platinum = settings.getFiveRates();
+
+        /* GET GOLD BANNERS*/
+        goldBanners = settings.getGoldBanners();
+
+        /* GET RECORD CRYSTAL RATES */
+        recordCrystalRates = settings.getRecordCrystalRates();
+
+        /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
         BANNERS = bannersXML.readConfig(Files.BANNER_XML.get());
 
-        getRates();
+        /* OPEN USER DATA FILE */
+        USER = new UserParser(DISCORD_ID);
 
         PLATINUM_PH = new File(Files.PLATINUM_PLACEHOLDER.get());
         GOLD_PH = new File(Files.GOLD_PLACEHOLDER.get());
@@ -78,7 +118,8 @@ public class Scout
         goldCharacters = new ArrayList<>();
         platinumCharacters = new ArrayList<>();
 
-        run();
+        guaranteeOnePlatinum = false;
+        guaranteedScout = false;
     }
 
     private void run()
@@ -87,6 +128,10 @@ public class Scout
         if (BANNER_ID < BANNERS.size())
         {
             /* GET BANNER AND CHARACTER DATA. ALSO ADJUST RATES IF NEEDED */
+            if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
+            {
+                guaranteedScout = true;
+            }
             setupBanner();
 
             if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
@@ -100,6 +145,80 @@ public class Scout
                 /* PULL AND DRAW SCOUT RESULT IMAGE */
                 multiPull();
                 drawImage(imageStrings);
+
+                /* INCREMENT STEP IF DOING STEP UP*/
+                if (bannerType == 1 || bannerType == 3)
+                {
+                    int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
+
+                    /* STEP UP V1 - INCREMENT STEP, RESET IF NEXT STEP IS GREATER THAN 5 */
+                    if (bannerType == 1)
+                    {
+                        currentStep++;
+                        if (currentStep > 5)
+                        {
+                            USER.changeValue(SELECTED_BANNER.getBannerName(), 1);
+                        }
+                        else
+                        {
+                            USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
+                        }
+                    }
+
+                    /* STEP UP V3 - INCREMENT STEP, KEEP STEP AT 6 IF GREATER THAN 6 */
+                    if (bannerType == 3)
+                    {
+                        currentStep++;
+                        if (currentStep > 6)
+                        {
+                            USER.changeValue(SELECTED_BANNER.getBannerName(), 6);
+                        }
+                        else
+                        {
+                            USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
+                        }
+                    }
+                }
+            }
+            else if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
+            {
+                if (bannerType == 2)
+                {
+                    int userRC = USER.getBannerData(SELECTED_BANNER.getBannerName());
+                    System.out.println("RC " + userRC);
+                    if (userRC >= 10)
+                    {
+                        /* SUBTRACT 10 RECORD CRYSTAL FROM USER */
+                        userRC -= 10;
+                        USER.changeValue(SELECTED_BANNER.getBannerName(), userRC);
+                        System.out.println("RC " + userRC);
+
+                        /* SCOUT */
+                        singlePull();
+                        drawImage(imageString);
+                        buildScoutMenu();
+                        scoutMenu.setGuaranteedScout(true);
+                        scoutMenu.setTypeData(String.valueOf(userRC));
+
+                        displayResults();
+
+                        /* SAVE USER DATA */
+                        USER.saveData();
+                        return;
+                    }
+                    else
+                    {
+                        /* TODO - ALERT PLAYER THAT THEY DO NOT HAVE ENOUGH RECORD CRYSTALS */
+                        new Message(CLIENT, CHANNEL, "You do not have enough record crystals", true, 255, 0, 0);
+                        return;
+                    }
+                }
+                else
+                {
+                    /* TODO - ALERT PLAYER THAT BANNER IS NOT RECORD CRYSTAL */
+                    new Message(CLIENT, CHANNEL, "This banner does not have a guaranteed scout", true, 255, 0, 0);
+                    return;
+                }
             }
             else
             {
@@ -110,6 +229,9 @@ public class Scout
             /* BUILD SCOUT MENU, AND DISPLAY RESULTS */
             buildScoutMenu();
             displayResults();
+
+            /* SAVE USER DATA */
+            USER.saveData();
         }
         else
         {
@@ -124,7 +246,7 @@ public class Scout
         characters.add(getCharacter(scout()));
 
         /* FIXME - DEBUG MESSAGE */
-        //System.out.println(characters.get(0).toString());
+        System.out.println(characters.get(0).toString());
 
         /* SAVE IMAGE STRING AND RARITY OF CHARACTER */
         imageString = characters.get(0).getImagePath();
@@ -185,7 +307,32 @@ public class Scout
         }
         else if (rarity == 4)
         {
-            character = goldCharacters.get(RNG.nextInt(goldCharacters.size()));
+            if (guaranteedScout)
+            {
+                double d = RNG.nextDouble();
+                /* 60% CHANCE TO GET A BANNER GOLD CHARACTER FROM GUARANTEED */
+                if (d < 0.6)
+                {
+                    character = goldCharacters.get(RNG.nextInt(goldCharacters.size()));
+                }
+                /* 40% CHANCE TO GET A OFF-BANNER GOLD CHARACTER */
+                else
+                {
+                    character = randGoldCharacter();
+                }
+            }
+            else
+            {
+                if (goldCharacters.size() > 0)
+                {
+                    character = goldCharacters.get(RNG.nextInt(goldCharacters.size()));
+                }
+                else
+                {
+                    character = randGoldCharacter();
+                }
+            }
+
         }
         else
         {
@@ -391,6 +538,22 @@ public class Scout
 
     private int scout()
     {
+        /* FIXME - DEBUG MESSAGE */
+        //System.out.println("c " + copper);
+        //System.out.println("s " + silver);
+        //System.out.println("g " + gold);
+        //System.out.println("p " + platinum);
+
+        if (guaranteeOnePlatinum)
+        {
+           guaranteeOnePlatinum = false;
+           return 5;
+        }
+        if (guaranteedScout)
+        {
+            return 4;
+        }
+
         double d;
         d = RNG.nextDouble();
 
@@ -416,21 +579,13 @@ public class Scout
         }
     }
 
-    private void getRates()
-    {
-        SettingsParser settings = new SettingsParser();
-
-        copper = settings.getTwoRates();
-        silver = settings.getThreeRates();
-        gold = settings.getFourRates();
-        platinum = settings.getFiveRates();
-    }
-
     private void setupBanner()
     {
         /* GET BANNER DATA AND CHARACTERS */
         SELECTED_BANNER = BANNERS.get(BANNER_ID);
         BANNER_CHARACTERS = SELECTED_BANNER.getCharacters();
+        bannerType = Integer.parseInt(SELECTED_BANNER.getBannerType());
+        bannerTypeData = USER.getBannerData(SELECTED_BANNER.getBannerName());
 
         /* SORT GOLD AND PLATINUM CHARACTERS AND STORE THEM IN THEIR OWN ARRAYS */
         for (Character character : BANNER_CHARACTERS)
@@ -451,6 +606,80 @@ public class Scout
             copper += platinum;
             platinum = 0;
         }
+
+        /* MODIFY RATES ACCORDING TO BANNER TYPE */
+        {
+            /* STEP UP V1 */
+            if (bannerType == 1)
+            {
+                double goldRateIncrease;
+                switch (bannerTypeData)
+                {
+                    case 1:
+                        /* TODO - CHANGE MD PRICE TO 200 */
+                        break;
+                    case 3:
+                        /* TODO - CHANGE MD PRICE TO 200 */
+
+                        /* TODO - INCREASE GOLD SCOUT RATES BY 1.5X */
+                        goldRateIncrease = (gold * 1.5) - gold;
+                        gold += goldRateIncrease;
+                        copper -= goldRateIncrease;
+                        break;
+                    case 5:
+                        /* TODO - CHANGE GOLD SCOUT RATES BY 2.0X */
+                        goldRateIncrease = (gold * 2.0) - gold;
+                        gold += goldRateIncrease;
+                        copper -= goldRateIncrease;
+
+                        /* TODO - RESET STEPS TO 1 */
+                        break;
+                    default:
+                        break;
+                }
+            }
+            /* RECORD CRYSTAL */
+            else if (bannerType == 2)
+            {
+                /* GIVE RECORD CRYSTALS IF NOT DOING GUARANTEED SCOUT */
+                if (!guaranteedScout)
+                {
+                    rcGet = getRecordCrystals();
+                    bannerTypeData += rcGet;
+                    USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
+                }
+            }
+            /* STEP UP V2 */
+            else if (bannerType == 3)
+            {
+                double platinumRateIncrease;
+                switch (bannerTypeData)
+                {
+                    case 1:
+                        /* TODO - CHANGE MD PRICE TO 200 */
+                        break;
+                    case 3:
+                        /* TODO - CHANGE MD PRICE TO 200 */
+
+                        /* TODO - INCREASE PLATINUM SCOUT RATES BY 1.5X */
+                        platinumRateIncrease = (platinum * 1.5) - platinum;
+                        platinum += platinumRateIncrease;
+                        copper -= platinumRateIncrease;
+                        break;
+                    case 5:
+                        /* TODO - GUARANTEE A PLATINUM CHARACTER */
+                        guaranteeOnePlatinum = true;
+                        break;
+                    case 6:
+                        /* TODO - INCREASE PLATINUM SCOUT RATES BY 2.0X */
+                        platinumRateIncrease = (platinum * 2.0) - platinum;
+                        platinum += platinumRateIncrease;
+                        copper -= platinumRateIncrease;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     private void buildScoutMenu()
@@ -462,6 +691,7 @@ public class Scout
         scoutMenu.setArgoText(argoText);
         scoutMenu.setThumbnail(argoFace);
         scoutMenu.setBannerName(SELECTED_BANNER.getBannerName());
+        scoutMenu.setMdRemain(USER.getMemoryDiamonds());
 
         /* EDIT DEPENDING ON TYPE OF PULL */
         if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
@@ -472,10 +702,12 @@ public class Scout
         {
             scoutMenu.setPullType(Text.MULTI_PULL.get());
             scoutMenu.setBannerType(SELECTED_BANNER.bannerTypeToString());
+            scoutMenu.setTypeData(String.valueOf(bannerTypeData));
 
-            /* TODO REPLACE WITH USER DATA ONCE IMPLEMENTED */
-            //scoutMenu.setTypeData("");
-            scoutMenu.setTypeData("0");
+            if (bannerType == 2)
+            {
+                scoutMenu.setRcGet(rcGet);
+            }
         }
     }
 
@@ -500,5 +732,31 @@ public class Scout
     public List<Character> getCharacters()
     {
         return characters;
+    }
+
+    private Character randGoldCharacter()
+    {
+        int randIndex = goldBanners.get(RNG.nextInt(goldBanners.size()));
+        Banner randBanner = BANNERS.get(randIndex - 1);
+        List<Character> randCharacters = randBanner.getCharacters();
+
+        return randCharacters.get(RNG.nextInt(randCharacters.size()));
+    }
+
+    private int getRecordCrystals()
+    {
+        double d = RNG.nextDouble();
+        double recordCrystalRate = recordCrystalRates.get(0);
+
+        for (int i = 0 ; i < recordCrystalRates.size() ; i++)
+        {
+            recordCrystalRate += recordCrystalRates.get(i);
+            if (d < recordCrystalRate)
+            {
+                return i;
+            }
+        }
+
+        return 0;
     }
 }

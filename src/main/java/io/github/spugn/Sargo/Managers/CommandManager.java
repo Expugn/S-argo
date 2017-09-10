@@ -21,8 +21,7 @@ public class CommandManager
     private static IChannel CHANNEL;
     private static IMessage MESSAGE;
     private static SettingsParser settings;
-
-    private static final String MASTER_ROLE_NAME = "S'argo";
+    private static String DISCORD_ID;
 
     public CommandManager(IDiscordClient client, MessageReceivedEvent event)
     {
@@ -30,6 +29,7 @@ public class CommandManager
         CHANNEL = event.getChannel();
         MESSAGE = event.getMessage();
         settings = new SettingsParser();
+        DISCORD_ID = MESSAGE.getAuthor().getStringID();
     }
 
     public void run()
@@ -52,14 +52,14 @@ public class CommandManager
             {
                 new Help(CLIENT, CHANNEL);
             }
-            /* SCOUT | "@bot scout <banner id> [single/multi]" */
+            /* SCOUT | "@bot scout <banner id> [single/multi] [g/guaranteed]" */
             else if (commandLine.getCommand().equalsIgnoreCase("scout"))
             {
                 try
                 {
                     if (commandLine.getArgumentCount() >= 2)
                     {
-                        new Scout(CLIENT, CHANNEL, Integer.parseInt(commandLine.getArgument(1)), commandLine.getArgument(2));
+                        new Scout(CLIENT, CHANNEL, Integer.parseInt(commandLine.getArgument(1)), commandLine.getArgument(2), DISCORD_ID);
                     }
                     else if (commandLine.getArgumentCount() >= 1)
                     {
@@ -125,7 +125,7 @@ public class CommandManager
             else if (commandLine.getCommand().equalsIgnoreCase("debug"))
             {
                 /* TODO - RESTRICT ACCESS */
-                new Debug(CLIENT, CHANNEL, MESSAGE.getAuthor().getStringID());
+                new Debug(CLIENT, CHANNEL, DISCORD_ID);
             }
             else
             {

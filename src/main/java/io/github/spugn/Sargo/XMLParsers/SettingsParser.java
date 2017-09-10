@@ -3,10 +3,12 @@ package io.github.spugn.Sargo.XMLParsers;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.XMLEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.*;
 
 public class SettingsParser
 {
@@ -18,6 +20,13 @@ public class SettingsParser
     static final String USE_MENTION = "UseMention";
     static final String COMMAND_PREFIX = "CommandPrefix";
     static final String DELETE_USER_MESSAGE = "DeleteUserMessage";
+
+    static final String BANNER_ID = "BannerID";
+    static final String ID = "id";
+
+    static final String RECORD_CRYSTAL = "RecordCrystal";
+    static final String AMOUNT = "amount";
+    static final String RATE = "rate";
 
     /* BASE RATE TAGS */
     static final String TWO_STAR_RATES = "two";
@@ -34,6 +43,8 @@ public class SettingsParser
     private double fourRates;
     private double fiveRates;
     private boolean errorInRates;
+    private List<Integer> goldBanners;
+    private List<Double> recordCrystalRates;
 
     public SettingsParser()
     {
@@ -85,6 +96,16 @@ public class SettingsParser
         return errorInRates;
     }
 
+    public List<Double> getRecordCrystalRates()
+    {
+        return recordCrystalRates;
+    }
+
+    public List<Integer> getGoldBanners()
+    {
+        return goldBanners;
+    }
+
     private void readConfig()
     {
         try
@@ -93,6 +114,9 @@ public class SettingsParser
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
             InputStream in = new FileInputStream(FILE_PATH);
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+
+            goldBanners = new ArrayList<>();
+            recordCrystalRates = new ArrayList<>();
 
             /* READ XML FILE */
             while (eventReader.hasNext())
@@ -167,6 +191,37 @@ public class SettingsParser
                         fiveRates = Double.parseDouble(event.asCharacters().getData());
                         continue;
                     }
+
+                    /* GET AND SAVE BANNER ID */
+                    if (event.asStartElement().getName().getLocalPart().equals(BANNER_ID))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals(ID))
+                            {
+                                goldBanners.add(Integer.parseInt(attribute.getValue()));
+                            }
+                        }
+                    }
+
+                    /* GET AND SAVE DELETE USER MESSAGE SETTING */
+                    if (event.asStartElement().getName().getLocalPart().equals(RECORD_CRYSTAL))
+                    {
+                        double rate = 0.0;
+
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals(RATE))
+                            {
+                                rate = Double.parseDouble(attribute.getValue());
+                            }
+                        }
+                        recordCrystalRates.add(rate);
+                    }
                 }
             }
         }
@@ -184,9 +239,23 @@ public class SettingsParser
 
     private void checkRates()
     {
+        /* CHECK SCOUT RATES */
         if (twoRates + threeRates + fourRates + fiveRates != 1)
         {
             errorInRates = true;
+            return;
+        }
+
+        /* CHECK RECORD CRYSTAL RATES */
+        double rcRates = 0.0;
+        for (double d : recordCrystalRates)
+        {
+            rcRates += d;
+        }
+        if (rcRates != 1)
+        {
+            errorInRates = true;
+            return;
         }
     }
 }

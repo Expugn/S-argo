@@ -26,4 +26,44 @@
         <four>0.04</four>
         <five>0.02</five>
     </BaseRates>
+
+    <!--> RECORD CRYSTAL RATES <-->
+    <RecordCrystal>
+        <RecordCrystal amount="1" rate="0.03"/>
+        <RecordCrystal amount="2" rate="0.37"/>
+        <RecordCrystal amount="3" rate="0.4"/>
+        <RecordCrystal amount="4" rate="0.1"/>
+        <RecordCrystal amount="5" rate="0.035"/>
+        <RecordCrystal amount="6" rate="0.035"/>
+        <RecordCrystal amount="7" rate="0.01"/>
+        <RecordCrystal amount="8" rate="0.01"/>
+        <RecordCrystal amount="9" rate="0.005"/>
+        <RecordCrystal amount="10" rate="0.005"/>
+    </RecordCrystal>
+
+    <!-->
+    GOLD BANNERS
+        These are the banners included in record crystal guaranteed scouts.
+        They are also the gold characters you can get from banners with only platinum characters.
+    <-->
+    <GoldBanners>
+        <BannerID id="3"/> <!-->The Accelerating Reality<-->
+        <BannerID id="4"/> <!-->Hooray ★ Love Cheers<-->
+        <BannerID id="6"/> <!-->Alicization - The Knights' Encounter<-->
+        <BannerID id="7"/> <!-->Deadly Beautiful Kunoichi<-->
+        <BannerID id="8"/> <!-->Enduring Love in Another Space<-->
+        <BannerID id="9"/> <!-->Blooming School Life<-->
+        <BannerID id="10"/> <!-->Princess from the Virtual World<-->
+        <BannerID id="11"/> <!-->To Your Heart - Maid in Balmy Breeze<-->
+        <BannerID id="12"/> <!-->Alicization - Integration Beginning<-->
+        <BannerID id="13"/> <!-->Beautiful Girls Playing in the Water<-->
+        <BannerID id="14"/> <!-->Poetry of Constellation<-->
+        <BannerID id="15"/> <!-->Eternal Love - Dreaming Bride<-->
+        <BannerID id="16"/> <!-->Recalling Moments<-->
+        <BannerID id="17"/> <!-->Workers' Cosplay Paradise<-->
+        <BannerID id="18"/> <!-->Raindrops Concerto<-->
+        <BannerID id="19"/> <!-->Tropical Dream<-->
+        <BannerID id="20"/> <!-->Promised Night of the Stars<-->
+        <BannerID id="21"/> <!-->Yukata Night<-->
+    </GoldBanners>
 </settings>
