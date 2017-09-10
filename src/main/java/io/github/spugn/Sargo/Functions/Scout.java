@@ -266,7 +266,6 @@ public class Scout
         characters.add(getCharacter(scout()));
 
         /* SAVE IMAGE STRING AND RARITY OF CHARACTER */
-        //imageString = characters.get(0).getImagePath();
         generateImageString();
         highestRarity = Integer.parseInt(characters.get(0).getRarity());
     }
@@ -296,14 +295,6 @@ public class Scout
         }
 
         /* GENERATE IMAGE STRINGS */
-        /*
-        for(int i = 0 ; i < 11 ; i++)
-        {
-            System.out.println(characters.get(i).toString());
-
-            imageStrings[i] = characters.get(i).getImagePath();
-        }
-        */
         generateImageStrings();
 
         /* SAVE HIGHEST RARITY CHARACTER */
@@ -312,9 +303,6 @@ public class Scout
 
     private void generateImageString()
     {
-        /* GET USER CHARACTERS */
-        //List<Character> userCharacterBox = USER.getCharacterBox();
-
         /* CHARACTER BOX IS NOT EMPTY */
         if (!USER.getCharacterBox().isEmpty())
         {
@@ -324,7 +312,6 @@ public class Scout
                 /* CHARACTER IS A DUPLICATE */
                 if (userCharacter.getPrefix().equals(characters.get(0).getPrefix()))
                 {
-                    /* TODO - GIVE HACKING CRYSTALS DEPENDING ON RARITY */
                     giveHackingCrystals(characters.get(0));
                     try
                     {
@@ -369,8 +356,6 @@ public class Scout
 
     private void generateImageStrings()
     {
-        /* GET USER CHARACTERS */
-        //List<Character> userCharacterBox = USER.getCharacterBox();
         boolean foundDuplicate = false;
 
         /* GO THROUGH SCOUTED CHARACTERS */
@@ -386,7 +371,6 @@ public class Scout
                     if (userCharacter.getPrefix().equals(characters.get(i).getPrefix()) && userCharacter.getName().equals(characters.get(i).getName()))
                     {
                         foundDuplicate = true;
-                        /* TODO - GIVE HACKING CRYSTALS DEPENDING ON RARITY */
                         giveHackingCrystals(characters.get(i));
                         try
                         {
@@ -657,7 +641,7 @@ public class Scout
             /* DRAW CHARACTER ON NEW IMAGE */
             g.drawImage(bi, x, y, null);
 
-            /* SAVE IMAGE AS "images/latest_result.png" */
+            /* SAVE IMAGE AS "temp_<discordID>/results.png" */
             ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
         }
         catch (IOException e)
@@ -698,7 +682,7 @@ public class Scout
                 }
             }
 
-            /* SAVE IMAGE AS "images/latest_result.png" */
+            /* SAVE IMAGE AS "temp_<discordID>/results.png" */
             ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
         }
         catch (IOException e)

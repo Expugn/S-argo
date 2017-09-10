@@ -11,10 +11,10 @@ import java.util.*;
 
 public class UserParser
 {
-    /* Data Tags */
     private static String FILE_PATH;
     private static String USER_DIR_FILE_PATH;
 
+    /* DATA TAGS */
     static final String MEMORY_DIAMONDS = "memoryDiamonds";
     static final String MONEY_SPENT = "moneySpent";
     static final String HACKING_CRYSTALS = "hackingCrystals";
@@ -144,7 +144,7 @@ public class UserParser
 
                 if (event.isStartElement())
                 {
-                    /* GET AND SAVE MENTION SETTING */
+                    /* GET AND SAVE MEMORY DIAMOND COUNT */
                     if (event.asStartElement().getName().getLocalPart().equals(MEMORY_DIAMONDS))
                     {
                         event = eventReader.nextEvent();
@@ -152,7 +152,7 @@ public class UserParser
                         continue;
                     }
 
-                    /* GET AND SAVE COMMAND PREFIX */
+                    /* GET AND SAVE MONEY SPENT */
                     if (event.asStartElement().getName().getLocalPart().equals(MONEY_SPENT))
                     {
                         event = eventReader.nextEvent();
@@ -160,7 +160,7 @@ public class UserParser
                         continue;
                     }
 
-                    /* GET AND SAVE COMMAND PREFIX */
+                    /* GET AND SAVE HACKING CRYSTAL COUNT */
                     if (event.asStartElement().getName().getLocalPart().equals(HACKING_CRYSTALS))
                     {
                         event = eventReader.nextEvent();
@@ -168,7 +168,7 @@ public class UserParser
                         continue;
                     }
 
-                    /* GET AND SAVE DELETE USER MESSAGE SETTING */
+                    /* GET AND SAVE BANNER INFO */
                     if (event.asStartElement().getName().getLocalPart().equals(BANNER))
                     {
                         String bannerName = "";
@@ -190,7 +190,7 @@ public class UserParser
                         bannerInfo.put(bannerName, bannerData);
                     }
 
-                    /* GET AND SAVE TWO STAR RATES */
+                    /* GET AND SAVE CHARACTER BOX */
                     if (event.asStartElement().getName().getLocalPart().equals(CHARACTER))
                     {
                         Character character = new Character();
@@ -213,7 +213,7 @@ public class UserParser
                             }
                         }
 
-                        /* GENERATE IMAGE FILE PATH*/
+                        /* GENERATE IMAGE FILE PATH */
                         character.setImagePath(Files.GRAY_PLACEHOLDER.get());
 
                         /* ADD CHARACTER TO CHARACTER LIST */
@@ -368,7 +368,6 @@ public class UserParser
             XMLEventFactory eventFactory = XMLEventFactory.newInstance();
 
             XMLEvent end = eventFactory.createDTD("\n");
-            XMLEvent tab = eventFactory.createDTD("\t");
 
             /* WRITE START DOCUMENT ELEMENT */
             StartDocument startDocument = eventFactory.createStartDocument();
