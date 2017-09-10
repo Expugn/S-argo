@@ -45,6 +45,23 @@
     </Banner>
 
     <Banner id="4">
+        <name>Medal Scout - Sword Dance</name>
+        <type>0</type>
+
+        <!--> CHARACTER LIST <-->
+        <Character prefix="Concealed Dual Blades" char="Kirito" rarity="4"/>
+        <Character prefix="Prestige Vice Commander" char="Asuna" rarity="4"/>
+        <Character prefix="Faithful Swordsman" char="Klein" rarity="4"/>
+        <Character prefix="Explosive Axe" char="Agil" rarity="4"/>
+        <Character prefix="Swift Fast Heroine" char="Leafa" rarity="4"/>
+        <Character prefix="Genius of Swordsmith" char="Lisbeth" rarity="4"/>
+        <Character prefix="Yearning Blade" char="Silica" rarity="4"/>
+        <Character prefix="Sword Master" char="Yuuki" rarity="4"/>
+        <Character prefix="Death Bullet" char="Sinon" rarity="4"/>
+        <Character prefix="Bravery Lance" char="Sachi" rarity="4"/>
+    </Banner>
+
+    <Banner id="5">
         <name>Hooray ★ Love Cheers</name>
         <type>0</type>
 
@@ -56,7 +73,7 @@
         <Character prefix="Glittering Youth" char="Strea" rarity="4"/>
     </Banner>
 
-    <Banner id="5">
+    <Banner id="6">
         <name>Spring Breeze Hina-Matsuri</name>
         <type>0</type>
 
@@ -66,7 +83,7 @@
         <Character prefix="Pudding Rather Than Praise" char="Premiere" rarity="4"/>
     </Banner>
 
-    <Banner id="6">
+    <Banner id="7">
         <name>Alicization - The Knights' Encounter</name>
         <type>0</type>
 
@@ -75,7 +92,7 @@
         <Character prefix="Born Genius" char="Eugeo" rarity="4"/>
     </Banner>
 
-    <Banner id="7">
+    <Banner id="8">
         <name>Deadly Beautiful Kunoichi</name>
         <type>0</type>
 
@@ -87,7 +104,7 @@
         <Character prefix="Umbral Flight" char="Yuuki" rarity="4"/>
     </Banner>
 
-    <Banner id="8">
+    <Banner id="9">
         <name>Enduring Love in Another Space</name>
         <type>0</type>
 
@@ -100,17 +117,17 @@
         <Character prefix="Natural Pop Star" char="Yuuki" rarity="4"/>
     </Banner>
 
-    <Banner id="9">
+    <Banner id="10">
         <name>Blooming School Life</name>
         <type>0</type>
 
         <!--> CHARACTER LIST <-->
-        <Character prefix="Blossom of Youth" char="Philia" rarity="4"/>
         <Character prefix="Sakura Romance" char="Strea" rarity="4"/>
         <Character prefix="Born in Sakura Season" char="Yui" rarity="4"/>
+        <Character prefix="Blossom of Youth" char="Philia" rarity="4"/>
     </Banner>
 
-    <Banner id="10">
+    <Banner id="11">
         <name>Princess from the Virtual World</name>
         <type>0</type>
 
@@ -123,7 +140,7 @@
         <Character prefix="Eccentric Riding Hood" char="Yuuki" rarity="4"/>
     </Banner>
 
-    <Banner id="11">
+    <Banner id="12">
         <name>To Your Heart - Maid in Balmy Breeze</name>
         <type>0</type>
 
@@ -136,7 +153,7 @@
         <Character prefix="Fledgling Tweeny" char="Yuuki" rarity="4"/>
     </Banner>
 
-    <Banner id="12">
+    <Banner id="13">
         <name>Alicization - Integration Beginning</name>
         <type>0</type>
 
@@ -145,7 +162,7 @@
         <Character prefix="Blue Silver Knight" char="Eugeo" rarity="4"/>
     </Banner>
 
-    <Banner id="13">
+    <Banner id="14">
         <name>Beautiful Girls Playing in the Water</name>
         <type>0</type>
 
@@ -155,7 +172,7 @@
         <Character prefix="Pure Hunter Soul" char="Philia" rarity="4"/>
     </Banner>
 
-    <Banner id="14">
+    <Banner id="15">
         <name>Poetry of Constellation</name>
         <type>0</type>
 
@@ -166,7 +183,7 @@
         <Character prefix="Aries" char="Leafa" rarity="4"/>
     </Banner>
 
-    <Banner id="15">
+    <Banner id="16">
         <name>Eternal Love - Dreaming Brides</name>
         <type>0</type>
 
@@ -179,7 +196,7 @@
         <Character prefix="Bouquet Toss" char="Yuuki" rarity="4"/>
     </Banner>
 
-    <Banner id="16">
+    <Banner id="17">
         <name>Recalling Moments</name>
         <type>0</type>
 
@@ -189,7 +206,7 @@
         <Character prefix="Faroff Fencer" char="Suguha" rarity="4"/>
     </Banner>
 
-    <Banner id="17">
+    <Banner id="18">
         <name>Workers' Cosplay Paradise</name>
         <type>0</type>
 
@@ -202,7 +219,7 @@
         <Character prefix="Roller Waitress" char="Yuna" rarity="4"/>
     </Banner>
 
-    <Banner id="18">
+    <Banner id="19">
         <name>Raindrops Concerto</name>
         <type>1</type>
 
@@ -212,7 +229,7 @@
         <Character prefix="Rainy Season Enjoyment" char="Leafa" rarity="4"/>
     </Banner>
 
-    <Banner id="19">
+    <Banner id="20">
         <name>Tropical Dream</name>
         <type>1</type>
 
@@ -224,7 +241,7 @@
         <Character prefix="Sunny Summer Girl" char="Yuuki" rarity="4"/>
     </Banner>
 
-    <Banner id="20">
+    <Banner id="21">
         <name>Promised Night of the Stars</name>
         <type>1</type>
 
@@ -234,7 +251,7 @@
         <Character prefix="Promise of Reunion" char="Philia" rarity="4"/>
     </Banner>
 
-    <Banner id="21">
+    <Banner id="22">
         <name>Yukata Night</name>
         <type>2</type>
 
@@ -246,7 +263,7 @@
         <Character prefix="Dusk Lespedeza" char="Suguha" rarity="4"/>
     </Banner>
 
-    <Banner id="22">
+    <Banner id="23">
         <name>Char. Enhancement Vote Scout</name>
         <type>1</type>
 
@@ -258,7 +275,7 @@
         <Character prefix="Angel Cheer" char="Yui" rarity="4"/>
     </Banner>
 
-    <Banner id="23">
+    <Banner id="24">
         <name>Beaming Summer Gals</name>
         <type>2</type>
 
@@ -270,7 +287,7 @@
         <Character prefix="Midsummer Babe" char="Suguha" rarity="4"/>
     </Banner>
 
-    <Banner id="24">
+    <Banner id="25">
         <name>Summer Night Festa</name>
         <type>1</type>
 
@@ -280,7 +297,7 @@
         <Character prefix="Kagura Dance" char="Premiere" rarity="4"/>
     </Banner>
 
-    <Banner id="25">
+    <Banner id="26">
         <name>In the Stormy Sea - Jolly Roger</name>
         <type>2</type>
 
@@ -292,7 +309,7 @@
         <Character prefix="Intuitive Navigator" char="Yuuki" rarity="4"/>
     </Banner>
 
-    <Banner id="26">
+    <Banner id="27">
         <name>1st Anniversary Countdown Vote Scout</name>
         <type>1</type>
 
@@ -304,7 +321,7 @@
         <Character prefix="Leo" char="Sinon" rarity="4"/>
     </Banner>
 
-    <Banner id="27">
+    <Banner id="28">
         <name>Birthday Scout - Sinon 8.21</name>
         <type>1</type>
 
@@ -318,7 +335,7 @@
         <Character prefix="Free Style Artist" char="Sinon" rarity="4"/>
     </Banner>
 
-    <Banner id="28">
+    <Banner id="29">
         <name>Proof of Trust X Bonds of Fate</name>
         <type>3</type>
 
@@ -329,12 +346,41 @@
         <Character prefix="The Archer - Overcoming the Past" char="Sinon" rarity="5"/>
     </Banner>
 
-    <Banner id="29">
+    <Banner id="30">
         <name>Alicization - The World Spins With Swords</name>
         <type>3</type>
 
         <!--> CHARACTER LIST <-->
         <Character prefix="Fragrant Olive Integrity Knight" char="Alice" rarity="5"/>
         <Character prefix="Blue Rose Integrity Knight" char="Eugeo" rarity="5"/>
+    </Banner>
+
+    <Banner id="31">
+        <name>Event Limited - Free Characters</name>
+        <type>0</type>
+
+        <!--> CHARACTER LIST <-->
+        <Character prefix="Nightwear" char="Asuna" rarity="4"/>
+        <Character prefix="Captive Princess" char="Asuna" rarity="4"/>
+        <Character prefix="Fairy Dance" char="Kirito" rarity="4"/>
+        <Character prefix="AR Idol" char="Yuna" rarity="4"/>
+        <Character prefix="Queen of Chef" char="Rechka" rarity="4"/>
+        <Character prefix="Foxy Priestress" char="Silica" rarity="4"/>
+        <Character prefix="Hide-and-seek Girl" char="Sphica" rarity="4"/>
+        <Character prefix="Genius Creator" char="Yuuki" rarity="4"/>
+        <Character prefix="Black Wing" char="Kirito" rarity="4"/>
+        <Character prefix="Intrepid Detective" char="Eugeo" rarity="4"/>
+        <Character prefix="365 Days" char="Kirito" rarity="4"/>
+    </Banner>
+
+    <Banner id="32">
+        <name>Ticket Scout - Ranking Rewards</name>
+        <type>0</type>
+
+        <!--> CHARACTER LIST <-->
+        <Character prefix="Up-and-coming Tiny Idol" char="Yui" rarity="4"/>
+        <Character prefix="Tropical dB" char="Yuna" rarity="4"/>
+        <Character prefix="True Heart" char="Yui" rarity="4"/>
+        <Character prefix="Holy Sword" char="Heathcliff" rarity="4"/>
     </Banner>
 </banners>
