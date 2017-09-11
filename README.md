@@ -20,7 +20,7 @@ This includes:
 Static pull rates every time, nothing special.
 * **Step Up Scouts**  
 Increased 1.5x gold character chance on Step 3, Increased 2.0x gold character chance on Step 5.
-* **Record Crystal Scouts** 
+* **Record Crystal Scouts**  
 Record Crystals given every multi scout that can be used in a guaranteed scout.
 * **Step Up v2 Scouts**  
 Same thing as Step Up, but features one guaranteed platinum character on Step 5 and 2.0x platinum character rates on Step 6 which repeats.
