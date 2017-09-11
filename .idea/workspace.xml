@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a2796fab-1f53-406f-8e84-1d79324c2651" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Items/Gold_Large.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Items/Hacking_Crystal.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Items/Memory_Diamond.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Weapon Chest/Blue_Chest.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Weapon Chest/Brown_Chest.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Weapon Chest/Red_Chest.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Debug.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Managers/CommandManager.java" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Managers/CommandManager.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -38,8 +28,8 @@
       <file leaf-file-name="Scout.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="268" column="38" lean-forward="false" selection-start-line="268" selection-start-column="38" selection-end-line="268" selection-end-column="38" />
+            <state relative-caret-position="168">
+              <caret line="345" column="43" lean-forward="false" selection-start-line="345" selection-start-column="43" selection-end-line="345" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -540,8 +530,8 @@
           <caret line="107" column="5" lean-forward="false" selection-start-line="107" selection-start-column="5" selection-end-line="107" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#31565#31566#0" expanded="false" />
-            <element signature="e#31598#31599#0" expanded="false" />
+            <element signature="e#31352#31353#0" expanded="false" />
+            <element signature="e#31385#31386#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -924,8 +914,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="268" column="38" lean-forward="false" selection-start-line="268" selection-start-column="38" selection-end-line="268" selection-end-column="38" />
+        <state relative-caret-position="168">
+          <caret line="345" column="43" lean-forward="false" selection-start-line="345" selection-start-column="43" selection-end-line="345" selection-end-column="43" />
           <folding />
         </state>
       </provider>

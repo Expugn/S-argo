@@ -147,9 +147,6 @@ public class Scout
             }
             setupBanner();
 
-            /* FIXME - MESSAGE THAT READS SCOUT RATES */
-            //CHANNEL.sendMessage(new WarningMessage("RATES", "2 - " + copper + "\n3 - " + silver + "\n4 - " + gold + "\n5 - " + platinum).get().build());
-
             if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
             {
                 if (userMemoryDiamonds >= singleScoutPrice)
