@@ -71,6 +71,10 @@ public class Scout
     private boolean guaranteedScout;
     private File tempUserDirectory;
 
+    private int userMemoryDiamonds;
+    private int singleScoutPrice;
+    private int multiScoutPrice;
+
     public Scout(IDiscordClient client, IChannel channel, int bannerID, String choice, String discordID)
     {
         CLIENT = client;
@@ -121,6 +125,10 @@ public class Scout
 
         guaranteeOnePlatinum = false;
         guaranteedScout = false;
+
+        userMemoryDiamonds = USER.getMemoryDiamonds();
+        singleScoutPrice = 25;
+        multiScoutPrice = 250;
     }
 
     private void run()
@@ -144,48 +152,72 @@ public class Scout
 
             if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
             {
-                /* PULL AND DRAW SCOUT RESULT IMAGE */
-                singlePull();
-                drawImage(imageString);
+                if (userMemoryDiamonds >= singleScoutPrice)
+                {
+                    /* REMOVE MEMORY DIAMONDS FROM USER ACCOUNT */
+                    userMemoryDiamonds -= singleScoutPrice;
+                    USER.setMemoryDiamonds(userMemoryDiamonds);
+
+                    /* PULL AND DRAW SCOUT RESULT IMAGE */
+                    singlePull();
+                    drawImage(imageString);
+                }
+                else
+                {
+                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.").get().build());
+                    return;
+                }
             }
             else if (CHOICE.equalsIgnoreCase("multi") || CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("11"))
             {
-                /* PULL AND DRAW SCOUT RESULT IMAGE */
-                multiPull();
-                drawImage(imageStrings);
+                if (userMemoryDiamonds >= multiScoutPrice)
+                {
+                    /* REMOVE MEMORY DIAMONDS FROM USER ACCOUNT */
+                    userMemoryDiamonds -= multiScoutPrice;
+                    USER.setMemoryDiamonds(userMemoryDiamonds);
+
+                    /* PULL AND DRAW SCOUT RESULT IMAGE */
+                    multiPull();
+                    drawImage(imageStrings);
 
                 /* INCREMENT STEP IF DOING STEP UP*/
-                if (bannerType == 1 || bannerType == 3)
-                {
-                    int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
+                    if (bannerType == 1 || bannerType == 3)
+                    {
+                        int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
 
                     /* STEP UP V1 - INCREMENT STEP, RESET IF NEXT STEP IS GREATER THAN 5 */
-                    if (bannerType == 1)
-                    {
-                        currentStep++;
-                        if (currentStep > 5)
+                        if (bannerType == 1)
                         {
-                            USER.changeValue(SELECTED_BANNER.getBannerName(), 1);
+                            currentStep++;
+                            if (currentStep > 5)
+                            {
+                                USER.changeValue(SELECTED_BANNER.getBannerName(), 1);
+                            }
+                            else
+                            {
+                                USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
+                            }
                         }
-                        else
-                        {
-                            USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
-                        }
-                    }
 
                     /* STEP UP V3 - INCREMENT STEP, KEEP STEP AT 6 IF GREATER THAN 6 */
-                    if (bannerType == 3)
-                    {
-                        currentStep++;
-                        if (currentStep > 6)
+                        if (bannerType == 3)
                         {
-                            USER.changeValue(SELECTED_BANNER.getBannerName(), 6);
-                        }
-                        else
-                        {
-                            USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
+                            currentStep++;
+                            if (currentStep > 6)
+                            {
+                                USER.changeValue(SELECTED_BANNER.getBannerName(), 6);
+                            }
+                            else
+                            {
+                                USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
+                            }
                         }
                     }
+                }
+                else
+                {
+                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.").get().build());
+                    return;
                 }
             }
             else if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
@@ -759,17 +791,17 @@ public class Scout
                 switch (bannerTypeData)
                 {
                     case 1:
-                        /* TODO - CHANGE MD PRICE TO 200 */
+                        /* MULTI SCOUT PRICE BECOMES 200 */
+                        multiScoutPrice = 200;
                         break;
                     case 3:
-                        /* TODO - CHANGE MD PRICE TO 200 */
-
-                        /* TODO - INCREASE GOLD SCOUT RATES BY 1.5X */
+                        /* MULTI SCOUT PRICE BECOMES 200 AND GOLD SCOUT RATES ARE INCREASED 1.5X */
+                        multiScoutPrice = 200;
                         copper = copper - ((gold * 1.5) - gold) ;
                         gold = gold * 1.5;
                         break;
                     case 5:
-                        /* TODO - CHANGE GOLD SCOUT RATES BY 2.0X */
+                        /* GOLD SCOUT RATES ARE INCREASED 2.0X */
                         copper = copper - ((gold * 2.0) - gold);
                         gold = gold * 2.0;
                         break;
@@ -794,22 +826,21 @@ public class Scout
                 switch (bannerTypeData)
                 {
                     case 1:
-                        /* TODO - CHANGE MD PRICE TO 200 */
+                        /* MULTI SCOUT PRICE BECOMES 200 */
+                        multiScoutPrice = 200;
                         break;
                     case 3:
-                        /* TODO - CHANGE MD PRICE TO 200 */
-
-                        /* TODO - INCREASE PLATINUM SCOUT RATES BY 1.5X */
+                        /* MULTI SCOUT PRICE BECOMES 200 AND PLATINUM SCOUT RATES ARE INCREASED 1.5X */
+                        multiScoutPrice = 200;
                         copper = copper - ((platinum * 1.5) - platinum);
                         platinum = platinum * 1.5;
-
                         break;
                     case 5:
-                        /* TODO - GUARANTEE A PLATINUM CHARACTER */
+                        /* ONE PLATINUM CHARACTER IS GUARANTEED */
                         guaranteeOnePlatinum = true;
                         break;
                     case 6:
-                        /* TODO - INCREASE PLATINUM SCOUT RATES BY 2.0X */
+                        /* PLATINUM SCOUT RATES ARE INCREASED BY 2.0X */
                         copper = copper - ((platinum * 2.0) - platinum);
                         platinum = platinum * 2.0;
 
@@ -829,7 +860,7 @@ public class Scout
         scoutMenu.setArgoText(argoText);
         scoutMenu.setThumbnail(argoFace);
         scoutMenu.setBannerName(SELECTED_BANNER.getBannerName());
-        scoutMenu.setMdRemain(USER.getMemoryDiamonds());
+        scoutMenu.setMdRemain(userMemoryDiamonds);
         scoutMenu.setUserName(CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator());
 
         /* EDIT DEPENDING ON TYPE OF PULL */

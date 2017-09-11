@@ -109,15 +109,21 @@ public class CommandManager
                 }
 
             }
-            /* SHOP | "@bot shop [number of MDs]" */
+            /* SHOP | "@bot shop [Item ID]" */
             else if (commandLine.getCommand().equalsIgnoreCase("shop"))
             {
-                /* TODO - IMPLEMENT CURRENCY */
+                if (commandLine.getArgumentCount() >= 1)
+                {
+                    new Shop(CHANNEL, DISCORD_ID, commandLine.getArgument(1));
+                }
+                else
+                {
+                    new Shop(CHANNEL);
+                }
             }
             /* PROFILE | "@bot profile [info/data/search]" */
             else if (commandLine.getCommand().equalsIgnoreCase("profile"))
             {
-                /* TODO - GET AND DISPLAY USER DATA */
                 if (commandLine.getArgumentCount() >= 2)
                 {
                     if (commandLine.getArgument(1).equalsIgnoreCase("info") || commandLine.getArgument(1).equalsIgnoreCase("i"))

@@ -15,6 +15,8 @@ public enum Images
     /* images/Miscellaneous/ */
     SCOUT_ICON("images/Miscellaneous/Scout_Icon.png"),
     MEMORY_DIAMOND_ICON("images/Miscellaneous/Memory_Diamond_Icon.png"),
+    SHOP_ICON("images/Miscellaneous/Shop_Icon.png"),
+    PROFILE_ICON("images/Miscellaneous/Profile_Icon.png"),
 
     /* END OF IMAGES */
     ;

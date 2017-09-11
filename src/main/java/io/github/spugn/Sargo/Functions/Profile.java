@@ -8,6 +8,7 @@ import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Profile
@@ -33,10 +34,12 @@ public class Profile
         init();
         initBannerInfo();
 
+        DecimalFormat df = new DecimalFormat("#.00");
+
         String basicInfo = "";
         basicInfo += "**Memory Diamonds**: " + user.getMemoryDiamonds() + "\n";
         basicInfo += "**Hacking Crystals**: " + user.getHackingCrystals() + "\n";
-        basicInfo += "**Money Spent**: $" + user.getMoneySpent();
+        basicInfo += "**Money Spent**: $" + df.format(user.getMoneySpent());
 
         builder.appendField("Information", basicInfo, false);
 
@@ -288,6 +291,7 @@ public class Profile
         builder.withAuthorName(userName + "'s Profile");
         builder.withAuthorIcon(iUser.getAvatarURL());
         builder.withColor(255, 86, 91);
+        builder.withThumbnail(Images.PROFILE_ICON.getUrl());
     }
 
     private void initBannerInfo()
