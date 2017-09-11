@@ -74,7 +74,6 @@ public class Profile
         }
         else
         {
-            //double progress = (double) (totalOwned / totalCharacters) * 100.0;
             completionProgress = df.format((dTotalOwned / dTotalCharacters) * 100) + "%";
         }
         completionProgress += " (" + totalOwned + "/" + totalCharacters + ")";

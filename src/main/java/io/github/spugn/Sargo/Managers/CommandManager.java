@@ -182,11 +182,6 @@ public class CommandManager
                     new Reset(CHANNEL);
                 }
             }
-            else if (commandLine.getCommand().equalsIgnoreCase("debug"))
-            {
-                /* TODO - RESTRICT ACCESS */
-                new Debug(CLIENT, CHANNEL, DISCORD_ID);
-            }
             else
             {
                 CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Unknown command. Use 'help' for a list of commands.").get().build());
