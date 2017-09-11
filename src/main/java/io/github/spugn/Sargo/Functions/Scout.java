@@ -165,6 +165,7 @@ public class Scout
                 else
                 {
                     CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.").get().build());
+                    deleteTempDirectory();
                     return;
                 }
             }
@@ -180,12 +181,12 @@ public class Scout
                     multiPull();
                     drawImage(imageStrings);
 
-                /* INCREMENT STEP IF DOING STEP UP*/
+                    /* INCREMENT STEP IF DOING STEP UP*/
                     if (bannerType == 1 || bannerType == 3)
                     {
                         int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
 
-                    /* STEP UP V1 - INCREMENT STEP, RESET IF NEXT STEP IS GREATER THAN 5 */
+                        /* STEP UP V1 - INCREMENT STEP, RESET IF NEXT STEP IS GREATER THAN 5 */
                         if (bannerType == 1)
                         {
                             currentStep++;
@@ -199,7 +200,7 @@ public class Scout
                             }
                         }
 
-                    /* STEP UP V3 - INCREMENT STEP, KEEP STEP AT 6 IF GREATER THAN 6 */
+                        /* STEP UP V3 - INCREMENT STEP, KEEP STEP AT 6 IF GREATER THAN 6 */
                         if (bannerType == 3)
                         {
                             currentStep++;
@@ -217,6 +218,7 @@ public class Scout
                 else
                 {
                     CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.").get().build());
+                    deleteTempDirectory();
                     return;
                 }
             }
@@ -225,13 +227,12 @@ public class Scout
                 if (bannerType == 2)
                 {
                     int userRC = USER.getBannerData(SELECTED_BANNER.getBannerName());
-                    System.out.println("RC " + userRC);
+
                     if (userRC >= 10)
                     {
                         /* SUBTRACT 10 RECORD CRYSTAL FROM USER */
                         userRC -= 10;
                         USER.changeValue(SELECTED_BANNER.getBannerName(), userRC);
-                        System.out.println("RC " + userRC);
 
                         /* SCOUT */
                         singlePull();
@@ -251,18 +252,21 @@ public class Scout
                     else
                     {
                         CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need 10 record crystals to do a guaranteed scout.").get().build());
+                        deleteTempDirectory();
                         return;
                     }
                 }
                 else
                 {
                     CHANNEL.sendMessage(new WarningMessage("NO GUARANTEED SCOUT", "This banner does not have a guaranteed scout.").get().build());
+                    deleteTempDirectory();
                     return;
                 }
             }
             else
             {
                 CHANNEL.sendMessage(new WarningMessage("UNKNOWN SCOUT TYPE", "Use 'scout [Banner ID] [s|m|g]'.").get().build());
+                deleteTempDirectory();
                 return;
             }
 
@@ -547,7 +551,7 @@ public class Scout
                     break;
             }
         }
-        System.out.println(character.toString());
+
         return character;
     }
 
