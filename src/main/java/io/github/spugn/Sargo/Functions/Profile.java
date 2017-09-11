@@ -143,7 +143,7 @@ public class Profile
         BannerParser bannersXML = new BannerParser();
         List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
 
-        if (bannerID < banners.size() && bannerID > 0)
+        if (bannerID < banners.size() && bannerID >= 0)
         {
             Banner requestedBanner = banners.get(bannerID);
             boolean characterFound = false;
