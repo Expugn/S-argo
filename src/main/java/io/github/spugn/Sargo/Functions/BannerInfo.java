@@ -15,12 +15,11 @@ public class BannerInfo
     private static IDiscordClient CLIENT;
     private static IChannel CHANNEL;
     private static List<Banner> BANNERS;
-    private final String GITHUB_IMAGE = "https://raw.githubusercontent.com/Expugn/S-argo/master/";
 
-    private int copper;
-    private int silver;
-    private int gold;
-    private int platinum;
+    private double copper;
+    private double silver;
+    private double gold;
+    private double platinum;
 
     private int bannerID;
 
@@ -66,12 +65,6 @@ public class BannerInfo
 
     private void listBanners()
     {
-        /* TODO - IMPLEMENT PAGINATE */
-
-        /* TODO - REPLACE THIS WITH GIVEN PAGE NUMBER */
-        //int page = 1;
-
-
         BannerListMenu menu = new BannerListMenu();
         menu.setBannerCount(BANNERS.size());
         int pageLength = 10;
@@ -106,21 +99,6 @@ public class BannerInfo
 
         menu.setBannerList(message);
         CHANNEL.sendMessage(menu.get().build());
-
-        //paginate(bannerList, page, 10);
-
-        /*
-        String s = "";
-        for(Banner banner : BANNERS)
-        {
-            s += "\n" + banner.getBannerID() + ") **" + banner.getBannerName() + "**";
-        }
-
-        BannerListMenu menu = new BannerListMenu();
-        menu.setBannerCount(BANNERS.size());
-        menu.setBannerList(s);
-
-        */
     }
 
     private void getBannerInfo()
@@ -137,9 +115,6 @@ public class BannerInfo
             menu.setCharacterAmount(banner.getCharacters().size());
             menu.setBannerID(bannerID);
             menu.setImageURL(new GitHubImage(banner.getCharacters().get(charIndex).getImagePath()).getURL());
-
-            /* FIXME - IMAGE URL DEBUG MESSAGE */
-            //System.out.println(new GitHubImage(banner.getCharacters().get(charIndex).getImagePath()).getURL());
 
             /* CREATE CHARACTER LIST */
             String charList = "";
@@ -178,9 +153,82 @@ public class BannerInfo
                 ratesList += "[5 ★] " + platinum + "%\n";
             ratesList += "[4 ★] " + gold + "%\n";
             ratesList += "[3 ★] " + silver + "%\n";
-            ratesList += "[2 ★] " + copper + "%\n";
+            ratesList += "[2 ★] " + copper + "%";
 
             menu.setRatesList(ratesList);
+
+            /* BANNER IS STEP UP */
+            if (banner.getBannerType().equals("1"))
+            {
+                double tC = copper - ((gold * 1.5) - gold);
+                double tS = silver;
+                double tG = gold * 1.5;
+                double tP = platinum;
+
+                String stepThreeRates = "";
+                if (tP != 0)
+                    stepThreeRates += "[5 ★] " + tP + "%\n";
+                stepThreeRates += "[4 ★] " + tG + "%\n";
+                stepThreeRates += "[3 ★] " + tS + "%\n";
+                stepThreeRates += "[2 ★] " + tC + "%";
+                menu.setStepThreeRatesList(stepThreeRates);
+
+                tC = copper - ((gold * 2.0) - gold);
+                tS = silver;
+                tG = gold * 2.0;
+                tP = platinum;
+
+                String stepFiveRates = "";
+                if (tP != 0)
+                    stepFiveRates += "[5 ★] " + tP + "%\n";
+                stepFiveRates += "[4 ★] " + tG + "%\n";
+                stepFiveRates += "[3 ★] " + tS + "%\n";
+                stepFiveRates += "[2 ★] " + tC + "%";
+                menu.setStepFiveRatesList(stepFiveRates);
+            }
+            /* BANNER IS STEP UP V2 */
+            else if (banner.getBannerType().equals("3"))
+            {
+                double tC = copper - ((platinum * 1.5) - platinum);
+                double tS = silver;
+                double tG = gold;
+                double tP = platinum * 1.5;
+
+                String stepThreeRates = "";
+                if (tP != 0)
+                    stepThreeRates += "[5 ★] " + tP + "%\n";
+                stepThreeRates += "[4 ★] " + tG + "%\n";
+                stepThreeRates += "[3 ★] " + tS + "%\n";
+                stepThreeRates += "[2 ★] " + tC + "%";
+                menu.setStepThreeRatesList(stepThreeRates);
+
+                tC = 0.0;
+                tS = 0.0;
+                tG = 0.0;
+                tP = 100.0;
+
+                String stepFiveRates = "";
+                if (tP != 0)
+                    stepFiveRates += "[5 ★] " + tP + "%\n";
+                stepFiveRates += "[4 ★] " + tG + "%\n";
+                stepFiveRates += "[3 ★] " + tS + "%\n";
+                stepFiveRates += "[2 ★] " + tC + "%\n";
+                stepFiveRates += "(For One Character)";
+                menu.setStepFiveRatesList(stepFiveRates);
+
+                tC = copper - ((platinum * 2.0) - platinum);
+                tS = silver;
+                tG = gold;
+                tP = platinum * 2.0;
+
+                String stepSixRates = "";
+                if (tP != 0)
+                    stepSixRates += "[5 ★] " + tP + "%\n";
+                stepSixRates += "[4 ★] " + tG + "%\n";
+                stepSixRates += "[3 ★] " + tS + "%\n";
+                stepSixRates += "[2 ★] " + tC + "%";
+                menu.setStepSixRatesList(stepSixRates);
+            }
 
             CHANNEL.sendMessage(menu.get().build());
         }
