@@ -42,12 +42,38 @@ public class Profile
 
         /* CHARACTER BOX */
         String characterInfo = "";
-        characterInfo += "**[2 ★]** - " + user.getCopperCount() + "/" + new CopperCharacter().getSize() + "\n\n";
-        characterInfo += "**[3 ★]** - " + user.getSilverCount() + "/" + new SilverCharacter().getSize() + "\n\n";
-        characterInfo += "**[4 ★]** - " + user.getGoldCount() + "/" + goldCount + "\n\n";
-        characterInfo += "**[5 ★]** - " + user.getPlatinumCount() + "/" + platinumCount;
+
+        int cCTotal = new CopperCharacter().getSize();
+        int sCTotal = new SilverCharacter().getSize();
+
+        int userCopper = user.getCopperCount();
+        int userSilver = user.getSilverCount();
+        int userGold = user.getGoldCount();
+        int userPlatinum = user.getPlatinumCount();
+
+        characterInfo += "**[2 ★]** - " + userCopper + "/" + cCTotal + "\n";
+        characterInfo += "**[3 ★]** - " + userSilver + "/" + sCTotal + "\n";
+        characterInfo += "**[4 ★]** - " + userGold + "/" + goldCount + "\n";
+        characterInfo += "**[5 ★]** - " + userPlatinum + "/" + platinumCount;
 
         builder.appendField("Characters", characterInfo, false);
+
+        String completionProgress = "";
+        int totalOwned = userCopper + userSilver + userGold + userPlatinum;
+        int totalCharacters = cCTotal + sCTotal + goldCount + platinumCount;
+
+        if (totalOwned == totalCharacters)
+        {
+            completionProgress = "**★ 100% ★**";
+        }
+        else
+        {
+            double progress = totalOwned / totalCharacters;
+            completionProgress = progress + "%";
+        }
+        completionProgress += " (" + totalOwned + "/" + totalCharacters + ")";
+
+        builder.appendField("Completion", completionProgress, false);
 
         CHANNEL.sendMessage(builder.build());
     }
