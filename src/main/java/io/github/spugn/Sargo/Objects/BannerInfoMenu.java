@@ -10,6 +10,9 @@ public class BannerInfoMenu
     private int characterAmount;
     private String characterList;
     private String ratesList;
+    private String stepThreeRatesList;
+    private String stepFiveRatesList;
+    private String stepSixRatesList;
     private int bannerID;
     private String imageURL;
 
@@ -27,7 +30,19 @@ public class BannerInfoMenu
 
         builder.appendField(Text.BANNER_INFO_CHARACTER_HEADER.get(), characterList, false);
 
-        builder.appendField(Text.BANNER_INFO_RATES_HEADER.get(), ratesList, false);
+        builder.appendField(Text.BANNER_INFO_RATES_HEADER.get(), ratesList, true);
+
+        if (bannerType.equalsIgnoreCase("Step Up"))
+        {
+            builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+            builder.appendField("- Step 5 Pull Rates -", stepFiveRatesList, true);
+        }
+        else if (bannerType.equalsIgnoreCase("Step Up v2"))
+        {
+            builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+            builder.appendField("- Step 5 Pull Rates -", stepFiveRatesList, true);
+            builder.appendField("- Step 6 Pull Rates -", stepThreeRatesList, true);
+        }
 
         builder.withFooterText(Text.BANNER_INFO_FOOTER_1.get() + " " + (bannerID + 1) + " " + Text.BANNER_INFO_FOOTER_2.get());
     }
@@ -71,5 +86,20 @@ public class BannerInfoMenu
     public void setImageURL(String imageURL)
     {
         this.imageURL = imageURL;
+    }
+
+    public void setStepThreeRatesList(String stepThreeRatesList)
+    {
+        this.stepThreeRatesList = stepThreeRatesList;
+    }
+
+    public void setStepFiveRatesList(String stepFiveRatesList)
+    {
+        this.stepFiveRatesList = stepFiveRatesList;
+    }
+
+    public void setStepSixRatesList(String stepSixRatesList)
+    {
+        this.stepSixRatesList = stepSixRatesList;
     }
 }
