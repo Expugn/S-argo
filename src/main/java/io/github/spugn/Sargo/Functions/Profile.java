@@ -65,14 +65,17 @@ public class Profile
         int totalOwned = userCopper + userSilver + userGold + userPlatinum;
         int totalCharacters = cCTotal + sCTotal + goldCount + platinumCount;
 
+        double dTotalOwned = userCopper + userSilver + userGold + userPlatinum;
+        double dTotalCharacters = cCTotal + sCTotal + goldCount + platinumCount;
+
         if (totalOwned == totalCharacters)
         {
             completionProgress = "**★ 100% ★**";
         }
         else
         {
-            double progress = totalOwned / totalCharacters;
-            completionProgress = progress + "%";
+            //double progress = (double) (totalOwned / totalCharacters) * 100.0;
+            completionProgress = df.format((dTotalOwned / dTotalCharacters) * 100) + "%";
         }
         completionProgress += " (" + totalOwned + "/" + totalCharacters + ")";
 
