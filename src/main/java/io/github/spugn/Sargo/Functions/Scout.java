@@ -81,7 +81,6 @@ public class Scout
         DISCORD_ID = discordID;
 
         init();
-
         run();
     }
 
@@ -127,7 +126,7 @@ public class Scout
     private void run()
     {
         /* CHECK IF REQUESTED BANNER IS AVAILABLE */
-        if (BANNER_ID < BANNERS.size())
+        if (BANNER_ID < BANNERS.size() && BANNER_ID >= 0)
         {
             /* MAKE TEMPORARY IMAGE FOLDER */
             tempUserDirectory = new File("images/temp_" + DISCORD_ID);

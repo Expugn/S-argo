@@ -143,7 +143,7 @@ public class Profile
         BannerParser bannersXML = new BannerParser();
         List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
 
-        if (bannerID < banners.size())
+        if (bannerID < banners.size() && bannerID > 0)
         {
             Banner requestedBanner = banners.get(bannerID);
             boolean characterFound = false;
@@ -218,20 +218,28 @@ public class Profile
     {
         String characterList = "";
         int characterCount = 0;
+        String correctName = "";
+        boolean fetchCorrectName = true;
 
         for (Character c : user.getCharacterBox())
         {
             if (c.getName().equalsIgnoreCase(characterName))
             {
-                characterList += c.toString() + "\n";
+                characterList += c.toStringNoName() + "\n";
                 characterCount++;
+
+                if (fetchCorrectName)
+                {
+                    fetchCorrectName = false;
+                    correctName = c.getName();
+                }
             }
         }
 
         if (!characterList.isEmpty())
         {
-            builder.appendField("Character Search: " + characterName, characterList, false);
-            builder.withFooterText(characterCount + " '" + characterName + "'s obtained.");
+            builder.appendField("Character Search: " + correctName, characterList, false);
+            builder.withFooterText(characterCount + " " + correctName + " found.");
         }
         else
         {

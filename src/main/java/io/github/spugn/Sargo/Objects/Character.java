@@ -60,4 +60,9 @@ public class Character
     {
         return rarity + "★ [" + prefix + "] " + name;
     }
+
+    public String toStringNoName()
+    {
+        return rarity + "★ [" + prefix + "] ";
+    }
 }

@@ -114,13 +114,13 @@ public class CommandManager
             {
                 /* TODO - IMPLEMENT CURRENCY */
             }
-            /* INFO | "@bot info [mention user]" */
+            /* PROFILE | "@bot profile [info/data/search]" */
             else if (commandLine.getCommand().equalsIgnoreCase("profile"))
             {
                 /* TODO - GET AND DISPLAY USER DATA */
                 if (commandLine.getArgumentCount() >= 2)
                 {
-                    if (commandLine.getArgument(1).equalsIgnoreCase("info"))
+                    if (commandLine.getArgument(1).equalsIgnoreCase("info") || commandLine.getArgument(1).equalsIgnoreCase("i"))
                     {
                         try
                         {
@@ -135,7 +135,7 @@ public class CommandManager
                             CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
                         }
                     }
-                    else if (commandLine.getArgument(1).equalsIgnoreCase("search"))
+                    else if (commandLine.getArgument(1).equalsIgnoreCase("search") || commandLine.getArgument(1).equalsIgnoreCase("s"))
                     {
                         new Profile(CHANNEL, DISCORD_ID, 3, commandLine.getArgument(2));
                     }
@@ -146,7 +146,7 @@ public class CommandManager
                 }
                 else if (commandLine.getArgumentCount() >= 1)
                 {
-                    if (commandLine.getArgument(1).equalsIgnoreCase("data"))
+                    if (commandLine.getArgument(1).equalsIgnoreCase("data") || commandLine.getArgument(1).equalsIgnoreCase("d"))
                     {
                         new Profile(CHANNEL, DISCORD_ID, 1);
                     }

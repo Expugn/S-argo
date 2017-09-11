@@ -103,7 +103,7 @@ public class BannerInfo
 
     private void getBannerInfo()
     {
-        if (bannerID < BANNERS.size())
+        if (bannerID < BANNERS.size() && bannerID >= 0)
         {
             Banner banner = BANNERS.get(bannerID);
             BannerInfoMenu menu = new BannerInfoMenu();
@@ -170,7 +170,8 @@ public class BannerInfo
                     stepThreeRates += "[5 ★] " + tP + "%\n";
                 stepThreeRates += "[4 ★] " + tG + "%\n";
                 stepThreeRates += "[3 ★] " + tS + "%\n";
-                stepThreeRates += "[2 ★] " + tC + "%";
+                stepThreeRates += "[2 ★] " + tC + "%\n";
+                stepThreeRates += "**(4 ★ Scout Rates 1.5x)**";
                 menu.setStepThreeRatesList(stepThreeRates);
 
                 tC = copper - ((gold * 2.0) - gold);
@@ -183,7 +184,8 @@ public class BannerInfo
                     stepFiveRates += "[5 ★] " + tP + "%\n";
                 stepFiveRates += "[4 ★] " + tG + "%\n";
                 stepFiveRates += "[3 ★] " + tS + "%\n";
-                stepFiveRates += "[2 ★] " + tC + "%";
+                stepFiveRates += "[2 ★] " + tC + "%\n";
+                stepFiveRates += "**(4 ★ Scout Rates 2.0x)**";
                 menu.setStepFiveRatesList(stepFiveRates);
             }
             /* BANNER IS STEP UP V2 */
@@ -199,7 +201,8 @@ public class BannerInfo
                     stepThreeRates += "[5 ★] " + tP + "%\n";
                 stepThreeRates += "[4 ★] " + tG + "%\n";
                 stepThreeRates += "[3 ★] " + tS + "%\n";
-                stepThreeRates += "[2 ★] " + tC + "%";
+                stepThreeRates += "[2 ★] " + tC + "%\n";
+                stepThreeRates += "**(5 ★ Scout Rates 1.5x)**";
                 menu.setStepThreeRatesList(stepThreeRates);
 
                 tC = 0.0;
@@ -213,7 +216,7 @@ public class BannerInfo
                 stepFiveRates += "[4 ★] " + tG + "%\n";
                 stepFiveRates += "[3 ★] " + tS + "%\n";
                 stepFiveRates += "[2 ★] " + tC + "%\n";
-                stepFiveRates += "(For One Character)";
+                stepFiveRates += "**(For One Character)**";
                 menu.setStepFiveRatesList(stepFiveRates);
 
                 tC = copper - ((platinum * 2.0) - platinum);
@@ -226,7 +229,8 @@ public class BannerInfo
                     stepSixRates += "[5 ★] " + tP + "%\n";
                 stepSixRates += "[4 ★] " + tG + "%\n";
                 stepSixRates += "[3 ★] " + tS + "%\n";
-                stepSixRates += "[2 ★] " + tC + "%";
+                stepSixRates += "[2 ★] " + tC + "%\n";
+                stepSixRates += "**(5 ★ Scout Rates 2.0x)**";
                 menu.setStepSixRatesList(stepSixRates);
             }
 
@@ -234,7 +238,7 @@ public class BannerInfo
         }
         else
         {
-            new Message(CLIENT, CHANNEL, Text.SCOUT_UNKNOWN_BANNER.get(), true, 255, 0, 0);
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
         }
     }
 }
