@@ -269,19 +269,22 @@ public class Profile
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
         List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
+        List<String> allCharacterPrefixes = new ArrayList<>();
 
         for (Banner b : banners)
         {
             /* GET CHARACTERS */
             for (Character c : b.getCharacters())
             {
-                if (c.getRarity().equals("4"))
+                if (c.getRarity().equals("4") && !(allCharacterPrefixes.contains(c.getPrefix())))
                 {
                     goldCount++;
+                    allCharacterPrefixes.add(c.getPrefix());
                 }
-                else if (c.getRarity().equals("5"))
+                else if (c.getRarity().equals("5") && !(allCharacterPrefixes.contains(c.getPrefix())))
                 {
                     platinumCount++;
+                    allCharacterPrefixes.add(c.getPrefix());
                 }
             }
 
