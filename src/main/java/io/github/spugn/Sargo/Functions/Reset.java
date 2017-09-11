@@ -1,6 +1,7 @@
 package io.github.spugn.Sargo.Functions;
 
 import io.github.spugn.Sargo.Objects.WarningMessage;
+import io.github.spugn.Sargo.XMLParsers.UserParser;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IUser;
 
@@ -22,10 +23,11 @@ public class Reset
 
         if (userFile.exists())
         {
-            userFile.delete();
+            //userFile.delete();
+            new UserParser(discordID).resetUser();
 
             IUser discordUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
-            CHANNEL.sendMessage(new WarningMessage("USER FILE DELETED", "**" + discordUser.getName() + "#" + discordUser.getDiscriminator() + "**'s file has been deleted.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("USER FILE RESET", "**" + discordUser.getName() + "#" + discordUser.getDiscriminator() + "**'s file has been reset.").get().build());
         }
         else
         {

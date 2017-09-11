@@ -595,4 +595,63 @@ public class UserParser
         eventWriter.add(eElement);
         eventWriter.add(end);
     }
+
+    public void resetUser()
+    {
+        try
+        {
+            /* INITIALIZE VARIABLES */
+            XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+            XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(new FileOutputStream(FILE_PATH));
+            XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+
+            XMLEvent end = eventFactory.createDTD("\n");
+            XMLEvent tab = eventFactory.createDTD("\t");
+
+            /* WRITE START DOCUMENT ELEMENT */
+            StartDocument startDocument = eventFactory.createStartDocument();
+            eventWriter.add(startDocument);
+            eventWriter.add(end);
+
+            /* BEGIN WRITING USER CONFIG, WRITE user START ELEMENT */
+            StartElement configStartElement = eventFactory.createStartElement("", "", USER);
+            eventWriter.add(configStartElement);
+            eventWriter.add(end);
+
+            /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, AND HACKING CRYSTALS */
+            writeNode(eventWriter, MEMORY_DIAMONDS, DEFAULT_MEMORY_DIAMONDS);
+            writeNode(eventWriter, MONEY_SPENT, DEFAULT_MONEY_SPENT);
+            writeNode(eventWriter, HACKING_CRYSTALS, DEFAULT_HACKING_CRYSTALS);
+
+            /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
+            writeDefaultBannerData(eventWriter);
+
+            /* WRITE characterBox START NODE*/
+            eventWriter.add(tab);
+            StartElement sElement = eventFactory.createStartElement("", "", CHARACTER_BOX);
+            eventWriter.add(sElement);
+            eventWriter.add(end);
+
+            /* CLOSE CHARACTER BOX ELEMENT */
+            eventWriter.add(tab);
+            EndElement eElement = eventFactory.createEndElement("", "", CHARACTER_BOX);
+            eventWriter.add(eElement);
+            eventWriter.add(end);
+
+
+            /* WRITE user END ELEMENT AND CLOSE WRITER */
+            eventWriter.add(eventFactory.createEndElement("", "", USER));
+            eventWriter.add(end);
+            eventWriter.add(eventFactory.createEndDocument());
+            eventWriter.close();
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        catch (XMLStreamException e)
+        {
+            e.printStackTrace();
+        }
+    }
 }
