@@ -6,7 +6,6 @@ import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import io.github.spugn.sdevkit.Command.CommandLine;
 import io.github.spugn.sdevkit.Discord.Discord4J.DiscordCommand;
-import io.github.spugn.sdevkit.Discord.Discord4J.EmbedMessage;
 import io.github.spugn.sdevkit.Discord.Discord4J.Message;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -91,13 +90,11 @@ public class CommandManager
                         catch (NumberFormatException f)
                         {
                             /* SECOND CHARACTER IS NOT AN INT */
-                            //new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
                             CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please provide a page number after 'p'.").get().build());
                         }
                         catch (NullPointerException f)
                         {
                             /* SECOND CHARACTER IS NOT AN INT */
-                            //new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
                             CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please provide a page number after 'p'.").get().build());
                         }
                         catch (StringIndexOutOfBoundsException f)
@@ -107,7 +104,6 @@ public class CommandManager
                     }
                     else
                     {
-                        //new Message(CLIENT, CHANNEL, Text.SCOUT_NUMBER_FORMAT_EXCEPTION.get(), true, 255, 0, 0);
                         CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
                     }
                 }
@@ -119,14 +115,55 @@ public class CommandManager
                 /* TODO - IMPLEMENT CURRENCY */
             }
             /* INFO | "@bot info [mention user]" */
-            else if (commandLine.getCommand().equalsIgnoreCase("info"))
+            else if (commandLine.getCommand().equalsIgnoreCase("profile"))
             {
                 /* TODO - GET AND DISPLAY USER DATA */
+                if (commandLine.getArgumentCount() >= 2)
+                {
+                    if (commandLine.getArgument(1).equalsIgnoreCase("info"))
+                    {
+                        try
+                        {
+                            /* TEST IF ARGUMENT CAN BE PARSED INTO AN INTEGER */
+                            Integer.parseInt(commandLine.getArgument(2));
+
+                            /* OPEN BANNER INFO PROFILE */
+                            new Profile(CHANNEL, DISCORD_ID, 2, commandLine.getArgument(2));
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
+                        }
+                    }
+                    else if (commandLine.getArgument(1).equalsIgnoreCase("search"))
+                    {
+                        new Profile(CHANNEL, DISCORD_ID, 3, commandLine.getArgument(2));
+                    }
+                    else
+                    {
+                        CHANNEL.sendMessage(new WarningMessage("UNKNOWN ARGUMENT", "Please review the help menu.").get().build());
+                    }
+                }
+                else if (commandLine.getArgumentCount() >= 1)
+                {
+                    if (commandLine.getArgument(1).equalsIgnoreCase("data"))
+                    {
+                        new Profile(CHANNEL, DISCORD_ID, 1);
+                    }
+                    else
+                    {
+                        CHANNEL.sendMessage(new WarningMessage("UNKNOWN ARGUMENT", "Please review the help menu.").get().build());
+                    }
+                }
+                else
+                {
+                    new Profile(CHANNEL, DISCORD_ID);
+                }
+
             }
             /* RESET | "@bot reset [y]" */
             else if (commandLine.getCommand().equalsIgnoreCase("reset"))
             {
-                /* TODO - ERASE PLAYER DATA */
                 if (commandLine.getArgumentCount() >= 1)
                 {
                     if (commandLine.getArgument(1).equalsIgnoreCase("y") ||commandLine.getArgument(1).equalsIgnoreCase("yes"))
@@ -146,7 +183,6 @@ public class CommandManager
             }
             else
             {
-                //new Message(CLIENT, CHANNEL, Text.UNKNOWN_COMMAND.get(), true, 255, 0, 0);
                 CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Unknown command. Use 'help' for a list of commands.").get().build());
             }
         }
@@ -156,7 +192,6 @@ public class CommandManager
     {
         if (settings.isErrorInRates())
         {
-            //new Message(CLIENT, CHANNEL, Text.SCOUT_RATE_ERROR.get(), true, 255, 0, 0);
             CHANNEL.sendMessage(new WarningMessage("SCOUT RATE ERROR", "Scout rates do not add up to 1.0. Please review your settings file.").get().build());
         }
     }

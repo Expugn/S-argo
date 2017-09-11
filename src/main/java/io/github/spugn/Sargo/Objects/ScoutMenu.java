@@ -17,6 +17,7 @@ public class ScoutMenu
     private String thumbnail = Images.ARGO_SMILE.getUrl();
     private String footerIcon = Images.MEMORY_DIAMOND_ICON.getUrl();
     private String footerText = Text.MD_REMAINING.get();
+    private String userName = "";
     private String typeData = "";
     private String bannerType = "";
     private int mdRemain = 0;
@@ -66,7 +67,7 @@ public class ScoutMenu
         builder.withColor(244, 233, 167);
         builder.withThumbnail(thumbnail);
         builder.withFooterIcon(footerIcon);
-        builder.withFooterText(mdRemain + " " + footerText);
+        builder.withFooterText(userName + " | " + mdRemain + " " + footerText);
     }
 
     public EmbedBuilder get()
@@ -118,5 +119,10 @@ public class ScoutMenu
     public void setGuaranteedScout(boolean guaranteedScout)
     {
         this.guaranteedScout = guaranteedScout;
+    }
+
+    public void setUserName(String userName)
+    {
+        this.userName = userName;
     }
 }

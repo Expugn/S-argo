@@ -8,6 +8,7 @@ import io.github.spugn.Sargo.XMLParsers.UserParser;
 import io.github.spugn.sdevkit.Discord.Discord4J.Message;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.util.RateLimitException;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -90,10 +91,10 @@ public class Scout
         SettingsParser settings = new SettingsParser();
 
         /* GET RATES */
-        copper = settings.getTwoRates();
-        silver = settings.getThreeRates();
-        gold = settings.getFourRates();
-        platinum = settings.getFiveRates();
+        copper = (int) (settings.getTwoRates() * 100);
+        silver = (int) (settings.getThreeRates() * 100);
+        gold = (int) (settings.getFourRates() * 100);
+        platinum = (int) (settings.getFiveRates() * 100);
 
         /* GET GOLD BANNERS*/
         goldBanners = settings.getGoldBanners();
@@ -246,7 +247,6 @@ public class Scout
         else
         {
             CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
-            return;
         }
     }
 
@@ -516,6 +516,7 @@ public class Scout
                     break;
             }
         }
+        System.out.println(character.toString());
         return character;
     }
 
@@ -692,13 +693,14 @@ public class Scout
            guaranteeOnePlatinum = false;
            return 5;
         }
+
         if (guaranteedScout)
         {
             return 4;
         }
 
         double d;
-        d = RNG.nextDouble();
+        d = RNG.nextDouble() * 100;
 
         /* TWO STAR (COPPER) CHARACTER */
         if (d < copper)
@@ -755,7 +757,6 @@ public class Scout
             /* STEP UP V1 */
             if (bannerType == 1)
             {
-                double goldRateIncrease;
                 switch (bannerTypeData)
                 {
                     case 1:
@@ -765,17 +766,13 @@ public class Scout
                         /* TODO - CHANGE MD PRICE TO 200 */
 
                         /* TODO - INCREASE GOLD SCOUT RATES BY 1.5X */
-                        goldRateIncrease = (gold * 1.5) - gold;
-                        gold += goldRateIncrease;
-                        copper -= goldRateIncrease;
+                        copper = copper - ((gold * 1.5) - gold) ;
+                        gold = gold * 1.5;
                         break;
                     case 5:
                         /* TODO - CHANGE GOLD SCOUT RATES BY 2.0X */
-                        goldRateIncrease = (gold * 2.0) - gold;
-                        gold += goldRateIncrease;
-                        copper -= goldRateIncrease;
-
-                        /* TODO - RESET STEPS TO 1 */
+                        copper = copper - ((gold * 2.0) - gold);
+                        gold = gold * 2.0;
                         break;
                     default:
                         break;
@@ -795,7 +792,6 @@ public class Scout
             /* STEP UP V2 */
             else if (bannerType == 3)
             {
-                double platinumRateIncrease;
                 switch (bannerTypeData)
                 {
                     case 1:
@@ -805,9 +801,9 @@ public class Scout
                         /* TODO - CHANGE MD PRICE TO 200 */
 
                         /* TODO - INCREASE PLATINUM SCOUT RATES BY 1.5X */
-                        platinumRateIncrease = (platinum * 1.5) - platinum;
-                        platinum += platinumRateIncrease;
-                        copper -= platinumRateIncrease;
+                        copper = copper - ((platinum * 1.5) - platinum);
+                        platinum = platinum * 1.5;
+
                         break;
                     case 5:
                         /* TODO - GUARANTEE A PLATINUM CHARACTER */
@@ -815,9 +811,9 @@ public class Scout
                         break;
                     case 6:
                         /* TODO - INCREASE PLATINUM SCOUT RATES BY 2.0X */
-                        platinumRateIncrease = (platinum * 2.0) - platinum;
-                        platinum += platinumRateIncrease;
-                        copper -= platinumRateIncrease;
+                        copper = copper - ((platinum * 2.0) - platinum);
+                        platinum = platinum * 2.0;
+
                     default:
                         break;
                 }
@@ -835,6 +831,7 @@ public class Scout
         scoutMenu.setThumbnail(argoFace);
         scoutMenu.setBannerName(SELECTED_BANNER.getBannerName());
         scoutMenu.setMdRemain(USER.getMemoryDiamonds());
+        scoutMenu.setUserName(CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator());
 
         /* EDIT DEPENDING ON TYPE OF PULL */
         if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
@@ -865,6 +862,10 @@ public class Scout
         catch (FileNotFoundException e)
         {
             CHANNEL.sendMessage(new WarningMessage("IMAGE NOT FOUND", "Unable to display scout result.").get().build());
+        }
+        catch (RateLimitException e)
+        {
+            CHANNEL.sendMessage(new WarningMessage("RATE LIMIT EXCEPTION", "Slow down with the messages!").get().build());
         }
 
     }
