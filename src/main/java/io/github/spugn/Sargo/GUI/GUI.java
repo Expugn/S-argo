@@ -10,8 +10,9 @@ public class GUI extends JFrame
     private static final int WIDTH = 500;
     private static final int HEIGHT = 100;
     private JButton exitB;
+    private JLabel botLabel;
 
-    public GUI()
+    public GUI(String botName)
     {
         exitB = new JButton("Stop S'argo");
         exitB.addActionListener(new ActionListener()
@@ -22,6 +23,8 @@ public class GUI extends JFrame
                 System.exit(0);
             }
         });
+
+        botLabel = new JLabel("        Now running on: " + botName);
 
         Container pane = getContentPane();
         pane.setLayout(new GridLayout(1, 1));
@@ -53,6 +56,7 @@ public class GUI extends JFrame
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        pane.add(botLabel);
         pane.add(exitB);
     }
 }

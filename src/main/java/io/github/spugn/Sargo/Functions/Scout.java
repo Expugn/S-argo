@@ -6,6 +6,8 @@ import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IMessage;
+import sx.blah.discord.util.EmbedBuilder;
 import sx.blah.discord.util.RateLimitException;
 
 import javax.imageio.ImageIO;
@@ -20,295 +22,294 @@ import java.util.Random;
 
 public class Scout
 {
-    private static IChannel CHANNEL;
-    private static int BANNER_ID;
-    private static String CHOICE;
-    private static List<Banner> BANNERS;
-    private static String DISCORD_ID;
+    private IChannel CHANNEL;
+    private int BANNER_ID;
+    private String CHOICE;
+    private String DISCORD_ID;
 
-    private static Banner SELECTED_BANNER;
-    private static List<Character> BANNER_CHARACTERS;
-    private static Random RNG;
+    private SettingsParser SETTINGS;
+    private List<Banner> BANNERS;
+    private UserParser USER;
 
-    private static UserParser USER;
+    private List<Double> RECORD_CRYSTAL_RATES;
+    private double COPPER;
+    private double SILVER;
+    private double GOLD;
+    private double PLATINUM;
+    private List<Integer> GOLD_BANNERS;
 
-    private List<Integer> goldBanners;
+    private Random RNG;
 
-    /* RATES */
-    private double copper;
-    private double silver;
-    private double gold;
-    private double platinum;
-
+    private Banner SELECTED_BANNER;
+    private List<Character> BANNER_CHARACTERS;
     private int bannerType;
-
-    /* bannerTypeData: INFORMATION ON WHAT STEP THE USER IS ON / HOW MANY RECORD CRYSTALS THEY HAVE */
     private int bannerTypeData;
-
-    /* PLACEHOLDERS */
-    private static File PLATINUM_PH;
-    private static File GOLD_PH;
-    private static File SILVER_PH;
-    private static File COPPER_PH;
-
-    /* SCOUTED DATA */
-    private String imageString;
-    private String imageStrings[];
-    private String argoText;
-    private String argoFace;
-    private ScoutMenu scoutMenu;
-    private int highestRarity;
-    private List<Character> characters;
     private List<Character> goldCharacters;
     private List<Character> platinumCharacters;
-    private List<Double> recordCrystalRates;
+
+    private String imageString;
+    private String imageStrings[];
+    private int highestRarity;
+
+    private ScoutMenu scoutMenu;
+    private String argoText;
+    private String argoFace;
+
+    private File tempUserDirectory;
+
+    private List<Character> characters;
+
     private int rcGet;
     private boolean guaranteeOnePlatinum;
     private boolean guaranteedScout;
-    private File tempUserDirectory;
 
     private int userMemoryDiamonds;
+    private int userHackingCrystals;
+    private int userRecordCrystals;
     private int singleScoutPrice;
     private int multiScoutPrice;
 
-    public Scout(IChannel channel, int bannerID, String choice, String discordID)
+    public Scout(IChannel channel, int bannerID, String choice, String discordID) throws RateLimitException
     {
         CHANNEL = channel;
         BANNER_ID = bannerID - 1;
         CHOICE = choice;
-        RNG = new Random(System.currentTimeMillis());
         DISCORD_ID = discordID;
 
-        init();
-        run();
+        initFiles();
+        initSettings();
+        initUser();
+        initVariables();
+        initMemoryDiamonds();
+
+        if (!(BANNER_ID < BANNERS.size() && BANNER_ID >= 0))
+        {
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
+            return;
+        }
+
+        initBanner();
+
+        if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
+        {
+            if (userMemoryDiamonds < singleScoutPrice)
+            {
+                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.").get().build());
+                return;
+            }
+
+            userMemoryDiamonds -= singleScoutPrice;
+            USER.setMemoryDiamonds(userMemoryDiamonds);
+
+            doSinglePull();
+        }
+        else if (CHOICE.equalsIgnoreCase("multi") || CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("11"))
+        {
+            if (userMemoryDiamonds < multiScoutPrice)
+            {
+                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.").get().build());
+                return;
+            }
+
+            userMemoryDiamonds -= multiScoutPrice;
+            USER.setMemoryDiamonds(userMemoryDiamonds);
+
+            doMultiPull();
+            updateBannerData();
+        }
+        else if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
+        {
+            if (bannerType != 2)
+            {
+                CHANNEL.sendMessage(new WarningMessage("NO RECORD CRYSTAL SCOUT", "This banner does not have a record crystal scout.").get().build());
+                return;
+            }
+
+            userRecordCrystals = USER.getBannerData(SELECTED_BANNER.getBannerName());
+
+            if (userRecordCrystals < 10)
+            {
+                CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need 10 record crystals to do a record crystal scout.").get().build());
+                return;
+            }
+
+            userRecordCrystals -= 10;
+            USER.changeValue(SELECTED_BANNER.getBannerName(), userRecordCrystals);
+
+            guaranteedScout = true;
+
+            doSinglePull();
+        }
+
+        buildScoutMenu();
+
+        IMessage display = null;
+        try
+        {
+            display = CHANNEL.sendMessage(scoutMenu.get().build());
+            CHANNEL.sendFile(new File(tempUserDirectory + "/results.png"));
+        }
+        catch (FileNotFoundException e)
+        {
+            CHANNEL.sendMessage(new WarningMessage("IMAGE NOT FOUND", "Unable to display scout result.").get().build());
+        }
+        catch (RateLimitException e)
+        {
+            EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
+            display.edit(rateLimited.build());
+            deleteTempDirectory();
+        }
+
+        USER.saveData();
+        deleteTempDirectory();
     }
 
-    private void init()
+    private void initFiles()
     {
         /* OPEN SETTINGS FILE */
-        SettingsParser settings = new SettingsParser();
-
-        /* GET RATES */
-        copper = (int) (settings.getTwoRates() * 100);
-        silver = (int) (settings.getThreeRates() * 100);
-        gold = (int) (settings.getFourRates() * 100);
-        platinum = (int) (settings.getFiveRates() * 100);
-
-        /* GET GOLD BANNERS*/
-        goldBanners = settings.getGoldBanners();
-
-        /* GET RECORD CRYSTAL RATES */
-        recordCrystalRates = settings.getRecordCrystalRates();
+        SETTINGS = new SettingsParser();
 
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
         BANNERS = bannersXML.readConfig(Files.BANNER_XML.get());
 
-        /* OPEN USER DATA FILE */
+        /* OPEN USER FILE */
         USER = new UserParser(DISCORD_ID);
+    }
 
-        PLATINUM_PH = new File(Files.PLATINUM_PLACEHOLDER.get());
-        GOLD_PH = new File(Files.GOLD_PLACEHOLDER.get());
-        SILVER_PH = new File(Files.SILVER_PLACEHOLDER.get());
-        COPPER_PH = new File(Files.COPPER_PLACEHOLDER.get());
+    private void initSettings()
+    {
+        COPPER = (int) (SETTINGS.getTwoRates() * 100);
+        SILVER = (int) (SETTINGS.getThreeRates() * 100);
+        GOLD = (int) (SETTINGS.getFourRates() * 100);
+        PLATINUM = (int) (SETTINGS.getFiveRates() * 100);
+        RECORD_CRYSTAL_RATES = SETTINGS.getRecordCrystalRates();
+        GOLD_BANNERS = SETTINGS.getGoldBanners();
+    }
 
-        imageStrings = new String[11];
-        characters = new ArrayList<>();
-        scoutMenu = new ScoutMenu();
+    private void initBanner()
+    {
+        SELECTED_BANNER = BANNERS.get(BANNER_ID);
+        BANNER_CHARACTERS = SELECTED_BANNER.getCharacters();
+        bannerType = Integer.parseInt(SELECTED_BANNER.getBannerType());
+        bannerTypeData = USER.getBannerData(SELECTED_BANNER.getBannerName());
         goldCharacters = new ArrayList<>();
         platinumCharacters = new ArrayList<>();
 
+        for (Character character : BANNER_CHARACTERS)
+        {
+            if (Integer.parseInt(character.getRarity()) == 4)
+            {
+                goldCharacters.add(character);
+            }
+            else if (Integer.parseInt(character.getRarity()) == 5)
+            {
+                platinumCharacters.add(character);
+            }
+        }
+
+        if (platinumCharacters.size() <= 0)
+        {
+            COPPER += PLATINUM;
+            PLATINUM = 0;
+        }
+
+        if (bannerType == 1)
+        {
+            switch (bannerTypeData)
+            {
+                case 1:
+                    multiScoutPrice = 200;
+                    break;
+                case 3:
+                    multiScoutPrice = 200;
+                    COPPER = COPPER - ((GOLD * 1.5) - GOLD) ;
+                    GOLD = GOLD * 1.5;
+                    break;
+                case 5:
+                    COPPER = COPPER - ((GOLD * 2.0) - GOLD);
+                    GOLD = GOLD * 2.0;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (bannerType == 3)
+        {
+            switch (bannerTypeData)
+            {
+                case 1:
+                    multiScoutPrice = 200;
+                    break;
+                case 3:
+                    multiScoutPrice = 200;
+                    COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
+                    PLATINUM = PLATINUM * 1.5;
+                    break;
+                case 5:
+                    guaranteeOnePlatinum = true;
+                    break;
+                case 6:
+                    COPPER = COPPER - ((PLATINUM * 2.0) - PLATINUM);
+                    PLATINUM = PLATINUM * 2.0;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private void initUser()
+    {
+        userMemoryDiamonds = USER.getMemoryDiamonds();
+        userHackingCrystals = USER.getHackingCrystals();
+        userRecordCrystals = 0;
+    }
+
+    private void initVariables()
+    {
+        RNG = new Random(System.currentTimeMillis());
+
+        scoutMenu = new ScoutMenu();
+
+        imageStrings = new String[11];
+        characters = new ArrayList<>();
+
         guaranteeOnePlatinum = false;
         guaranteedScout = false;
+    }
 
-        userMemoryDiamonds = USER.getMemoryDiamonds();
+    private void initMemoryDiamonds()
+    {
         singleScoutPrice = 25;
         multiScoutPrice = 250;
     }
 
-    private void run()
+
+    /* PULLS ======================================================================================================== */
+
+
+    private void doSinglePull()
     {
-        /* CHECK IF REQUESTED BANNER IS AVAILABLE */
-        if (BANNER_ID < BANNERS.size() && BANNER_ID >= 0)
-        {
-            /* MAKE TEMPORARY IMAGE FOLDER */
-            tempUserDirectory = new File("images/temp_" + DISCORD_ID);
-            tempUserDirectory.mkdir();
+        tempUserDirectory = new File("images/temp_" + DISCORD_ID);
+        tempUserDirectory.mkdir();
 
-            /* GET BANNER AND CHARACTER DATA. ALSO ADJUST RATES IF NEEDED */
-            if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
-            {
-                guaranteedScout = true;
-            }
-            setupBanner();
-
-            if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
-            {
-                if (userMemoryDiamonds >= singleScoutPrice)
-                {
-                    /* REMOVE MEMORY DIAMONDS FROM USER ACCOUNT */
-                    userMemoryDiamonds -= singleScoutPrice;
-                    USER.setMemoryDiamonds(userMemoryDiamonds);
-
-                    /* PULL AND DRAW SCOUT RESULT IMAGE */
-                    singlePull();
-                    drawImage(imageString);
-                }
-                else
-                {
-                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.").get().build());
-                    deleteTempDirectory();
-                    return;
-                }
-            }
-            else if (CHOICE.equalsIgnoreCase("multi") || CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("11"))
-            {
-                if (userMemoryDiamonds >= multiScoutPrice)
-                {
-                    /* REMOVE MEMORY DIAMONDS FROM USER ACCOUNT */
-                    userMemoryDiamonds -= multiScoutPrice;
-                    USER.setMemoryDiamonds(userMemoryDiamonds);
-
-                    /* PULL AND DRAW SCOUT RESULT IMAGE */
-                    multiPull();
-                    drawImage(imageStrings);
-
-                    /* INCREMENT STEP IF DOING STEP UP*/
-                    if (bannerType == 1 || bannerType == 3)
-                    {
-                        int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
-
-                        /* STEP UP V1 - INCREMENT STEP, RESET IF NEXT STEP IS GREATER THAN 5 */
-                        if (bannerType == 1)
-                        {
-                            currentStep++;
-                            if (currentStep > 5)
-                            {
-                                USER.changeValue(SELECTED_BANNER.getBannerName(), 1);
-                            }
-                            else
-                            {
-                                USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
-                            }
-                        }
-
-                        /* STEP UP V3 - INCREMENT STEP, KEEP STEP AT 6 IF GREATER THAN 6 */
-                        if (bannerType == 3)
-                        {
-                            currentStep++;
-                            if (currentStep > 6)
-                            {
-                                USER.changeValue(SELECTED_BANNER.getBannerName(), 6);
-                            }
-                            else
-                            {
-                                USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.").get().build());
-                    deleteTempDirectory();
-                    return;
-                }
-            }
-            else if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
-            {
-                if (bannerType == 2)
-                {
-                    int userRC = USER.getBannerData(SELECTED_BANNER.getBannerName());
-
-                    if (userRC >= 10)
-                    {
-                        /* SUBTRACT 10 RECORD CRYSTAL FROM USER */
-                        userRC -= 10;
-                        USER.changeValue(SELECTED_BANNER.getBannerName(), userRC);
-
-                        /* SCOUT */
-                        singlePull();
-                        drawImage(imageString);
-                        buildScoutMenu();
-                        scoutMenu.setGuaranteedScout(true);
-                        scoutMenu.setTypeData(String.valueOf(userRC));
-
-                        displayResults();
-
-                        /* SAVE USER DATA */
-                        USER.saveData();
-
-                        deleteTempDirectory();
-                        return;
-                    }
-                    else
-                    {
-                        CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need 10 record crystals to do a guaranteed scout.").get().build());
-                        deleteTempDirectory();
-                        return;
-                    }
-                }
-                else
-                {
-                    CHANNEL.sendMessage(new WarningMessage("NO GUARANTEED SCOUT", "This banner does not have a guaranteed scout.").get().build());
-                    deleteTempDirectory();
-                    return;
-                }
-            }
-            else
-            {
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN SCOUT TYPE", "Use 'scout [Banner ID] [s|m|g]'.").get().build());
-                deleteTempDirectory();
-                return;
-            }
-
-            /* BUILD SCOUT MENU, AND DISPLAY RESULTS */
-            buildScoutMenu();
-            displayResults();
-
-            /* SAVE USER DATA */
-            USER.saveData();
-
-            deleteTempDirectory();
-        }
-        else
-        {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
-        }
-    }
-
-    private void deleteTempDirectory()
-    {
-        String[] entries = tempUserDirectory.list();
-        for (String s : entries)
-        {
-            File currentFile = new File(tempUserDirectory.getPath(), s);
-            currentFile.delete();
-        }
-        tempUserDirectory.delete();
-    }
-
-    private void singlePull()
-    {
-        /* GET CHARACTER */
         characters.add(getCharacter(scout()));
-
-        /* SAVE IMAGE STRING AND RARITY OF CHARACTER */
-        generateImageString();
         highestRarity = Integer.parseInt(characters.get(0).getRarity());
+
+        generateImageString();
+        drawImage(imageString);
     }
 
-    private void multiPull()
+    private void doMultiPull()
     {
-        /* GENERATE CHARACTERS */
+        tempUserDirectory = new File("images/temp_" + DISCORD_ID);
+        tempUserDirectory.mkdir();
+
         for (int i = 0 ; i < 11 ; i++)
         {
             characters.add(getCharacter(scout()));
         }
-
-        /* BUBBLE SORT CHARACTER ARRAY */
         Character tempCharacter;
-
         for (int a = 0 ; a < 12 ; a++)
         {
             for (int b = 1 ; b < 11 ; b++)
@@ -321,43 +322,73 @@ public class Scout
                 }
             }
         }
-
-        /* GENERATE IMAGE STRINGS */
-        generateImageStrings();
-
-        /* SAVE HIGHEST RARITY CHARACTER */
         highestRarity = Integer.parseInt(characters.get(0).getRarity());
+
+        generateImageStrings();
+        drawImage(imageStrings);
     }
+
+    private void updateBannerData()
+    {
+        if (bannerType == 1)
+        {
+            int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
+            currentStep++;
+            if (currentStep > 5)
+            {
+                USER.changeValue(SELECTED_BANNER.getBannerName(), 1);
+            }
+            else
+            {
+                USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
+            }
+        }
+        else if (bannerType == 2)
+        {
+            rcGet = getRecordCrystals();
+            bannerTypeData += rcGet;
+            USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
+        }
+        else if (bannerType == 3)
+        {
+            int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
+            currentStep++;
+            if (currentStep > 6)
+            {
+                USER.changeValue(SELECTED_BANNER.getBannerName(), 6);
+            }
+            else
+            {
+                USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
+            }
+        }
+    }
+
+    /* IMAGE DRAWING ================================================================================================ */
+
 
     private void generateImageString()
     {
-        /* CHARACTER BOX IS NOT EMPTY */
         if (!USER.getCharacterBox().isEmpty())
         {
-            /* ITERATE THROUGH CHARACTERS, CHECK IF DUPLICATE EXISTS */
             for (Character userCharacter : USER.getCharacterBox())
             {
-                /* CHARACTER IS A DUPLICATE */
                 if (userCharacter.getPrefix().equals(characters.get(0).getPrefix()))
                 {
                     giveHackingCrystals(characters.get(0));
                     try
                     {
-                        /* GET BACKGROUND AND CREATE NEW IMAGE */
+                        /* CHARACTER IMAGE */
                         Image characterImage = ImageIO.read(new File(characters.get(0).getImagePath()));
                         BufferedImage result = new BufferedImage(characterImage.getWidth(null), characterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-                        /* DRAW BACKGROUND ON NEW IMAGE */
                         Graphics g = result.getGraphics();
                         g.drawImage(characterImage, 0, 0, null);
 
-                        /* READ IMAGE STRING */
+                        /* SHADE CHARACTER IMAGE */
                         BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
-
-                        /* DRAW SHADE OVER CHARACTER IMAGE */
                         g.drawImage(bi, 0, 0, null);
 
-                        /* WRITE TO TEMPORARY DIRECTORY AND SAVE FILE PATH */
+                        /* SAVE */
                         ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + 0 + ".png"));
                         imageString = tempUserDirectory + "/temp_" + 0 + ".png";
                         return;
@@ -368,52 +399,39 @@ public class Scout
                     }
                 }
             }
-            /* NO DUPLICATES FOUND */
-            USER.addCharacter(characters.get(0));
-            imageString = characters.get(0).getImagePath();
         }
-        else
-        {
-            /* CHARACTER BOX IS EMPTY, NO DUPLICATES EXIST. */
-            USER.addCharacter(characters.get(0));
-            imageString = characters.get(0).getImagePath();
-        }
-
+        USER.addCharacter(characters.get(0));
+        imageString = characters.get(0).getImagePath();
     }
 
     private void generateImageStrings()
     {
         boolean foundDuplicate = false;
 
-        /* GO THROUGH SCOUTED CHARACTERS */
         for (int i = 0 ; i < 11 ; i++)
         {
-            /* CHARACTER BOX IS NOT EMPTY */
             if (!USER.getCharacterBox().isEmpty())
             {
-                /* ITERATE THROUGH CHARACTERS, CHECK IF DUPLICATE EXISTS */
                 for (Character userCharacter : USER.getCharacterBox())
                 {
-                    /* CHARACTER IS A DUPLICATE */
                     if (userCharacter.getPrefix().equals(characters.get(i).getPrefix()) && userCharacter.getName().equals(characters.get(i).getName()))
                     {
                         foundDuplicate = true;
                         giveHackingCrystals(characters.get(i));
+
                         try
                         {
-                            /* GET BACKGROUND AND CREATE NEW IMAGE */
+                            /* CHARACTER IMAGE */
                             Image scout_background = ImageIO.read(new File(characters.get(i).getImagePath()));
                             BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-                            /* DRAW BACKGROUND ON NEW IMAGE */
                             Graphics g = result.getGraphics();
                             g.drawImage(scout_background, 0, 0, null);
 
-                            /* READ IMAGE STRING */
+                            /* SHADE CHARACTER IMAGE */
                             BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
                             g.drawImage(bi, 0, 0, null);
 
-                            /* WRITE TO TEMPORARY DIRECTORY AND SAVE FILE PATH */
+                            /* SAVE */
                             ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + i + ".png"));
                             imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
                         }
@@ -423,57 +441,128 @@ public class Scout
                         }
                     }
                 }
-                /* DUPLICATE CHARACTER NOT FOUND */
+
                 if (!foundDuplicate)
                 {
                     USER.addCharacter(characters.get(i));
                     imageStrings[i] = characters.get(i).getImagePath();
                 }
+
                 foundDuplicate = false;
             }
             else
             {
-                /* CHARACTER BOX IS EMPTY, NO DUPLICATES EXIST. */
                 USER.addCharacter(characters.get(i));
                 imageStrings[i] = characters.get(i).getImagePath();
             }
         }
     }
 
-    private void giveHackingCrystals(Character c)
+    public void drawImage(String imageString)
     {
-        /* GET USER HACKING CRYSTALS */
-        int userHC = USER.getHackingCrystals();
-
-        /* GRANT HACKING CRYSTALS BASED ON CHARACTER RARITY */
-        switch(Integer.parseInt(c.getRarity()))
+        try
         {
-            case 2:
-                userHC += 1;
-                break;
-            case 3:
-                userHC += 2;
-                break;
-            case 4:
-                userHC += 50;
-                break;
-            case 5:
-                userHC += 100;
-                break;
-            default:
-                userHC += 1;
-                break;
+            int x;
+            int y = 95;
+
+            /* SCOUT BACKGROUND */
+            Image scout_background = ImageIO.read(new File(Files.SINGLE_SCOUT_BACKGROUND.get()));
+            BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            Graphics g = result.getGraphics();
+            g.drawImage(scout_background, 0, 0, null);
+
+            /* CHARACTER IMAGE */
+            BufferedImage bi = ImageIO.read(new File(imageString));
+            x = (scout_background.getWidth(null) / 2) - (bi.getWidth() / 2);
+            g.drawImage(bi, x, y, null);
+
+            /* SAVE */
+            ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
+        }
+        catch (IOException e)
+        {
+            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+        }
+    }
+
+    public void drawImage(String imageStrings[])
+    {
+        try
+        {
+            int x = 0;
+            int y = 95;
+
+            /* SCOUT BACKGROUND */
+            Image scout_background = ImageIO.read(new File(Files.MULTI_SCOUT_BACKGROUND.get()));
+            BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            Graphics g = result.getGraphics();
+            g.drawImage(scout_background, 0, 0, null);
+
+            /* CHARACTER IMAGES */
+            for (int i = 0 ; i < imageStrings.length ; i++)
+            {
+                BufferedImage bi = ImageIO.read(new File(imageStrings[i]));
+                g.drawImage(bi, x, y, null);
+                x += bi.getWidth();
+
+                /* RESET POSITION IF NEAR OUT OF BOUNDS */
+                if (x >= result.getWidth())
+                {
+                    x = 0;
+                    y += bi.getHeight();
+                }
+            }
+
+            /* SAVE */
+            ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
+        }
+        catch (IOException e)
+        {
+            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+        }
+    }
+
+
+    /* CHARACTER GENERATION ==========================================================================================*/
+
+
+    private int scout()
+    {
+        if (guaranteeOnePlatinum)
+        {
+            guaranteeOnePlatinum = false;
+            return 5;
         }
 
-        /* SAVE HACKING CRYSTAL COUNT */
-        USER.setHackingCrystals(userHC);
+        if (guaranteedScout)
+        {
+            return 4;
+        }
+
+        double d;
+        d = RNG.nextDouble() * 100;
+
+        if (d < COPPER)
+        {
+            return 2;
+        }
+        else if (d < COPPER + SILVER)
+        {
+            return 3;
+        }
+        else if (d < COPPER + SILVER + GOLD)
+        {
+            return 4;
+        }
+        else
+        {
+            return 5;
+        }
     }
 
     private Character getCharacter(int rarity)
     {
         Character character;
-
-        /* GET CHARACTER DETERMINED BY RARITY */
         if (rarity == 2)
         {
             CopperCharacter cC = new CopperCharacter();
@@ -489,12 +578,10 @@ public class Scout
             if (guaranteedScout)
             {
                 double d = RNG.nextDouble();
-                /* 60% CHANCE TO GET A BANNER GOLD CHARACTER FROM GUARANTEED */
                 if (d < 0.6)
                 {
                     character = goldCharacters.get(RNG.nextInt(goldCharacters.size()));
                 }
-                /* 40% CHANCE TO GET A OFF-BANNER GOLD CHARACTER */
                 else
                 {
                     character = randGoldCharacter();
@@ -511,341 +598,49 @@ public class Scout
                     character = randGoldCharacter();
                 }
             }
-
         }
         else
         {
             character = platinumCharacters.get(RNG.nextInt(platinumCharacters.size()));
         }
 
-        /* CHECK IF CHARACTER IMAGE FILE EXISTS */
-        /* IF NOT, REPLACE WITH PLACEHOLDER IMAGE */
         File characterImage = new File(character.getImagePath());
-
         if (!characterImage.exists())
         {
             switch (Integer.parseInt(character.getRarity()))
             {
                 case 2:
-                    character.setImagePath(COPPER_PH.toString());
+                    character.setImagePath(Files.COPPER_PLACEHOLDER.get());
                     break;
                 case 3:
-                    character.setImagePath(SILVER_PH.toString());
+                    character.setImagePath(Files.SILVER_PLACEHOLDER.get());
                     break;
                 case 4:
-                    character.setImagePath(GOLD_PH.toString());
+                    character.setImagePath(Files.GOLD_PLACEHOLDER.get());
                     break;
                 case 5:
-                    character.setImagePath(PLATINUM_PH.toString());
+                    character.setImagePath(Files.PLATINUM_PLACEHOLDER.get());
                     break;
                 default:
-                    character.setImagePath(COPPER_PH.toString());
+                    character.setImagePath(Files.GRAY_PLACEHOLDER.get());
                     break;
             }
         }
-
         return character;
     }
 
-    private void argo()
+    private Character randGoldCharacter()
     {
-        double aText = RNG.nextDouble();
-        double aFace = RNG.nextDouble();
+        int randIndex = GOLD_BANNERS.get(RNG.nextInt(GOLD_BANNERS.size()));
+        Banner randBanner = BANNERS.get(randIndex - 1);
+        List<Character> randCharacters = randBanner.getCharacters();
 
-        /* DETERMINE THE TEXT THAT ARGO WILL SAY */
-        if (aText < 0.25)
-        {
-            argoText = Text.ARGO_1.get();
-        }
-        else if (aText < 0.5)
-        {
-            argoText = Text.ARGO_2.get();
-        }
-        else if (aText < 0.75)
-        {
-            argoText = Text.ARGO_3.get();
-        }
-        else
-        {
-            argoText = Text.ARGO_4.get();
-        }
-
-        /* DETERMINE THE TYPE OF FACE ARGO WILL HAVE */
-        switch (highestRarity)
-        {
-            case 2:
-                /* 75% FOR SMILE, 25% FOR GRIN */
-                if (aFace < 0.75)
-                {
-                    argoFace = Images.ARGO_SMILE.getUrl();
-                }
-                else
-                {
-                    argoFace = Images.ARGO_GRIN.getUrl();
-                }
-                break;
-
-            case 3:
-                /* 50% FOR SMILE, 50% FOR GRIN*/
-                if (aFace < 0.5)
-                {
-                    argoFace = Images.ARGO_SMILE.getUrl();
-                }
-                else
-                {
-                    argoFace = Images.ARGO_GRIN.getUrl();
-                }
-                break;
-
-            case 4:
-                /* 10% FOR SMILE, 25% FOR GRIN, 65% FOR SMUG */
-                if (aFace < 0.1)
-                {
-                    argoFace = Images.ARGO_SMILE.getUrl();
-                }
-                else if (aFace < 0.35)
-                {
-                    argoFace = Images.ARGO_GRIN.getUrl();
-                }
-                else
-                {
-                    argoFace = Images.ARGO_SMUG.getUrl();
-                }
-                break;
-
-            case 5:
-                /* 10% FOR SMILE, 10% FOR GRIN, 20% FOR SMUG, 60% FOR FLOWERS */
-                if (aFace < 0.1)
-                {
-                    argoFace = Images.ARGO_SMILE.getUrl();
-                }
-                else if (aFace < 0.2)
-                {
-                    argoFace = Images.ARGO_GRIN.getUrl();
-                }
-                else if (aFace < 0.4)
-                {
-                    argoFace = Images.ARGO_SMUG.getUrl();
-                }
-                else
-                {
-                    argoFace = Images.ARGO_FLOWERS.getUrl();
-                }
-                break;
-
-            default:
-                argoFace = Images.ARGO_SMILE.getUrl();
-                break;
-        }
+        return randCharacters.get(RNG.nextInt(randCharacters.size()));
     }
 
-    public void drawImage(String imageString)
-    {
-        try
-        {
-            /* STARTING POSITION */
-            int x;
-            int y = 95;
 
-            /* GET BACKGROUND AND CREATE NEW IMAGE */
-            Image scout_background = ImageIO.read(new File(Files.SINGLE_SCOUT_BACKGROUND.get()));
-            BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+    /* MENU ========================================================================================================= */
 
-            /* DRAW BACKGROUND ON NEW IMAGE */
-            Graphics g = result.getGraphics();
-            g.drawImage(scout_background, 0, 0, null);
-
-            /* READ IMAGE STRING */
-            BufferedImage bi = ImageIO.read(new File(imageString));
-
-            /* CALCULATE CENTER */
-            x = (scout_background.getWidth(null) / 2) - (bi.getWidth() / 2);
-
-            /* DRAW CHARACTER ON NEW IMAGE */
-            g.drawImage(bi, x, y, null);
-
-            /* SAVE IMAGE AS "temp_<discordID>/results.png" */
-            ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
-        }
-        catch (IOException e)
-        {
-            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
-        }
-    }
-
-    public void drawImage(String imageStrings[])
-    {
-        try
-        {
-            /* STARTING POSITION */
-            int x = 0;
-            int y = 95;
-
-            /* GET BACKGROUND AND CREATE NEW IMAGE */
-            Image scout_background = ImageIO.read(new File(Files.MULTI_SCOUT_BACKGROUND.get()));
-            BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-            /* DRAW BACKGROUND ON NEW IMAGE */
-            Graphics g = result.getGraphics();
-            g.drawImage(scout_background, 0, 0, null);
-
-            /* ITERATE THROUGH CHARACTER IMAGES AND PASTE ON NEW IMAGE */
-            for (int i = 0 ; i < imageStrings.length ; i++)
-            {
-                BufferedImage bi = ImageIO.read(new File(imageStrings[i]));
-                g.drawImage(bi, x, y, null);
-                x += bi.getWidth();
-
-                /* RESET POSITION IF NEAR OUT OF BOUNDS */
-                if (x >= result.getWidth())
-                {
-                    x = 0;
-                    y += bi.getHeight();
-                }
-            }
-
-            /* SAVE IMAGE AS "temp_<discordID>/results.png" */
-            ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
-        }
-        catch (IOException e)
-        {
-            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
-        }
-    }
-
-    private int scout()
-    {
-        if (guaranteeOnePlatinum)
-        {
-           guaranteeOnePlatinum = false;
-           return 5;
-        }
-
-        if (guaranteedScout)
-        {
-            return 4;
-        }
-
-        double d;
-        d = RNG.nextDouble() * 100;
-
-        /* TWO STAR (COPPER) CHARACTER */
-        if (d < copper)
-        {
-            return 2;
-        }
-        /* THREE STAR (SILVER) CHARACTER */
-        else if (d < copper + silver)
-        {
-            return 3;
-        }
-        /* FOUR STAR (GOLD) CHARACTER */
-        else if (d < copper + silver + gold)
-        {
-            return 4;
-        }
-        /* FIVE STAR (PLATINUM) CHARACTER */
-        else
-        {
-            return 5;
-        }
-    }
-
-    private void setupBanner()
-    {
-        /* GET BANNER DATA AND CHARACTERS */
-        SELECTED_BANNER = BANNERS.get(BANNER_ID);
-        BANNER_CHARACTERS = SELECTED_BANNER.getCharacters();
-        bannerType = Integer.parseInt(SELECTED_BANNER.getBannerType());
-        bannerTypeData = USER.getBannerData(SELECTED_BANNER.getBannerName());
-
-        /* SORT GOLD AND PLATINUM CHARACTERS AND STORE THEM IN THEIR OWN ARRAYS */
-        for (Character character : BANNER_CHARACTERS)
-        {
-            if (Integer.parseInt(character.getRarity()) == 4)
-            {
-                goldCharacters.add(character);
-            }
-            else if (Integer.parseInt(character.getRarity()) == 5)
-            {
-                platinumCharacters.add(character);
-            }
-        }
-
-        /* NO PLATINUM CHARACTER, ADJUST RATES */
-        if (platinumCharacters.size() <= 0)
-        {
-            copper += platinum;
-            platinum = 0;
-        }
-
-        /* MODIFY RATES ACCORDING TO BANNER TYPE */
-        {
-            /* STEP UP V1 */
-            if (bannerType == 1)
-            {
-                switch (bannerTypeData)
-                {
-                    case 1:
-                        /* MULTI SCOUT PRICE BECOMES 200 */
-                        multiScoutPrice = 200;
-                        break;
-                    case 3:
-                        /* MULTI SCOUT PRICE BECOMES 200 AND GOLD SCOUT RATES ARE INCREASED 1.5X */
-                        multiScoutPrice = 200;
-                        copper = copper - ((gold * 1.5) - gold) ;
-                        gold = gold * 1.5;
-                        break;
-                    case 5:
-                        /* GOLD SCOUT RATES ARE INCREASED 2.0X */
-                        copper = copper - ((gold * 2.0) - gold);
-                        gold = gold * 2.0;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            /* RECORD CRYSTAL */
-            else if (bannerType == 2)
-            {
-                /* GIVE RECORD CRYSTALS IF NOT DOING GUARANTEED SCOUT */
-                if (!guaranteedScout)
-                {
-                    rcGet = getRecordCrystals();
-                    bannerTypeData += rcGet;
-                    USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
-                }
-            }
-            /* STEP UP V2 */
-            else if (bannerType == 3)
-            {
-                switch (bannerTypeData)
-                {
-                    case 1:
-                        /* MULTI SCOUT PRICE BECOMES 200 */
-                        multiScoutPrice = 200;
-                        break;
-                    case 3:
-                        /* MULTI SCOUT PRICE BECOMES 200 AND PLATINUM SCOUT RATES ARE INCREASED 1.5X */
-                        multiScoutPrice = 200;
-                        copper = copper - ((platinum * 1.5) - platinum);
-                        platinum = platinum * 1.5;
-                        break;
-                    case 5:
-                        /* ONE PLATINUM CHARACTER IS GUARANTEED */
-                        guaranteeOnePlatinum = true;
-                        break;
-                    case 6:
-                        /* PLATINUM SCOUT RATES ARE INCREASED BY 2.0X */
-                        copper = copper - ((platinum * 2.0) - platinum);
-                        platinum = platinum * 2.0;
-
-                    default:
-                        break;
-                }
-            }
-        }
-    }
 
     private void buildScoutMenu()
     {
@@ -875,49 +670,154 @@ public class Scout
                 scoutMenu.setRcGet(rcGet);
             }
         }
+        else if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
+        {
+            scoutMenu.setGuaranteedScout(true);
+            scoutMenu.setTypeData(String.valueOf(userRecordCrystals));
+        }
     }
 
-    private void displayResults()
+    private void argo()
     {
-        try
+        double aText = RNG.nextDouble();
+        double aFace = RNG.nextDouble();
+
+        if (aText < 0.25)
         {
-            /* SEND SCOUT MENU AND SCOUT RESULT IMAGE*/
-            CHANNEL.sendMessage(scoutMenu.get().build());
-            CHANNEL.sendFile(new File(tempUserDirectory + "/results.png"));
+            argoText = Text.ARGO_1.get();
         }
-        catch (FileNotFoundException e)
+        else if (aText < 0.5)
         {
-            CHANNEL.sendMessage(new WarningMessage("IMAGE NOT FOUND", "Unable to display scout result.").get().build());
+            argoText = Text.ARGO_2.get();
         }
-        catch (RateLimitException e)
+        else if (aText < 0.75)
         {
-            CHANNEL.sendMessage(new WarningMessage("RATE LIMIT EXCEPTION", "Slow down with the messages!").get().build());
+            argoText = Text.ARGO_3.get();
+        }
+        else
+        {
+            argoText = Text.ARGO_4.get();
         }
 
+
+
+        switch (highestRarity)
+        {
+            case 2:
+                if (aFace < 0.75)
+                {
+                    argoFace = Images.ARGO_SMILE.getUrl();
+                }
+                else
+                {
+                    argoFace = Images.ARGO_GRIN.getUrl();
+                }
+                break;
+
+            case 3:
+                if (aFace < 0.5)
+                {
+                    argoFace = Images.ARGO_SMILE.getUrl();
+                }
+                else
+                {
+                    argoFace = Images.ARGO_GRIN.getUrl();
+                }
+                break;
+
+            case 4:
+                if (aFace < 0.1)
+                {
+                    argoFace = Images.ARGO_SMILE.getUrl();
+                }
+                else if (aFace < 0.35)
+                {
+                    argoFace = Images.ARGO_GRIN.getUrl();
+                }
+                else
+                {
+                    argoFace = Images.ARGO_SMUG.getUrl();
+                }
+                break;
+
+            case 5:
+                if (aFace < 0.1)
+                {
+                    argoFace = Images.ARGO_SMILE.getUrl();
+                }
+                else if (aFace < 0.2)
+                {
+                    argoFace = Images.ARGO_GRIN.getUrl();
+                }
+                else if (aFace < 0.4)
+                {
+                    argoFace = Images.ARGO_SMUG.getUrl();
+                }
+                else
+                {
+                    argoFace = Images.ARGO_FLOWERS.getUrl();
+                }
+                break;
+
+            default:
+                argoFace = Images.ARGO_SMILE.getUrl();
+                break;
+        }
     }
 
-    public List<Character> getCharacters()
+
+    /* USER DATA MODIFIERS ========================================================================================== */
+
+
+    private void giveHackingCrystals(Character c)
     {
-        return characters;
+        switch(Integer.parseInt(c.getRarity()))
+        {
+            case 2:
+                userHackingCrystals += 1;
+                break;
+            case 3:
+                userHackingCrystals += 2;
+                break;
+            case 4:
+                userHackingCrystals += 50;
+                break;
+            case 5:
+                userHackingCrystals += 100;
+                break;
+            default:
+                userHackingCrystals += 1;
+                break;
+        }
+        USER.setHackingCrystals(userHackingCrystals);
     }
 
-    private Character randGoldCharacter()
-    {
-        int randIndex = goldBanners.get(RNG.nextInt(goldBanners.size()));
-        Banner randBanner = BANNERS.get(randIndex - 1);
-        List<Character> randCharacters = randBanner.getCharacters();
 
-        return randCharacters.get(RNG.nextInt(randCharacters.size()));
+    /* MISC ========================================================================================================= */
+
+
+    private void deleteTempDirectory()
+    {
+        if (tempUserDirectory.exists())
+        {
+            String[] entries = tempUserDirectory.list();
+            for (String s : entries)
+            {
+                File currentFile = new File(tempUserDirectory.getPath(), s);
+                currentFile.delete();
+            }
+            tempUserDirectory.delete();
+        }
     }
 
     private int getRecordCrystals()
     {
         double d = RNG.nextDouble();
-        double recordCrystalRate = recordCrystalRates.get(0);
+        double recordCrystalRate = RECORD_CRYSTAL_RATES.get(0);
 
-        for (int i = 0 ; i < recordCrystalRates.size() ; i++)
+        for (int i = 0 ; i < RECORD_CRYSTAL_RATES.size() ; i++)
         {
-            recordCrystalRate += recordCrystalRates.get(i);
+            recordCrystalRate += RECORD_CRYSTAL_RATES.get(i);
             if (d < recordCrystalRate)
             {
                 return i;

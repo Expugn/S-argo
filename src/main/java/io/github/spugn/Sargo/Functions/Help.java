@@ -1,18 +1,13 @@
 package io.github.spugn.Sargo.Functions;
 
 import io.github.spugn.Sargo.Objects.Images;
-import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.util.EmbedBuilder;
 
 public class Help
 {
-    private static IChannel CHANNEL;
-
     public Help(IChannel channel)
     {
-        CHANNEL = channel;
-
         EmbedBuilder builder = new EmbedBuilder();
 
         builder.withAuthorName("Help Menu");
@@ -47,6 +42,6 @@ public class Help
         resetHelp += "'**reset**' - Reset your data file." + "\n";
         builder.appendField("DATA RESET", resetHelp, false);
 
-        CHANNEL.sendMessage(builder.build());
+        channel.sendMessage(builder.build());
     }
 }

@@ -1,12 +1,15 @@
 package io.github.spugn.Sargo.Objects;
 
+import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+
 public class GitHubImage
 {
     private String filePath;
-    private final String GITHUB_IMAGE = "https://raw.githubusercontent.com/Expugn/S-argo/master/";
+    private final String GITHUB_IMAGE;
 
     public GitHubImage(String filePath)
     {
+        GITHUB_IMAGE = new SettingsParser().getGitHubRepoURL();
         this.filePath = filePath;
     }
 
