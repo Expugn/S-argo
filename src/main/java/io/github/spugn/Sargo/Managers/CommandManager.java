@@ -1,14 +1,10 @@
 package io.github.spugn.Sargo.Managers;
 
 import io.github.spugn.Sargo.Functions.*;
-import io.github.spugn.Sargo.Objects.Text;
 import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.Utilities.CommandLine;
 import io.github.spugn.Sargo.Utilities.DiscordCommand;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
-//import io.github.spugn.sdevkit.Command.CommandLine;
-//import io.github.spugn.sdevkit.Discord.Discord4J.DiscordCommand;
-//import io.github.spugn.sdevkit.Discord.Discord4J.Message;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;

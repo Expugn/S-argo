@@ -15,7 +15,7 @@ import java.util.*;
 public class Profile
 {
     private static IChannel CHANNEL;
-    private static String DISCORD_ID;
+    private String DISCORD_ID;
 
     private EmbedBuilder builder;
     private IUser iUser;
