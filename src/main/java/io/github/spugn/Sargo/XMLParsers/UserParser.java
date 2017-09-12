@@ -11,8 +11,8 @@ import java.util.*;
 
 public class UserParser
 {
-    private static String FILE_PATH;
-    private static String USER_DIR_FILE_PATH;
+    private String FILE_PATH;
+    private String USER_DIR_FILE_PATH;
 
     /* DATA TAGS */
     static final String MEMORY_DIAMONDS = "memoryDiamonds";
