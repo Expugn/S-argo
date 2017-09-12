@@ -1,5 +1,6 @@
 package io.github.spugn.Sargo;
 
+import io.github.spugn.Sargo.GUI.GUI;
 import io.github.spugn.Sargo.Listeners.MessageListener;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import io.github.spugn.sdevkit.Discord.Discord4J.BuildBot;
@@ -12,6 +13,8 @@ public class Sargo
 
     public static void main(String[] args)
     {
+        GUI guiObj = new GUI();
+        
         SettingsParser settings = new SettingsParser();
 
         CLIENT = BuildBot.run(settings.getBotToken());
