@@ -29,9 +29,6 @@ public enum Text
     BANNER_INFO_FOOTER_1("Use 'scout "),
     BANNER_INFO_FOOTER_2(" [s | m | g]' to scout."),
 
-    /* WARNINGS */
-    SCOUT_NUMBER_FORMAT_EXCEPTION("**COMMAND ERROR**\nMake sure you're entering a number for the Banner ID."),
-
     /* END OF TEXT */
     ;
     private final String text;

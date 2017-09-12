@@ -23,11 +23,11 @@ public class MessageListener
     {
         try
         {
-            new CommandManager(client, event).run();
+            new CommandManager(client, event);
         }
         catch (RateLimitException e)
         {
-            event.getChannel().sendMessage(new WarningMessage("RATE LIMIT EXCEPTION", "Slow down with the messages!").get().build());
+            System.out.println("Rate Limit Exception.");
         }
         catch (DiscordException e)
         {
