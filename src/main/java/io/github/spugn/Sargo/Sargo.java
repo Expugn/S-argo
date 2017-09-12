@@ -14,7 +14,7 @@ public class Sargo
     public static void main(String[] args)
     {
         GUI guiObj = new GUI();
-        
+
         SettingsParser settings = new SettingsParser();
 
         CLIENT = BuildBot.run(settings.getBotToken());

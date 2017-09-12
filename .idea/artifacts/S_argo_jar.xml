@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="S-argo:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/S_argo_jar</output-path>
+    <root id="archive" name="S-argo.jar">
+      <element id="module-output" name="S-argo" />
+      <element id="extracted-dir" path="$USER_HOME$/workspace/S-devKit/target/sdevkit.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
