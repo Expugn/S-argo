@@ -10,7 +10,9 @@ import io.github.spugn.sdevkit.Discord.Discord4J.Message;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
+import sx.blah.discord.handle.obj.IUser;
 
 public class CommandManager
 {
@@ -47,7 +49,7 @@ public class CommandManager
             /* HELP | "@bot help" */
             if (commandLine.getCommand().equalsIgnoreCase("help"))
             {
-                new Help(CLIENT, CHANNEL);
+                new Help(CHANNEL);
             }
             /* SCOUT | "@bot scout <banner id> [single/multi] [g/guaranteed]" */
             else if (commandLine.getCommand().equalsIgnoreCase("scout"))
@@ -56,15 +58,15 @@ public class CommandManager
                 {
                     if (commandLine.getArgumentCount() >= 2)
                     {
-                        new Scout(CLIENT, CHANNEL, Integer.parseInt(commandLine.getArgument(1)), commandLine.getArgument(2), DISCORD_ID);
+                        new Scout(CHANNEL, Integer.parseInt(commandLine.getArgument(1)), commandLine.getArgument(2), DISCORD_ID);
                     }
                     else if (commandLine.getArgumentCount() >= 1)
                     {
-                        new BannerInfo(CLIENT, CHANNEL, Integer.parseInt(commandLine.getArgument(1)));
+                        new BannerInfo(CHANNEL, Integer.parseInt(commandLine.getArgument(1)));
                     }
                     else
                     {
-                        new BannerInfo(CLIENT, CHANNEL, "1");
+                        new BannerInfo(CHANNEL, "1");
                     }
                 }
                 catch (NumberFormatException e)
@@ -78,7 +80,7 @@ public class CommandManager
 
                             if (pChar == 'p' || pChar == 'P')
                             {
-                                new BannerInfo(CLIENT, CHANNEL, String.valueOf(pageNumber));
+                                new BannerInfo(CHANNEL, String.valueOf(pageNumber));
                             }
                             else
                             {
@@ -166,6 +168,56 @@ public class CommandManager
                     new Profile(CHANNEL, DISCORD_ID);
                 }
 
+            }
+            /* USER PROFILE | "@bot user [name/mention] "*/
+            else if (commandLine.getCommand().equalsIgnoreCase("user"))
+            {
+                if (commandLine.getArgumentCount() >= 1)
+                {
+                    IGuild guild = CHANNEL.getGuild();
+
+                    String userDiscordName = commandLine.getArgument(1);
+                    if (!(guild.getUsersByName(userDiscordName).isEmpty()))
+                    {
+                        /* THERE IS A USER WITH THE GIVEN NAME IN THE GUILD */
+                        /* GET THE FIRST USER AND BUILD PROFILE */
+                        IUser foundUser = guild.getUsersByName(userDiscordName).get(0);
+                        new Profile(CHANNEL, foundUser.getStringID());
+                    }
+                    else
+                    {
+                        try
+                        {
+                            /* TRY TO SEE IF IT IS A MENTION */
+                            String userDiscordID = commandLine.getArgument(1);
+                            userDiscordID = userDiscordID.replaceAll("<", "");
+                            userDiscordID = userDiscordID.replaceAll("@", "");
+                            userDiscordID = userDiscordID.replaceAll("!", "");
+                            userDiscordID = userDiscordID.replaceAll(">", "");
+
+                            if (guild.getUserByID(Long.parseLong(userDiscordID)) != null)
+                            {
+                                /* USER FOUND, BUILD PROFILE */
+                                IUser foundUser = guild.getUserByID(Long.parseLong(userDiscordID));
+                                new Profile(CHANNEL, foundUser.getStringID());
+                            }
+                            else
+                            {
+                                /* USER DOES NOT EXIST */
+                                CHANNEL.sendMessage(new WarningMessage("UNKNOWN USER", "Could not find that user.").get().build());
+                            }
+                        }
+                        catch (NumberFormatException e)
+                        {
+                            /* SECOND ARGUMENT IS NOT A DISCORD ID*/
+                            CHANNEL.sendMessage(new WarningMessage("UNKNOWN USER", "Could not find that user.").get().build());
+                        }
+                    }
+                }
+                else
+                {
+                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH ARGUMENTS", "Please review the help menu.").get().build());
+                }
             }
             /* RESET | "@bot reset [y]" */
             else if (commandLine.getCommand().equalsIgnoreCase("reset"))

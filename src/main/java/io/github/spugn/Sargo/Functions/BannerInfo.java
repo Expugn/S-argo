@@ -4,15 +4,12 @@ import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
-import io.github.spugn.sdevkit.Discord.Discord4J.Message;
-import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.*;
 
 public class BannerInfo
 {
-    private static IDiscordClient CLIENT;
     private static IChannel CHANNEL;
     private static List<Banner> BANNERS;
 
@@ -25,9 +22,8 @@ public class BannerInfo
 
     private int page;
 
-    public BannerInfo(IDiscordClient client, IChannel channel, String page)
+    public BannerInfo(IChannel channel, String page)
     {
-        CLIENT = client;
         CHANNEL = channel;
 
         /* READ Banners.xml */
@@ -43,9 +39,8 @@ public class BannerInfo
         listBanners();
     }
 
-    public BannerInfo(IDiscordClient client, IChannel channel, int bannerID)
+    public BannerInfo(IChannel channel, int bannerID)
     {
-        CLIENT = client;
         CHANNEL = channel;
         this.bannerID = bannerID - 1;
 

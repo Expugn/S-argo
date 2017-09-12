@@ -8,6 +8,7 @@ import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -31,10 +32,25 @@ public class Profile
         CHANNEL = channel;
         DISCORD_ID = discordID;
 
+        if (!(new File("data/Users/USER_" + discordID + ".xml").exists()))
+        {
+            /* USER FILE DOES NOT EXIST. */
+            builder = new EmbedBuilder();
+            IUser foundUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
+            builder.withAuthorName(foundUser.getName() + "#" + foundUser.getDiscriminator() + "'s Profile");
+            builder.withAuthorIcon(foundUser.getAvatarURL());
+            builder.withColor(255, 86, 91);
+            builder.withThumbnail(Images.PROFILE_ICON.getUrl());
+            builder.appendField("USER FILE DOES NOT EXIST", "There is no data for this user.", false);
+
+            CHANNEL.sendMessage(builder.build());
+            return;
+        }
+
         init();
         initBannerInfo();
 
-        DecimalFormat df = new DecimalFormat("#.00");
+        DecimalFormat df = new DecimalFormat("0.00");
 
         String basicInfo = "";
         basicInfo += "**Memory Diamonds**: " + user.getMemoryDiamonds() + "\n";
@@ -61,7 +77,7 @@ public class Profile
 
         builder.appendField("Characters", characterInfo, false);
 
-        String completionProgress = "";
+        String completionProgress;
         int totalOwned = userCopper + userSilver + userGold + userPlatinum;
         int totalCharacters = cCTotal + sCTotal + goldCount + platinumCount;
 

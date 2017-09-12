@@ -20,24 +20,17 @@ public enum Text
     BANNER_LIST_TITLE("Banner List"),
     BANNER_LIST_BANNER_COUNT(" banners available."),
     BANNER_LIST_BANNER_HEADER("- Banners - "),
-    BANNER_LIST_FOOTER("'scout [Banner ID]' for more banner info.  |  'scout p[page]' to view another page."),
+    BANNER_LIST_FOOTER("'scout [Banner ID]' for more banner info.  |  'scout p[Page]' to view another page."),
 
     /* BANNER INFO INTERFACE */
     BANNER_INFO_CHARACTER_COUNT(" characters available."),
     BANNER_INFO_CHARACTER_HEADER("- Characters -"),
     BANNER_INFO_RATES_HEADER("- Pull Rates -"),
     BANNER_INFO_FOOTER_1("Use 'scout "),
-    BANNER_INFO_FOOTER_2(" [single | multi]' to scout."),
+    BANNER_INFO_FOOTER_2(" [s | m | g]' to scout."),
 
     /* WARNINGS */
-    SCOUT_RATE_ERROR("SCOUT RATES DO NOT ADD UP TO 1.0.\nPLEASE CORRECT THIS ERROR IN YOUR **Settings.xml** FILE."),
-    SCOUT_IMAGE_GEN_ERROR("IO EXCEPTION\nCANNOT GENERATE SCOUT RESULT IMAGE."),
-    SCOUT_MISSING_RESULT_IMAGE_ERROR("UNABLE TO DISPLAY SCOUT RESULT.\nIMAGE NOT FOUND."),
-    SCOUT_UNKNOWN_TYPE("**UNKNOWN SCOUT TYPE.**\nUse '*scout [Banner ID] [**single** | **s** | **1** | **multi** | **m** | **11**]*'"),
-    SCOUT_UNKNOWN_BANNER("**UNKNOWN BANNER ID.**\nUse '*scout*'"),
-    SCOUT_NOT_ENOUGH_ARGUMENTS("**NOT ENOUGH ARGUMENTS**\nUse '*scout [Banner ID] [**single** | **s** | **1** | **multi** | **m** | **11**]*'"),
     SCOUT_NUMBER_FORMAT_EXCEPTION("**COMMAND ERROR**\nMake sure you're entering a number for the Banner ID."),
-    UNKNOWN_COMMAND("**UNKNOWN COMMAND.**\nUse '*help*'"),
 
     /* END OF TEXT */
     ;

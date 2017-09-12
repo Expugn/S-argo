@@ -5,8 +5,6 @@ import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
-import io.github.spugn.sdevkit.Discord.Discord4J.Message;
-import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.util.RateLimitException;
 
@@ -19,11 +17,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.SortedMap;
 
 public class Scout
 {
-    private static IDiscordClient CLIENT;
     private static IChannel CHANNEL;
     private static int BANNER_ID;
     private static String CHOICE;
@@ -75,9 +71,8 @@ public class Scout
     private int singleScoutPrice;
     private int multiScoutPrice;
 
-    public Scout(IDiscordClient client, IChannel channel, int bannerID, String choice, String discordID)
+    public Scout(IChannel channel, int bannerID, String choice, String discordID)
     {
-        CLIENT = client;
         CHANNEL = channel;
         BANNER_ID = bannerID - 1;
         CHOICE = choice;

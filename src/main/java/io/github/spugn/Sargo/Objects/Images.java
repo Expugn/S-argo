@@ -17,6 +17,7 @@ public enum Images
     MEMORY_DIAMOND_ICON("images/Miscellaneous/Memory_Diamond_Icon.png"),
     SHOP_ICON("images/Miscellaneous/Shop_Icon.png"),
     PROFILE_ICON("images/Miscellaneous/Profile_Icon.png"),
+    HELP_ICON("images/Miscellaneous/Help_Icon.png"),
 
     /* END OF IMAGES */
     ;
