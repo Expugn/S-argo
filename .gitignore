@@ -38,3 +38,6 @@ data/Settings.xml
 
 target/
 /src/main/java/io/github/spugn/Sargo/Functions/Debug.java
+/data/Users_old/
+data/Users_old/
+out/
