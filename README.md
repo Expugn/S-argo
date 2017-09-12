@@ -8,9 +8,9 @@ This Discord bot's main use is to be a "summon simulator" for the mobile game *S
 S'argo was not built to have self-hosting in mind, so support won't be given.
 
 To start the bot: insert your bot's token in data/Settings.xml under the **token** section.  
-You can then run the code to start the bot. There is no GUI or anything, so if you decide  
-to make an executable .jar file with this code, you'll have to terminate the java process in  
-task manager to stop the bot.
+You can then run the code to start the bot.
+
+There IS a basic GUI, but it only features one button and clicking that button kills the bot.
 
 ## Features
 S'argo features the scouting feature from *Sword Art Online: Memory Defrag*.
@@ -33,6 +33,9 @@ they receive to fully simulate the in-game experience.
 S'argo is called by mentioning your bot before the command.  
 Replace '@mention' with '@your_bot_name'.  
 
+- **HELP MENU**  
+'@mention **help**' - Get a command list.
+
 - **SCOUTING**  
 '@mention **scout**' - View the first page of all available banners.  
 '@mention **scout** p[Page Number]' - View a specific page in the banner list.  
@@ -44,6 +47,9 @@ Replace '@mention' with '@your_bot_name'.
 '@mention **profile** data' - View your Step or Record Crystal data.  
 '@mention **profile** info [Banner ID]' - View your obtained/missing characters in a banner.  
 '@mention **profile** search [Character Name]' - Search through your collection for that character name.
+
+- **USER SEARCH**  
+'@mention **user** [name/@name]' - Get a user's basic profile.
 
 - **USER RESET**  
 '@mention **reset**' - Reset your user file.  
