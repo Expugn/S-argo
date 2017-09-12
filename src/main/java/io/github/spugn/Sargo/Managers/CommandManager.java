@@ -48,6 +48,12 @@ public class CommandManager
 
         COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
 
+        if (SETTINGS.getIgnoredChannelNames().contains(CHANNEL.getName()))
+        {
+            System.out.println("Channel " + CHANNEL.getName() + " is ignored.");
+            return;
+        }
+
         try
         {
             if (COMMAND_LINE != null)

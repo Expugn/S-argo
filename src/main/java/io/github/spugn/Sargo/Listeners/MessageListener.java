@@ -35,7 +35,7 @@ public class MessageListener
         }
         catch (MissingPermissionsException e)
         {
-            event.getChannel().sendMessage(new WarningMessage("MISSING PERMISSIONS EXCEPTION", "Not enough permissions.").get().build());
+            System.out.println("Missing Permissions!");
         }
     }
 }

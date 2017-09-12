@@ -15,9 +15,14 @@
     <BotSettings>
         <Token>YOURTOKENHERE</Token>
         <UseMention>true</UseMention>
-        <CommandPrefix>-</CommandPrefix>
+        <CommandPrefix>$</CommandPrefix>
         <DeleteUserMessage>false</DeleteUserMessage>
     </BotSettings>
+
+    <IgnoredChannels>
+        <iChannel channelName="general"/>
+        <iChannel channelName="ignored-channel"/>
+    </IgnoredChannels>
 
     <!--> GACHAPON RATES <-->
     <BaseRates>

@@ -21,6 +21,9 @@ public class SettingsParser
     static final String COMMAND_PREFIX = "CommandPrefix";
     static final String DELETE_USER_MESSAGE = "DeleteUserMessage";
 
+    static final String IGNORED_CHANNEL = "iChannel";
+    static final String CHANNEL_NAME = "channelName";
+
     static final String BANNER_ID = "BannerID";
     static final String ID = "id";
 
@@ -45,6 +48,7 @@ public class SettingsParser
     private boolean errorInRates;
     private List<Integer> goldBanners;
     private List<Double> recordCrystalRates;
+    private List<String> ignoredChannelNames;
 
     public SettingsParser()
     {
@@ -106,6 +110,11 @@ public class SettingsParser
         return goldBanners;
     }
 
+    public List<String> getIgnoredChannelNames()
+    {
+        return ignoredChannelNames;
+    }
+
     private void readConfig()
     {
         try
@@ -117,6 +126,7 @@ public class SettingsParser
 
             goldBanners = new ArrayList<>();
             recordCrystalRates = new ArrayList<>();
+            ignoredChannelNames = new ArrayList<>();
 
             /* READ XML FILE */
             while (eventReader.hasNext())
@@ -202,6 +212,20 @@ public class SettingsParser
                             if (attribute.getName().toString().equals(ID))
                             {
                                 goldBanners.add(Integer.parseInt(attribute.getValue()));
+                            }
+                        }
+                    }
+
+                    /* GET AND SAVE IGNORED CHANNEL NAME*/
+                    if (event.asStartElement().getName().getLocalPart().equals(IGNORED_CHANNEL))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals(CHANNEL_NAME))
+                            {
+                                ignoredChannelNames.add(attribute.getValue());
                             }
                         }
                     }
