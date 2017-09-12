@@ -21,6 +21,9 @@ public class SettingsParser
     static final String COMMAND_PREFIX = "CommandPrefix";
     static final String DELETE_USER_MESSAGE = "DeleteUserMessage";
 
+    static final String BOT_OWNER_ID = "BotOwnerID";
+    static final String GITHUB_DATA_REPOSITORY = "GitHubDataRepository";
+
     static final String IGNORED_CHANNEL = "iChannel";
     static final String CHANNEL_NAME = "channelName";
 
@@ -49,6 +52,8 @@ public class SettingsParser
     private List<Integer> goldBanners;
     private List<Double> recordCrystalRates;
     private List<String> ignoredChannelNames;
+    private String botOwnerDiscordID;
+    private String gitHubRepoURL;
 
     public SettingsParser()
     {
@@ -115,6 +120,16 @@ public class SettingsParser
         return ignoredChannelNames;
     }
 
+    public String getGitHubRepoURL()
+    {
+        return gitHubRepoURL;
+    }
+
+    public String getBotOwnerDiscordID()
+    {
+        return botOwnerDiscordID;
+    }
+
     private void readConfig()
     {
         try
@@ -167,6 +182,22 @@ public class SettingsParser
                     {
                         event = eventReader.nextEvent();
                         deleteUserMessage = Boolean.parseBoolean(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE BOT OWNER ID */
+                    if (event.asStartElement().getName().getLocalPart().equals(BOT_OWNER_ID))
+                    {
+                        event = eventReader.nextEvent();
+                        botOwnerDiscordID = event.asCharacters().getData();
+                        continue;
+                    }
+
+                    /* GET AND SAVE GITHUB DATA REPOSITORY */
+                    if (event.asStartElement().getName().getLocalPart().equals(GITHUB_DATA_REPOSITORY))
+                    {
+                        event = eventReader.nextEvent();
+                        gitHubRepoURL = event.asCharacters().getData();
                         continue;
                     }
 

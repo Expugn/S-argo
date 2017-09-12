@@ -20,6 +20,7 @@ public class CommandManager
     private final IChannel CHANNEL;
     private final IMessage MESSAGE;
     private final String DISCORD_ID;
+    private final String BOT_OWNER_DISCORD_ID;
     private final SettingsParser SETTINGS;
     private final DiscordCommand DISCORD_COMMAND;
     private final CommandLine COMMAND_LINE;
@@ -31,6 +32,8 @@ public class CommandManager
         DISCORD_ID = MESSAGE.getAuthor().getStringID();
 
         SETTINGS = new SettingsParser();
+
+        BOT_OWNER_DISCORD_ID = SETTINGS.getBotOwnerDiscordID();
 
         DISCORD_COMMAND = new DiscordCommand(client);
         DISCORD_COMMAND.setUseMention(SETTINGS.isUseMention());
@@ -85,6 +88,10 @@ public class CommandManager
                 {
                     resetCommand();
                 }
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("update") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
+                {
+                    updateCommand();
+                }
                 else
                 {
                     CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Unknown command. Use 'help' for a list of commands.").get().build());
@@ -101,7 +108,7 @@ public class CommandManager
         }
         catch (MissingPermissionsException e)
         {
-            event.getChannel().sendMessage(new WarningMessage("MISSING PERMISSIONS EXCEPTION", "Not enough permissions.").get().build());
+            System.out.println("Not Enough Permissions.");
         }
     }
 
@@ -256,7 +263,7 @@ public class CommandManager
                 }
                 catch (NumberFormatException e)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("UNKNOWN USER", "Could not find that user.").get().build());
+                    CHANNEL.sendMessage(new WarningMessage("UNKNOWN USER", "Could not find that user. Does their name have a space? Try 'user @name' instead.").get().build());
                 }
             }
         }
@@ -279,6 +286,18 @@ public class CommandManager
         else
         {
             new Reset(CHANNEL);
+        }
+    }
+
+    private void updateCommand() throws RateLimitException, DiscordException, MissingPermissionsException
+    {
+        if (COMMAND_LINE.getArgumentCount() >= 2)
+        {
+            new Update(CHANNEL, COMMAND_LINE.getArgument(1), COMMAND_LINE.getArgument(2));
+        }
+        else if (COMMAND_LINE.getArgumentCount() >= 1)
+        {
+            new Update(CHANNEL, COMMAND_LINE.getArgument(1));
         }
     }
 

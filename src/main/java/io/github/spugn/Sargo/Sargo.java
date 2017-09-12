@@ -1,6 +1,5 @@
 package io.github.spugn.Sargo;
 
-import io.github.spugn.Sargo.GUI.GUI;
 import io.github.spugn.Sargo.Listeners.MessageListener;
 import io.github.spugn.Sargo.Listeners.ReadyListener;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
@@ -16,8 +15,6 @@ public class Sargo
 
     public static void main(String[] args)
     {
-        new GUI();
-
         SettingsParser settings = new SettingsParser();
 
         CLIENT = buildBot(settings.getBotToken());
@@ -25,6 +22,8 @@ public class Sargo
 
         dispatcher.registerListener(new ReadyListener(CLIENT));
         dispatcher.registerListener(new MessageListener(CLIENT));
+
+
     }
 
     @Nullable

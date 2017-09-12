@@ -1,5 +1,7 @@
 package io.github.spugn.Sargo.Objects;
 
+import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+
 /**
  * Since Discord4J doesn't allow reading images from source when it comes to EmbedMessages, I'll have to upload them.
  * Images used in this enum can be found under the images folder.
@@ -23,7 +25,7 @@ public enum Images
     ;
 
     private final String url;
-    private final String GITHUB_IMAGE = "https://raw.githubusercontent.com/Expugn/S-argo/master/";
+    private final String GITHUB_IMAGE = new SettingsParser().getGitHubRepoURL();
 
     Images (String url)
     {
