@@ -68,6 +68,7 @@ public class Scout
     private int userRecordCrystals;
     private int singleScoutPrice;
     private int multiScoutPrice;
+    private boolean initBannerInfo;
 
     public Scout(IChannel channel, int bannerID, String choice, String discordID) throws RateLimitException
     {
@@ -199,6 +200,27 @@ public class Scout
         bannerTypeData = USER.getBannerData(SELECTED_BANNER.getBannerName());
         goldCharacters = new ArrayList<>();
         platinumCharacters = new ArrayList<>();
+
+        if (USER.isBannerInfoExists(SELECTED_BANNER.getBannerName()) == -1)
+        {
+            int newBannerInfoValue;
+
+            if (bannerType == 1 || bannerType == 3)
+            {
+                newBannerInfoValue = 1;
+            }
+            else if (bannerType == 2)
+            {
+                newBannerInfoValue = 0;
+            }
+            else
+            {
+                newBannerInfoValue = 0;
+            }
+
+            USER.addBannerInfo(SELECTED_BANNER.getBannerName(), newBannerInfoValue);
+            bannerTypeData = newBannerInfoValue;
+        }
 
         for (Character character : BANNER_CHARACTERS)
         {
@@ -630,7 +652,6 @@ public class Scout
                     break;
             }
         }
-        System.out.println(character.toString());
         return character;
     }
 
