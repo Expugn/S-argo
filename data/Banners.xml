@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-->Test Comment<-->
 <banners>
     <Banner id = "1">
         <name>Start Dash</name>
@@ -384,14 +385,14 @@
         <Character prefix="Holy Sword" char="Heathcliff" rarity="4"/>
     </Banner>
 
-    <Banner id="32">
+    <Banner id="33">
         <name>5★ Upgrade Vote Scout</name>
-        <type>0</type>
+        <type>3</type>
 
         <!--> CHARACTER LIST <-->
-        <Character prefix="Hero's Return" char="Kirito" rarity="4"/>
-        <Character prefix="Heart of Confront" char="Asuna" rarity="4"/>
-        <Character prefix="Raindrops Girl" char="Rain" rarity="4"/>
-        <Character prefix="Golden Knight" char="Alice" rarity="4"/>
+        <Character prefix="5★ Hero's Return" char="Kirito" rarity="5"/>
+        <Character prefix="5★ Heart of Confront" char="Asuna" rarity="5"/>
+        <Character prefix="5★ Raindrops Girl" char="Rain" rarity="5"/>
+        <Character prefix="5★ Golden Knight" char="Alice" rarity="5"/>
     </Banner>
 </banners>
