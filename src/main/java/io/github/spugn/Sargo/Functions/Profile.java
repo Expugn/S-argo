@@ -205,7 +205,7 @@ public class Profile
                 /* TRY AND FIND CHARACTER IN USER BOX */
                 for (Character oC : user.getCharacterBox())
                 {
-                    if (c.getPrefix().equals(oC.getPrefix()) && c.getName().equals(oC.getName()))
+                    if (c.getPrefix().equals(oC.getPrefix()) && c.getName().equals(oC.getName()) && c.getRarity().equals(oC.getRarity()))
                     {
                         /* CHARACTER IS SAME */
                         characterFound = true;
@@ -317,22 +317,23 @@ public class Profile
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
         List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
-        List<String> allCharacterPrefixes = new ArrayList<>();
+        List<String> allGoldCharacterPrefixes = new ArrayList<>();
+        List<String> allPlatinumCharacterPrefixes = new ArrayList<>();
 
         for (Banner b : banners)
         {
             /* GET CHARACTERS */
             for (Character c : b.getCharacters())
             {
-                if (c.getRarity().equals("4") && !(allCharacterPrefixes.contains(c.getPrefix())))
+                if (c.getRarity().equals("4") && !(allGoldCharacterPrefixes.contains(c.getPrefix())))
                 {
                     goldCount++;
-                    allCharacterPrefixes.add(c.getPrefix());
+                    allGoldCharacterPrefixes.add(c.getPrefix());
                 }
-                else if (c.getRarity().equals("5") && !(allCharacterPrefixes.contains(c.getPrefix())))
+                else if (c.getRarity().equals("5") && !(allPlatinumCharacterPrefixes.contains(c.getPrefix())))
                 {
                     platinumCount++;
-                    allCharacterPrefixes.add(c.getPrefix());
+                    allPlatinumCharacterPrefixes.add(c.getPrefix());
                 }
             }
 

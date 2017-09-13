@@ -399,7 +399,9 @@ public class Scout
         {
             for (Character userCharacter : USER.getCharacterBox())
             {
-                if (userCharacter.getPrefix().equals(characters.get(0).getPrefix()))
+                if (userCharacter.getPrefix().equals(characters.get(0).getPrefix())
+                        && userCharacter.getRarity().equals(characters.get(0).getRarity())
+                        && userCharacter.getName().equals(characters.get(0).getName()))
                 {
                     giveHackingCrystals(characters.get(0));
                     try
@@ -440,7 +442,9 @@ public class Scout
             {
                 for (Character userCharacter : USER.getCharacterBox())
                 {
-                    if (userCharacter.getPrefix().equals(characters.get(i).getPrefix()) && userCharacter.getName().equals(characters.get(i).getName()))
+                    if (userCharacter.getPrefix().equals(characters.get(i).getPrefix())
+                            && userCharacter.getRarity().equals(characters.get(i).getRarity())
+                            && userCharacter.getName().equals(characters.get(i).getName()))
                     {
                         foundDuplicate = true;
                         giveHackingCrystals(characters.get(i));

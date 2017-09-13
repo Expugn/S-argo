@@ -386,13 +386,13 @@
     </Banner>
 
     <Banner id="33">
-        <name>5★ Upgrade Vote Scout</name>
+        <name>5 Star Upgrade Vote Scout</name>
         <type>3</type>
 
         <!--> CHARACTER LIST <-->
-        <Character prefix="5★ Hero's Return" char="Kirito" rarity="5"/>
-        <Character prefix="5★ Heart of Confront" char="Asuna" rarity="5"/>
-        <Character prefix="5★ Raindrops Girl" char="Rain" rarity="5"/>
-        <Character prefix="5★ Golden Knight" char="Alice" rarity="5"/>
+        <Character prefix="Hero's Return" char="Kirito" rarity="5"/>
+        <Character prefix="Heart of Confront" char="Asuna" rarity="5"/>
+        <Character prefix="Raindrops Girl" char="Rain" rarity="5"/>
+        <Character prefix="Golden Knight" char="Alice" rarity="5"/>
     </Banner>
 </banners>

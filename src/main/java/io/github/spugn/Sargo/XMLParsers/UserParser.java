@@ -382,6 +382,43 @@ public class UserParser
         StartElement sElement = eventFactory.createStartElement("", "", BANNER_DATA);
         eventWriter.add(sElement);
 
+        for (Banner b : banners)
+        {
+            /* BANNER IS NOT NORMAL */
+            if (!b.getBannerType().equals("0"))
+            {
+                /* WRITE ELEMENT NAME, BANNER NAME, AND BANNER DATA */
+                StringWriter bannerElement = new StringWriter();
+                XMLStreamWriter writer = outputFactory.createXMLStreamWriter(bannerElement);
+
+                writer.writeEmptyElement(BANNER);
+                writer.writeAttribute(B_NAME, b.getBannerName());
+
+                /* IS STEP UP UP OR STEP UP V2 */
+                if (b.getBannerType().equals("1") || b.getBannerType().equals("3"))
+                {
+                    writer.writeAttribute(B_DATA, DEFAULT_STEP);
+                }
+                /* IS RECORD CRYSTAL */
+                else if (b.getBannerType().equals("2"))
+                {
+                    writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL);
+                }
+
+                writer.writeEndDocument();
+                writer.flush();
+                writer.close();
+
+                /* START A NEW LINE AND TAB TWICE */
+                eventWriter.add(end);
+                eventWriter.add(tab);
+                eventWriter.add(tab);
+
+                /* WRITE BANNER DATA ELEMENT TO FILE */
+                eventWriter.add(eventFactory.createDTD(bannerElement.toString()));
+            }
+        }
+
         eventWriter.add(end);
         eventWriter.add(tab);
 

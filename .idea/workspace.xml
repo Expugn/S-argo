@@ -9,9 +9,8 @@
     <list default="true" id="a2796fab-1f53-406f-8e84-1d79324c2651" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/Banners.xml" afterPath="$PROJECT_DIR$/data/Banners.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/data/Settings_Fresh.xml" afterPath="$PROJECT_DIR$/data/Settings_Fresh.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Update.java" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Update.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java" afterPath="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -28,7 +27,7 @@
       <file leaf-file-name="CommandManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Managers/CommandManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
+            <state relative-caret-position="4216">
               <caret line="261" column="21" lean-forward="false" selection-start-line="261" selection-start-column="21" selection-end-line="261" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -44,7 +43,7 @@
       <file leaf-file-name="Update.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Update.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-17">
+            <state relative-caret-position="1428">
               <caret line="101" column="68" lean-forward="false" selection-start-line="101" selection-start-column="68" selection-end-line="101" selection-end-column="68" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -53,11 +52,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Settings_Fresh.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Settings_Fresh.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/Settings_Fresh.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="16" column="51" lean-forward="false" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+            <state relative-caret-position="629">
+              <caret line="37" column="35" lean-forward="false" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -66,8 +65,8 @@
       <file leaf-file-name="Settings.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data/Settings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="51" />
+            <state relative-caret-position="204">
+              <caret line="12" column="8" lean-forward="false" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -76,7 +75,7 @@
       <file leaf-file-name="Sargo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Sargo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
+            <state relative-caret-position="340">
               <caret line="27" column="56" lean-forward="false" selection-start-line="27" selection-start-column="56" selection-end-line="27" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -88,18 +87,28 @@
       <file leaf-file-name="Scout.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="207" column="51" lean-forward="true" selection-start-line="207" selection-start-column="51" selection-end-line="207" selection-end-column="51" />
+            <state relative-caret-position="7174">
+              <caret line="440" column="50" lean-forward="false" selection-start-line="440" selection-start-column="50" selection-end-line="440" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file leaf-file-name="Profile.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="37" column="0" lean-forward="true" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+            <state relative-caret-position="408">
+              <caret line="336" column="17" lean-forward="true" selection-start-line="336" selection-start-column="17" selection-end-line="336" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="USER_182259866201620482.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data/Users/USER_182259866201620482.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="24" column="29" lean-forward="false" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -108,39 +117,9 @@
       <file leaf-file-name="UserParser.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="382" column="34" lean-forward="false" selection-start-line="382" selection-start-column="34" selection-end-line="382" selection-end-column="34" />
-              <folding>
-                <element signature="e#3496#3497#0" expanded="true" />
-                <element signature="e#3545#3546#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/GUI/GUI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-184">
-              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state relative-caret-position="1717">
+              <caret line="144" column="20" lean-forward="false" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="20" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SettingsParser.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/SettingsParser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="95" column="5" lean-forward="false" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
-              <folding>
-                <element signature="e#2871#2872#0" expanded="true" />
-                <element signature="e#2913#2914#0" expanded="true" />
-                <element signature="e#2957#2958#0" expanded="true" />
-                <element signature="e#2993#2994#0" expanded="true" />
-                <element signature="e#3041#3042#0" expanded="true" />
-                <element signature="e#3081#3082#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -157,9 +136,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>re</find>
-      <find>test</find>
-      <find>disp</find>
       <find>bubble s</find>
       <find>/*</find>
       <find>Message</find>
@@ -187,6 +163,9 @@
       <find>heart</find>
       <find>golde</find>
       <find>@</find>
+      <find>addC</find>
+      <find>rarity</find>
+      <find>addCha</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -211,7 +190,6 @@
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/BannerListMenu.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Debug.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/Banner.java" />
-        <option value="$PROJECT_DIR$/data/Users/USER_182259866201620482.xml" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/WarningMessage.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/ScoutMenu.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Info.java" />
@@ -233,7 +211,6 @@
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Listeners/LoginListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Help.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/Text.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Listeners/MessageListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/SettingsParser.java" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/GitHubImage.java" />
@@ -245,12 +222,14 @@
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Managers/CommandManager.java" />
         <option value="$PROJECT_DIR$/data/Settings.xml" />
         <option value="$PROJECT_DIR$/data/Banners.xml" />
-        <option value="$PROJECT_DIR$/../S-argo_Data/data/Banners.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Update.java" />
         <option value="$PROJECT_DIR$/data/Settings_Fresh.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java" />
+        <option value="$PROJECT_DIR$/data/Users/USER_182259866201620482.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java" />
+        <option value="$PROJECT_DIR$/../S-argo_Data/data/Banners.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java" />
       </list>
     </option>
   </component>
@@ -261,11 +240,11 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="131" />
-    <option name="y" value="34" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="150" />
+    <option name="y" value="29" />
     <option name="width" value="1599" />
-    <option name="height" value="940" />
+    <option name="height" value="942" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -283,10 +262,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -337,12 +312,25 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Sargo" type="462c0819:PsiDirectoryNode" />
+              <item name="Functions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Sargo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Sargo" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Sargo" type="462c0819:PsiDirectoryNode" />
               <item name="XMLParsers" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -509,8 +497,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="131" y="34" width="1599" height="940" extended-state="0" />
-    <editor active="true" />
+    <frame x="150" y="29" width="1599" height="942" extended-state="1" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -520,12 +507,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30721393" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26799008" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2539482" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2539482" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -561,10 +548,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="850">
           <caret line="74" column="5" lean-forward="false" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
-          <folding>
-            <element signature="e#1410#1411#0" expanded="false" />
-            <element signature="e#1461#1462#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -572,16 +555,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="415">
           <caret line="72" column="17" lean-forward="true" selection-start-line="72" selection-start-column="17" selection-end-line="72" selection-end-column="17" />
-          <folding>
-            <element signature="e#2968#2969#0" expanded="false" />
-            <element signature="e#3002#3003#0" expanded="false" />
-            <element signature="e#3051#3052#0" expanded="false" />
-            <element signature="e#3091#3092#0" expanded="false" />
-            <element signature="e#3158#3159#0" expanded="false" />
-            <element signature="e#3212#3213#0" expanded="false" />
-            <element signature="e#3264#3265#0" expanded="false" />
-            <element signature="e#3304#3305#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -589,14 +562,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="455">
           <caret line="29" column="5" lean-forward="true" selection-start-line="29" selection-start-column="5" selection-end-line="29" selection-end-column="5" />
-          <folding>
-            <element signature="e#242#243#0" expanded="false" />
-            <element signature="e#286#287#0" expanded="false" />
-            <element signature="e#722#723#0" expanded="false" />
-            <element signature="e#756#757#0" expanded="false" />
-            <element signature="e#800#801#0" expanded="false" />
-            <element signature="e#832#833#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -604,7 +569,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
           <caret line="43" column="27" lean-forward="true" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -612,7 +576,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="782">
           <caret line="80" column="0" lean-forward="false" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -620,7 +583,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="27" column="85" lean-forward="false" selection-start-line="27" selection-start-column="85" selection-end-line="27" selection-end-column="85" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -628,12 +590,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="501">
           <caret line="65" column="45" lean-forward="true" selection-start-line="65" selection-start-column="45" selection-end-line="65" selection-end-column="45" />
-          <folding>
-            <element signature="e#954#955#0" expanded="false" />
-            <element signature="e#1014#1015#0" expanded="false" />
-            <element signature="e#1056#1057#0" expanded="false" />
-            <element signature="e#1109#1110#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -641,7 +597,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="12" lean-forward="false" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="33" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -658,11 +613,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="617">
@@ -671,14 +621,16 @@
           <second_editor />
         </state>
       </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Utilities/DiscordCommand.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1275">
           <caret line="93" column="31" lean-forward="true" selection-start-line="93" selection-start-column="31" selection-end-line="93" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -686,7 +638,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2346">
           <caret line="150" column="54" lean-forward="false" selection-start-line="150" selection-start-column="54" selection-end-line="150" selection-end-column="54" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -702,7 +653,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="427">
           <caret line="30" column="4" lean-forward="false" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -720,7 +670,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="9" column="5" lean-forward="false" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -752,7 +701,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="459">
           <caret line="37" column="55" lean-forward="false" selection-start-line="37" selection-start-column="55" selection-end-line="37" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -760,10 +708,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
-          <folding>
-            <element signature="e#889#890#0" expanded="false" />
-            <element signature="e#920#921#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -775,19 +719,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/downloaded_banners.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="47" lean-forward="false" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/data/downloaded_banners.xml" />
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/GitHubImage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="45" lean-forward="false" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -795,61 +731,19 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Sargo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="27" column="56" lean-forward="false" selection-start-line="27" selection-start-column="56" selection-end-line="27" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1966">
-          <caret line="216" column="36" lean-forward="true" selection-start-line="216" selection-start-column="36" selection-end-line="216" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Managers/CommandManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="261" column="21" lean-forward="false" selection-start-line="261" selection-start-column="21" selection-end-line="261" selection-end-column="21" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#shopCommand#0;class#CommandManager#0" expanded="false" />
-            <element signature="method#resetCommand#0;class#CommandManager#0" expanded="false" />
-            <element signature="method#updateCommand#0;class#CommandManager#0" expanded="false" />
-            <element signature="method#sayWarning#0;class#CommandManager#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/GUI/GUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-184">
+        <state relative-caret-position="323">
           <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../S-argo_Data/data/Banners.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="955">
-          <caret line="395" column="30" lean-forward="false" selection-start-line="395" selection-start-column="30" selection-end-line="395" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/SettingsParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
+        <state relative-caret-position="1071">
           <caret line="95" column="5" lean-forward="false" selection-start-line="95" selection-start-column="5" selection-end-line="95" selection-end-column="5" />
           <folding>
             <element signature="e#2871#2872#0" expanded="true" />
@@ -862,52 +756,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/Banners.xml">
+    <entry file="file://$PROJECT_DIR$/data/Settings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="379" column="0" lean-forward="true" selection-start-line="379" selection-start-column="0" selection-end-line="379" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data/Users/USER_182259866201620482.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="65" lean-forward="true" selection-start-line="11" selection-start-column="65" selection-end-line="11" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="382" column="34" lean-forward="false" selection-start-line="382" selection-start-column="34" selection-end-line="382" selection-end-column="34" />
-          <folding>
-            <element signature="e#3496#3497#0" expanded="true" />
-            <element signature="e#3545#3546#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="207" column="51" lean-forward="true" selection-start-line="207" selection-start-column="51" selection-end-line="207" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="37" column="0" lean-forward="true" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        <state relative-caret-position="204">
+          <caret line="12" column="8" lean-forward="false" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="51" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Update.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-17">
+        <state relative-caret-position="1428">
           <caret line="101" column="68" lean-forward="false" selection-start-line="101" selection-start-column="68" selection-end-line="101" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -915,18 +774,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/Settings.xml">
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Sargo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="51" />
-          <folding />
+        <state relative-caret-position="340">
+          <caret line="27" column="56" lean-forward="false" selection-start-line="27" selection-start-column="56" selection-end-line="27" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data/Settings_Fresh.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="16" column="51" lean-forward="false" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="51" />
+        <state relative-caret-position="629">
+          <caret line="37" column="35" lean-forward="false" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Managers/CommandManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4216">
+          <caret line="261" column="21" lean-forward="false" selection-start-line="261" selection-start-column="21" selection-end-line="261" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#shopCommand#0;class#CommandManager#0" expanded="false" />
+            <element signature="method#resetCommand#0;class#CommandManager#0" expanded="false" />
+            <element signature="method#updateCommand#0;class#CommandManager#0" expanded="false" />
+            <element signature="method#sayWarning#0;class#CommandManager#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/Users/USER_182259866201620482.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="29" lean-forward="false" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/XMLParsers/UserParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="144" column="20" lean-forward="false" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/Banners.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="379" column="0" lean-forward="true" selection-start-line="379" selection-start-column="0" selection-end-line="379" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../S-argo_Data/data/Banners.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5138">
+          <caret line="65" column="21" lean-forward="true" selection-start-line="65" selection-start-column="21" selection-end-line="65" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Scout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7174">
+          <caret line="440" column="50" lean-forward="false" selection-start-line="440" selection-start-column="50" selection-end-line="440" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Functions/Profile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="336" column="17" lean-forward="true" selection-start-line="336" selection-start-column="17" selection-end-line="336" selection-end-column="17" />
           <folding />
         </state>
       </provider>
