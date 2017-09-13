@@ -56,8 +56,14 @@ public class Update
 
     private void updateBanners()
     {
+        boolean dataFolderExists = new File("data").exists();
         try
         {
+            if (!dataFolderExists)
+            {
+                new File("data").mkdir();
+            }
+
             CHANNEL.sendMessage(new WarningMessage("UPDATING BANNERS", "Fetching [Banners.xml](" + gitHubDataRepository + "data/Banners.xml)").get().build());
             URL website = new URL(gitHubDataRepository + "data/Banners.xml");
             ReadableByteChannel rbc = Channels.newChannel(website.openStream());
@@ -85,10 +91,31 @@ public class Update
             List<Character> bannerCharacters = selectedBanner.getCharacters();
             String characterList = "";
 
+            boolean imageFolderExists = new File("images").exists();
+            boolean characterFolderExists = new File("images/Characters").exists();
+            boolean bannerFolderExists;
+
             try
             {
                 for (Character c : bannerCharacters)
                 {
+                    bannerFolderExists = new File("images/Characters/" + selectedBanner.getBannerName()).exists();
+
+                    if (!imageFolderExists)
+                    {
+                        new File("images").mkdir();
+                    }
+
+                    if (!characterFolderExists)
+                    {
+                        new File ("images/Characters").mkdir();
+                    }
+
+                    if (!bannerFolderExists)
+                    {
+                        new File("images/Characters/" + selectedBanner.getBannerName()).mkdir();
+                    }
+
                     String url = gitHubDataRepository + c.getImagePath();
                     url = url.replaceAll(" ", "%20");
                     url = url.replaceAll("★", "%E2%98%85");

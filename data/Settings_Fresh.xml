@@ -14,6 +14,7 @@
     <-->
     <BotSettings>
         <Token>YOURTOKENHERE</Token>
+        <BotOwnerID>182259866201620482</BotOwnerID>
         <UseMention>true</UseMention>
         <CommandPrefix>$</CommandPrefix>
         <DeleteUserMessage>false</DeleteUserMessage>
@@ -23,6 +24,8 @@
         <iChannel channelName="general"/>
         <iChannel channelName="ignored-channel"/>
     </IgnoredChannels>
+
+    <GitHubDataRepository>https://raw.githubusercontent.com/Expugn/S-argo_Data/master/</GitHubDataRepository>
 
     <!--> GACHAPON RATES <-->
     <BaseRates>
