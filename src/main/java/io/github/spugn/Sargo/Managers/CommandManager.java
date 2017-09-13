@@ -94,7 +94,7 @@ public class CommandManager
                 }
                 else
                 {
-                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Unknown command. Use 'help' for a list of commands.").get().build());
+                    CHANNEL.sendMessage(new WarningMessage("UNKNOWN COMMAND", "Use 'help' for a list of commands.").get().build());
                 }
             }
         }
@@ -150,15 +150,15 @@ public class CommandManager
                 }
                 catch (NumberFormatException f)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please provide a page number after 'p'.").get().build());
+                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
                 }
                 catch (NullPointerException f)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please provide a page number after 'p'.").get().build());
+                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
                 }
                 catch (StringIndexOutOfBoundsException f)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please provide a page number after 'p'.").get().build());
+                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
                 }
             }
             else

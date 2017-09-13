@@ -23,6 +23,7 @@ public class ScoutMenu
     private int mdRemain = 0;
     private int rcGet = 0;
     private boolean guaranteedScout = false;
+    private String characterString = "";
 
 
     public ScoutMenu()
@@ -60,6 +61,11 @@ public class ScoutMenu
         else
         {
             builder.withTitle("Single Pull");
+        }
+
+        if (!characterString.isEmpty())
+        {
+            builder.appendField("Scout Result", characterString, false);
         }
 
         builder.withDesc(argoText);
@@ -124,5 +130,10 @@ public class ScoutMenu
     public void setUserName(String userName)
     {
         this.userName = userName;
+    }
+
+    public void setCharacterString(String characterString)
+    {
+        this.characterString = characterString;
     }
 }

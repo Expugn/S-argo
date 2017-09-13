@@ -69,12 +69,16 @@ public class Scout
     private int singleScoutPrice;
     private int multiScoutPrice;
 
+    private boolean generateImage;
+    private String characterString;
+
     public Scout(IChannel channel, int bannerID, String choice, String discordID) throws RateLimitException
     {
         CHANNEL = channel;
         BANNER_ID = bannerID - 1;
         CHOICE = choice;
         DISCORD_ID = discordID;
+        generateImage = false;
 
         initFiles();
         initSettings();
@@ -90,7 +94,7 @@ public class Scout
 
         initBanner();
 
-        if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
+        if (CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("si"))
         {
             if (userMemoryDiamonds < singleScoutPrice)
             {
@@ -98,17 +102,27 @@ public class Scout
                 return;
             }
 
+            if (CHOICE.equalsIgnoreCase("si"))
+            {
+                generateImage = true;
+            }
+
             userMemoryDiamonds -= singleScoutPrice;
             USER.setMemoryDiamonds(userMemoryDiamonds);
 
             doSinglePull();
         }
-        else if (CHOICE.equalsIgnoreCase("multi") || CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("11"))
+        else if (CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("mi"))
         {
             if (userMemoryDiamonds < multiScoutPrice)
             {
                 CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.").get().build());
                 return;
+            }
+
+            if (CHOICE.equalsIgnoreCase("mi"))
+            {
+                generateImage = true;
             }
 
             userMemoryDiamonds -= multiScoutPrice;
@@ -117,12 +131,17 @@ public class Scout
             doMultiPull();
             updateBannerData();
         }
-        else if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
+        else if (CHOICE.equalsIgnoreCase("rc") || CHOICE.equalsIgnoreCase("rci"))
         {
             if (bannerType != 2)
             {
                 CHANNEL.sendMessage(new WarningMessage("NO RECORD CRYSTAL SCOUT", "This banner does not have a record crystal scout.").get().build());
                 return;
+            }
+
+            if (CHOICE.equalsIgnoreCase("rci"))
+            {
+                generateImage = true;
             }
 
             userRecordCrystals = USER.getBannerData(SELECTED_BANNER.getBannerName());
@@ -151,7 +170,11 @@ public class Scout
         try
         {
             display = CHANNEL.sendMessage(scoutMenu.get().build());
-            CHANNEL.sendFile(new File(tempUserDirectory + "/results.png"));
+
+            if (generateImage)
+            {
+                CHANNEL.sendFile(new File(tempUserDirectory + "/results.png"));
+            }
         }
         catch (FileNotFoundException e)
         {
@@ -304,6 +327,8 @@ public class Scout
 
         guaranteeOnePlatinum = false;
         guaranteedScout = false;
+
+        characterString = "";
     }
 
     private void initMemoryDiamonds()
@@ -408,20 +433,27 @@ public class Scout
                     giveHackingCrystals(characters.get(0));
                     try
                     {
-                        /* CHARACTER IMAGE */
-                        Image characterImage = ImageIO.read(new File(characters.get(0).getImagePath()));
-                        BufferedImage result = new BufferedImage(characterImage.getWidth(null), characterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                        Graphics g = result.getGraphics();
-                        g.drawImage(characterImage, 0, 0, null);
+                        if (!generateImage)
+                        {
+                            characterString += "~~" + characters.get(0).toString() + "~~" + "\n";
+                        }
+                        else
+                        {
+                            /* CHARACTER IMAGE */
+                            Image characterImage = ImageIO.read(new File(characters.get(0).getImagePath()));
+                            BufferedImage result = new BufferedImage(characterImage.getWidth(null), characterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                            Graphics g = result.getGraphics();
+                            g.drawImage(characterImage, 0, 0, null);
 
-                        /* SHADE CHARACTER IMAGE */
-                        BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
-                        g.drawImage(bi, 0, 0, null);
+                            /* SHADE CHARACTER IMAGE */
+                            BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
+                            g.drawImage(bi, 0, 0, null);
 
-                        /* SAVE */
-                        ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + 0 + ".png"));
-                        imageString = tempUserDirectory + "/temp_" + 0 + ".png";
-                        return;
+                            /* SAVE */
+                            ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + 0 + ".png"));
+                            imageString = tempUserDirectory + "/temp_" + 0 + ".png";
+                            return;
+                        }
                     }
                     catch (IOException e)
                     {
@@ -431,7 +463,16 @@ public class Scout
             }
         }
         USER.addCharacter(characters.get(0));
-        imageString = characters.get(0).getImagePath();
+
+        if (!generateImage)
+        {
+            characterString += "**" + characters.get(0).toString() + "**\n";
+        }
+        else
+        {
+            imageString = characters.get(0).getImagePath();
+        }
+
     }
 
     private void generateImageStrings()
@@ -453,19 +494,26 @@ public class Scout
 
                         try
                         {
-                            /* CHARACTER IMAGE */
-                            Image scout_background = ImageIO.read(new File(characters.get(i).getImagePath()));
-                            BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                            Graphics g = result.getGraphics();
-                            g.drawImage(scout_background, 0, 0, null);
+                            if (!generateImage)
+                            {
+                                characterString += "~~" + characters.get(i).toString() + "~~" + "\n";
+                            }
+                            else
+                            {
+                                /* CHARACTER IMAGE */
+                                Image scout_background = ImageIO.read(new File(characters.get(i).getImagePath()));
+                                BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                                Graphics g = result.getGraphics();
+                                g.drawImage(scout_background, 0, 0, null);
 
-                            /* SHADE CHARACTER IMAGE */
-                            BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
-                            g.drawImage(bi, 0, 0, null);
+                                /* SHADE CHARACTER IMAGE */
+                                BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
+                                g.drawImage(bi, 0, 0, null);
 
-                            /* SAVE */
-                            ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + i + ".png"));
-                            imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
+                                /* SAVE */
+                                ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + i + ".png"));
+                                imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
+                            }
                         }
                         catch (IOException e)
                         {
@@ -477,7 +525,16 @@ public class Scout
                 if (!foundDuplicate)
                 {
                     USER.addCharacter(characters.get(i));
-                    imageStrings[i] = characters.get(i).getImagePath();
+
+                    if (!generateImage)
+                    {
+                        characterString += "**" + characters.get(i).toString() + "**\n";
+                    }
+                    else
+                    {
+                        imageStrings[i] = characters.get(i).getImagePath();
+                    }
+
                 }
 
                 foundDuplicate = false;
@@ -485,13 +542,26 @@ public class Scout
             else
             {
                 USER.addCharacter(characters.get(i));
-                imageStrings[i] = characters.get(i).getImagePath();
+
+                if (!generateImage)
+                {
+                    characterString += "**" + characters.get(i).toString() + "**\n";
+                }
+                else
+                {
+                    imageStrings[i] = characters.get(i).getImagePath();
+                }
             }
         }
     }
 
     public void drawImage(String imageString)
     {
+        if (!generateImage)
+        {
+            return;
+        }
+
         try
         {
             int x;
@@ -519,6 +589,11 @@ public class Scout
 
     public void drawImage(String imageStrings[])
     {
+        if (!generateImage)
+        {
+            return;
+        }
+
         try
         {
             int x = 0;
@@ -687,11 +762,11 @@ public class Scout
         scoutMenu.setUserName(CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator());
 
         /* EDIT DEPENDING ON TYPE OF PULL */
-        if (CHOICE.equalsIgnoreCase("single") || CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("1"))
+        if (CHOICE.equalsIgnoreCase("s") || CHOICE.equalsIgnoreCase("si"))
         {
             scoutMenu.setPullType(Text.SINGLE_PULL.get());
         }
-        else if (CHOICE.equalsIgnoreCase("multi") || CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("11"))
+        else if (CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("mi"))
         {
             scoutMenu.setPullType(Text.MULTI_PULL.get());
             scoutMenu.setBannerType(SELECTED_BANNER.bannerTypeToString());
@@ -702,10 +777,15 @@ public class Scout
                 scoutMenu.setRcGet(rcGet);
             }
         }
-        else if (CHOICE.equalsIgnoreCase("g") || CHOICE.equalsIgnoreCase("guaranteed") || CHOICE.equalsIgnoreCase("rc"))
+        else if (CHOICE.equalsIgnoreCase("rc") || CHOICE.equalsIgnoreCase("rci"))
         {
             scoutMenu.setGuaranteedScout(true);
             scoutMenu.setTypeData(String.valueOf(userRecordCrystals));
+        }
+
+        if (!generateImage)
+        {
+            scoutMenu.setCharacterString(characterString);
         }
     }
 
