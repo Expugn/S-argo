@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 public class GUI extends JFrame
 {
-    private static final int WIDTH = 500;
+    private static final int WIDTH = 550;
     private static final int HEIGHT = 100;
     private JButton exitB;
     private JLabel botLabel;
@@ -50,7 +50,7 @@ public class GUI extends JFrame
 
         }
 
-        setTitle("S'argo - SAO:MD Summon Simulator Discord Bot");
+        setTitle("S'argo - SAO:MD Summon Simulator Discord Bot by S'pugn#2612");
         setSize(WIDTH, HEIGHT);
         setResizable(false);
         setVisible(true);

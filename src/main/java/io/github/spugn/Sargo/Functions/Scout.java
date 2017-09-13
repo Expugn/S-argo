@@ -140,6 +140,10 @@ public class Scout
 
             doSinglePull();
         }
+        else
+        {
+            return;
+        }
 
         buildScoutMenu();
 
