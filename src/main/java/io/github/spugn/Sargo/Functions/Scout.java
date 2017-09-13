@@ -68,7 +68,6 @@ public class Scout
     private int userRecordCrystals;
     private int singleScoutPrice;
     private int multiScoutPrice;
-    private boolean initBannerInfo;
 
     public Scout(IChannel channel, int bannerID, String choice, String discordID) throws RateLimitException
     {
@@ -157,12 +156,15 @@ public class Scout
         catch (FileNotFoundException e)
         {
             CHANNEL.sendMessage(new WarningMessage("IMAGE NOT FOUND", "Unable to display scout result.").get().build());
+            deleteTempDirectory();
+            return;
         }
         catch (RateLimitException e)
         {
             EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
             display.edit(rateLimited.build());
             deleteTempDirectory();
+            return;
         }
 
         USER.saveData();
