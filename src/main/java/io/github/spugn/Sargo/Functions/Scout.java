@@ -626,6 +626,7 @@ public class Scout
                     break;
             }
         }
+        System.out.println(character.toString());
         return character;
     }
 

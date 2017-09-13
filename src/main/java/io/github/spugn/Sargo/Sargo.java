@@ -22,8 +22,6 @@ public class Sargo
 
         dispatcher.registerListener(new ReadyListener(CLIENT));
         dispatcher.registerListener(new MessageListener(CLIENT));
-
-
     }
 
     @Nullable

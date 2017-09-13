@@ -383,4 +383,15 @@
         <Character prefix="True Heart" char="Yui" rarity="4"/>
         <Character prefix="Holy Sword" char="Heathcliff" rarity="4"/>
     </Banner>
+
+    <Banner id="32">
+        <name>5★ Upgrade Vote Scout</name>
+        <type>0</type>
+
+        <!--> CHARACTER LIST <-->
+        <Character prefix="Hero's Return" char="Kirito" rarity="4"/>
+        <Character prefix="Heart of Confront" char="Asuna" rarity="4"/>
+        <Character prefix="Raindrops Girl" char="Rain" rarity="4"/>
+        <Character prefix="Golden Knight" char="Alice" rarity="4"/>
+    </Banner>
 </banners>
