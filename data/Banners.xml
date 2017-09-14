@@ -385,6 +385,17 @@
     </Banner>
 
     <Banner id="33">
+        <name>Memory of Friendship and Passing of Time</name>
+        <type>3</type>
+
+        <!--> CHARACTER LIST <-->
+        <Character prefix="Heartful Water fairy" char="Asuna" rarity="5"/>
+        <Character prefix="Wish Granter" char="Yuuki" rarity="5"/>
+        <Character prefix="Ingenuous Guardian" char="Silica" rarity="5"/>
+        <Character prefix="Harmony Keeper" char="Lisbeth" rarity="5"/>
+    </Banner>
+
+    <Banner id="34">
         <name>5 Star Upgrade Vote Scout</name>
         <type>3</type>
 

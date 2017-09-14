@@ -23,6 +23,7 @@ public class SettingsParser
 
     static final String BOT_OWNER_ID = "BotOwnerID";
     static final String GITHUB_DATA_REPOSITORY = "GitHubDataRepository";
+    static final String DISABLE_IMAGES = "DisableImages";
 
     static final String IGNORED_CHANNEL = "iChannel";
     static final String CHANNEL_NAME = "channelName";
@@ -54,6 +55,7 @@ public class SettingsParser
     private List<String> ignoredChannelNames;
     private String botOwnerDiscordID;
     private String gitHubRepoURL;
+    private boolean isDisableImages;
 
     public SettingsParser()
     {
@@ -130,6 +132,11 @@ public class SettingsParser
         return botOwnerDiscordID;
     }
 
+    public boolean isDisableImages()
+    {
+        return isDisableImages;
+    }
+
     private void readConfig()
     {
         try
@@ -198,6 +205,14 @@ public class SettingsParser
                     {
                         event = eventReader.nextEvent();
                         gitHubRepoURL = event.asCharacters().getData();
+                        continue;
+                    }
+
+                    /* GET AND SAVE DISABLE IMAGES */
+                    if (event.asStartElement().getName().getLocalPart().equals(DISABLE_IMAGES))
+                    {
+                        event = eventReader.nextEvent();
+                        isDisableImages = Boolean.parseBoolean(event.asCharacters().getData());
                         continue;
                     }
 

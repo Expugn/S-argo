@@ -37,6 +37,7 @@ public class Scout
     private double GOLD;
     private double PLATINUM;
     private List<Integer> GOLD_BANNERS;
+    private boolean IMAGE_DISABLED;
 
     private Random RNG;
 
@@ -102,7 +103,7 @@ public class Scout
                 return;
             }
 
-            if (CHOICE.equalsIgnoreCase("si"))
+            if (CHOICE.equalsIgnoreCase("si") && !IMAGE_DISABLED)
             {
                 generateImage = true;
             }
@@ -120,7 +121,7 @@ public class Scout
                 return;
             }
 
-            if (CHOICE.equalsIgnoreCase("mi"))
+            if (CHOICE.equalsIgnoreCase("mi") && !IMAGE_DISABLED)
             {
                 generateImage = true;
             }
@@ -139,7 +140,7 @@ public class Scout
                 return;
             }
 
-            if (CHOICE.equalsIgnoreCase("rci"))
+            if (CHOICE.equalsIgnoreCase("rci") && !IMAGE_DISABLED)
             {
                 generateImage = true;
             }
@@ -171,7 +172,7 @@ public class Scout
         {
             display = CHANNEL.sendMessage(scoutMenu.get().build());
 
-            if (generateImage)
+            if (generateImage && !IMAGE_DISABLED)
             {
                 CHANNEL.sendFile(new File(tempUserDirectory + "/results.png"));
             }
@@ -215,6 +216,7 @@ public class Scout
         PLATINUM = (int) (SETTINGS.getFiveRates() * 100);
         RECORD_CRYSTAL_RATES = SETTINGS.getRecordCrystalRates();
         GOLD_BANNERS = SETTINGS.getGoldBanners();
+        IMAGE_DISABLED = SETTINGS.isDisableImages();
     }
 
     private void initBanner()
@@ -329,6 +331,8 @@ public class Scout
         guaranteedScout = false;
 
         characterString = "";
+
+        tempUserDirectory = new File("images/temp_" + DISCORD_ID);
     }
 
     private void initMemoryDiamonds()
@@ -343,8 +347,10 @@ public class Scout
 
     private void doSinglePull()
     {
-        tempUserDirectory = new File("images/temp_" + DISCORD_ID);
-        tempUserDirectory.mkdir();
+        if (generateImage && !IMAGE_DISABLED)
+        {
+            tempUserDirectory.mkdir();
+        }
 
         characters.add(getCharacter(scout()));
         highestRarity = Integer.parseInt(characters.get(0).getRarity());
@@ -355,8 +361,11 @@ public class Scout
 
     private void doMultiPull()
     {
-        tempUserDirectory = new File("images/temp_" + DISCORD_ID);
-        tempUserDirectory.mkdir();
+        if (generateImage && !IMAGE_DISABLED)
+        {
+            tempUserDirectory = new File("images/temp_" + DISCORD_ID);
+            tempUserDirectory.mkdir();
+        }
 
         for (int i = 0 ; i < 11 ; i++)
         {
@@ -433,27 +442,24 @@ public class Scout
                     giveHackingCrystals(characters.get(0));
                     try
                     {
-                        if (!generateImage)
-                        {
-                            characterString += "~~" + characters.get(0).toString() + "~~" + "\n";
-                        }
-                        else
-                        {
-                            /* CHARACTER IMAGE */
-                            Image characterImage = ImageIO.read(new File(characters.get(0).getImagePath()));
-                            BufferedImage result = new BufferedImage(characterImage.getWidth(null), characterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                            Graphics g = result.getGraphics();
-                            g.drawImage(characterImage, 0, 0, null);
+                        characterString += "~~" + characters.get(0).toString() + "~~" + "\n";
+                        /* CHARACTER IMAGE */
+                        Image characterImage = ImageIO.read(new File(characters.get(0).getImagePath()));
+                        BufferedImage result = new BufferedImage(characterImage.getWidth(null), characterImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                        Graphics g = result.getGraphics();
+                        g.drawImage(characterImage, 0, 0, null);
 
-                            /* SHADE CHARACTER IMAGE */
-                            BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
-                            g.drawImage(bi, 0, 0, null);
+                        /* SHADE CHARACTER IMAGE */
+                        BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
+                        g.drawImage(bi, 0, 0, null);
 
-                            /* SAVE */
+                        /* SAVE */
+                        if (generateImage && !IMAGE_DISABLED)
+                        {
                             ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + 0 + ".png"));
-                            imageString = tempUserDirectory + "/temp_" + 0 + ".png";
-                            return;
                         }
+                        imageString = tempUserDirectory + "/temp_" + 0 + ".png";
+                        return;
                     }
                     catch (IOException e)
                     {
@@ -463,16 +469,8 @@ public class Scout
             }
         }
         USER.addCharacter(characters.get(0));
-
-        if (!generateImage)
-        {
-            characterString += "**" + characters.get(0).toString() + "**\n";
-        }
-        else
-        {
-            imageString = characters.get(0).getImagePath();
-        }
-
+        characterString += "**" + characters.get(0).toString() + "**\n";
+        imageString = characters.get(0).getImagePath();
     }
 
     private void generateImageStrings()
@@ -494,26 +492,23 @@ public class Scout
 
                         try
                         {
-                            if (!generateImage)
-                            {
-                                characterString += "~~" + characters.get(i).toString() + "~~" + "\n";
-                            }
-                            else
-                            {
-                                /* CHARACTER IMAGE */
-                                Image scout_background = ImageIO.read(new File(characters.get(i).getImagePath()));
-                                BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-                                Graphics g = result.getGraphics();
-                                g.drawImage(scout_background, 0, 0, null);
+                            characterString += "~~" + characters.get(i).toString() + "~~" + "\n";
+                            /* CHARACTER IMAGE */
+                            Image scout_background = ImageIO.read(new File(characters.get(i).getImagePath()));
+                            BufferedImage result = new BufferedImage(scout_background.getWidth(null), scout_background.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                            Graphics g = result.getGraphics();
+                            g.drawImage(scout_background, 0, 0, null);
 
-                                /* SHADE CHARACTER IMAGE */
-                                BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
-                                g.drawImage(bi, 0, 0, null);
+                            /* SHADE CHARACTER IMAGE */
+                            BufferedImage bi = ImageIO.read(new File("images/Miscellaneous/Owned_Character_Shade.png"));
+                            g.drawImage(bi, 0, 0, null);
 
-                                /* SAVE */
+                            /* SAVE */
+                            if (generateImage && !IMAGE_DISABLED)
+                            {
                                 ImageIO.write(result, "png", new File(tempUserDirectory + "/temp_" + i + ".png"));
-                                imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
                             }
+                            imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
                         }
                         catch (IOException e)
                         {
@@ -525,16 +520,8 @@ public class Scout
                 if (!foundDuplicate)
                 {
                     USER.addCharacter(characters.get(i));
-
-                    if (!generateImage)
-                    {
-                        characterString += "**" + characters.get(i).toString() + "**\n";
-                    }
-                    else
-                    {
-                        imageStrings[i] = characters.get(i).getImagePath();
-                    }
-
+                    characterString += "**" + characters.get(i).toString() + "**\n";
+                    imageStrings[i] = characters.get(i).getImagePath();
                 }
 
                 foundDuplicate = false;
@@ -542,26 +529,14 @@ public class Scout
             else
             {
                 USER.addCharacter(characters.get(i));
-
-                if (!generateImage)
-                {
-                    characterString += "**" + characters.get(i).toString() + "**\n";
-                }
-                else
-                {
-                    imageStrings[i] = characters.get(i).getImagePath();
-                }
+                characterString += "**" + characters.get(i).toString() + "**\n";
+                imageStrings[i] = characters.get(i).getImagePath();
             }
         }
     }
 
     public void drawImage(String imageString)
     {
-        if (!generateImage)
-        {
-            return;
-        }
-
         try
         {
             int x;
@@ -579,21 +554,22 @@ public class Scout
             g.drawImage(bi, x, y, null);
 
             /* SAVE */
-            ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
+            if (generateImage && !IMAGE_DISABLED)
+            {
+                ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
+            }
         }
         catch (IOException e)
         {
-            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+            if (generateImage && !IMAGE_DISABLED)
+            {
+                CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+            }
         }
     }
 
     public void drawImage(String imageStrings[])
     {
-        if (!generateImage)
-        {
-            return;
-        }
-
         try
         {
             int x = 0;
@@ -621,11 +597,17 @@ public class Scout
             }
 
             /* SAVE */
-            ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
+            if (generateImage && !IMAGE_DISABLED)
+            {
+                ImageIO.write(result, "png", new File(tempUserDirectory + "/results.png"));
+            }
         }
         catch (IOException e)
         {
-            CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+            if (generateImage && !IMAGE_DISABLED)
+            {
+                CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+            }
         }
     }
 

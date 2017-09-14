@@ -10,7 +10,6 @@ import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.util.EmbedBuilder;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.MalformedURLException;
@@ -33,9 +32,13 @@ public class Update
         {
             updateBanners();
         }
+        else if (dataName.equalsIgnoreCase("settings"))
+        {
+            updateSettings();
+        }
         else
         {
-            channel.sendMessage(new WarningMessage("INCORRECT UPDATE TYPE", "Update Types: **banners**, **images**").get().build());
+            channel.sendMessage(new WarningMessage("INCORRECT UPDATE TYPE", "Update Types: **banners**, **settings**, **images system**, **images [Banner ID]**").get().build());
         }
     }
 
@@ -46,11 +49,21 @@ public class Update
 
         if (dataName.equalsIgnoreCase("images"))
         {
-            updateImages((Integer.parseInt(bannerID_String) - 1));
+            try
+            {
+                updateImages((Integer.parseInt(bannerID_String) - 1));
+            }
+            catch (NumberFormatException e)
+            {
+                if (bannerID_String.equalsIgnoreCase("system"))
+                {
+                    updateSystem();
+                }
+            }
         }
         else
         {
-            channel.sendMessage(new WarningMessage("INCORRECT UPDATE TYPE", "Update Types: **banners**, **images**").get().build());
+            channel.sendMessage(new WarningMessage("INCORRECT UPDATE TYPE", "Update Types: **banners**, **settings**, **images system**, **images [Banner ID]**").get().build());
         }
     }
 
@@ -72,11 +85,37 @@ public class Update
         }
         catch (MalformedURLException e)
         {
-            CHANNEL.sendMessage(new WarningMessage("Whoops.", "MalformedURLException").get().build());
+            CHANNEL.sendMessage(new WarningMessage("[MalformedURLException] Whoops. Something went wrong.", "Are you sure the Banners.xml you're trying to load are in the repository?").get().build());
         }
         catch (IOException e)
         {
-            CHANNEL.sendMessage(new WarningMessage("Whoops.", "IOException").get().build());
+            CHANNEL.sendMessage(new WarningMessage("[IOException] Whoops. Something went wrong.", "Are you sure the directory you're trying to save files to exists?").get().build());
+        }
+    }
+
+    private void updateSettings()
+    {
+        boolean dataFolderExists = new File("data").exists();
+        try
+        {
+            if (!dataFolderExists)
+            {
+                new File("data").mkdir();
+            }
+
+            CHANNEL.sendMessage(new WarningMessage("UPDATING SETTINGS", "Fetching [new_Settings.xml](" + gitHubDataRepository + "data/new_Settings.xml)").get().build());
+            URL website = new URL(gitHubDataRepository + "data/new_Settings.xml");
+            ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+            FileOutputStream fos = new FileOutputStream("data/new_Settings.xml");
+            fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        }
+        catch (MalformedURLException e)
+        {
+            CHANNEL.sendMessage(new WarningMessage("[MalformedURLException] Whoops. Something went wrong.", "Are you sure the new_Settings.xml you're trying to load are in the repository?").get().build());
+        }
+        catch (IOException e)
+        {
+            CHANNEL.sendMessage(new WarningMessage("[IOException] Whoops. Something went wrong.", "Are you sure the directory you're trying to save files to exists?").get().build());
         }
     }
 
@@ -89,7 +128,7 @@ public class Update
         {
             Banner selectedBanner = banners.get(bannerID);
             List<Character> bannerCharacters = selectedBanner.getCharacters();
-            String characterList = "";
+            EmbedBuilder builder = new EmbedBuilder();
 
             boolean imageFolderExists = new File("images").exists();
             boolean characterFolderExists = new File("images/Characters").exists();
@@ -126,29 +165,98 @@ public class Update
                     File file = new File(c.getImagePath());
                     ImageIO.write(image, "png", file);
 
-                    characterList += "[" + c.toString() + "](" + url + ")\n";
+                    builder.appendField(c.toString(), "[Image Link](" + url + ")", false);
                 }
             }
             catch (MalformedURLException e)
             {
-                CHANNEL.sendMessage(new WarningMessage("Whoops.", "MalformedURLException").get().build());
+                CHANNEL.sendMessage(new WarningMessage("[MalformedURLException] Whoops. Something went wrong.", "Are you sure the images you're trying to load are in the repository?").get().build());
                 return;
             }
             catch (IOException e)
             {
-                CHANNEL.sendMessage(new WarningMessage("Whoops.", "IOException").get().build());
+                CHANNEL.sendMessage(new WarningMessage("[IOException] Whoops. Something went wrong.", "Are you sure the directory you're trying to save files to exists?").get().build());
                 return;
             }
 
-            EmbedBuilder builder = new EmbedBuilder();
             builder.withAuthorName("Updated the following images:");
-            builder.appendField(selectedBanner.getBannerName(), characterList, false);
-
             CHANNEL.sendMessage(builder.build());
         }
         else
         {
             CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
+        }
+    }
+
+    private void updateSystem()
+    {
+        boolean imageFolderExists = new File("images").exists();
+        boolean scoutBGFolderExists = new File("images/Scout Backgrounds").exists();
+        boolean miscFolderExists = new File("images/Miscellaneous").exists();
+
+        if (!imageFolderExists)
+        {
+            new File("images").mkdir();
+        }
+
+        if (!scoutBGFolderExists)
+        {
+            new File("images/Scout Backgrounds").mkdir();
+        }
+
+        if (!miscFolderExists)
+        {
+            new File("images/Miscellaneous").mkdir();
+        }
+
+        try
+        {
+            URL website;
+            File file;
+            BufferedImage image;
+
+            String fp_OCS = "images/Miscellaneous/Owned_Character_Shade.png";
+            String fp_SB_S = "images/Scout Backgrounds/Single.png";
+            String fp_SB_M = "images/Scout Backgrounds/Multi.png";
+
+            /* Owned_Character_Shade.png */
+            website = new URL(gitHubDataRepository + fp_OCS);
+            image = ImageIO.read(website);
+            file = new File(fp_OCS);
+            ImageIO.write(image, "png", file);
+
+            /* Single.png */
+            website = new URL(gitHubDataRepository + fp_SB_S.replaceAll(" ", "%20"));
+            image = ImageIO.read(website);
+            file = new File(fp_SB_S);
+            ImageIO.write(image, "png", file);
+
+            /* Multi.png */
+            website = new URL(gitHubDataRepository + fp_SB_M.replaceAll(" ", "%20"));
+            image = ImageIO.read(website);
+            file = new File(fp_SB_M);
+            ImageIO.write(image, "png", file);
+
+            String filesList = "";
+            filesList += "[Owned_Character_Shade.png](" + gitHubDataRepository + fp_OCS + ")\n";
+            filesList += "[Single.png](" + (gitHubDataRepository + fp_SB_S).replaceAll(" ", "%20") + ")\n";
+            filesList += "[Multi.png](" + (gitHubDataRepository + fp_SB_M).replaceAll(" ", "%20") + ")\n";
+
+            EmbedBuilder builder = new EmbedBuilder();
+            builder.withAuthorName("Updated the following files:");
+            builder.appendField("Files", filesList, false);
+
+            CHANNEL.sendMessage(builder.build());
+        }
+        catch (MalformedURLException e)
+        {
+            CHANNEL.sendMessage(new WarningMessage("Whoops.", "MalformedURLException").get().build());
+            return;
+        }
+        catch (IOException e)
+        {
+            CHANNEL.sendMessage(new WarningMessage("Whoops.", "IOException").get().build());
+            return;
         }
     }
 }

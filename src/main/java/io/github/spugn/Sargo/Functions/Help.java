@@ -19,7 +19,8 @@ public class Help
         scoutingHelp += "'**scout** [Banner ID]' - View a banner's information." + "\n";
         scoutingHelp += "'**scout** [Banner ID] [s/si]' - Perform a single scout." + "\n";
         scoutingHelp += "'**scout** [Banner ID] [m/mi]' - Perform a multi scout." + "\n";
-        scoutingHelp += "'**scout** [Banner ID] [rc/rci]' - Perform a record crystal scout.";
+        scoutingHelp += "'**scout** [Banner ID] [rc/rci]' - Perform a record crystal scout." + "\n\n";
+        scoutingHelp += "**Adding an 'i' after 's/m/rc' will generate an image result.**" + "\n";
         builder.appendField("SCOUT", scoutingHelp, false);
 
         String shopHelp = "";

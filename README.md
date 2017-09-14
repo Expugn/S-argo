@@ -34,25 +34,62 @@ S'argo is called by mentioning your bot before the command.
 Replace '@mention' with '@your_bot_name'.  
 
 - **HELP MENU**  
-'@mention **help**' - Get a command list.
+'**help**' - Get a command list.
 
 - **SCOUTING**  
-'@mention **scout**' - View the first page of all available banners.  
-'@mention **scout** p[Page Number]' - View a specific page in the banner list.  
-'@mention **scout** [Banner ID]' - View banner information.  
-'@mention **scout** [Banner ID] [s(ingle) | m(ulti) | g(uaranteed)]' - Scout a banner.
+'**scout**' - View the first page of all available banners.  
+'**scout** p[Page Number]' - View a specific page in the banner list.  
+'**scout** [Banner ID]' - View banner information.  
+'**scout** [Banner ID] [s(ingle)(i) | m(ulti)(i) | rc(uaranteed)(i)]' - Scout a banner.  
+**Adding an "i" after s/m/g will display an image result.**
 
 - **USER PROFILE**  
-'@mention **profile**' - View your information and character collection progress.  
-'@mention **profile** data' - View your Step or Record Crystal data.  
-'@mention **profile** info [Banner ID]' - View your obtained/missing characters in a banner.  
-'@mention **profile** search [Character Name]' - Search through your collection for that character name.
+'**profile**' - View your information and character collection progress.  
+'**profile** data' - View your Step or Record Crystal data.  
+'**profile** info [Banner ID]' - View your obtained/missing characters in a banner.  
+'**profile** search [Character Name]' - Search through your collection for that character name.
 
 - **USER SEARCH**  
-'@mention **user** [name/@name]' - Get a user's basic profile.
+'**user** [name/@name]' - Get a user's basic profile.
 
 - **USER RESET**  
-'@mention **reset**' - Reset your user file.  
+'**reset**' - Reset your user file.  
+
+## Startup Guide
+If you're just starting, grab the S-argo_Startup_Kit.zip in releases.  
+1) Open the Settings.xml file located in the data folder.
+2) Place your Discord ID and Bot Token in the appropriate location.
+3) Modify the other settings as you please.
+3) Run the .jar file; a GUI should appear and it should show your Bot's name and discriminator.
+4) In any non-ignored channel, type '**update banners**', this should grab the Banners.xml file from the GitHub repository under Settings.xml.
+6) Scouting is now available, but if you try to generate an image, gold/platinum character images will be placeholders if you didn't grab the Character_Images.zip file.
+7) You can also download character images by running '**update images [Banner ID]**' in any non-ignored channel.
+8) Once all the character images for each banner are saved in their appropriate location, the bot is now ready for use.
+
+## Updating Guide
+### S'argo (.jar File)
+Grab the latest release of S'argo. After stopping your bot, you can delete your old .jar file and replace it 
+with the new latest release .jar file. Make sure to check for any Settings.xml changes and update your Settings.xml
+file if there are any.
+
+### Banners.xml
+When the bot is running, you can use '**update banners**' to grab the latest Banner.xml file from the GitHub Data
+Repository linked in Settings.xml.  
+If you wish to update manually, fill out the banner details in a similar format to the other banners.
+
+### Character Images
+When the bot is running, you can use '**update images [Banner ID]**' to grab the images for that banner. Make sure
+you've updated to the latest banner file first before doing so.  
+If you wish to update manually, make a new folder with the banner name under images/Characters/ and put your
+image files inside.
+
+### Settings.xml
+You can grab the latest version of the Settings.xml file by using '**update settings**' when the bot is running.
+This will save a file named "new_Settings.xml" in your data folder from the GitHub Data Repository.  
+You can modify the settings in there as you please, and then delete your old Settings.xml file and rename the new Settings.xml file to "Settings.xml".
+
+## Related Links
+[S'argo Official Data Repository](https://github.com/Expugn/S-argo_Data "Official Data Repository")
 
 ## Other Stuff
 This is a non-profit fan project with the purpose of practice and entertainment.
