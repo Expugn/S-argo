@@ -27,6 +27,7 @@ public class SettingsParser
 
     static final String IGNORED_CHANNEL = "iChannel";
     static final String CHANNEL_NAME = "channelName";
+    static final String NO_GUI = "NoGUI";
 
     static final String BANNER_ID = "BannerID";
     static final String ID = "id";
@@ -56,6 +57,7 @@ public class SettingsParser
     private String botOwnerDiscordID;
     private String gitHubRepoURL;
     private boolean isDisableImages;
+    private boolean isNoGUI;
 
     public SettingsParser()
     {
@@ -137,6 +139,11 @@ public class SettingsParser
         return isDisableImages;
     }
 
+    public boolean isNoGUI()
+    {
+        return isNoGUI;
+    }
+
     private void readConfig()
     {
         try
@@ -213,6 +220,14 @@ public class SettingsParser
                     {
                         event = eventReader.nextEvent();
                         isDisableImages = Boolean.parseBoolean(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE NO GUI */
+                    if (event.asStartElement().getName().getLocalPart().equals(NO_GUI))
+                    {
+                        event = eventReader.nextEvent();
+                        isNoGUI = Boolean.parseBoolean(event.asCharacters().getData());
                         continue;
                     }
 

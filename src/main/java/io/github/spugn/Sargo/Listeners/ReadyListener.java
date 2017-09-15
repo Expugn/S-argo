@@ -18,9 +18,13 @@ public class ReadyListener
     @EventSubscriber
     public void onReadyEvent(ReadyEvent event)
     {
-        new GUI(CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
-
         SettingsParser settings = new SettingsParser();
+
+        if (!settings.isNoGUI())
+        {
+            new GUI(CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
+        }
+
         if (settings.isUseMention())
         {
             CLIENT.changePlayingText("S'argo | @" + CLIENT.getOurUser().getName() + " help");

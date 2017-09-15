@@ -51,12 +51,6 @@ public class CommandManager
 
         COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
 
-        if (SETTINGS.getIgnoredChannelNames().contains(CHANNEL.getName()))
-        {
-            System.out.println("Channel " + CHANNEL.getName() + " is ignored.");
-            return;
-        }
-
         try
         {
             if (COMMAND_LINE != null)
@@ -91,6 +85,11 @@ public class CommandManager
                 else if (COMMAND_LINE.getCommand().equalsIgnoreCase("update") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
                 {
                     updateCommand();
+                }
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("stop") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
+                {
+                    CHANNEL.sendMessage(new WarningMessage("SHUTTING DOWN", "Goodbye!").get().build());
+                    System.exit(0);
                 }
                 else
                 {

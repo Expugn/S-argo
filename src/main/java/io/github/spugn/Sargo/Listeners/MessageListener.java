@@ -2,6 +2,7 @@ package io.github.spugn.Sargo.Listeners;
 
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.WarningMessage;
+import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -23,7 +24,12 @@ public class MessageListener
     {
         try
         {
-            new CommandManager(client, event);
+            SettingsParser settings = new SettingsParser();
+            if (!(settings.getIgnoredChannelNames().contains(event.getChannel().getName())))
+            {
+                new CommandManager(client, event);
+            }
+
         }
         catch (RateLimitException e)
         {
