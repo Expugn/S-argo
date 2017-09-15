@@ -65,7 +65,7 @@ public class ScoutMenu
 
         if (!characterString.isEmpty())
         {
-            builder.appendField("Scout Result", characterString, false);
+            builder.appendField("- Scout Result -", characterString, false);
         }
 
         builder.withDesc(argoText);
