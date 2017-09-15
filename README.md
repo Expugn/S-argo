@@ -40,7 +40,7 @@ Replace '@mention' with '@your_bot_name'.
 '**scout**' - View the first page of all available banners.  
 '**scout** p[Page Number]' - View a specific page in the banner list.  
 '**scout** [Banner ID]' - View banner information.  
-'**scout** [Banner ID] [s(ingle)(i) | m(ulti)(i) | rc(uaranteed)(i)]' - Scout a banner.  
+'**scout** [Banner ID] [s(ingle)(i) | m(ulti)(i) | rc(record crystal)(i)]' - Scout a banner.  
 **Adding an "i" after s/m/g will display an image result.**
 
 - **USER PROFILE**  
@@ -99,3 +99,5 @@ All characters and assets belong to their respective owners.
 
 If you enjoy using this bot, please support the francise by trying out the actual game.  
 *Sword Art Online: Memory Defrag* is available in the Apple iOS App Store and Google Play Store.
+
+Project began on September 6, 2017.
