@@ -171,7 +171,33 @@ public class CommandManager
     {
         if (COMMAND_LINE.getArgumentCount() >= 1)
         {
-            new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1));
+            if (COMMAND_LINE.getArgumentCount() >= 2)
+            {
+                try
+                {
+                    int quantity = Integer.parseInt(COMMAND_LINE.getArgument(2));
+
+                    if (quantity < 0)
+                    {
+                        quantity = 1;
+                    }
+                    else if (quantity > 10)
+                    {
+                        quantity = 10;
+                    }
+
+                    new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), quantity);
+                }
+                catch (NumberFormatException e)
+                {
+                    new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1);
+                }
+            }
+            else
+            {
+                new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1);
+            }
+
         }
         else
         {

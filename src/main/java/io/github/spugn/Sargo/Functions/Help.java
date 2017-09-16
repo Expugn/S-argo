@@ -25,7 +25,7 @@ public class Help
 
         String shopHelp = "";
         shopHelp += "'**shop**' - View the shop." + "\n";
-        shopHelp += "'**shop** [Item ID]' - \"Buy\" a Memory Diamond bundle." + "\n";
+        shopHelp += "'**shop** [Item ID] [Quantity]' - \"Buy\" a Memory Diamond bundle(s)." + "\n";
         builder.appendField("SHOP", shopHelp, false);
 
         String profileHelp = "";

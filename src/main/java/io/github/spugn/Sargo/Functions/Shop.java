@@ -4,6 +4,7 @@ import io.github.spugn.Sargo.Objects.Images;
 import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 
@@ -25,72 +26,99 @@ public class Shop
         builder.appendField("6) Memory Diamond F [$44.99]", "Get 360 Memory Diamonds", false);
         builder.appendField("7) Memory Diamond G [$79.99]", "Get 700 Memory Diamonds", false);
 
-        builder.withFooterText("To buy Memory Diamonds use 'shop [Item ID]'");
+        builder.withFooterText("To buy Memory Diamonds use 'shop [Item ID] [Quantity]'");
 
         channel.sendMessage(builder.build());
     }
 
-    public Shop(IChannel channel, String discordID, String item)
+    public Shop(IChannel channel, String discordID, String item, int quantity)
     {
-        UserParser user = new UserParser(discordID);
-        IUser iUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
+        try
+        {
+            UserParser user = new UserParser(discordID);
+            IUser iUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
 
-        String userName = iUser.getName() + "#" + iUser.getDiscriminator();
-        int userMemoryDiamonds = user.getMemoryDiamonds();
-        double userMoneySpent = user.getMoneySpent();
+            String userName = iUser.getName() + "#" + iUser.getDiscriminator();
+            long userMemoryDiamonds = user.getMemoryDiamonds();
+            double userMoneySpent = user.getMoneySpent();
 
-        if (item.equals("1") || item.equalsIgnoreCase("A"))
-        {
-            userMemoryDiamonds += 5;
-            userMoneySpent += 0.99;
-        }
-        else if (item.equals("2") || item.equalsIgnoreCase("B"))
-        {
-            userMemoryDiamonds += 25;
-            userMoneySpent += 4.99;
-        }
-        else if (item.equals("3") || item.equalsIgnoreCase("C"))
-        {
-            userMemoryDiamonds += 50;
-            userMoneySpent += 7.99;
-        }
-        else if (item.equals("4") || item.equalsIgnoreCase("D"))
-        {
-            userMemoryDiamonds += 125;
-            userMoneySpent += 17.99;
-        }
-        else if (item.equals("5") || item.equalsIgnoreCase("E"))
-        {
-            userMemoryDiamonds += 250;
-            userMoneySpent += 33.99;
-        }
-        else if (item.equals("6") || item.equalsIgnoreCase("F"))
-        {
-            userMemoryDiamonds += 360;
-            userMoneySpent += 44.99;
-        }
-        else if (item.equals("7") || item.equalsIgnoreCase("G"))
-        {
-            userMemoryDiamonds += 700;
-            userMoneySpent += 79.99;
-        }
-        else
-        {
-            channel.sendMessage(new WarningMessage("UNKNOWN ITEM", "Use 'shop' to review available Memory Diamond bundles.").get().build());
-            return;
-        }
+            if (item.equals("1") || item.equalsIgnoreCase("A"))
+            {
+                userMemoryDiamonds += 5 * quantity;
+                userMoneySpent += 0.99 * quantity;
+            }
+            else if (item.equals("2") || item.equalsIgnoreCase("B"))
+            {
+                userMemoryDiamonds += 25 * quantity;
+                userMoneySpent += 4.99 * quantity;
+            }
+            else if (item.equals("3") || item.equalsIgnoreCase("C"))
+            {
+                userMemoryDiamonds += 50 * quantity;
+                userMoneySpent += 7.99 * quantity;
+            }
+            else if (item.equals("4") || item.equalsIgnoreCase("D"))
+            {
+                userMemoryDiamonds += 125 * quantity;
+                userMoneySpent += 17.99 * quantity;
+            }
+            else if (item.equals("5") || item.equalsIgnoreCase("E"))
+            {
+                userMemoryDiamonds += 250 * quantity;
+                userMoneySpent += 33.99 * quantity;
+            }
+            else if (item.equals("6") || item.equalsIgnoreCase("F"))
+            {
+                userMemoryDiamonds += 360 * quantity;
+                userMoneySpent += 44.99 * quantity;
+            }
+            else if (item.equals("7") || item.equalsIgnoreCase("G"))
+            {
+                userMemoryDiamonds += 700 * quantity;
+                userMoneySpent += 79.99 * quantity;
+            }
+            else
+            {
+                channel.sendMessage(new WarningMessage("UNKNOWN ITEM", "Use 'shop' to review available Memory Diamond bundles.").get().build());
+                return;
+            }
 
-        EmbedBuilder builder = new EmbedBuilder();
+            EmbedBuilder builder = new EmbedBuilder();
 
-        builder.withColor(209, 204, 210);
-        builder.withAuthorName("You're all set.");
-        builder.withDescription("Your purchase was successful.");
-        builder.withFooterText(userName + " | Balance: " + userMemoryDiamonds + " Memory Diamonds");
 
-        user.setMemoryDiamonds(userMemoryDiamonds);
-        user.setMoneySpent(userMoneySpent);
-        user.saveData();
 
-        channel.sendMessage(builder.build());
+            if (userMemoryDiamonds > Integer.MAX_VALUE)
+            {
+                builder.withColor(255, 0, 0);
+                builder.withAuthorName("TOO MANY MEMORY DIAMONDS");
+                builder.withDescription("Yikes, looks like you can't hold that many memory diamonds.");
+
+            }
+            else if (userMoneySpent > Double.MAX_VALUE)
+            {
+                builder.withColor(255, 0, 0);
+                builder.withAuthorName("TOO MUCH MONEY SPENT");
+                builder.withDescription("Yikes, looks like your wallet is bone-dry.");
+            }
+            else
+            {
+                builder.withColor(209, 204, 210);
+                builder.withAuthorName("You're all set.");
+                builder.withDescription("Your purchase was successful.");
+                builder.withFooterText(userName + " | Balance: " + userMemoryDiamonds + " Memory Diamonds");
+
+                user.setMemoryDiamonds((int) userMemoryDiamonds);
+                user.setMoneySpent(userMoneySpent);
+                user.saveData();
+            }
+            IMessage message = channel.sendMessage(builder.build());
+
+            Thread.sleep(3000);
+            message.delete();
+        }
+        catch (InterruptedException e)
+        {
+            channel.sendMessage(new WarningMessage("Whoops.", "Something went wrong with your purchase.").get().build());
+        }
     }
 }
