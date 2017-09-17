@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 # Created by .ignore support plugin (hsz.mobi)
 ### Java template
-=======
->>>>>>> parent of 630daa3... Initial commit
 # Compiled class file
 *.class
 
@@ -27,18 +24,13 @@
 hs_err_pid*
 
 .gitignore
-data/Users/
 modules/
 src/main/resources/
 src/test/
 target/generated-sources/
 
-# Personal Settings File
-data/Settings.xml
-
 target/
 out/
 /.idea/workspace.xml
-/images/Characters/
-/data/Banners.xml
 /data/
+/images/
