@@ -180,6 +180,7 @@ public class Scout
         catch (FileNotFoundException e)
         {
             CHANNEL.sendMessage(new WarningMessage("IMAGE NOT FOUND", "Unable to display scout result.").get().build());
+            display.delete();
             deleteTempDirectory();
             return;
         }

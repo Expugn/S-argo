@@ -21,6 +21,11 @@ public enum Images
     PROFILE_ICON("images/Miscellaneous/Profile_Icon.png"),
     HELP_ICON("images/Miscellaneous/Help_Icon.png"),
 
+    /* images/Chest/ */
+    CHEST_BROWN("images/Chest/Brown.png"),
+    CHEST_BLUE("images/Chest/Blue.png"),
+    CHEST_RED("images/Chest/Red.png"),
+
     /* END OF IMAGES */
     ;
 

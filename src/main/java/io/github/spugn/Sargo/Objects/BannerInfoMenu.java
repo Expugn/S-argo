@@ -9,6 +9,8 @@ public class BannerInfoMenu
     private String bannerName;
     private int characterAmount;
     private String characterList;
+    private int weaponAmount;
+    private String weaponList;
     private String ratesList;
     private String stepThreeRatesList;
     private String stepFiveRatesList;
@@ -28,7 +30,12 @@ public class BannerInfoMenu
         builder.withColor(0, 153, 153);
         builder.withThumbnail(imageURL);
 
-        builder.appendField(Text.BANNER_INFO_CHARACTER_HEADER.get(), characterList, false);
+        builder.appendField(Text.BANNER_INFO_CHARACTER_HEADER.get(), characterList, (weaponAmount > 0));
+
+        if (weaponAmount > 0)
+        {
+            builder.appendField("- Weapons -", weaponList, true);
+        }
 
         builder.appendField(Text.BANNER_INFO_RATES_HEADER.get(), ratesList, true);
 
@@ -68,9 +75,19 @@ public class BannerInfoMenu
         this.characterAmount = characterAmount;
     }
 
+    public void setWeaponAmount(int weaponAmount)
+    {
+        this.weaponAmount = weaponAmount;
+    }
+
     public void setCharacterList(String characterList)
     {
         this.characterList = characterList;
+    }
+
+    public void setWeaponList(String weaponList)
+    {
+        this.weaponList = weaponList;
     }
 
     public void setRatesList(String ratesList)

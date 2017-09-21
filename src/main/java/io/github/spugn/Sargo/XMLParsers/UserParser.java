@@ -3,6 +3,7 @@ package io.github.spugn.Sargo.XMLParsers;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Objects.Files;
+import io.github.spugn.Sargo.Objects.Weapon;
 
 import javax.xml.stream.*;
 import javax.xml.stream.events.*;
@@ -18,10 +19,13 @@ public class UserParser
     static final String MEMORY_DIAMONDS = "memoryDiamonds";
     static final String MONEY_SPENT = "moneySpent";
     static final String HACKING_CRYSTALS = "hackingCrystals";
+    static final String COL_BALANCE = "colBalance";
     static final String BANNER = "Banner";
     static final String CHARACTER = "Character";
+    static final String WEAPON = "Weapon";
 
     static final String CHARACTER_BOX = "characterBox";
+    static final String WEAPON_BOX = "weaponBox";
     static final String BANNER_DATA = "bannerData";
 
     static final String USER = "user";
@@ -30,12 +34,17 @@ public class UserParser
     static final String CHARACTER_NAME = "name";
     static final String CHARACTER_RARITY = "rarity";
 
+    static final String WEAPON_NAME = "name";
+    static final String WEAPON_RARITY = "rarity";
+    static final String WEAPON_COUNT = "count";
+
     static final String B_NAME = "name";
     static final String B_DATA = "data";
 
     static final String DEFAULT_MEMORY_DIAMONDS = "0";
     static final String DEFAULT_MONEY_SPENT = "0";
     static final String DEFAULT_HACKING_CRYSTALS = "0";
+    static final String DEFAULT_COL_BALANCE = "0";
     static final String DEFAULT_STEP = "1";
     static final String DEFAULT_RECORD_CRYSTAL = "0";
 
@@ -43,8 +52,10 @@ public class UserParser
     private int memoryDiamonds;
     private double moneySpent;
     private int hackingCrystals;
+    private int colBalance;
     private SortedMap<String, Integer> bannerInfo;
     private List<Character> characterBox;
+    private List<Weapon> weaponBox;
     private int cC;
     private int sC;
     private int gC;
@@ -54,6 +65,7 @@ public class UserParser
     {
         bannerInfo = new TreeMap<>();
         characterBox = new ArrayList<>();
+        weaponBox = new ArrayList<>();
 
         FILE_PATH = "data/Users/USER_" + discordID + ".xml";
         USER_DIR_FILE_PATH = "data/Users";
@@ -83,6 +95,11 @@ public class UserParser
         return hackingCrystals;
     }
 
+    public int getColBalance()
+    {
+        return colBalance;
+    }
+
     public int getBannerData(String bannerName)
     {
         for(final Map.Entry<String, Integer> e : bannerInfo.entrySet())
@@ -100,6 +117,11 @@ public class UserParser
     public List<Character> getCharacterBox()
     {
         return characterBox;
+    }
+
+    public List<Weapon> getWeaponBox()
+    {
+        return weaponBox;
     }
 
     public int getCopperCount()
@@ -122,6 +144,16 @@ public class UserParser
         return pC;
     }
 
+    public int getTotalWeaponCount()
+    {
+        int count = 0;
+        for (Weapon w : weaponBox)
+        {
+            count += w.getCount();
+        }
+        return count;
+    }
+
     public void setMemoryDiamonds(int memoryDiamonds)
     {
         this.memoryDiamonds = memoryDiamonds;
@@ -137,6 +169,11 @@ public class UserParser
         this.hackingCrystals = hackingCrystals;
     }
 
+    public void setColBalance(int colBalance)
+    {
+        this.colBalance = colBalance;
+    }
+
     public void changeValue(String bannerName, int newValue)
     {
         bannerInfo.put(bannerName, newValue);
@@ -145,6 +182,29 @@ public class UserParser
     public void addCharacter(Character character)
     {
         characterBox.add(character);
+    }
+
+    public void addWeapon(Weapon weapon)
+    {
+        if (!weaponBox.isEmpty())
+        {
+            for (int i = 0 ; i < weaponBox.size() ; i++)
+            {
+                if (weapon.getName().equals(weaponBox.get(i).getName()))
+                {
+                    weaponBox.get(i).setCount(weaponBox.get(i).getCount() + 1);
+                    return;
+                }
+            }
+            weapon.setCount(1);
+            weaponBox.add(weapon);
+        }
+        else
+        {
+            weapon.setCount(1);
+            weaponBox.add(weapon);
+        }
+
     }
 
     public void addBannerInfo(String bannerName, int value)
@@ -214,6 +274,14 @@ public class UserParser
                         continue;
                     }
 
+                    /* GET AND SAVE COL BALANCE */
+                    if (event.asStartElement().getName().getLocalPart().equals(COL_BALANCE))
+                    {
+                        event = eventReader.nextEvent();
+                        colBalance = Integer.parseInt(event.asCharacters().getData());
+                        continue;
+                    }
+
                     /* GET AND SAVE BANNER INFO */
                     if (event.asStartElement().getName().getLocalPart().equals(BANNER))
                     {
@@ -264,6 +332,37 @@ public class UserParser
 
                         /* ADD CHARACTER TO CHARACTER LIST */
                         characterBox.add(character);
+                    }
+
+                    /* GET AND SAVE WEAPON BOX */
+                    if (event.asStartElement().getName().getLocalPart().equals(WEAPON))
+                    {
+                        Weapon weapon = new Weapon();
+
+                        //<Weapon name="garbage" rarity="4" count="1"/>
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals(WEAPON_NAME))
+                            {
+                                weapon.setName(attribute.getValue());
+                            }
+                            if (attribute.getName().toString().equals(WEAPON_RARITY))
+                            {
+                                weapon.setRarity(attribute.getValue());
+                            }
+                            if (attribute.getName().toString().equals(WEAPON_COUNT))
+                            {
+                                weapon.setCount(Integer.parseInt(attribute.getValue()));
+                            }
+                        }
+
+                        /* GENERATE IMAGE FILE PATH */
+                        weapon.setImagePath("images/Weapons/Placeholders/Gray.png");
+
+                        /* ADD CHARACTER TO CHARACTER LIST */
+                        weaponBox.add(weapon);
                     }
                 }
             }
@@ -328,10 +427,11 @@ public class UserParser
                 eventWriter.add(configStartElement);
                 eventWriter.add(end);
 
-                /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, AND HACKING CRYSTALS */
+                /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, AND COL BALANCE */
                 writeNode(eventWriter, MEMORY_DIAMONDS, DEFAULT_MEMORY_DIAMONDS);
                 writeNode(eventWriter, MONEY_SPENT, DEFAULT_MONEY_SPENT);
                 writeNode(eventWriter, HACKING_CRYSTALS, DEFAULT_HACKING_CRYSTALS);
+                writeNode(eventWriter, COL_BALANCE, DEFAULT_COL_BALANCE);
 
                 /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
                 writeDefaultBannerData(eventWriter);
@@ -346,6 +446,18 @@ public class UserParser
                 eventWriter.add(tab);
                 EndElement eElement = eventFactory.createEndElement("", "", CHARACTER_BOX);
                 eventWriter.add(eElement);
+                eventWriter.add(end);
+
+                /* WRITE WEAPON BOX START NODE*/
+                eventWriter.add(tab);
+                StartElement s2Element = eventFactory.createStartElement("", "", WEAPON_BOX);
+                eventWriter.add(s2Element);
+                eventWriter.add(end);
+
+                /* CLOSE WEAPON BOX ELEMENT */
+                eventWriter.add(tab);
+                EndElement e2Element = eventFactory.createEndElement("", "", WEAPON_BOX);
+                eventWriter.add(e2Element);
                 eventWriter.add(end);
 
 
@@ -448,10 +560,11 @@ public class UserParser
             eventWriter.add(configStartElement);
             eventWriter.add(end);
 
-            /* WRITE DATA FOR MEMORY DIAMONDS, MONEY SPENT, AND HACKING CRYSTALS */
+            /* WRITE DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, AND COL BALANCE */
             writeNode(eventWriter, MEMORY_DIAMONDS, String.valueOf(memoryDiamonds));
             writeNode(eventWriter, MONEY_SPENT, String.valueOf(moneySpent));
             writeNode(eventWriter, HACKING_CRYSTALS, String.valueOf(hackingCrystals));
+            writeNode(eventWriter, COL_BALANCE, String.valueOf(colBalance));
 
             /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
             writeBannerData(eventWriter);
@@ -459,6 +572,8 @@ public class UserParser
             /* WRITE characterBox ELEMENT AND FILL WITH CURRENT CHARACTERS */
             writeCharacterBox(eventWriter);
 
+            /* WRITE weaponBox ELEMENT AND FILL WITH CURRENT WEAPONS */
+            writeWeaponBox(eventWriter);
 
             /* WRITE user END ELEMENT AND CLOSE WRITER */
             eventWriter.add(eventFactory.createEndElement("", "", USER));
@@ -564,6 +679,56 @@ public class UserParser
         eventWriter.add(end);
     }
 
+    private void writeWeaponBox(XMLEventWriter eventWriter) throws XMLStreamException
+    {
+        /* INITIALIZE VARIABLES */
+        XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+        StringWriter weaponElement;
+
+        XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+        XMLEvent end = eventFactory.createDTD("\n");
+        XMLEvent tab = eventFactory.createDTD("\t");
+
+        /* WRITE weaponBox START NODE*/
+        eventWriter.add(tab);
+        StartElement sElement = eventFactory.createStartElement("", "", WEAPON_BOX);
+        eventWriter.add(sElement);
+
+        /* WRITE WEAPON DATA */
+        for (Weapon weapon : weaponBox)
+        {
+            /* CREATE EMPTY ELEMENT */
+            weaponElement = new StringWriter();
+            XMLStreamWriter writer = outputFactory.createXMLStreamWriter(weaponElement);
+
+            /* WRITE ELEMENT NAME, CHARACTER PREFIX, CHARACTER NAME, AND RARITY */
+            writer.writeEmptyElement(WEAPON);
+            writer.writeAttribute(WEAPON_NAME, weapon.getName());
+            writer.writeAttribute(WEAPON_RARITY, weapon.getRarity());
+            writer.writeAttribute(WEAPON_COUNT, String.valueOf(weapon.getCount()));
+            writer.writeEndDocument();
+            writer.flush();
+            writer.close();
+
+            /* START NEW LINE AND TAB TWICE */
+            eventWriter.add(end);
+            eventWriter.add(tab);
+            eventWriter.add(tab);
+
+            /* WRITE WEAPON ELEMENT TO FILE */
+            eventWriter.add(eventFactory.createDTD(weaponElement.toString()));
+        }
+
+        /* NEW LINE AND ADD TAB */
+        eventWriter.add(end);
+        eventWriter.add(tab);
+
+        /* CLOSE CHARACTER BOX ELEMENT */
+        EndElement eElement = eventFactory.createEndElement("", "", WEAPON_BOX);
+        eventWriter.add(eElement);
+        eventWriter.add(end);
+    }
+
     private void writeBannerData(XMLEventWriter eventWriter) throws XMLStreamException
     {
         /* INITIALIZE VARIABLES */
@@ -639,6 +804,7 @@ public class UserParser
             writeNode(eventWriter, MEMORY_DIAMONDS, DEFAULT_MEMORY_DIAMONDS);
             writeNode(eventWriter, MONEY_SPENT, DEFAULT_MONEY_SPENT);
             writeNode(eventWriter, HACKING_CRYSTALS, DEFAULT_HACKING_CRYSTALS);
+            writeNode(eventWriter, COL_BALANCE, DEFAULT_COL_BALANCE);
 
             /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
             writeDefaultBannerData(eventWriter);
@@ -655,6 +821,17 @@ public class UserParser
             eventWriter.add(eElement);
             eventWriter.add(end);
 
+            /* WRITE weaponBox START NODE*/
+            eventWriter.add(tab);
+            StartElement s2Element = eventFactory.createStartElement("", "", WEAPON_BOX);
+            eventWriter.add(s2Element);
+            eventWriter.add(end);
+
+            /* CLOSE WEAPON BOX ELEMENT */
+            eventWriter.add(tab);
+            EndElement e2Element = eventFactory.createEndElement("", "", WEAPON_BOX);
+            eventWriter.add(e2Element);
+            eventWriter.add(end);
 
             /* WRITE user END ELEMENT AND CLOSE WRITER */
             eventWriter.add(eventFactory.createEndElement("", "", USER));

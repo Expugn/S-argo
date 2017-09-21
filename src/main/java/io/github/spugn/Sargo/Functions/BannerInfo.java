@@ -119,6 +119,18 @@ public class BannerInfo
             }
             menu.setCharacterList(charList);
 
+            /* IF THERE ARE WEAPONS, CREATE WEAPON LIST */
+            if (banner.getWeapons().size() > 0)
+            {
+                String weapList = "";
+                for (Weapon w : banner.getWeapons())
+                {
+                    weapList += "\n" + w.toString();
+                }
+                menu.setWeaponAmount(banner.getWeapons().size());
+                menu.setWeaponList(weapList);
+            }
+
             /* CREATE RATE LIST */
             List<Character> goldCharacters = new ArrayList<>();
             List<Character> platinumCharacters = new ArrayList<>();

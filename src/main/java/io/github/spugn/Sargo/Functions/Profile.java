@@ -55,6 +55,8 @@ public class Profile
         String basicInfo = "";
         basicInfo += "**Memory Diamonds**: " + user.getMemoryDiamonds() + "\n";
         basicInfo += "**Hacking Crystals**: " + user.getHackingCrystals() + "\n";
+        basicInfo += "**Col Balance**: " + user.getColBalance() + "\n";
+        basicInfo += "**4★ Weapons**: " + user.getTotalWeaponCount() + "\n";
         basicInfo += "**Money Spent**: $" + df.format(user.getMoneySpent());
 
         builder.appendField("Information", basicInfo, false);
@@ -251,7 +253,66 @@ public class Profile
                 }
                 builder.appendField(noHaveCounter + " Characters Missing", noHaveList, false);
             }
-    }
+
+            /* WEAPON STATS */
+            boolean weaponFound = false;
+            int weaponCounter = 0;
+
+            List<Weapon> obtainedWeapons = new ArrayList<>();
+            List<Weapon> unobtainedWeapons = new ArrayList<>();
+
+            for (Weapon w : requestedBanner.getWeapons())
+            {
+                weaponCounter++;
+                /* TRY AND FIND WEAPON IN USER BOX */
+                for (Weapon oW : user.getWeaponBox())
+                {
+                    if (w.getName().equals(oW.getName()))
+                    {
+                        /* WEAPON IS SAME */
+                        w.setCount(oW.getCount());
+                        weaponFound = true;
+                        break;
+                    }
+                }
+
+                /* ADD WEAPON TO LIST */
+                if (!weaponFound)
+                {
+                    unobtainedWeapons.add(w);
+                }
+                else
+                {
+                    obtainedWeapons.add(w);
+                }
+
+                weaponFound = false;
+            }
+
+            if (obtainedWeapons.size() > 0)
+            {
+                String obtainedList = "";
+                int obtainedCounter = 0;
+                for (Weapon w : obtainedWeapons)
+                {
+                    obtainedList += w.toStringWithCount() + "\n";
+                    obtainedCounter++;
+                }
+                builder.appendField(obtainedCounter + " Weapons Obtained", obtainedList, false);
+            }
+
+            if (unobtainedWeapons.size() > 0)
+            {
+                String noHaveList = "";
+                int noHaveCounter = 0;
+                for (Weapon w : unobtainedWeapons)
+                {
+                    noHaveList += w.toString() + "\n";
+                    noHaveCounter++;
+                }
+                builder.appendField(noHaveCounter + " Weapons Missing", noHaveList, false);
+            }
+        }
         else
         {
             CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());

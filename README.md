@@ -24,15 +24,14 @@ Increased 1.5x gold character chance on Step 3, Increased 2.0x gold character ch
 Record Crystals given every multi scout that can be used in a guaranteed scout.
 * **Step Up v2 Scouts**  
 Same thing as Step Up, but features one guaranteed platinum character on Step 5 and 2.0x platinum character rates on Step 6 which repeats.
+* **Weapon Scouts**  
+Same as normal scouts, but with weapons instead of characters.
 
 Unlike the other *Sword Art Online: Memory Defrag* summon simulators, S'argo features user data 
 saving so users can see their character collection and get Hacking Crystals for duplicate characters
 they receive to fully simulate the in-game experience.
 
 ## Commands
-S'argo is called by mentioning your bot before the command.  
-Replace '@mention' with '@your_bot_name'.  
-
 - **HELP MENU**  
 '**help**' - Get a command list.
 
@@ -41,7 +40,8 @@ Replace '@mention' with '@your_bot_name'.
 '**scout** p[Page Number]' - View a specific page in the banner list.  
 '**scout** [Banner ID]' - View banner information.  
 '**scout** [Banner ID] [s(ingle)(i) | m(ulti)(i) | rc(record crystal)(i)]' - Scout a banner.  
-**Adding an "i" after s/m/g will display an image result.**
+'**scout** [Banner ID] [ws(ingle)(i) | wm(ulti)(i)]' - Scout a weapon banner.  
+**Adding an "i" after s/ws/m/wm/rc will display an image result.**
 
 - **USER PROFILE**  
 '**profile**' - View your information and character collection progress.  
@@ -49,11 +49,19 @@ Replace '@mention' with '@your_bot_name'.
 '**profile** info [Banner ID]' - View your obtained/missing characters in a banner.  
 '**profile** search [Character Name]' - Search through your collection for that character name.
 
+- **SHOP**  
+'**shop**' - View the available Memory Diamond bundles.  
+'**shop** [Item ID] [Quantity]' - "Buy" that Memory Diamond bundle.
+
 - **USER SEARCH**  
 '**user** [name/@name]' - Get a user's basic profile.
 
 - **USER RESET**  
 '**reset**' - Reset your user file.  
+
+- **BOT OWNERS**  
+'**update**' - Download image files from the GitHub Data Repository.  
+'**stop**' - Stop the bot.  
 
 ## Startup Guide
 If you're just starting, grab the S-argo_Startup_Kit.zip in releases.  
