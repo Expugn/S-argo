@@ -50,7 +50,7 @@ public class GUI extends JFrame
 
         }
 
-        setTitle("S'argo v1.1 - SAO:MD Summon Simulator Discord Bot by S'pugn#2612");
+        setTitle("S'argo v1.3 - SAO:MD Summon Simulator Discord Bot by S'pugn#2612");
         setSize(WIDTH, HEIGHT);
         setResizable(false);
         setVisible(true);

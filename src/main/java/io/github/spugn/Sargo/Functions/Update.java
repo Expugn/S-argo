@@ -1,9 +1,7 @@
 package io.github.spugn.Sargo.Functions;
 
-import io.github.spugn.Sargo.Objects.Banner;
+import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
-import io.github.spugn.Sargo.Objects.Files;
-import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import sx.blah.discord.handle.obj.IChannel;
@@ -128,10 +126,13 @@ public class Update
         {
             Banner selectedBanner = banners.get(bannerID);
             List<Character> bannerCharacters = selectedBanner.getCharacters();
+            List<Weapon> bannerWeapons = selectedBanner.getWeapons();
             EmbedBuilder builder = new EmbedBuilder();
+            EmbedBuilder builder2 = new EmbedBuilder();
 
             boolean imageFolderExists = new File("images").exists();
             boolean characterFolderExists = new File("images/Characters").exists();
+            boolean weaponFolderExists = new File("images/Weapons").exists();
             boolean bannerFolderExists;
 
             try
@@ -167,6 +168,38 @@ public class Update
 
                     builder.appendField(c.toString(), "[Image Link](" + url + ")", false);
                 }
+
+                for (Weapon w : bannerWeapons)
+                {
+                    bannerFolderExists = new File("images/Weapons/" + selectedBanner.getBannerName()).exists();
+
+                    if (!imageFolderExists)
+                    {
+                        new File("images").mkdir();
+                    }
+
+                    if (!weaponFolderExists)
+                    {
+                        new File ("images/Weapons").mkdir();
+                    }
+
+                    if (!bannerFolderExists)
+                    {
+                        new File("images/Weapons/" + selectedBanner.getBannerName()).mkdir();
+                    }
+
+                    String url = gitHubDataRepository + w.getImagePath();
+                    url = url.replaceAll(" ", "%20");
+                    url = url.replaceAll("★", "%E2%98%85");
+
+                    URL website = new URL(url);
+
+                    BufferedImage image = ImageIO.read(website);
+                    File file = new File(w.getImagePath());
+                    ImageIO.write(image, "png", file);
+
+                    builder2.appendField(w.toString(), "[Image Link](" + url + ")", false);
+                }
             }
             catch (MalformedURLException e)
             {
@@ -180,7 +213,9 @@ public class Update
             }
 
             builder.withAuthorName("Updated the following images:");
+            builder2.withAuthorName("Updated the following images:");
             CHANNEL.sendMessage(builder.build());
+            CHANNEL.sendMessage(builder2.build());
         }
         else
         {
@@ -218,6 +253,8 @@ public class Update
             String fp_OCS = "images/Miscellaneous/Owned_Character_Shade.png";
             String fp_SB_S = "images/Scout Backgrounds/Single.png";
             String fp_SB_M = "images/Scout Backgrounds/Multi.png";
+            String fp_SB_SW = "images/Scout Backgrounds/Single_Weapon.png";
+            String fp_SB_MW = "images/Scout Backgrounds/Multi_Weapon.png";
 
             /* Owned_Character_Shade.png */
             website = new URL(gitHubDataRepository + fp_OCS);
@@ -237,10 +274,24 @@ public class Update
             file = new File(fp_SB_M);
             ImageIO.write(image, "png", file);
 
+            /* Single_Weapon.png */
+            website = new URL(gitHubDataRepository + fp_SB_SW.replaceAll(" ", "%20"));
+            image = ImageIO.read(website);
+            file = new File(fp_SB_SW);
+            ImageIO.write(image, "png", file);
+
+            /* Multi_Weapon.png */
+            website = new URL(gitHubDataRepository + fp_SB_MW.replaceAll(" ", "%20"));
+            image = ImageIO.read(website);
+            file = new File(fp_SB_MW);
+            ImageIO.write(image, "png", file);
+
             String filesList = "";
             filesList += "[Owned_Character_Shade.png](" + gitHubDataRepository + fp_OCS + ")\n";
             filesList += "[Single.png](" + (gitHubDataRepository + fp_SB_S).replaceAll(" ", "%20") + ")\n";
             filesList += "[Multi.png](" + (gitHubDataRepository + fp_SB_M).replaceAll(" ", "%20") + ")\n";
+            filesList += "[Single_Weapon.png](" + (gitHubDataRepository + fp_SB_SW).replaceAll(" ", "%20") + ")\n";
+            filesList += "[Multi_Weapon.png](" + (gitHubDataRepository + fp_SB_MW).replaceAll(" ", "%20") + ")\n";
 
             EmbedBuilder builder = new EmbedBuilder();
             builder.withAuthorName("Updated the following files:");

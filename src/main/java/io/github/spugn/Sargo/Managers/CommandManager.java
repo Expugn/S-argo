@@ -117,7 +117,18 @@ public class CommandManager
         {
             if (COMMAND_LINE.getArgumentCount() >= 2)
             {
-                new Scout(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
+                if (COMMAND_LINE.getArgument(2).equalsIgnoreCase("ws") ||
+                        COMMAND_LINE.getArgument(2).equalsIgnoreCase("wsi") ||
+                        COMMAND_LINE.getArgument(2).equalsIgnoreCase("wm") ||
+                        COMMAND_LINE.getArgument(2).equalsIgnoreCase("wmi"))
+                {
+                    new WeaponScout(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
+                }
+                else
+                {
+                    new Scout(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
+                }
+
             }
             else if (COMMAND_LINE.getArgumentCount() >= 1)
             {

@@ -72,12 +72,4 @@ public class CopperCharacter
     {
         return characters.size();
     }
-
-    public void systemReadImagePaths()
-    {
-        for (Character character : characters)
-        {
-            System.out.println(character.getImagePath());
-        }
-    }
 }

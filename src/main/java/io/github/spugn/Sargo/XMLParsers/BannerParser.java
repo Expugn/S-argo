@@ -2,6 +2,7 @@ package io.github.spugn.Sargo.XMLParsers;
 
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
+import io.github.spugn.Sargo.Objects.Weapon;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -31,6 +32,9 @@ public class BannerParser
     static final String CHARACTER_NAME = "char";
     static final String RARITY = "rarity";
 
+    static final String WEAPON = "Weapon";
+    static final String WEAPON_NAME = "name";
+
     public List<Banner> readConfig(String configFile)
     {
         List<Banner> banners = new ArrayList();
@@ -38,7 +42,10 @@ public class BannerParser
         {
             Banner banner = null;
             ArrayList<Character> characters = null;
-            Character character = null;
+            Character character;
+
+            ArrayList<Weapon> weapons = null;
+            Weapon weapon;
 
             /* CREATE XMLInputFactory AND XMLEventReader */
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -59,6 +66,7 @@ public class BannerParser
                     {
                         banner = new Banner();
                         characters = new ArrayList();
+                        weapons = new ArrayList<>();
 
                         /* GET AND SAVE BANNER ID */
                         Iterator<Attribute> attributes = startElement.getAttributes();
@@ -120,6 +128,32 @@ public class BannerParser
                         /* ADD CHARACTER TO CHARACTER LIST */
                         characters.add(character);
                     }
+
+                    /* GET AND SAVE WEAPON */
+                    if (event.asStartElement().getName().getLocalPart().equals(WEAPON))
+                    {
+                        weapon = new Weapon();
+
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals(WEAPON_NAME))
+                            {
+                                weapon.setName(attribute.getValue());
+                            }
+                            if (attribute.getName().toString().equals(RARITY))
+                            {
+                                weapon.setRarity(attribute.getValue());
+                            }
+                        }
+
+                        /* GENERATE IMAGE FILE PATH*/
+                        weapon.setImagePath("images/Weapons/" + banner.getBannerName() + "/" + weapon.getName().replaceAll(" ", "_") + ".png");
+
+                        /* ADD WEAPON TO WEAPON LIST */
+                        weapons.add(weapon);
+                    }
                 }
 
                 /* END OF BANNER ELEMENT. FINALIZE CHARACTER LIST AND ADD OBJECT TO ArrayList */
@@ -129,6 +163,7 @@ public class BannerParser
                     if (endElement.getName().getLocalPart().equals(BANNER))
                     {
                         banner.setCharacters(characters);
+                        banner.setWeapons(weapons);
                         banners.add(banner);
                     }
                 }
