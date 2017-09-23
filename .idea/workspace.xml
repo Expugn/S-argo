@@ -7,9 +7,235 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a2796fab-1f53-406f-8e84-1d79324c2651" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CODE_OF_CONDUCT.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/data/Banners.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Argo/Argo_Flowers.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Argo/Argo_Grin.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Argo/Argo_Smile.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Argo/Argo_Smug.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/1st Anniversary Countdown Vote Scout/Golden_Knight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/1st Anniversary Countdown Vote Scout/Heart_of_Confront.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/1st Anniversary Countdown Vote Scout/Hero's_Return.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/1st Anniversary Countdown Vote Scout/Leo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/1st Anniversary Countdown Vote Scout/Parlor_Maid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Cool-Headed_Sniper.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Fairy_Blacksmith.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Fairy_Dragon_Tamer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Skill_Connect.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alfheim Online Reborn/Undine_Healer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alicization - Integration Beginning/Blue_Silver_Knight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alicization - Integration Beginning/Golden_Knight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alicization - The Knights' Encounter/Born_Genius.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alicization - The Knights' Encounter/Integrity_Knight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alicization - The World Spins With Swords/Blue_Rose_Integrity_Knight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Alicization - The World Spins With Swords/Fragrant_Olive_Integrity_Knight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Beaming Summer Gals/Healing_Beauty.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Beaming Summer Gals/Midsummer_Babe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Beaming Summer Gals/Mischievous_Summer_Chick.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Beaming Summer Gals/Summer_Sunshine.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Beaming Summer Gals/Sunflower_Girl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Beautiful Girls Playing in the Water/Pure_Hunter_Soul.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Beautiful Girls Playing in the Water/Smile_on_Waterfront.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Beautiful Girls Playing in the Water/Summer_Girl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Birthday Scout - Sinon 8.21/Dangerous_Kiss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Birthday Scout - Sinon 8.21/Free_Style_Artist.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Birthday Scout - Sinon 8.21/Novice_Police.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Birthday Scout - Sinon 8.21/Progressive_Gunner.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Birthday Scout - Sinon 8.21/Stiletto_Heel_Bride.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Birthday Scout - Sinon 8.21/Stillroom_Maid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Birthday Scout - Sinon 8.21/Victorious_Girl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Blooming School Life/Blossom_of_Youth.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Blooming School Life/Born_in_Sakura_Season.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Blooming School Life/Sakura_Romance.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Char. Enhancement Vote Scout/Angel_Cheer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Char. Enhancement Vote Scout/Gemini.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Char. Enhancement Vote Scout/Lightning_Dance.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Char. Enhancement Vote Scout/Shinobi_Slash.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Char. Enhancement Vote Scout/Summer_Girl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Agil.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Argo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Asuna.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Corvatz.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Diavel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Kagemune.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Kibaou.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Kirito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Klein.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Lisbeth.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Philia.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Rosalia.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Sachi.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Sasha.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Sigurd.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Silica.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Sinon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Strea.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Thinker.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Yolko.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Copper/Yulier.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Deadly Beautiful Kunoichi/Dark_Dancer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Deadly Beautiful Kunoichi/Dragon_Caster.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Deadly Beautiful Kunoichi/Shinobi_Slash.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Deadly Beautiful Kunoichi/Umbral_Flight.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Deadly Beautiful Kunoichi/Void_Runner.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Enduring Love in Another Space/Fascinating_MC_Performer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Enduring Love in Another Space/Free_Style_Artist.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Enduring Love in Another Space/Hit_Idol_of_Love_and_Effort.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Enduring Love in Another Space/Natural_Pop_Star.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Enduring Love in Another Space/Sparkling_Teen_Idol.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Enduring Love in Another Space/Young_Idol.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Eternal Love - Dreaming Brides/Blessed_Breath.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Eternal Love - Dreaming Brides/Bouquet_Toss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Eternal Love - Dreaming Brides/Fragrant_Olive_in_June.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Eternal Love - Dreaming Brides/Promise_at_that_Time.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Eternal Love - Dreaming Brides/Stiletto_Heel_Bride.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Eternal Love - Dreaming Brides/The_Kiss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/365_Days.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/AR_Idol.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Black_Wing.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Captive_Princess.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Fairy_Dance.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Foxy_Priestress.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Genius_Creator.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Hide-and-seek_Girl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Intrepid_Detective.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Nightwear.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Event Limited - Free Characters/Queen_of_Chef.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Hooray ★ Love Cheers/Angel_Cheer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Hooray ★ Love Cheers/Cheer_of_Love.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Hooray ★ Love Cheers/Glittering_Youth.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Hooray ★ Love Cheers/Shouting_Cheers.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Hooray ★ Love Cheers/Victorious_Girl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/In the Stormy Sea - Jolly Roger/Gorgeous_Quartermaster.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/In the Stormy Sea - Jolly Roger/Great_Sniper_on_the_Lookout.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/In the Stormy Sea - Jolly Roger/Intuitive_Navigator.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/In the Stormy Sea - Jolly Roger/Lofty_Captain.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/In the Stormy Sea - Jolly Roger/Radiant_First_Mate.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Bravery_Lance.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Concealed_Dual_Blades.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Death_Bullet.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Explosive_Axe.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Faithful_Swordsman.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Genius_of_Swordsmith.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Prestige_Vice_Commander.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Swift_Fast_Heroine.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Sword_Master.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Medal Scout - Sword Dance/Yearning_Blade.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Placeholders/Copper.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Placeholders/Gold.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Placeholders/Gray.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Placeholders/Platinum.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Placeholders/Silver.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Poetry of Constellation/Aries.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Poetry of Constellation/Gemini.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Poetry of Constellation/Leo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Poetry of Constellation/Libra.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Princess from the Virtual World/Dangerous_Kiss.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Princess from the Virtual World/Eccentric_Riding_Hood.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Princess from the Virtual World/Ephemeral_Feelings.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Princess from the Virtual World/Lightning_Dance.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Princess from the Virtual World/My_Little_Lover.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Princess from the Virtual World/Pearl_Tears.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Promised Night of the Stars/Celestial_Dancer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Promised Night of the Stars/Promise_of_Reunion.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Promised Night of the Stars/Starlight_Prayer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Proof of Trust X Bonds of Fate/The_Archer_-_Overcoming_the_Past.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Proof of Trust X Bonds of Fate/The_Blade_-_Facing_the_Feelings.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Proof of Trust X Bonds of Fate/The_Will_-_Changing_the_Fate.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Proof of Trust X Bonds of Fate/The_Will_-_Transcending_the_System.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Raindrops Concerto/Indoor_Gamer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Raindrops Concerto/Raindrops_Girl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Raindrops Concerto/Rainy_Season_Enjoyment.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Recalling Moments/Faroff_Fencer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Recalling Moments/Heart_Flash.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Recalling Moments/Regurent_Sword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Agile_Kitty_Silica.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Apprentice_Blacksmith_Lisbeth.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Battle_Smith_Lisbeth.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Cat-Eared_Archer_Sinon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Cat_Sith_Info_Broker_Argo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Floor-Clearing_Demon_Asuna.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Guild_Commander_Heathcliff.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Information_Broker_Argo.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Item_Master_Rain.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Katana_Master_Klein.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Mysterious_Warrior_Yuuki.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Party_Mascot_Silica.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Salamander_Samurai_Klein.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Solo_Kirito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Spriggan_Kirito.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Spriggan_Seeker_Philia.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Stalwart_Tank_Agil.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Sword_&amp;_Shield_Sachi.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/The_Young_Pooka_Seven.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Uninhibited_Fairy_Strea.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/Wind_Mage_Leafa.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/World_of_Guns_Sinon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/_Alicia_Rue.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/_Eugene.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/_Kuradeel.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/_Lux.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/_Red-Eyed_XaXa.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/_Sakuya.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/_Siune.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Silver/_Sumeragi.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Spring Breeze Hina-Matsuri/Early_Spring_Dance.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Spring Breeze Hina-Matsuri/Flower_Peach_Baby.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Spring Breeze Hina-Matsuri/Pudding_Rather_Than_Praise.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Black_Swordsman.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Brawny_Axeman.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Dragon_Tamer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Furinkazan.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Goddess_of_Death.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Lightning_Flash.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/MHCP-002.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Mace_Master.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Multi-Wielder.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Star_Scientist.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Storm_Mage.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Treasure_Hunter.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Start Dash/Zekken.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Summer Night Festa/Good_Street_Vendor.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Summer Night Festa/Kagura_Dance.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Summer Night Festa/Summer_Night_Shout.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/The Accelerating Reality/Augmented_Tamer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/The Accelerating Reality/Efficient_Smith.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/The Accelerating Reality/Heart_of_Confront.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/The Accelerating Reality/Hero's_Return.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/The Accelerating Reality/Progressive_Gunner.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Ticket Scout - Ranking Rewards/Holy_Sword.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Ticket Scout - Ranking Rewards/Tropical_dB.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Ticket Scout - Ranking Rewards/True_Heart.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Ticket Scout - Ranking Rewards/Up-and-coming_Tiny_Idol.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/To Your Heart - Maid in Balmy Breeze/Fledgling_Tweeny.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/To Your Heart - Maid in Balmy Breeze/Kitchen_Maid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/To Your Heart - Maid in Balmy Breeze/Mellow_Maid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/To Your Heart - Maid in Balmy Breeze/Omniscient_Maid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/To Your Heart - Maid in Balmy Breeze/Parlor_Maid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/To Your Heart - Maid in Balmy Breeze/Stillroom_Maid.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Tropical Dream/Summer_Princess.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Tropical Dream/Sunny_Summer_Girl.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Tropical Dream/Surfer.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Tropical Dream/Tropical_Beach_Boy.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Tropical Dream/Tropical_Lover.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Workers' Cosplay Paradise/All_Aboard.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Workers' Cosplay Paradise/Attention_Please.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Workers' Cosplay Paradise/Novice_Police.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Workers' Cosplay Paradise/Roller_Waitress.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Workers' Cosplay Paradise/Spartan_Female_Teacher.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Workers' Cosplay Paradise/Time_of_Injection.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Yukata Night/Blossom_Shower.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Yukata Night/Dusk_Lespedeza.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Yukata Night/Firey_Morning_Glory.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Yukata Night/Illuminating_Weeping_Willow.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Characters/Yukata Night/Zinnia_Melody.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Miscellaneous/Help_Icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Miscellaneous/Memory_Diamond_Icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Miscellaneous/Owned_Character_Shade.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Miscellaneous/Profile_Icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Miscellaneous/Scout_Icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Miscellaneous/Shop_Icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Scout Backgrounds/Multi.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Scout Backgrounds/Single.png" afterPath="" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -39,7 +265,7 @@
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="75">
-                <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+                <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -86,16 +312,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Settings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/Settings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="31" column="18" lean-forward="false" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CommandManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Managers/CommandManager.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -136,7 +352,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/WarningMessage.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="9" column="29" lean-forward="true" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+              <caret line="9" column="29" lean-forward="false" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -260,9 +476,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="664" />
-    <option name="y" value="60" />
+    <option name="y" value="78" />
     <option name="width" value="1169" />
-    <option name="height" value="921" />
+    <option name="height" value="903" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -294,18 +510,7 @@
             <path>
               <item name="Sargo" type="b2602c69:ProjectViewProjectNode" />
               <item name="Sargo" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Sargo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Sargo" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Sargo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Sargo" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-              <item name="Scout Backgrounds" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -477,8 +682,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="664" y="60" width="1169" height="921" extended-state="0" />
-    <editor active="true" />
+    <frame x="664" y="78" width="1169" height="903" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -488,12 +692,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32356688" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33116037" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23417173" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23417173" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -629,6 +833,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -848,7 +1053,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/io/github/spugn/Sargo/Objects/WarningMessage.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="9" column="29" lean-forward="true" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
+          <caret line="9" column="29" lean-forward="false" selection-start-line="9" selection-start-column="29" selection-end-line="9" selection-end-column="29" />
           <folding />
         </state>
       </provider>
@@ -931,7 +1136,7 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="75">
-            <caret line="94" column="0" lean-forward="true" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+            <caret line="94" column="0" lean-forward="false" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
             <folding />
           </first_editor>
           <second_editor />
