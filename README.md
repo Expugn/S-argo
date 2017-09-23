@@ -1,16 +1,7 @@
 # S'argo
 ## Information
-S'argo is a Discord bot using the Discord4J API wrapper.
-
+S'argo is a Discord bot using the Discord4J API wrapper.  
 This Discord bot's main use is to be a "summon simulator" for the mobile game *Sword Art Online: Memory Defrag*.
-
-## Usage
-S'argo was not built to have self-hosting in mind, so support won't be given.
-
-To start the bot: insert your bot's token in data/Settings.xml under the **token** section.  
-You can then run the code to start the bot.
-
-There IS a basic GUI, but it only features one button and clicking that button kills the bot.
 
 ## Features
 S'argo features the scouting feature from *Sword Art Online: Memory Defrag*.
@@ -30,6 +21,10 @@ Same as normal scouts, but with weapons instead of characters.
 Unlike the other *Sword Art Online: Memory Defrag* summon simulators, S'argo features user data 
 saving so users can see their character collection and get Hacking Crystals for duplicate characters
 they receive to fully simulate the in-game experience.
+
+## Demo
+Want to try out the bot? Check out the **#scout-simulator** channel in the *Sword Art Online Memory Defrag* Reddit Discord!  
+Invite link for the server is down in Related Links.
 
 ## Commands
 - **HELP MENU**  
@@ -101,7 +96,23 @@ This will save a file named "new_Settings.xml" in your data folder from the GitH
 You can modify the settings in there as you please, and then delete your old Settings.xml file and rename the new Settings.xml file to "Settings.xml".
 
 ## Related Links
-[S'argo Official Data Repository](https://github.com/Expugn/S-argo_Data "Official Data Repository")
+[S'argo Official Data Repository](https://github.com/Expugn/S-argo_Data "Official Data Repository")  
+[*Sword Art Online: Memory Defrag* Subreddit](https://www.reddit.com/r/MemoryDefrag/ "Fan Subreddit")  
+[Subreddit Discord Invite Link](http://discord.gg/MemoryDefrag "Discord Invite Link")  
+[4★ Character Database](https://www.reddit.com/r/MemoryDefrag/comments/5yyr4j/sao_md_4_database/ "4★ Character Database")
+
+## Special Thanks
+> **Pep#7848 | /u/pedrobpimenta**  
+  For liking my bot enough to ask to add it to the Reddit Discord, lol.  
+  Also added the Wind, Halloween 2016, and Earth banners/images that were exclusive to the Japan server.
+  
+> **Azuto#0016 | /u/Azuto**  
+  For his work in the Character Database.  
+  The database was really handy for grabbing banner names, character prefixes, and weapon names.  
+  The character database is linked in Related Links.
+  
+> **Legacy ∞**  
+  For beta testing S'argo before it's official release :HAhaa:. Thanks guys!
 
 ## Other Stuff
 This is a non-profit fan project with the purpose of practice and entertainment.
