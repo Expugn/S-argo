@@ -212,10 +212,18 @@ public class Update
                 return;
             }
 
-            builder.withAuthorName("Updated the following images:");
-            builder2.withAuthorName("Updated the following images:");
-            CHANNEL.sendMessage(builder.build());
-            CHANNEL.sendMessage(builder2.build());
+            builder.withAuthorName("Updated the following character images:");
+            builder2.withAuthorName("Updated the following weapon images:");
+
+            if (bannerCharacters.size() > 0)
+            {
+                CHANNEL.sendMessage(builder.build());
+            }
+
+            if (bannerWeapons.size() > 0)
+            {
+                CHANNEL.sendMessage(builder2.build());
+            }
         }
         else
         {
