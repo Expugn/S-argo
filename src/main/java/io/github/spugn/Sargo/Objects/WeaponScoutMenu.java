@@ -8,7 +8,6 @@ public class WeaponScoutMenu
 
     private String bannerName = "";
     private String pullType = "";
-    private String chestText = "*...*";
     private String authorIcon = Images.SCOUT_ICON.getUrl();
     private String thumbnail = Images.CHEST_BROWN.getUrl();
     private String footerIcon = Images.MEMORY_DIAMOND_ICON.getUrl();
@@ -41,7 +40,6 @@ public class WeaponScoutMenu
             builder.appendField("- Weapon Result -", weaponString, false);
         }
 
-        builder.withDesc(chestText);
         builder.withAuthorIcon(authorIcon);
         builder.withColor(139, 69, 19);
         builder.withThumbnail(thumbnail);

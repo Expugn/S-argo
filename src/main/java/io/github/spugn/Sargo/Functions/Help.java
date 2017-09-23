@@ -43,6 +43,10 @@ public class Help
 
         String resetHelp = "";
         resetHelp += "'**reset**' - Reset your data file." + "\n";
+        resetHelp += "'**reset** [Banner ID] c' - Reset your character data for a banner." + "\n";
+        resetHelp += "'**reset** [Banner ID] w' - Reset your weapon data for a banner." + "\n";
+        resetHelp += "'**reset** [Banner ID] a' - Reset all data for a banner." + "\n\n";
+        resetHelp += "**Resetting all data includes your Step or Record Crystal data as well.**" + "\n";
         builder.appendField("DATA RESET", resetHelp, false);
 
         channel.sendMessage(builder.build());

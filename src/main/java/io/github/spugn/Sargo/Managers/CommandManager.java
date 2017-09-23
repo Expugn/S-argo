@@ -308,10 +308,44 @@ public class CommandManager
             CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH ARGUMENTS", "Please review the help menu.").get().build());
         }
     }
-
+    
     private void resetCommand() throws RateLimitException, DiscordException, MissingPermissionsException
     {
-        if (COMMAND_LINE.getArgumentCount() >= 1)
+        if (COMMAND_LINE.getArgumentCount() >= 3)
+        {
+            String arg3 = COMMAND_LINE.getArgument(3);
+            String arg2 = COMMAND_LINE.getArgument(2);
+            int bannerID = Integer.parseInt(COMMAND_LINE.getArgument(1));
+            boolean yes = (arg3.equalsIgnoreCase("y") || arg3.equalsIgnoreCase("yes"));
+
+            if (arg2.equalsIgnoreCase("c") ||
+                    arg2.equalsIgnoreCase("w") ||
+                    arg2.equalsIgnoreCase("a"))
+            {
+                new Reset(CHANNEL, DISCORD_ID, bannerID, arg2, yes);
+            }
+            else
+            {
+                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Use 'reset [BannerID] [c/w/a]'").get().build());
+            }
+        }
+        else if (COMMAND_LINE.getArgumentCount() >= 2)
+        {
+            String arg2 = COMMAND_LINE.getArgument(2);
+            int bannerID = Integer.parseInt(COMMAND_LINE.getArgument(1));
+
+            if (arg2.equalsIgnoreCase("c") ||
+                    arg2.equalsIgnoreCase("w") ||
+                    arg2.equalsIgnoreCase("a"))
+            {
+                new Reset(CHANNEL, DISCORD_ID, bannerID, arg2, false);
+            }
+            else
+            {
+                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Use 'reset [BannerID] [c/w/a]'").get().build());
+            }
+        }
+        else if (COMMAND_LINE.getArgumentCount() >= 1)
         {
             String arg1 = COMMAND_LINE.getArgument(1);
             if (arg1.equalsIgnoreCase("y") || arg1.equalsIgnoreCase("yes"))

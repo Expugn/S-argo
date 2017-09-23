@@ -58,6 +58,10 @@ they receive to fully simulate the in-game experience.
 
 - **USER RESET**  
 '**reset**' - Reset your user file.  
+'**reset** [Banner ID] c' - Reset your character data for a banner.  
+'**reset** [Banner ID] w' - Reset your weapon data for a banner.  
+'**reset** [Banner ID] a' - Reset all data for a banner.  
+**Resetting all data includes your Step or Record Crystal data as well.**
 
 - **BOT OWNERS**  
 '**update**' - Download image files from the GitHub Data Repository.  

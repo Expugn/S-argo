@@ -154,6 +154,16 @@ public class UserParser
         return count;
     }
 
+    public void setCharacterBox(List<Character> characterBox)
+    {
+        this.characterBox = characterBox;
+    }
+
+    public void setWeaponBox(List<Weapon> weaponBox)
+    {
+        this.weaponBox = weaponBox;
+    }
+
     public void setMemoryDiamonds(int memoryDiamonds)
     {
         this.memoryDiamonds = memoryDiamonds;
