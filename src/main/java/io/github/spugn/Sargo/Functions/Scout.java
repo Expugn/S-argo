@@ -73,6 +73,8 @@ public class Scout
     private boolean generateImage;
     private String characterString;
 
+    private boolean stopScout;
+
     public Scout(IChannel channel, int bannerID, String choice, String discordID) throws RateLimitException
     {
         CHANNEL = channel;
@@ -80,6 +82,7 @@ public class Scout
         CHOICE = choice;
         DISCORD_ID = discordID;
         generateImage = false;
+        stopScout = false;
 
         initFiles();
         initSettings();
@@ -161,6 +164,11 @@ public class Scout
             doSinglePull();
         }
         else
+        {
+            return;
+        }
+
+        if (stopScout)
         {
             return;
         }
@@ -465,6 +473,7 @@ public class Scout
                     catch (IOException e)
                     {
                         CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+                        stopScout = true;
                     }
                 }
             }
@@ -514,6 +523,7 @@ public class Scout
                         catch (IOException e)
                         {
                             CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+                            stopScout = true;
                         }
                     }
                 }
@@ -565,6 +575,7 @@ public class Scout
             if (generateImage && !IMAGE_DISABLED)
             {
                 CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+                stopScout = true;
             }
         }
     }
@@ -608,6 +619,7 @@ public class Scout
             if (generateImage && !IMAGE_DISABLED)
             {
                 CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+                stopScout = true;
             }
         }
     }

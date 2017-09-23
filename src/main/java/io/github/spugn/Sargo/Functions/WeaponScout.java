@@ -1,7 +1,6 @@
 package io.github.spugn.Sargo.Functions;
 
 import io.github.spugn.Sargo.Objects.*;
-import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
@@ -60,6 +59,8 @@ public class WeaponScout
     private boolean generateImage;
     private String weaponString;
 
+    private boolean stopScout;
+
     public WeaponScout(IChannel channel, int bannerID, String choice, String discordID) throws RateLimitException
     {
         CHANNEL = channel;
@@ -67,6 +68,7 @@ public class WeaponScout
         CHOICE = choice;
         DISCORD_ID = discordID;
         generateImage = false;
+        stopScout = false;
 
         initFiles();
         initSettings();
@@ -125,6 +127,11 @@ public class WeaponScout
             doMultiPull();
         }
         else
+        {
+            return;
+        }
+
+        if (stopScout)
         {
             return;
         }
@@ -302,6 +309,7 @@ public class WeaponScout
             if (generateImage && !IMAGE_DISABLED)
             {
                 CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+                stopScout = true;
             }
         }
     }
@@ -345,6 +353,7 @@ public class WeaponScout
             if (generateImage && !IMAGE_DISABLED)
             {
                 CHANNEL.sendMessage(new WarningMessage("IO EXCEPTION", "Failed to create scout result image.").get().build());
+                stopScout = true;
             }
         }
     }
