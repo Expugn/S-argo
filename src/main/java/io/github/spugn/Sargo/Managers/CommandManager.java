@@ -308,7 +308,7 @@ public class CommandManager
             CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH ARGUMENTS", "Please review the help menu.").get().build());
         }
     }
-    
+
     private void resetCommand() throws RateLimitException, DiscordException, MissingPermissionsException
     {
         if (COMMAND_LINE.getArgumentCount() >= 3)

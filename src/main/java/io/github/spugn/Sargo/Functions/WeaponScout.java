@@ -92,7 +92,7 @@ public class WeaponScout
         {
             if (userMemoryDiamonds < singleScoutPrice)
             {
-                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.").get().build());
+                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse '**shop**' to get more Memory Diamonds.").get().build());
                 return;
             }
 
@@ -110,7 +110,7 @@ public class WeaponScout
         {
             if (userMemoryDiamonds < multiScoutPrice)
             {
-                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.").get().build());
+                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse '**shop**' to get more Memory Diamonds.").get().build());
                 return;
             }
 
