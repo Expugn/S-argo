@@ -47,6 +47,7 @@ public class UserParser
     static final String DEFAULT_COL_BALANCE = "0";
     static final String DEFAULT_STEP = "1";
     static final String DEFAULT_RECORD_CRYSTAL = "0";
+    static final String DEFAULT_RECORD_CRYSTAL_V2 = "-1";
 
     /* USER DATA */
     private int memoryDiamonds;
@@ -517,7 +518,7 @@ public class UserParser
                 writer.writeAttribute(B_NAME, b.getBannerName());
 
                 /* IS STEP UP UP OR STEP UP V2 */
-                if (b.getBannerType().equals("1") || b.getBannerType().equals("3"))
+                if (b.getBannerType().equals("1") || b.getBannerType().equals("3") || b.getBannerType().equals("4"))
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_STEP);
                 }
@@ -525,6 +526,11 @@ public class UserParser
                 else if (b.getBannerType().equals("2"))
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL);
+                }
+                /* IS RECORD CRYSTAL v2 */
+                else if (b.getBannerType().equals("5"))
+                {
+                    writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL_V2);
                 }
 
                 writer.writeEndDocument();

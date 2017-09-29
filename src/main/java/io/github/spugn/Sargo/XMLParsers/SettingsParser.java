@@ -30,6 +30,7 @@ public class SettingsParser
     static final String NO_GUI = "NoGUI";
 
     static final String BANNER_ID = "BannerID";
+    static final String BANNER_ID2 = "BannerID2";
     static final String ID = "id";
 
     static final String RECORD_CRYSTAL = "RecordCrystal";
@@ -52,6 +53,7 @@ public class SettingsParser
     private double fiveRates;
     private boolean errorInRates;
     private List<Integer> goldBanners;
+    private List<Integer> goldBannersv2;
     private List<Double> recordCrystalRates;
     private List<String> ignoredChannelNames;
     private String botOwnerDiscordID;
@@ -119,6 +121,11 @@ public class SettingsParser
         return goldBanners;
     }
 
+    public List<Integer> getGoldBannersv2()
+    {
+        return goldBannersv2;
+    }
+
     public List<String> getIgnoredChannelNames()
     {
         return ignoredChannelNames;
@@ -154,6 +161,7 @@ public class SettingsParser
             XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
 
             goldBanners = new ArrayList<>();
+            goldBannersv2 = new ArrayList<>();
             recordCrystalRates = new ArrayList<>();
             ignoredChannelNames = new ArrayList<>();
 
@@ -263,7 +271,7 @@ public class SettingsParser
                         continue;
                     }
 
-                    /* GET AND SAVE BANNER ID */
+                    /* GET AND SAVE GOLD BANNERS */
                     if (event.asStartElement().getName().getLocalPart().equals(BANNER_ID))
                     {
                         Iterator<Attribute> attributes = event.asStartElement().getAttributes();
@@ -273,6 +281,20 @@ public class SettingsParser
                             if (attribute.getName().toString().equals(ID))
                             {
                                 goldBanners.add(Integer.parseInt(attribute.getValue()));
+                            }
+                        }
+                    }
+
+                    /* GET AND SAVE GOLD BANNERS V2 */
+                    if (event.asStartElement().getName().getLocalPart().equals(BANNER_ID2))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals(ID))
+                            {
+                                goldBannersv2.add(Integer.parseInt(attribute.getValue()));
                             }
                         }
                     }

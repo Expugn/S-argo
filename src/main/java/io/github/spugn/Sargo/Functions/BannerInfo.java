@@ -240,6 +240,23 @@ public class BannerInfo
                 stepSixRates += "**(5 ★ Scout Rates 2.0x)**";
                 menu.setStepSixRatesList(stepSixRates);
             }
+            /* BANNER IS BIRTHDAY STEP UP */
+            else if (banner.getBannerType().equals("4"))
+            {
+                double tC = copper - (((platinum * 2.0) - platinum) + ((gold * 2.0) - gold));
+                double tS = silver;
+                double tG = gold * 2.0;
+                double tP = platinum * 2.0;
+
+                String stepThreeRates = "";
+                if (tP != 0)
+                    stepThreeRates += "[5 ★] " + tP + "%\n";
+                stepThreeRates += "[4 ★] " + tG + "%\n";
+                stepThreeRates += "[3 ★] " + tS + "%\n";
+                stepThreeRates += "[2 ★] " + tC + "%\n";
+                stepThreeRates += "**(4+ ★ Scout Rates 2.0x)**";
+                menu.setStepThreeRatesList(stepThreeRates);
+            }
 
             CHANNEL.sendMessage(menu.get().build());
         }

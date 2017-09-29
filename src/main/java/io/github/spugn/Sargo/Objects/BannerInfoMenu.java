@@ -50,6 +50,10 @@ public class BannerInfoMenu
             builder.appendField("- Step 5 Pull Rates -", stepFiveRatesList, true);
             builder.appendField("- Step 6 Pull Rates -", stepSixRatesList, true);
         }
+        else if (bannerType.equalsIgnoreCase("Birthday Step Up"))
+        {
+            builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+        }
 
         builder.withFooterText(Text.BANNER_INFO_FOOTER_1.get() + " " + (bannerID + 1) + " " + Text.BANNER_INFO_FOOTER_2.get());
     }

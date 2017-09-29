@@ -1,7 +1,6 @@
 package io.github.spugn.Sargo.Functions;
 
 import io.github.spugn.Sargo.Objects.*;
-import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import sx.blah.discord.handle.obj.IChannel;
@@ -15,30 +14,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
-public class WeaponScout
+public class TicketScout
 {
     private IChannel CHANNEL;
-    private int BANNER_ID;
     private String CHOICE;
     private String DISCORD_ID;
 
     private SettingsParser SETTINGS;
-    private List<Banner> BANNERS;
     private UserParser USER;
 
-    private double COPPER;
-    private double SILVER;
-    private double GOLD;
     private boolean IMAGE_DISABLED;
 
     private Random RNG;
-
-    private Banner SELECTED_BANNER;
-    private List<Weapon> BANNER_WEAPONS;
 
     private String imageString;
     private String imageStrings[];
@@ -48,22 +37,16 @@ public class WeaponScout
 
     private File tempUserDirectory;
 
-    private List<Weapon> weapons;
-
-    private int userMemoryDiamonds;
     private int userColBalance;
-    private int singleScoutPrice;
-    private int multiScoutPrice;
 
     private boolean generateImage;
-    private String weaponString;
+    private String itemString;
 
     private boolean stopScout;
 
-    public WeaponScout(IChannel channel, int bannerID, String choice, String discordID) throws RateLimitException
+    public TicketScout(IChannel channel, String choice, String discordID) throws RateLimitException
     {
         CHANNEL = channel;
-        BANNER_ID = bannerID - 1;
         CHOICE = choice;
         DISCORD_ID = discordID;
         generateImage = false;
@@ -73,55 +56,22 @@ public class WeaponScout
         initSettings();
         initUser();
         initVariables();
-        initMemoryDiamonds();
 
-        if (!(BANNER_ID < BANNERS.size() && BANNER_ID >= 0))
+        if (CHOICE.equalsIgnoreCase("ts") || CHOICE.equalsIgnoreCase("tsi"))
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
-            return;
-        }
-
-        initBanner();
-
-        if (BANNER_WEAPONS.size() <= 0)
-        {
-            CHANNEL.sendMessage(new WarningMessage("NO WEAPONS AVAILABLE", "This banner does not have a weapon scout.").get().build());
-            return;
-        }
-
-        if (CHOICE.equalsIgnoreCase("ws") || CHOICE.equalsIgnoreCase("wsi"))
-        {
-            if (userMemoryDiamonds < singleScoutPrice)
-            {
-                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse '**shop**' to get more Memory Diamonds.").get().build());
-                return;
-            }
-
-            if (CHOICE.equalsIgnoreCase("wsi") && !IMAGE_DISABLED)
+            if (CHOICE.equalsIgnoreCase("tsi") && !IMAGE_DISABLED)
             {
                 generateImage = true;
             }
-
-            userMemoryDiamonds -= singleScoutPrice;
-            USER.setMemoryDiamonds(userMemoryDiamonds);
 
             doSinglePull();
         }
-        else if (CHOICE.equalsIgnoreCase("wm") || CHOICE.equalsIgnoreCase("wmi"))
+        else if (CHOICE.equalsIgnoreCase("tm") || CHOICE.equalsIgnoreCase("tmi"))
         {
-            if (userMemoryDiamonds < multiScoutPrice)
-            {
-                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse '**shop**' to get more Memory Diamonds.").get().build());
-                return;
-            }
-
-            if (CHOICE.equalsIgnoreCase("wmi") && !IMAGE_DISABLED)
+            if (CHOICE.equalsIgnoreCase("tmi") && !IMAGE_DISABLED)
             {
                 generateImage = true;
             }
-
-            userMemoryDiamonds -= multiScoutPrice;
-            USER.setMemoryDiamonds(userMemoryDiamonds);
 
             doMultiPull();
         }
@@ -171,31 +121,17 @@ public class WeaponScout
         /* OPEN SETTINGS FILE */
         SETTINGS = new SettingsParser();
 
-        /* OPEN BANNERS FILE */
-        BannerParser bannersXML = new BannerParser();
-        BANNERS = bannersXML.readConfig(Files.BANNER_XML.get());
-
         /* OPEN USER FILE */
         USER = new UserParser(DISCORD_ID);
     }
 
     private void initSettings()
     {
-        COPPER = (int) (SETTINGS.getTwoRates() * 100);
-        SILVER = (int) (SETTINGS.getThreeRates() * 100);
-        GOLD = (int) (SETTINGS.getFourRates() * 100);
         IMAGE_DISABLED = SETTINGS.isDisableImages();
-    }
-
-    private void initBanner()
-    {
-        SELECTED_BANNER = BANNERS.get(BANNER_ID);
-        BANNER_WEAPONS = SELECTED_BANNER.getWeapons();
     }
 
     private void initUser()
     {
-        userMemoryDiamonds = USER.getMemoryDiamonds();
         userColBalance = USER.getColBalance();
     }
 
@@ -206,17 +142,8 @@ public class WeaponScout
         scoutMenu = new WeaponScoutMenu();
 
         imageStrings = new String[11];
-        weapons = new ArrayList<>();
-
-        weaponString = "";
 
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
-    }
-
-    private void initMemoryDiamonds()
-    {
-        singleScoutPrice = 15;
-        multiScoutPrice = 150;
     }
 
 
@@ -225,6 +152,7 @@ public class WeaponScout
 
     private void doSinglePull()
     {
+        /*
         if (generateImage && !IMAGE_DISABLED)
         {
             tempUserDirectory.mkdir();
@@ -234,10 +162,12 @@ public class WeaponScout
 
         generateImageString();
         drawImage(imageString);
+        */
     }
 
     private void doMultiPull()
     {
+        /*
         if (generateImage && !IMAGE_DISABLED)
         {
             tempUserDirectory = new File("images/temp_" + DISCORD_ID);
@@ -251,6 +181,7 @@ public class WeaponScout
 
         generateImageStrings();
         drawImage(imageStrings);
+        */
     }
 
     /* IMAGE DRAWING ================================================================================================ */
@@ -258,16 +189,19 @@ public class WeaponScout
 
     private void generateImageString()
     {
+        /*
         if (weapons.get(0).getRarity().equals("4"))
         {
             USER.addWeapon(weapons.get(0));
         }
         weaponString += weapons.get(0).toString() + "\n";
         imageString = weapons.get(0).getImagePath();
+        */
     }
 
     private void generateImageStrings()
     {
+        /*
         for (int i = 0 ; i < 11 ; i++)
         {
             if (weapons.get(i).getRarity().equals("4"))
@@ -277,6 +211,7 @@ public class WeaponScout
             weaponString += weapons.get(i).toString() + "\n";
             imageStrings[i] = weapons.get(i).getImagePath();
         }
+        */
     }
 
     public void drawImage(String imageString)
@@ -363,6 +298,7 @@ public class WeaponScout
 
     private int scout()
     {
+        /*
         double d;
         d = RNG.nextDouble() * 100;
 
@@ -382,10 +318,13 @@ public class WeaponScout
         {
             return 2;
         }
+        */
+        return 0;
     }
 
     private Weapon getWeapon(int rarity)
     {
+        /*
         Weapon weapon;
         if (rarity == 2)
         {
@@ -424,6 +363,8 @@ public class WeaponScout
 
         giveCol(weapon);
         return weapon;
+        */
+        return null;
     }
 
 
@@ -437,8 +378,8 @@ public class WeaponScout
 
         /* EDIT MENU */
         scoutMenu.setThumbnail(chestImage);
-        scoutMenu.setBannerName(SELECTED_BANNER.getBannerName());
-        scoutMenu.setMdRemain(userMemoryDiamonds);
+        //scoutMenu.setBannerName(SELECTED_BANNER.getBannerName());
+        //scoutMenu.setMdRemain(userMemoryDiamonds);
         scoutMenu.setUserName(CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator());
 
         /* EDIT DEPENDING ON TYPE OF PULL */
@@ -453,12 +394,13 @@ public class WeaponScout
 
         if (!generateImage)
         {
-            scoutMenu.setWeaponString(weaponString);
+            //scoutMenu.setWeaponString(weaponString);
         }
     }
 
     private void chest()
     {
+        /*
         switch (Integer.parseInt(weapons.get(0).getRarity()))
         {
             case 2:
@@ -477,6 +419,7 @@ public class WeaponScout
                 chestImage = Images.CHEST_BROWN.getUrl();
                 break;
         }
+        */
     }
 
 

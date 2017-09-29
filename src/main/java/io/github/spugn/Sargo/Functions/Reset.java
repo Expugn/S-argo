@@ -143,13 +143,17 @@ public class Reset
                 if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType().equalsIgnoreCase("0")))
                 {
                     int bannerType = Integer.parseInt(banners.get(bannerID).getBannerType());
-                    if (bannerType == 1 || bannerType == 3)
+                    if (bannerType == 1 || bannerType == 3 || bannerType == 4)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 1);
                     }
                     else if (bannerType == 2)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 0);
+                    }
+                    else if (bannerType == 5)
+                    {
+                        user.changeValue(banners.get(bannerID).getBannerName(), -1);
                     }
                 }
 
@@ -186,13 +190,20 @@ public class Reset
                     String dataString = "";
                     int bannerType = Integer.parseInt(banners.get(bannerID).getBannerType());
 
-                    if (bannerType == 1 || bannerType == 3)
+                    if (bannerType == 1 || bannerType == 3 || bannerType == 4)
                     {
                         dataString = "Step " + bannerData + " -> Step 1";
                     }
-                    else if (bannerType == 2)
+                    else if (bannerType == 2 || bannerType == 5)
                     {
-                        dataString = "Record Crystals: " + bannerData + " -> 0";
+                        if (bannerData < 0)
+                        {
+                            dataString = "Record Crystals: 0 -> 0";
+                        }
+                        else
+                        {
+                            dataString = "Record Crystals: " + bannerData + " -> 0";
+                        }
                     }
                     builder.appendField("- Data -", dataString, false);
                     hasData = true;

@@ -15,6 +15,10 @@ Increased 1.5x gold character chance on Step 3, Increased 2.0x gold character ch
 Record Crystals given every multi scout that can be used in a guaranteed scout.
 * **Step Up v2 Scouts**  
 Same thing as Step Up, but features one guaranteed platinum character on Step 5 and 2.0x platinum character rates on Step 6 which repeats.
+* **Birthday Step Up Scouts**  
+50% off multi scout on Step 1, Increased 2.0x gold and platinum character chance on Step 3.
+* **Record Crystal v2 Scouts**  
+Same thing as Record Crystal, but the first scout is 50% off.
 * **Weapon Scouts**  
 Same as normal scouts, but with weapons instead of characters.
 
@@ -113,6 +117,10 @@ You can modify the settings in there as you please, and then delete your old Set
   
 > **Legacy ∞**  
   For beta testing S'argo before it's official release :HAhaa:. Thanks guys!
+  
+> **Discord Dataminers (Salieri#6041 and Ntogg#2809)**  
+  For releasing game assets of new content (images/prefixes/etc) before they're announced so banners/images
+  can be updated quicker.
 
 ## Other Stuff
 This is a non-profit fan project with the purpose of practice and entertainment.

@@ -50,11 +50,11 @@ public class ScoutMenu
             typeData = "Multi Pull";
             builder.withTitle("[" + bannerType + "] - " + typeData);
         }
-        else if (bannerType.equalsIgnoreCase("Step Up") || bannerType.equalsIgnoreCase("Step Up v2"))
+        else if (bannerType.equalsIgnoreCase("Step Up") || bannerType.equalsIgnoreCase("Step Up v2") || bannerType.equalsIgnoreCase("Birthday Step Up"))
         {
             builder.withTitle("[" + bannerType + "] - Step " + typeData);
         }
-        else if (bannerType.equalsIgnoreCase("Record Crystal"))
+        else if (bannerType.equalsIgnoreCase("Record Crystal") || bannerType.equalsIgnoreCase("Record Crystal v2"))
         {
             builder.withTitle("[" + bannerType + "] - +" + rcGet + " Record Crystals (" + typeData + ")");
         }
