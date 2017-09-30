@@ -196,7 +196,14 @@ public class Scout
         catch (RateLimitException e)
         {
             EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
-            display.edit(rateLimited.build());
+            try
+            {
+                display.edit(rateLimited.build());
+            }
+            catch (NullPointerException a)
+            {
+
+            }
             deleteTempDirectory();
             return;
         }
