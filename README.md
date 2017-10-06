@@ -4,7 +4,7 @@ S'argo is a Discord bot using the Discord4J API wrapper.
 This Discord bot's main use is to be a "summon simulator" for the mobile game *Sword Art Online: Memory Defrag*.
 
 ## Features
-S'argo features the scouting feature from *Sword Art Online: Memory Defrag*.
+S'argo simulates the scouting system from *Sword Art Online: Memory Defrag*.
 
 This includes:
 * **Normal Scouts**  
@@ -19,6 +19,8 @@ Same thing as Step Up, but features one guaranteed platinum character on Step 5 
 50% off multi scout on Step 1, Increased 2.0x gold and platinum character chance on Step 3.
 * **Record Crystal v2 Scouts**  
 Same thing as Record Crystal, but the first scout is 50% off.
+* **Memorial Scouts**  
+Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond.
 * **Weapon Scouts**  
 Same as normal scouts, but with weapons instead of characters.
 

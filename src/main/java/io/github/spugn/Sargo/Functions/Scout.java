@@ -119,6 +119,12 @@ public class Scout
         }
         else if (CHOICE.equalsIgnoreCase("m") || CHOICE.equalsIgnoreCase("mi"))
         {
+            if (bannerType == 6)
+            {
+                CHANNEL.sendMessage(new WarningMessage("NO MULTI SCOUTS ALLOWED", "This banner only has single scouts available.").get().build());
+                return;
+            }
+
             if (userMemoryDiamonds < multiScoutPrice)
             {
                 CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse '**shop**' to get more Memory Diamonds.").get().build());
@@ -358,6 +364,10 @@ public class Scout
                 default:
                     break;
             }
+        }
+        else if (bannerType == 6)
+        {
+            singleScoutPrice = 1;
         }
     }
 
