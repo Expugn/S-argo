@@ -25,6 +25,7 @@ public class CommandManager
     private final SettingsParser SETTINGS;
     private final DiscordCommand DISCORD_COMMAND;
     private final CommandLine COMMAND_LINE;
+    private String botName;
 
     public CommandManager(IDiscordClient client, MessageReceivedEvent event)
     {
@@ -41,13 +42,22 @@ public class CommandManager
         DISCORD_COMMAND.setCommandPrefix(SETTINGS.getCommandPrefix());
         DISCORD_COMMAND.setDeleteUserMessage(SETTINGS.isDeleteUserMessage());
 
-        if (DISCORD_COMMAND.getUseMention())
+        if (SETTINGS.getSecretWord().equalsIgnoreCase("Ushi"))
         {
-            client.changePlayingText("S'argo | @" + client.getOurUser().getName() + " help");
+            botName = "S'ushi";
         }
         else
         {
-            client.changePlayingText("S'argo | " + DISCORD_COMMAND.getCommandPrefix() + "help");
+            botName = "S'argo";
+        }
+
+        if (DISCORD_COMMAND.getUseMention())
+        {
+            client.changePlayingText(botName + " | @" + client.getOurUser().getName() + " help");
+        }
+        else
+        {
+            client.changePlayingText(botName + " | " + DISCORD_COMMAND.getCommandPrefix() + "help");
         }
 
         COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
@@ -204,9 +214,9 @@ public class CommandManager
                     {
                         quantity = 1;
                     }
-                    else if (quantity > 10)
+                    else if (quantity > SETTINGS.getMaxShopLimit())
                     {
-                        quantity = 10;
+                        quantity = SETTINGS.getMaxShopLimit();
                     }
 
                     new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), quantity);

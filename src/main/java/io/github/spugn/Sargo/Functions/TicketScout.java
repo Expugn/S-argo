@@ -35,7 +35,7 @@ public class TicketScout
     private String imageStrings[];
 
     private TicketScoutMenu scoutMenu;
-    private String chestImage;
+    private String ticketImage;
 
     private List<Item> items;
 
@@ -561,11 +561,11 @@ public class TicketScout
 
     private void buildScoutMenu()
     {
-        /* GET CHEST DATA: CHEST IMAGE */
-        chest();
+        /* GET TICKET DATA: TICKET IMAGE */
+        ticket();
 
         /* EDIT MENU */
-        scoutMenu.setThumbnail(chestImage);
+        scoutMenu.setThumbnail(ticketImage);
         if (isPlusTicket)
         {
             scoutMenu.setBannerName("Plus Ticket Scout");
@@ -594,15 +594,15 @@ public class TicketScout
         }
     }
 
-    private void chest()
+    private void ticket()
     {
         if (isPlusTicket)
         {
-            chestImage = Images.CHEST_BLUE.getUrl();
+            ticketImage = Images.TICKET_PLUS.getUrl();
         }
         else
         {
-            chestImage = Images.CHEST_BROWN.getUrl();
+            ticketImage = Images.TICKET_NORMAL.getUrl();
         }
     }
 

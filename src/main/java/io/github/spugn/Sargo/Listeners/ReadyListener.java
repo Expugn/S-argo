@@ -9,6 +9,7 @@ import sx.blah.discord.handle.impl.events.ReadyEvent;
 public class ReadyListener
 {
     private final IDiscordClient CLIENT;
+    private String botName;
 
     public ReadyListener(IDiscordClient discordClient)
     {
@@ -25,13 +26,23 @@ public class ReadyListener
             new GUI(CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
         }
 
-        if (settings.isUseMention())
+        if (settings.getSecretWord().equalsIgnoreCase("Ushi"))
         {
-            CLIENT.changePlayingText("S'argo | @" + CLIENT.getOurUser().getName() + " help");
+            botName = "S'ushi";
         }
         else
         {
-            CLIENT.changePlayingText("S'argo | " + settings.getCommandPrefix() + "help");
+            botName = "S'argo";
+        }
+
+
+        if (settings.isUseMention())
+        {
+            CLIENT.changePlayingText(botName + " | @" + CLIENT.getOurUser().getName() + " help");
+        }
+        else
+        {
+            CLIENT.changePlayingText(botName + " | " + settings.getCommandPrefix() + "help");
         }
     }
 }

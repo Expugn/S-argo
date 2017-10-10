@@ -27,7 +27,6 @@ public enum Text
     BANNER_INFO_CHARACTER_HEADER("- Characters -"),
     BANNER_INFO_RATES_HEADER("- Pull Rates -"),
     BANNER_INFO_FOOTER_1("Use 'scout "),
-    BANNER_INFO_FOOTER_2(" [s/si | ws/wsi | m/mi | wm/wmi | rc/rci]' to scout."),
 
     /* END OF TEXT */
     ;

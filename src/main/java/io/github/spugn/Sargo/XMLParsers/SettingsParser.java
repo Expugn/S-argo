@@ -23,7 +23,9 @@ public class SettingsParser
 
     static final String BOT_OWNER_ID = "BotOwnerID";
     static final String GITHUB_DATA_REPOSITORY = "GitHubDataRepository";
+    static final String SECRET_WORD = "SecretWord";
     static final String DISABLE_IMAGES = "DisableImages";
+    static final String MAX_SHOP_LIMIT = "MaxShopLimit";
 
     static final String IGNORED_CHANNEL = "iChannel";
     static final String CHANNEL_NAME = "channelName";
@@ -58,8 +60,10 @@ public class SettingsParser
     private List<String> ignoredChannelNames;
     private String botOwnerDiscordID;
     private String gitHubRepoURL;
+    private String secretWord;
     private boolean isDisableImages;
     private boolean isNoGUI;
+    private int maxShopLimit;
 
     public SettingsParser()
     {
@@ -84,6 +88,11 @@ public class SettingsParser
     public boolean isDeleteUserMessage()
     {
         return deleteUserMessage;
+    }
+
+    public int getMaxShopLimit()
+    {
+        return maxShopLimit;
     }
 
     public double getTwoRates()
@@ -134,6 +143,11 @@ public class SettingsParser
     public String getGitHubRepoURL()
     {
         return gitHubRepoURL;
+    }
+
+    public String getSecretWord()
+    {
+        return secretWord;
     }
 
     public String getBotOwnerDiscordID()
@@ -223,6 +237,14 @@ public class SettingsParser
                         continue;
                     }
 
+                    /* GET AND SAVE SECRET WORD */
+                    if (event.asStartElement().getName().getLocalPart().equals(SECRET_WORD))
+                    {
+                        event = eventReader.nextEvent();
+                        secretWord = event.asCharacters().getData();
+                        continue;
+                    }
+
                     /* GET AND SAVE DISABLE IMAGES */
                     if (event.asStartElement().getName().getLocalPart().equals(DISABLE_IMAGES))
                     {
@@ -236,6 +258,14 @@ public class SettingsParser
                     {
                         event = eventReader.nextEvent();
                         isNoGUI = Boolean.parseBoolean(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE MAX SHOP LIMIT */
+                    if (event.asStartElement().getName().getLocalPart().equals(MAX_SHOP_LIMIT))
+                    {
+                        event = eventReader.nextEvent();
+                        maxShopLimit = Integer.parseInt(event.asCharacters().getData());
                         continue;
                     }
 

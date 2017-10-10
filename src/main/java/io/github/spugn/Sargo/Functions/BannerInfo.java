@@ -6,6 +6,7 @@ import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import sx.blah.discord.handle.obj.IChannel;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class BannerInfo
@@ -17,6 +18,8 @@ public class BannerInfo
     private double silver;
     private double gold;
     private double platinum;
+
+    private List<Double> recordCrystal;
 
     private int bannerID;
 
@@ -54,6 +57,7 @@ public class BannerInfo
         silver = (int) (settings.getThreeRates() * 100);
         gold = (int) (settings.getFourRates() * 100);
         platinum = (int) (settings.getFiveRates() * 100);
+        recordCrystal = settings.getRecordCrystalRates();
 
         getBannerInfo();
     }
@@ -256,6 +260,22 @@ public class BannerInfo
                 stepThreeRates += "[2 ★] " + tC + "%\n";
                 stepThreeRates += "**(4+ ★ Scout Rates 2.0x)**";
                 menu.setStepThreeRatesList(stepThreeRates);
+            }
+            else if (banner.getBannerType().equals("2") || banner.getBannerType().equals("5"))
+            {
+                int counter = 0;
+                String recordCrystalRates = "";
+                DecimalFormat df = new DecimalFormat("0.0");
+
+                for (double d : recordCrystal)
+                {
+                    if (d != 0)
+                    {
+                        recordCrystalRates += "[" + ++counter + " RC] " + df.format((d * 100)) + "%\n";
+                    }
+                }
+
+                menu.setRecordCrystalRatesList(recordCrystalRates);
             }
 
             CHANNEL.sendMessage(menu.get().build());

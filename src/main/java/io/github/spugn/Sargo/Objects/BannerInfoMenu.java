@@ -15,6 +15,7 @@ public class BannerInfoMenu
     private String stepThreeRatesList;
     private String stepFiveRatesList;
     private String stepSixRatesList;
+    private String recordCrystalRatesList;
     private int bannerID;
     private String imageURL;
 
@@ -53,6 +54,11 @@ public class BannerInfoMenu
         else if (bannerType.equalsIgnoreCase("Birthday Step Up"))
         {
             builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+        }
+        else if (bannerType.equalsIgnoreCase("Record Crystal") ||
+                bannerType.equalsIgnoreCase("Record Crystal v2"))
+        {
+            builder.appendField("- Record Crystal Rates -", recordCrystalRatesList, true);
         }
 
         String footer = "[s/si";
@@ -159,5 +165,10 @@ public class BannerInfoMenu
     public void setStepSixRatesList(String stepSixRatesList)
     {
         this.stepSixRatesList = stepSixRatesList;
+    }
+
+    public void setRecordCrystalRatesList(String recordCrystalRatesList)
+    {
+        this.recordCrystalRatesList = recordCrystalRatesList;
     }
 }

@@ -23,6 +23,8 @@ Same thing as Record Crystal, but the first scout is 50% off.
 Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond.
 * **Weapon Scouts**  
 Same as normal scouts, but with weapons instead of characters.
+* **Normal/Plus Ticket Scouts**  
+A special type of scout that doesn't use Memory Diamonds.
 
 Unlike the other *Sword Art Online: Memory Defrag* summon simulators, S'argo features user data 
 saving so users can see their character collection and get Hacking Crystals for duplicate characters
@@ -42,7 +44,9 @@ Invite link for the server is down in Related Links.
 '**scout** [Banner ID]' - View banner information.  
 '**scout** [Banner ID] [s(ingle)(i) | m(ulti)(i) | rc(record crystal)(i)]' - Scout a banner.  
 '**scout** [Banner ID] [ws(ingle)(i) | wm(ulti)(i)]' - Scout a weapon banner.  
-**Adding an "i" after s/ws/m/wm/rc will display an image result.**
+'**scout** [Banner ID] [nts(ingle)(i) | ntm(ulti)(i)]' - Scout using normal tickets.  
+'**scout** [Banner ID] [pts(ingle)(i) | ptm(ulti)(i)]' - Scout using plus tickets.  
+**Adding an "i" after your scout type will display an image result.**
 
 - **USER PROFILE**  
 '**profile**' - View your information and character collection progress.  

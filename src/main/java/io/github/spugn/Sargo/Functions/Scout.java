@@ -887,88 +887,110 @@ public class Scout
 
     private void argo()
     {
+        String secretWord = SETTINGS.getSecretWord();
         double aText = RNG.nextDouble();
         double aFace = RNG.nextDouble();
 
+        String text1 = Text.ARGO_1.get();
+        String text2 = Text.ARGO_2.get();
+        String text3 = Text.ARGO_3.get();
+        String text4 = Text.ARGO_4.get();
+
+        String image1 = Images.ARGO_SMILE.getUrl();
+        String image2 = Images.ARGO_GRIN.getUrl();
+        String image3 = Images.ARGO_SMUG.getUrl();
+        String image4 = Images.ARGO_FLOWERS.getUrl();
+
+        if (secretWord.equalsIgnoreCase("Ushi"))
+        {
+            text1 = "*\"Argo, sparkle smile!\"*";
+            text2 = "*\"Argo, sparkle smile!\"*";
+            text3 = "*\"Give me something that is super good, Argo.\"*";
+            text4 = "*\"Argo, sparkle!\"*";
+
+            image1 = Images.USHI_DISGUST.getUrl();
+            image2 = Images.USHI_GRIN.getUrl();
+            image3 = Images.USHI_HAPPY.getUrl();
+            image4 = Images.USHI_GASM.getUrl();
+        }
+
         if (aText < 0.25)
         {
-            argoText = Text.ARGO_1.get();
+            argoText = text1;
         }
         else if (aText < 0.5)
         {
-            argoText = Text.ARGO_2.get();
+            argoText = text2;
         }
         else if (aText < 0.75)
         {
-            argoText = Text.ARGO_3.get();
+            argoText = text3;
         }
         else
         {
-            argoText = Text.ARGO_4.get();
+            argoText = text4;
         }
-
-
 
         switch (highestRarity)
         {
             case 2:
                 if (aFace < 0.75)
                 {
-                    argoFace = Images.ARGO_SMILE.getUrl();
+                    argoFace = image1;
                 }
                 else
                 {
-                    argoFace = Images.ARGO_GRIN.getUrl();
+                    argoFace = image2;
                 }
                 break;
 
             case 3:
                 if (aFace < 0.5)
                 {
-                    argoFace = Images.ARGO_SMILE.getUrl();
+                    argoFace = image1;
                 }
                 else
                 {
-                    argoFace = Images.ARGO_GRIN.getUrl();
+                    argoFace = image2;
                 }
                 break;
 
             case 4:
                 if (aFace < 0.1)
                 {
-                    argoFace = Images.ARGO_SMILE.getUrl();
+                    argoFace = image1;
                 }
                 else if (aFace < 0.35)
                 {
-                    argoFace = Images.ARGO_GRIN.getUrl();
+                    argoFace = image2;
                 }
                 else
                 {
-                    argoFace = Images.ARGO_SMUG.getUrl();
+                    argoFace = image3;
                 }
                 break;
 
             case 5:
                 if (aFace < 0.1)
                 {
-                    argoFace = Images.ARGO_SMILE.getUrl();
+                    argoFace = image1;
                 }
                 else if (aFace < 0.2)
                 {
-                    argoFace = Images.ARGO_GRIN.getUrl();
+                    argoFace = image2;
                 }
                 else if (aFace < 0.4)
                 {
-                    argoFace = Images.ARGO_SMUG.getUrl();
+                    argoFace = image3;
                 }
                 else
                 {
-                    argoFace = Images.ARGO_FLOWERS.getUrl();
+                    argoFace = image4;
                 }
                 break;
 
             default:
-                argoFace = Images.ARGO_SMILE.getUrl();
+                argoFace = image1;
                 break;
         }
     }

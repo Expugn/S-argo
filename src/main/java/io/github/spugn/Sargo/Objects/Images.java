@@ -14,6 +14,13 @@ public enum Images
     ARGO_SMUG("images/Argo/Argo_Smug.png"),
     ARGO_FLOWERS("images/Argo/Argo_Flowers.png"),
 
+    /* images/Ushi/ */
+    USHI_DISGUST("images/Ushi/Ushi_Disgust.png"),
+    USHI_GRIN("images/Ushi/Ushi_Grin.png"),
+    USHI_HAPPY("images/Ushi/Ushi_Happy.png"),
+    USHI_GASM("images/Ushi/Ushi_Gasm.png"),
+
+
     /* images/Miscellaneous/ */
     SCOUT_ICON("images/Miscellaneous/Scout_Icon.png"),
     MEMORY_DIAMOND_ICON("images/Miscellaneous/Memory_Diamond_Icon.png"),
@@ -25,6 +32,10 @@ public enum Images
     CHEST_BROWN("images/Chest/Brown.png"),
     CHEST_BLUE("images/Chest/Blue.png"),
     CHEST_RED("images/Chest/Red.png"),
+
+    /* images/Ticket/*/
+    TICKET_NORMAL("images/Ticket/Normal.png"),
+    TICKET_PLUS("images/Ticket/Plus.png"),
 
     /* END OF IMAGES */
     ;
