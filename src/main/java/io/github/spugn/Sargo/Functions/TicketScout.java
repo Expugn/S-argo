@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TicketScout
@@ -32,15 +34,22 @@ public class TicketScout
     private String imageString;
     private String imageStrings[];
 
-    private WeaponScoutMenu scoutMenu;
+    private TicketScoutMenu scoutMenu;
     private String chestImage;
+
+    private List<Item> items;
+
+    private List<Item> attributeItemsList;
+    private List<Item> medallionsAndKeyList;
 
     private File tempUserDirectory;
 
     private int userColBalance;
+    private int userTotalScouts;
 
     private boolean generateImage;
     private String itemString;
+    private boolean isPlusTicket;
 
     private boolean stopScout;
 
@@ -57,22 +66,46 @@ public class TicketScout
         initUser();
         initVariables();
 
-        if (CHOICE.equalsIgnoreCase("ts") || CHOICE.equalsIgnoreCase("tsi"))
+        if (CHOICE.equalsIgnoreCase("nts") || CHOICE.equalsIgnoreCase("ntsi"))
         {
-            if (CHOICE.equalsIgnoreCase("tsi") && !IMAGE_DISABLED)
+            if (CHOICE.equalsIgnoreCase("ntsi") && !IMAGE_DISABLED)
             {
                 generateImage = true;
             }
 
+            initItems();
             doSinglePull();
         }
-        else if (CHOICE.equalsIgnoreCase("tm") || CHOICE.equalsIgnoreCase("tmi"))
+        else if (CHOICE.equalsIgnoreCase("ntm") || CHOICE.equalsIgnoreCase("ntmi"))
         {
-            if (CHOICE.equalsIgnoreCase("tmi") && !IMAGE_DISABLED)
+            if (CHOICE.equalsIgnoreCase("ntmi") && !IMAGE_DISABLED)
             {
                 generateImage = true;
             }
 
+            initItems();
+            doMultiPull();
+        }
+        else if (CHOICE.equalsIgnoreCase("pts") || CHOICE.equalsIgnoreCase("ptsi"))
+        {
+            if (CHOICE.equalsIgnoreCase("ptsi") && !IMAGE_DISABLED)
+            {
+                generateImage = true;
+            }
+            isPlusTicket = true;
+
+            initItems();
+            doSinglePull();
+        }
+        else if (CHOICE.equalsIgnoreCase("ptm") || CHOICE.equalsIgnoreCase("ptmi"))
+        {
+            if (CHOICE.equalsIgnoreCase("ptmi") && !IMAGE_DISABLED)
+            {
+                generateImage = true;
+            }
+            isPlusTicket = true;
+
+            initItems();
             doMultiPull();
         }
         else
@@ -99,7 +132,7 @@ public class TicketScout
         }
         catch (FileNotFoundException e)
         {
-            CHANNEL.sendMessage(new WarningMessage("IMAGE NOT FOUND", "Unable to display scout result.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("FAILED TO GENERATE IMAGE", "Unable to display scout result.").get().build());
             display.delete();
             deleteTempDirectory();
             return;
@@ -119,6 +152,7 @@ public class TicketScout
             return;
         }
 
+        USER.upgradeExchangeSwords();
         USER.saveData();
         deleteTempDirectory();
     }
@@ -140,17 +174,70 @@ public class TicketScout
     private void initUser()
     {
         userColBalance = USER.getColBalance();
+        userTotalScouts = USER.getTotalTicketScout();
     }
 
     private void initVariables()
     {
         RNG = new Random(System.currentTimeMillis());
 
-        scoutMenu = new WeaponScoutMenu();
+        scoutMenu = new TicketScoutMenu();
 
         imageStrings = new String[11];
+        items = new ArrayList<>();
+        itemString = "";
 
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
+
+        attributeItemsList = new ArrayList<>();
+        medallionsAndKeyList = new ArrayList<>();
+    }
+
+    private void initItems()
+    {
+        if (!isPlusTicket)
+        {
+            attributeItemsList.add(new Item("HP Shard", 50, 2500));
+            attributeItemsList.add(new Item("MP Shard", 50, 2500));
+            attributeItemsList.add(new Item("Attack Shard", 50, 2500));
+            attributeItemsList.add(new Item("Defense Shard", 50, 2500));
+            attributeItemsList.add(new Item("Critical Shard", 50, 2500));
+            attributeItemsList.add(new Item("Skill Shard", 50, 2500));
+            attributeItemsList.add(new Item("HP Crystal", 50, 12500));
+            attributeItemsList.add(new Item("MP Crystal", 50, 12500));
+            attributeItemsList.add(new Item("Attack Crystal", 50, 12500));
+            attributeItemsList.add(new Item("Defense Crystal", 50, 12500));
+            attributeItemsList.add(new Item("Critical Crystal", 50, 12500));
+            attributeItemsList.add(new Item("Skill Crystal", 50, 12500));
+            attributeItemsList.add(new Item("Holy HP Crystal", 10, 10000));
+            attributeItemsList.add(new Item("Holy MP Crystal", 10, 10000));
+            attributeItemsList.add(new Item("Holy Attack Crystal", 10, 10000));
+            attributeItemsList.add(new Item("Holy Defense Crystal", 10, 10000));
+            attributeItemsList.add(new Item("Holy Critical Crystal", 10, 10000));
+            attributeItemsList.add(new Item("Holy Skill Crystal", 10, 10000));
+            attributeItemsList.add(new Item("EXP X-Potion", 3, 3000));
+            attributeItemsList.add(new Item("EXP Hi-Potion", 5, 1250));
+            attributeItemsList.add(new Item("EXP Potion", 10, 500));
+
+            medallionsAndKeyList.add(new Item("Lv. 80 Decryption Key", 1, 0));
+            medallionsAndKeyList.add(new Item("Void Medallion", 1, 2500));
+            medallionsAndKeyList.add(new Item("Fire Medallion", 1, 2500));
+            medallionsAndKeyList.add(new Item("Water Medallion", 1, 2500));
+            medallionsAndKeyList.add(new Item("Wind Medallion", 1, 2500));
+            medallionsAndKeyList.add(new Item("Holy Medallion", 1, 2500));
+            medallionsAndKeyList.add(new Item("Dark Medallion", 1, 2500));
+            medallionsAndKeyList.add(new Item("Earth Medallion", 1, 2500));
+        }
+        else
+        {
+            medallionsAndKeyList.add(new Item("Void Medallion", 3, 7500));
+            medallionsAndKeyList.add(new Item("Fire Medallion", 3, 7500));
+            medallionsAndKeyList.add(new Item("Water Medallion", 3, 7500));
+            medallionsAndKeyList.add(new Item("Wind Medallion", 3, 7500));
+            medallionsAndKeyList.add(new Item("Holy Medallion", 3, 7500));
+            medallionsAndKeyList.add(new Item("Dark Medallion", 3, 7500));
+            medallionsAndKeyList.add(new Item("Earth Medallion", 3, 7500));
+        }
     }
 
 
@@ -159,36 +246,37 @@ public class TicketScout
 
     private void doSinglePull()
     {
-        /*
         if (generateImage && !IMAGE_DISABLED)
         {
             tempUserDirectory.mkdir();
         }
 
-        weapons.add(getWeapon(scout()));
+        userTotalScouts += 1;
+        USER.setTotalTicketScout(userTotalScouts);
+
+        items.add(getItem(scout()));
 
         generateImageString();
         drawImage(imageString);
-        */
     }
 
     private void doMultiPull()
     {
-        /*
         if (generateImage && !IMAGE_DISABLED)
         {
-            tempUserDirectory = new File("images/temp_" + DISCORD_ID);
             tempUserDirectory.mkdir();
         }
 
+        userTotalScouts += 11;
+        USER.setTotalTicketScout(userTotalScouts);
+
         for (int i = 0 ; i < 11 ; i++)
         {
-            weapons.add(getWeapon(scout()));
+            items.add(getItem(scout()));
         }
 
         generateImageStrings();
         drawImage(imageStrings);
-        */
     }
 
     /* IMAGE DRAWING ================================================================================================ */
@@ -196,29 +284,39 @@ public class TicketScout
 
     private void generateImageString()
     {
-        /*
-        if (weapons.get(0).getRarity().equals("4"))
+        if (items.get(0).getValue() < 0)
         {
-            USER.addWeapon(weapons.get(0));
+            if (items.get(0).getName().equals("Exchange Sword R2"))
+                USER.setR2ExchangeSwords(USER.getR2ExchangeSwords() + items.get(0).getQuantity());
+            if (items.get(0).getName().equals("Exchange Sword R3"))
+                USER.setR3ExchangeSwords(USER.getR3ExchangeSwords() + items.get(0).getQuantity());
+            if (items.get(0).getName().equals("Exchange Sword R4"))
+                USER.setR4ExchangeSwords(USER.getR4ExchangeSwords() + items.get(0).getQuantity());
+            if (items.get(0).getName().equals("Rainbow Essence"))
+                USER.setRainbowEssence(USER.getRainbowEssence() + items.get(0).getQuantity());
         }
-        weaponString += weapons.get(0).toString() + "\n";
-        imageString = weapons.get(0).getImagePath();
-        */
+        itemString += items.get(0).toString() + "\n";
+        imageString = items.get(0).getImagePath();
     }
 
     private void generateImageStrings()
     {
-        /*
         for (int i = 0 ; i < 11 ; i++)
         {
-            if (weapons.get(i).getRarity().equals("4"))
+            if (items.get(i).getValue() < 0)
             {
-                USER.addWeapon(weapons.get(i));
+                if (items.get(i).getName().equals("Exchange Sword R2"))
+                    USER.setR2ExchangeSwords(USER.getR2ExchangeSwords() + items.get(i).getQuantity());
+                if (items.get(i).getName().equals("Exchange Sword R3"))
+                    USER.setR3ExchangeSwords(USER.getR3ExchangeSwords() + items.get(i).getQuantity());
+                if (items.get(i).getName().equals("Exchange Sword R4"))
+                    USER.setR4ExchangeSwords(USER.getR4ExchangeSwords() + items.get(i).getQuantity());
+                if (items.get(i).getName().equals("Rainbow Essence"))
+                    USER.setRainbowEssence(USER.getRainbowEssence() + items.get(i).getQuantity());
             }
-            weaponString += weapons.get(i).toString() + "\n";
-            imageStrings[i] = weapons.get(i).getImagePath();
+            itemString += items.get(i).toString() + "\n";
+            imageStrings[i] = items.get(i).getImagePath();
         }
-        */
     }
 
     public void drawImage(String imageString)
@@ -305,73 +403,156 @@ public class TicketScout
 
     private int scout()
     {
-        /*
         double d;
         d = RNG.nextDouble() * 100;
 
-        if (d < COPPER)
+        if (!isPlusTicket)
         {
-            return 2;
-        }
-        else if (d < COPPER + SILVER)
-        {
-            return 3;
-        }
-        else if (d < COPPER + SILVER + GOLD)
-        {
-            return 4;
+            double exchangeSword = 5;
+            double attributeItems = 63;
+            double medallionsAndKey = 16;
+            double stardust = 12;
+            double rainbowEssence = 1;
+
+            /* EXCHANGE SWORD R2 */
+            if (d < exchangeSword)
+            {
+                return 1;
+            }
+            /* SHARD / CRYSTAL / HOLY CRYSTAL / EXP POTION */
+            else if (d < exchangeSword + attributeItems)
+            {
+                return 2;
+            }
+            /* MEDALLIONS AND LV. 80 KEY */
+            else if (d < exchangeSword + attributeItems + medallionsAndKey)
+            {
+                return 3;
+            }
+            /* STARDUST */
+            else if (d < exchangeSword + attributeItems + medallionsAndKey + stardust)
+            {
+                return 4;
+            }
+            /* RAINBOW ESSENCE */
+            else if (d < exchangeSword + attributeItems + medallionsAndKey + stardust + rainbowEssence)
+            {
+                return 5;
+            }
+            /* COL */
+            else
+            {
+                return 6;
+            }
         }
         else
         {
-            return 2;
+            double exchangeSwordR3 = 8;
+            double exchangeSwordR4 = 1;
+            double medallions = 63;
+            double stardust = 24;
+
+            /* EXCHANGE SWORD R3 */
+            if (d < exchangeSwordR3)
+            {
+                return 1;
+            }
+            /* EXCHANGE SWORD R4 */
+            else if (d < exchangeSwordR3 + exchangeSwordR4)
+            {
+                return 2;
+            }
+            /* MEDALLIONS */
+            else if (d < exchangeSwordR3 + exchangeSwordR4 + medallions)
+            {
+                return 3;
+            }
+            /* STARDUST */
+            else if (d < exchangeSwordR3 + exchangeSwordR4 + medallions + stardust)
+            {
+                return 4;
+            }
+            /* RAINBOW ESSENCE */
+            else
+            {
+                return 5;
+            }
         }
-        */
-        return 0;
     }
 
-    private Weapon getWeapon(int rarity)
+    private Item getItem(int value)
     {
-        /*
-        Weapon weapon;
-        if (rarity == 2)
+        Item item;
+        if (!isPlusTicket)
         {
-            CopperWeapon cW = new CopperWeapon();
-            weapon = cW.getWeapon(RNG.nextInt(cW.getSize()));
-        }
-        else if (rarity == 3)
-        {
-            SilverWeapon sW = new SilverWeapon();
-            weapon = sW.getWeapon(RNG.nextInt(sW.getSize()));
+            /* EXCHANGE SWORD R2 */
+            if (value == 1)
+            {
+                item = new Item("Exchange Sword R2", 1, -1);
+            }
+            /* SHARD / CRYSTAL / HOLY CRYSTAL / EXP POTION */
+            else if (value == 2)
+            {
+                item = attributeItemsList.get(RNG.nextInt(attributeItemsList.size()));
+            }
+            /* MEDALLIONS AND LV. 80 KEY */
+            else if (value == 3)
+            {
+                item = medallionsAndKeyList.get(RNG.nextInt(medallionsAndKeyList.size()));
+            }
+            /* STARDUST */
+            else if (value == 4)
+            {
+                item = new Item("Stardust (Medium)", 10, 500);
+            }
+            /* RAINBOW ESSENCE */
+            else if (value == 5)
+            {
+                item = new Item("Rainbow Essence", 1, -1);
+            }
+            /* COL */
+            else
+            {
+                item = new Item("Col", 50000, 50000);
+            }
         }
         else
         {
-            weapon = BANNER_WEAPONS.get(RNG.nextInt(BANNER_WEAPONS.size()));
-        }
-
-        File weaponImage = new File(weapon.getImagePath());
-        if (!weaponImage.exists())
-        {
-            switch (Integer.parseInt(weapon.getRarity()))
+            /* EXCHANGE SWORD R3 */
+            if (value == 1)
             {
-                case 2:
-                    weapon.setImagePath("images/Weapons/Placeholders/Copper.png");
-                    break;
-                case 3:
-                    weapon.setImagePath("images/Weapons/Placeholders/Silver.png");
-                    break;
-                case 4:
-                    weapon.setImagePath("images/Weapons/Placeholders/Gold.png");
-                    break;
-                default:
-                    weapon.setImagePath("images/Weapons/Placeholders/Gray.png");
-                    break;
+                item = new Item("Exchange Sword R3", 1, -1);
+            }
+            /* EXCHANGE SWORD R4 */
+            else if (value == 2)
+            {
+                item = new Item("Exchange Sword R4", 1, -1);
+            }
+            /* MEDALLIONS  */
+            else if (value == 3)
+            {
+                item = medallionsAndKeyList.get(RNG.nextInt(medallionsAndKeyList.size()));
+            }
+            /* STARDUST */
+            else if (value == 4)
+            {
+                item = new Item("Stardust (Medium)", 20, 1000);
+            }
+            /* RAINBOW ESSENCE */
+            else
+            {
+                item = new Item("Rainbow Essence", 1, -1);
             }
         }
 
-        giveCol(weapon);
-        return weapon;
-        */
-        return null;
+        File itemImage = new File(item.getImagePath());
+        if (!itemImage.exists())
+        {
+            item.setImagePath("images/Items/Item.png");
+        }
+
+        giveCol(item);
+        return item;
     }
 
 
@@ -385,8 +566,16 @@ public class TicketScout
 
         /* EDIT MENU */
         scoutMenu.setThumbnail(chestImage);
-        //scoutMenu.setBannerName(SELECTED_BANNER.getBannerName());
-        //scoutMenu.setMdRemain(userMemoryDiamonds);
+        if (isPlusTicket)
+        {
+            scoutMenu.setBannerName("Plus Ticket Scout");
+        }
+        else
+        {
+            scoutMenu.setBannerName("Normal Ticket Scout");
+        }
+
+        scoutMenu.setTotalScout(userTotalScouts);
         scoutMenu.setUserName(CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator());
 
         /* EDIT DEPENDING ON TYPE OF PULL */
@@ -401,51 +590,32 @@ public class TicketScout
 
         if (!generateImage)
         {
-            //scoutMenu.setWeaponString(weaponString);
+            scoutMenu.setItemString(itemString);
         }
     }
 
     private void chest()
     {
-        /*
-        switch (Integer.parseInt(weapons.get(0).getRarity()))
+        if (isPlusTicket)
         {
-            case 2:
-                chestImage = Images.CHEST_BROWN.getUrl();
-                break;
-
-            case 3:
-                chestImage = Images.CHEST_BLUE.getUrl();
-                break;
-
-            case 4:
-                chestImage = Images.CHEST_RED.getUrl();
-                break;
-
-            default:
-                chestImage = Images.CHEST_BROWN.getUrl();
-                break;
+            chestImage = Images.CHEST_BLUE.getUrl();
         }
-        */
+        else
+        {
+            chestImage = Images.CHEST_BROWN.getUrl();
+        }
     }
 
 
     /* USER DATA MODIFIERS ========================================================================================== */
 
 
-    private void giveCol(Weapon w)
+    private void giveCol(Item i)
     {
         final int COL_MAX = 99999999;
-        switch(Integer.parseInt(w.getRarity()))
+        if (i.getValue() >= 0)
         {
-            case 2:
-                userColBalance += 1600;
-                break;
-            case 3:
-                userColBalance += 7500;
-                break;
-            default:
-                break;
+            userColBalance += i.getValue();
         }
 
         if (userColBalance > COL_MAX)

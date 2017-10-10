@@ -55,9 +55,14 @@ public class Profile
         String basicInfo = "";
         basicInfo += "**Memory Diamonds**: " + user.getMemoryDiamonds() + "\n";
         basicInfo += "**Hacking Crystals**: " + user.getHackingCrystals() + "\n";
-        basicInfo += "**Col Balance**: " + user.getColBalance() + "\n";
+        basicInfo += "**Col Balance**: " + user.getColBalance() + "\n\n";
+
         basicInfo += "**4★ Weapons**: " + user.getTotalWeaponCount() + "\n";
-        basicInfo += "**Money Spent**: $" + df.format(user.getMoneySpent());
+        basicInfo += "**4★ Exchange Swords**: " + user.getR4ExchangeSwords() + "\n";
+        basicInfo += "**Rainbow Essences**: " + user.getRainbowEssence() + "\n\n";
+
+        basicInfo += "**Money Spent**: $" + df.format(user.getMoneySpent()) + "\n";
+        basicInfo += "**Total Ticket Scouts**: " + user.getTotalTicketScout() + "\n";
 
         builder.appendField("Information", basicInfo, false);
 

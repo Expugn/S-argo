@@ -149,7 +149,7 @@ public class WeaponScout
         }
         catch (FileNotFoundException e)
         {
-            CHANNEL.sendMessage(new WarningMessage("IMAGE NOT FOUND", "Unable to display scout result.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("FAILED TO GENERATE IMAGE", "Unable to display scout result.").get().build());
             display.delete();
             deleteTempDirectory();
             return;
@@ -247,7 +247,6 @@ public class WeaponScout
     {
         if (generateImage && !IMAGE_DISABLED)
         {
-            tempUserDirectory = new File("images/temp_" + DISCORD_ID);
             tempUserDirectory.mkdir();
         }
 

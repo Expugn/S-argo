@@ -14,6 +14,7 @@ import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
+import sx.blah.discord.util.cache.LongMap;
 
 public class CommandManager
 {
@@ -91,10 +92,6 @@ public class CommandManager
                     CHANNEL.sendMessage(new WarningMessage("SHUTTING DOWN", "Goodbye!").get().build());
                     System.exit(0);
                 }
-                else
-                {
-                    CHANNEL.sendMessage(new WarningMessage("UNKNOWN COMMAND", "Use 'help' for a list of commands.").get().build());
-                }
             }
         }
         catch (RateLimitException e)
@@ -143,33 +140,48 @@ public class CommandManager
         {
             if (COMMAND_LINE.getArgumentCount() == 1)
             {
-                try
+                if (COMMAND_LINE.getArgument(1).equalsIgnoreCase("nts") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("ntsi") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("ntm") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("ntmi") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("pts") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptsi") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptm") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptmi"))
                 {
-                    int pageNumber = Integer.parseInt(COMMAND_LINE.getArgument(1).charAt(1) + "");
-                    char pChar = COMMAND_LINE.getArgument(1).charAt(0);
+                    new TicketScout(CHANNEL, COMMAND_LINE.getArgument(1), DISCORD_ID);
+                }
+                else
+                {
+                    try
+                    {
+                        int pageNumber = Integer.parseInt(COMMAND_LINE.getArgument(1).charAt(1) + "");
+                        char pChar = COMMAND_LINE.getArgument(1).charAt(0);
 
-                    if (pChar == 'p' || pChar == 'P')
-                    {
-                        new BannerInfo(CHANNEL, String.valueOf(pageNumber));
-                    }
-                    else
-                    {
+                        if (pChar == 'p' || pChar == 'P')
+                        {
+                            new BannerInfo(CHANNEL, String.valueOf(pageNumber));
+                        }
+                        else
+                        {
                         /* FIRST CHARACTER IS NOT 'P' */
-                        CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
+                            CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
+                        }
+                    }
+                    catch (NumberFormatException f)
+                    {
+                        CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
+                    }
+                    catch (NullPointerException f)
+                    {
+                        CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
+                    }
+                    catch (StringIndexOutOfBoundsException f)
+                    {
+                        CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
                     }
                 }
-                catch (NumberFormatException f)
-                {
-                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
-                }
-                catch (NullPointerException f)
-                {
-                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
-                }
-                catch (StringIndexOutOfBoundsException f)
-                {
-                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
-                }
+
             }
             else
             {

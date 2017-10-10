@@ -55,7 +55,44 @@ public class BannerInfoMenu
             builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
         }
 
-        builder.withFooterText(Text.BANNER_INFO_FOOTER_1.get() + " " + (bannerID + 1) + " " + Text.BANNER_INFO_FOOTER_2.get());
+        String footer = "[s/si";
+
+        if (bannerType.equalsIgnoreCase("Normal") ||
+                bannerType.equalsIgnoreCase("Step Up") ||
+                bannerType.equalsIgnoreCase("Step Up v2") ||
+                bannerType.equalsIgnoreCase("Birthday Step Up"))
+        {
+            if (weaponAmount > 0)
+            {
+                footer += " | ws/wsi | m/mi | wm/wmi]' to scout.";
+            }
+            else
+            {
+                footer += " | m/mi]' to scout.";
+            }
+        }
+        else if (bannerType.equalsIgnoreCase("Record Crystal") ||
+                bannerType.equalsIgnoreCase("Record Crystal v2"))
+        {
+            if (weaponAmount > 0)
+            {
+                footer += " | ws/wsi | m/mi | wm/wmi | rc/rci]' to scout.";
+            }
+            else
+            {
+                footer += " | m/mi | rc/rci]' to scout.";
+            }
+        }
+        else if (bannerType.equalsIgnoreCase("Memorial Scout"))
+        {
+            footer += "]' to scout.";
+        }
+        else
+        {
+            footer += "]' to scout.";
+        }
+
+        builder.withFooterText(Text.BANNER_INFO_FOOTER_1.get() + " " + (bannerID + 1) + " " + footer);
     }
 
     public EmbedBuilder get()

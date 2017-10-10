@@ -20,6 +20,12 @@ public class UserParser
     static final String MONEY_SPENT = "moneySpent";
     static final String HACKING_CRYSTALS = "hackingCrystals";
     static final String COL_BALANCE = "colBalance";
+    static final String TOTAL_TICKET_SCOUT = "totalTicketScout";
+    static final String R2_EXCHANGE_SWORDS = "r2ExchangeSwords";
+    static final String R3_EXCHANGE_SWORDS = "r3ExchangeSwords";
+    static final String R4_EXCHANGE_SWORDS = "r4ExchangeSwords";
+    static final String RAINBOW_ESSENCE = "rainbowEssence";
+
     static final String BANNER = "Banner";
     static final String CHARACTER = "Character";
     static final String WEAPON = "Weapon";
@@ -48,12 +54,20 @@ public class UserParser
     static final String DEFAULT_STEP = "1";
     static final String DEFAULT_RECORD_CRYSTAL = "0";
     static final String DEFAULT_RECORD_CRYSTAL_V2 = "-1";
+    static final String DEFAULT_TICKET_SCOUT = "0";
+    static final String DEFAULT_EXCHANGE_SWORD = "0";
+    static final String DEFAULT_RAINBOW_ESSENCE = "0";
 
     /* USER DATA */
     private int memoryDiamonds;
     private double moneySpent;
     private int hackingCrystals;
     private int colBalance;
+    private int totalTicketScout;
+    private int r2ExchangeSwords;
+    private int r3ExchangeSwords;
+    private int r4ExchangeSwords;
+    private int rainbowEssence;
     private SortedMap<String, Integer> bannerInfo;
     private List<Character> characterBox;
     private List<Weapon> weaponBox;
@@ -155,6 +169,31 @@ public class UserParser
         return count;
     }
 
+    public int getTotalTicketScout()
+    {
+        return totalTicketScout;
+    }
+
+    public int getR2ExchangeSwords()
+    {
+        return r2ExchangeSwords;
+    }
+
+    public int getR3ExchangeSwords()
+    {
+        return r3ExchangeSwords;
+    }
+
+    public int getR4ExchangeSwords()
+    {
+        return r4ExchangeSwords;
+    }
+
+    public int getRainbowEssence()
+    {
+        return rainbowEssence;
+    }
+
     public void setCharacterBox(List<Character> characterBox)
     {
         this.characterBox = characterBox;
@@ -183,6 +222,48 @@ public class UserParser
     public void setColBalance(int colBalance)
     {
         this.colBalance = colBalance;
+    }
+
+    public void setTotalTicketScout(int totalTicketScout)
+    {
+        this.totalTicketScout = totalTicketScout;
+    }
+
+    public void setR2ExchangeSwords(int r2ExchangeSwords)
+    {
+        this.r2ExchangeSwords = r2ExchangeSwords;
+    }
+
+    public void setR3ExchangeSwords(int r3ExchangeSwords)
+    {
+        this.r3ExchangeSwords = r3ExchangeSwords;
+    }
+
+    public void setR4ExchangeSwords(int r4ExchangeSwords)
+    {
+        this.r4ExchangeSwords = r4ExchangeSwords;
+    }
+
+    public void upgradeExchangeSwords()
+    {
+        while(r2ExchangeSwords >= 3)
+        {
+            this.r2ExchangeSwords -= 3;
+            colBalance -= (73750 + 8640);
+            r3ExchangeSwords += 1;
+        }
+
+        while(r3ExchangeSwords >= 4)
+        {
+            this.r3ExchangeSwords -= 4;
+            colBalance -= (19850 + 16300);
+            r4ExchangeSwords += 1;
+        }
+    }
+
+    public void setRainbowEssence(int rainbowEssence)
+    {
+        this.rainbowEssence = rainbowEssence;
     }
 
     public void changeValue(String bannerName, int newValue)
@@ -290,6 +371,46 @@ public class UserParser
                     {
                         event = eventReader.nextEvent();
                         colBalance = Integer.parseInt(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE TOTAL TICKET SCOUTS */
+                    if (event.asStartElement().getName().getLocalPart().equals(TOTAL_TICKET_SCOUT))
+                    {
+                        event = eventReader.nextEvent();
+                        totalTicketScout = Integer.parseInt(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE R2 EXCHANGE SWORDS */
+                    if (event.asStartElement().getName().getLocalPart().equals(R2_EXCHANGE_SWORDS))
+                    {
+                        event = eventReader.nextEvent();
+                        r2ExchangeSwords = Integer.parseInt(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE R3 EXCHANGE SWORDS */
+                    if (event.asStartElement().getName().getLocalPart().equals(R3_EXCHANGE_SWORDS))
+                    {
+                        event = eventReader.nextEvent();
+                        r3ExchangeSwords = Integer.parseInt(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE R4 EXCHANGE SWORDS */
+                    if (event.asStartElement().getName().getLocalPart().equals(R4_EXCHANGE_SWORDS))
+                    {
+                        event = eventReader.nextEvent();
+                        r4ExchangeSwords = Integer.parseInt(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE RAINBOW ESSENCES */
+                    if (event.asStartElement().getName().getLocalPart().equals(RAINBOW_ESSENCE))
+                    {
+                        event = eventReader.nextEvent();
+                        rainbowEssence = Integer.parseInt(event.asCharacters().getData());
                         continue;
                     }
 
@@ -438,11 +559,16 @@ public class UserParser
                 eventWriter.add(configStartElement);
                 eventWriter.add(end);
 
-                /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, AND COL BALANCE */
+                /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, COL BALANCE, TOTAL TICKET SCOUTS, EXCHANGE SWORDS, AND RAINBOW ESSENCE */
                 writeNode(eventWriter, MEMORY_DIAMONDS, DEFAULT_MEMORY_DIAMONDS);
                 writeNode(eventWriter, MONEY_SPENT, DEFAULT_MONEY_SPENT);
                 writeNode(eventWriter, HACKING_CRYSTALS, DEFAULT_HACKING_CRYSTALS);
                 writeNode(eventWriter, COL_BALANCE, DEFAULT_COL_BALANCE);
+                writeNode(eventWriter, TOTAL_TICKET_SCOUT, DEFAULT_TICKET_SCOUT);
+                writeNode(eventWriter, R2_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
+                writeNode(eventWriter, R3_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
+                writeNode(eventWriter, R4_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
+                writeNode(eventWriter, RAINBOW_ESSENCE, DEFAULT_RAINBOW_ESSENCE);
 
                 /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
                 writeDefaultBannerData(eventWriter);
@@ -576,11 +702,16 @@ public class UserParser
             eventWriter.add(configStartElement);
             eventWriter.add(end);
 
-            /* WRITE DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, AND COL BALANCE */
+            /* WRITE DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, COL BALANCE, TOTAL TICKET SCOUTS, EXCHANGE SWORDS, AND RAINBOW ESSENCE */
             writeNode(eventWriter, MEMORY_DIAMONDS, String.valueOf(memoryDiamonds));
             writeNode(eventWriter, MONEY_SPENT, String.valueOf(moneySpent));
             writeNode(eventWriter, HACKING_CRYSTALS, String.valueOf(hackingCrystals));
             writeNode(eventWriter, COL_BALANCE, String.valueOf(colBalance));
+            writeNode(eventWriter, TOTAL_TICKET_SCOUT, String.valueOf(totalTicketScout));
+            writeNode(eventWriter, R2_EXCHANGE_SWORDS, String.valueOf(r2ExchangeSwords));
+            writeNode(eventWriter, R3_EXCHANGE_SWORDS, String.valueOf(r3ExchangeSwords));
+            writeNode(eventWriter, R4_EXCHANGE_SWORDS, String.valueOf(r4ExchangeSwords));
+            writeNode(eventWriter, RAINBOW_ESSENCE, String.valueOf(rainbowEssence));
 
             /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
             writeBannerData(eventWriter);
@@ -816,11 +947,16 @@ public class UserParser
             eventWriter.add(configStartElement);
             eventWriter.add(end);
 
-            /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, AND HACKING CRYSTALS */
+            /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, COL BALANCE, TOTAL TICKET SCOUTS, EXCHANGE SWORDS, AND RAINBOW ESSENCE */
             writeNode(eventWriter, MEMORY_DIAMONDS, DEFAULT_MEMORY_DIAMONDS);
             writeNode(eventWriter, MONEY_SPENT, DEFAULT_MONEY_SPENT);
             writeNode(eventWriter, HACKING_CRYSTALS, DEFAULT_HACKING_CRYSTALS);
             writeNode(eventWriter, COL_BALANCE, DEFAULT_COL_BALANCE);
+            writeNode(eventWriter, TOTAL_TICKET_SCOUT, DEFAULT_TICKET_SCOUT);
+            writeNode(eventWriter, R2_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
+            writeNode(eventWriter, R3_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
+            writeNode(eventWriter, R4_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
+            writeNode(eventWriter, RAINBOW_ESSENCE, DEFAULT_RAINBOW_ESSENCE);
 
             /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
             writeDefaultBannerData(eventWriter);
