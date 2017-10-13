@@ -26,6 +26,12 @@ public enum Images
     PINEHAX("images/Legacy/PineHax.png"),
     OREOWOLFBTW("images/Legacy/OreoWolfBtw.png"),
 
+    /* images/Tuglow/ */
+    TUGLOW_MEH("images/Tuglow/Tuglow_Meh.png"),
+    TUGLOW_SIGH("images/Tuglow/Tuglow_Sigh.png"),
+    TUGLOW_WHAT("images/Tuglow/Tuglow_What.png"),
+    TUGLOW_GASM("images/Tuglow/Tuglow_Gasm.png"),
+
     /* images/Miscellaneous/ */
     SCOUT_ICON("images/Miscellaneous/Scout_Icon.png"),
     MEMORY_DIAMOND_ICON("images/Miscellaneous/Memory_Diamond_Icon.png"),

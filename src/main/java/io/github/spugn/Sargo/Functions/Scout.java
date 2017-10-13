@@ -925,6 +925,18 @@ public class Scout
             image3 = Images.PINEHAX.getUrl();
             image4 = Images.OREOWOLFBTW.getUrl();
         }
+        else if (secretWord.equalsIgnoreCase("Tuglow"))
+        {
+            text1 = "Bruh.";
+            text2 = "YEET!";
+            text3 = "BOY.";
+            text4 = "Okay, we hype.";
+
+            image1 = Images.TUGLOW_MEH.getUrl();
+            image2 = Images.TUGLOW_SIGH.getUrl();
+            image3 = Images.TUGLOW_WHAT.getUrl();
+            image4 = Images.TUGLOW_GASM.getUrl();
+        }
 
         if (aText < 0.25)
         {
