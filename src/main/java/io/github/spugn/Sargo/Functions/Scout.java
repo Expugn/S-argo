@@ -913,6 +913,18 @@ public class Scout
             image3 = Images.USHI_HAPPY.getUrl();
             image4 = Images.USHI_GASM.getUrl();
         }
+        else if (secretWord.equalsIgnoreCase("Legacy"))
+        {
+            text1 = " ";
+            text2 = " ";
+            text3 = " ";
+            text4 = " ";
+
+            image1 = Images.FEELS_PIANIST_MAN.getUrl();
+            image2 = Images.JAVALAVA.getUrl();
+            image3 = Images.PINEHAX.getUrl();
+            image4 = Images.OREOWOLFBTW.getUrl();
+        }
 
         if (aText < 0.25)
         {

@@ -20,6 +20,11 @@ public enum Images
     USHI_HAPPY("images/Ushi/Ushi_Happy.png"),
     USHI_GASM("images/Ushi/Ushi_Gasm.png"),
 
+    /* images/Legacy/ */
+    FEELS_PIANIST_MAN("images/Legacy/FeelsPianistMan.png"),
+    JAVALAVA("images/Legacy/JavaLava.png"),
+    PINEHAX("images/Legacy/PineHax.png"),
+    OREOWOLFBTW("images/Legacy/OreoWolfBtw.png"),
 
     /* images/Miscellaneous/ */
     SCOUT_ICON("images/Miscellaneous/Scout_Icon.png"),
