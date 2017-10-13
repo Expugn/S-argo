@@ -21,6 +21,8 @@ Same thing as Step Up, but features one guaranteed platinum character on Step 5 
 Same thing as Record Crystal, but the first scout is 50% off.
 * **Memorial Scouts**  
 Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond.
+* **Step Up v3 Scouts**  
+50% off multi scout on Step 1, Increased 2.0x platinum character chance on Step 3.
 * **Weapon Scouts**  
 Same as normal scouts, but with weapons instead of characters.
 * **Normal/Plus Ticket Scouts**  
