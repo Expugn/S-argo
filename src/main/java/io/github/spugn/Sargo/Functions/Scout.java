@@ -927,10 +927,10 @@ public class Scout
         }
         else if (secretWord.equalsIgnoreCase("Tuglow"))
         {
-            text1 = "Bruh.";
-            text2 = "YEET!";
-            text3 = "BOY.";
-            text4 = "Okay, we hype.";
+            text1 = "*\"Bruh.\"*";
+            text2 = "*\"YEET!\"*";
+            text3 = "*\"BOY.\"*";
+            text4 = "*\"Okay, we hype.\"*";
 
             image1 = Images.TUGLOW_MEH.getUrl();
             image2 = Images.TUGLOW_SIGH.getUrl();

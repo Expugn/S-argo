@@ -241,7 +241,14 @@ public class SettingsParser
                     if (event.asStartElement().getName().getLocalPart().equals(SECRET_WORD))
                     {
                         event = eventReader.nextEvent();
-                        secretWord = event.asCharacters().getData();
+                        try
+                        {
+                            secretWord = event.asCharacters().getData();
+                        }
+                        catch (ClassCastException e)
+                        {
+                            secretWord = "";
+                        }
                         continue;
                     }
 
