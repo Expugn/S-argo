@@ -50,7 +50,10 @@ public class ScoutMenu
             typeData = "Multi Pull";
             builder.withTitle("[" + bannerType + "] - " + typeData);
         }
-        else if (bannerType.equalsIgnoreCase("Step Up") || bannerType.equalsIgnoreCase("Step Up v2") || bannerType.equalsIgnoreCase("Birthday Step Up"))
+        else if (bannerType.equalsIgnoreCase("Step Up") ||
+                bannerType.equalsIgnoreCase("Step Up v2") ||
+                bannerType.equalsIgnoreCase("Birthday Step Up") ||
+                bannerType.equalsIgnoreCase("Step Up v3"))
         {
             builder.withTitle("[" + bannerType + "] - Step " + typeData);
         }

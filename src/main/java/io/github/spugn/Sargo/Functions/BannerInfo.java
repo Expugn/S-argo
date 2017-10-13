@@ -261,6 +261,7 @@ public class BannerInfo
                 stepThreeRates += "**(4+ ★ Scout Rates 2.0x)**";
                 menu.setStepThreeRatesList(stepThreeRates);
             }
+            /* BANNER IS RECORD CRYSTAL */
             else if (banner.getBannerType().equals("2") || banner.getBannerType().equals("5"))
             {
                 int counter = 0;
@@ -276,6 +277,23 @@ public class BannerInfo
                 }
 
                 menu.setRecordCrystalRatesList(recordCrystalRates);
+            }
+            /* BANNER IS STEP UP V3 */
+            else if (banner.getBannerType().equals("7"))
+            {
+                double tC = copper - ((platinum * 2.0) - platinum);
+                double tS = silver;
+                double tG = gold;
+                double tP = platinum * 2.0;
+
+                String stepThreeRates = "";
+                if (tP != 0)
+                    stepThreeRates += "[5 ★] " + tP + "%\n";
+                stepThreeRates += "[4 ★] " + tG + "%\n";
+                stepThreeRates += "[3 ★] " + tS + "%\n";
+                stepThreeRates += "[2 ★] " + tC + "%\n";
+                stepThreeRates += "**(5 ★ Scout Rates 2.0x)**";
+                menu.setStepThreeRatesList(stepThreeRates);
             }
 
             CHANNEL.sendMessage(menu.get().build());

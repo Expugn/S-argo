@@ -256,7 +256,7 @@ public class Scout
         {
             int newBannerInfoValue;
 
-            if (bannerType == 1 || bannerType == 3 || bannerType == 4)
+            if (bannerType == 1 || bannerType == 3 || bannerType == 4 || bannerType == 7)
             {
                 newBannerInfoValue = 1;
             }
@@ -368,6 +368,20 @@ public class Scout
         else if (bannerType == 6)
         {
             singleScoutPrice = 1;
+        }
+        else if (bannerType == 7)
+        {
+            switch (bannerTypeData)
+            {
+                case 1:
+                    multiScoutPrice = 125;
+                    break;
+                case 3:
+                    COPPER = COPPER - ((PLATINUM * 2.0) - PLATINUM);
+                    PLATINUM = PLATINUM * 2.0;
+                default:
+                    break;
+            }
         }
     }
 
@@ -501,6 +515,19 @@ public class Scout
             rcGet = getRecordCrystals();
             bannerTypeData += rcGet;
             USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
+        }
+        else if (bannerType == 7)
+        {
+            int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
+            currentStep++;
+            if (currentStep > 3)
+            {
+                USER.changeValue(SELECTED_BANNER.getBannerName(), 1);
+            }
+            else
+            {
+                USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
+            }
         }
     }
 
@@ -823,13 +850,37 @@ public class Scout
 
     private Character randGoldCharacter()
     {
-        if (bannerType == 5)
+        if (bannerType == 5 || bannerType == 7)
         {
-            int randIndex = GOLD_BANNERS_V2.get(RNG.nextInt(GOLD_BANNERS_V2.size()));
-            Banner randBanner = BANNERS.get(randIndex - 1);
-            List<Character> randCharacters = randBanner.getCharacters();
+            if (bannerType == 7)
+            {
+                Character c = null;
+                boolean charNotInBanner = false;
 
-            return randCharacters.get(RNG.nextInt(randCharacters.size()));
+                while (!charNotInBanner)
+                {
+                    int randIndex = GOLD_BANNERS_V2.get(RNG.nextInt(GOLD_BANNERS_V2.size()));
+                    Banner randBanner = BANNERS.get(randIndex - 1);
+                    List<Character> randCharacters = randBanner.getCharacters();
+                    c = randCharacters.get(RNG.nextInt(randCharacters.size()));
+
+                    for (Character bc : SELECTED_BANNER.getCharacters())
+                    {
+                        if (!(bc.getName().equalsIgnoreCase(c.getName())) && !(bc.getPrefix().equalsIgnoreCase(c.getName())))
+                        {
+                            charNotInBanner = true;
+                        }
+                    }
+                }
+                return c;
+            }
+            else
+            {
+                int randIndex = GOLD_BANNERS_V2.get(RNG.nextInt(GOLD_BANNERS_V2.size()));
+                Banner randBanner = BANNERS.get(randIndex - 1);
+                List<Character> randCharacters = randBanner.getCharacters();
+                return randCharacters.get(RNG.nextInt(randCharacters.size()));
+            }
         }
         else
         {

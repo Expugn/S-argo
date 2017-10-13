@@ -60,13 +60,18 @@ public class BannerInfoMenu
         {
             builder.appendField("- Record Crystal Rates -", recordCrystalRatesList, true);
         }
+        else if (bannerType.equalsIgnoreCase("Step Up v3"))
+        {
+            builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+        }
 
         String footer = "[s/si";
 
         if (bannerType.equalsIgnoreCase("Normal") ||
                 bannerType.equalsIgnoreCase("Step Up") ||
                 bannerType.equalsIgnoreCase("Step Up v2") ||
-                bannerType.equalsIgnoreCase("Birthday Step Up"))
+                bannerType.equalsIgnoreCase("Birthday Step Up") ||
+                bannerType.equalsIgnoreCase("Step Up v3"))
         {
             if (weaponAmount > 0)
             {

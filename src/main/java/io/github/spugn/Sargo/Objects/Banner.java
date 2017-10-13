@@ -80,6 +80,8 @@ public class Banner
                 return "Record Crystal v2";
             case 6:
                 return "Memorial Scout";
+            case 7:
+                return "Step Up v3";
             default:
                 return "Unknown";
         }
