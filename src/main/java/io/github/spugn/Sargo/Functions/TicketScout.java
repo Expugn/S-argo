@@ -579,11 +579,13 @@ public class TicketScout
         scoutMenu.setUserName(CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator());
 
         /* EDIT DEPENDING ON TYPE OF PULL */
-        if (CHOICE.equalsIgnoreCase("ws") || CHOICE.equalsIgnoreCase("wsi"))
+        if (CHOICE.equalsIgnoreCase("nts") || CHOICE.equalsIgnoreCase("ntsi") ||
+                CHOICE.equalsIgnoreCase("pts") || CHOICE.equalsIgnoreCase("ptsi"))
         {
             scoutMenu.setPullType(Text.SINGLE_PULL.get());
         }
-        else if (CHOICE.equalsIgnoreCase("wm") || CHOICE.equalsIgnoreCase("wmi"))
+        else if (CHOICE.equalsIgnoreCase("ntm") || CHOICE.equalsIgnoreCase("ntmi") ||
+                CHOICE.equalsIgnoreCase("ptm") || CHOICE.equalsIgnoreCase("ptmi"))
         {
             scoutMenu.setPullType(Text.MULTI_PULL.get());
         }
