@@ -855,23 +855,37 @@ public class Scout
             if (bannerType == 7)
             {
                 Character c = null;
-                boolean charNotInBanner = false;
+                boolean charInBanner = true;
+                int randIndex;
+                Banner randBanner;
+                List<Character> randCharacters;
+                boolean sameName;
+                boolean samePrefix;
 
-                while (!charNotInBanner)
+                while(charInBanner)
                 {
-                    int randIndex = GOLD_BANNERS_V2.get(RNG.nextInt(GOLD_BANNERS_V2.size()));
-                    Banner randBanner = BANNERS.get(randIndex - 1);
-                    List<Character> randCharacters = randBanner.getCharacters();
+                    randIndex = GOLD_BANNERS_V2.get(RNG.nextInt(GOLD_BANNERS_V2.size()));
+                    randBanner = BANNERS.get(randIndex - 1);
+                    randCharacters = randBanner.getCharacters();
                     c = randCharacters.get(RNG.nextInt(randCharacters.size()));
 
                     for (Character bc : SELECTED_BANNER.getCharacters())
                     {
-                        if (!(bc.getName().equalsIgnoreCase(c.getName())) && !(bc.getPrefix().equalsIgnoreCase(c.getName())))
+                        sameName = c.getName().equalsIgnoreCase(bc.getName());
+                        samePrefix = c.getPrefix().equalsIgnoreCase(bc.getPrefix());
+
+                        if (!(sameName && samePrefix))
                         {
-                            charNotInBanner = true;
+                            charInBanner = false;
+                        }
+                        else
+                        {
+                            charInBanner = true;
+                            break;
                         }
                     }
                 }
+                
                 return c;
             }
             else
@@ -979,9 +993,9 @@ public class Scout
         else if (secretWord.equalsIgnoreCase("Tuglow"))
         {
             text1 = "*\"Bruh.\"*";
-            text2 = "*\"YEET!\"*";
-            text3 = "*\"BOY.\"*";
-            text4 = "*\"Okay, we hype.\"*";
+            text2 = "*\"Bruh.\"*";
+            text3 = "*\"YEET!\"*";
+            text4 = "*\"BOY!\"*";
 
             image1 = Images.TUGLOW_MEH.getUrl();
             image2 = Images.TUGLOW_SIGH.getUrl();
