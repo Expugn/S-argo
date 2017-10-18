@@ -143,7 +143,7 @@ public class Reset
                 if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType().equalsIgnoreCase("0")))
                 {
                     int bannerType = Integer.parseInt(banners.get(bannerID).getBannerType());
-                    if (bannerType == 1 || bannerType == 3 || bannerType == 4)
+                    if (bannerType == 1 || bannerType == 3 || bannerType == 4 || bannerType == 7)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 1);
                     }
@@ -190,7 +190,7 @@ public class Reset
                     String dataString = "";
                     int bannerType = Integer.parseInt(banners.get(bannerID).getBannerType());
 
-                    if (bannerType == 1 || bannerType == 3 || bannerType == 4)
+                    if (bannerType == 1 || bannerType == 3 || bannerType == 4 || bannerType == 7)
                     {
                         dataString = "Step " + bannerData + " -> Step 1";
                     }

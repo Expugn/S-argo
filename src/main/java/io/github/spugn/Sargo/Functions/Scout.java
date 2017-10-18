@@ -885,7 +885,7 @@ public class Scout
                         }
                     }
                 }
-                
+
                 return c;
             }
             else
