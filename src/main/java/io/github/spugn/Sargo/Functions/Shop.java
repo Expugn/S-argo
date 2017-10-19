@@ -1,5 +1,6 @@
 package io.github.spugn.Sargo.Functions;
 
+import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.Images;
 import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
@@ -26,7 +27,7 @@ public class Shop
         builder.appendField("6) Memory Diamond F [$44.99]", "Get 360 Memory Diamonds", false);
         builder.appendField("7) Memory Diamond G [$79.99]", "Get 700 Memory Diamonds", false);
 
-        builder.withFooterText("To buy Memory Diamonds use 'shop [Item ID] [Quantity]'");
+        builder.withFooterText("To buy Memory Diamonds use '" + CommandManager.commandPrefix + "shop [Item ID] [Quantity]'");
 
         channel.sendMessage(builder.build());
     }
@@ -79,7 +80,7 @@ public class Shop
             }
             else
             {
-                channel.sendMessage(new WarningMessage("UNKNOWN ITEM", "Use 'shop' to review available Memory Diamond bundles.").get().build());
+                channel.sendMessage(new WarningMessage("UNKNOWN ITEM", "Use '" + CommandManager.commandPrefix + "**shop**' to review available Memory Diamond bundles.").get().build());
                 return;
             }
 

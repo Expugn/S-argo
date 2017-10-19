@@ -26,6 +26,7 @@ public class CommandManager
     private final DiscordCommand DISCORD_COMMAND;
     private final CommandLine COMMAND_LINE;
     private String botName;
+    public static String commandPrefix;
 
     public CommandManager(IDiscordClient client, MessageReceivedEvent event)
     {
@@ -61,11 +62,13 @@ public class CommandManager
 
         if (DISCORD_COMMAND.getUseMention())
         {
-            client.changePlayingText(botName + " | @" + client.getOurUser().getName() + " help");
+            commandPrefix = "@" + client.getOurUser().getName() + " ";
+            client.changePlayingText(botName + " | " + commandPrefix + "help");
         }
         else
         {
-            client.changePlayingText(botName + " | " + DISCORD_COMMAND.getCommandPrefix() + "help");
+            commandPrefix = DISCORD_COMMAND.getCommandPrefix() + "";
+            client.changePlayingText(botName + " | " + commandPrefix + "help");
         }
 
         COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
@@ -329,7 +332,7 @@ public class CommandManager
                 }
                 catch (NumberFormatException e)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("UNKNOWN USER", "Could not find that user. Does their name have a space? Try 'user @name' instead.").get().build());
+                    CHANNEL.sendMessage(new WarningMessage("UNKNOWN USER", "Could not find that user. Does their name have a space? Try '" + commandPrefix + "**user** @[name]' instead.").get().build());
                 }
             }
         }
@@ -356,7 +359,7 @@ public class CommandManager
             }
             else
             {
-                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Use 'reset [BannerID] [c/w/a]'").get().build());
+                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Use '" + commandPrefix + "**reset** [BannerID] [c/w/a]'").get().build());
             }
         }
         else if (COMMAND_LINE.getArgumentCount() >= 2)
@@ -372,7 +375,7 @@ public class CommandManager
             }
             else
             {
-                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Use 'reset [BannerID] [c/w/a]'").get().build());
+                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Use '" + commandPrefix + "**reset** [BannerID] [c/w/a]'").get().build());
             }
         }
         else if (COMMAND_LINE.getArgumentCount() >= 1)

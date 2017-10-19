@@ -1,5 +1,6 @@
 package io.github.spugn.Sargo.Functions;
 
+import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
@@ -18,7 +19,7 @@ public class Reset
     public Reset(IChannel channel)
     {
         CHANNEL = channel;
-        CHANNEL.sendMessage(new WarningMessage("WARNING", "Continuing forward will erase all your data. Are you sure?\nType 'reset y' to proceed.").get().build());
+        CHANNEL.sendMessage(new WarningMessage("WARNING", "Continuing forward will erase all your data. Are you sure?\nType '" + CommandManager.commandPrefix + "**reset** y' to proceed.").get().build());
     }
 
     public Reset (IChannel channel, String discordID)
@@ -168,7 +169,7 @@ public class Reset
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.withAuthorName("WARNING");
                 builder.withTitle("Continuing forward will erase the following data from your file:");
-                builder.withFooterText("Type 'reset " + (bannerID + 1) + " " + choice + " y' to proceed.");
+                builder.withFooterText("Type '" + CommandManager.commandPrefix + "reset " + (bannerID + 1) + " " + choice + " y' to proceed.");
                 builder.withColor(255, 0, 0);
 
                 builder.appendField("- Banner -", banners.get(bannerID).getBannerName(), false);
@@ -218,7 +219,7 @@ public class Reset
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.commandPrefix + "**scout**' for a list of banners.").get().build());
         }
     }
 }

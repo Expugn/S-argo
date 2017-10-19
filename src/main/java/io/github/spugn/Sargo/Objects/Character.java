@@ -58,11 +58,19 @@ public class Character
     @Override
     public String toString()
     {
+        if (prefix.isEmpty())
+        {
+            return rarity + "★ " + name;
+        }
         return rarity + "★ [" + prefix + "] " + name;
     }
 
     public String toStringNoName()
     {
-        return rarity + "★ [" + prefix + "] ";
+        if (prefix.isEmpty())
+        {
+            return rarity + "★ " + name;
+        }
+        return rarity + "★ [" + prefix + "]";
     }
 }

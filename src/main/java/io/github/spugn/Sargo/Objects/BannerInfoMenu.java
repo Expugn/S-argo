@@ -1,5 +1,6 @@
 package io.github.spugn.Sargo.Objects;
 
+import io.github.spugn.Sargo.Managers.CommandManager;
 import sx.blah.discord.util.EmbedBuilder;
 
 public class BannerInfoMenu
@@ -103,7 +104,7 @@ public class BannerInfoMenu
             footer += "]' to scout.";
         }
 
-        builder.withFooterText(Text.BANNER_INFO_FOOTER_1.get() + " " + (bannerID + 1) + " " + footer);
+        builder.withFooterText("Use '" + CommandManager.commandPrefix + "scout " + (bannerID + 1) + " " + footer);
     }
 
     public EmbedBuilder get()

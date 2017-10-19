@@ -1,5 +1,6 @@
 package io.github.spugn.Sargo.Functions;
 
+import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
@@ -77,7 +78,7 @@ public class WeaponScout
 
         if (!(BANNER_ID < BANNERS.size() && BANNER_ID >= 0))
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.commandPrefix + "**scout**' for a list of banners.").get().build());
             return;
         }
 
@@ -93,7 +94,7 @@ public class WeaponScout
         {
             if (userMemoryDiamonds < singleScoutPrice)
             {
-                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse '**shop**' to get more Memory Diamonds.").get().build());
+                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.commandPrefix + "**shop**' to get more Memory Diamonds.").get().build());
                 return;
             }
 
@@ -111,7 +112,7 @@ public class WeaponScout
         {
             if (userMemoryDiamonds < multiScoutPrice)
             {
-                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse '**shop**' to get more Memory Diamonds.").get().build());
+                CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.commandPrefix + "**shop**' to get more Memory Diamonds.").get().build());
                 return;
             }
 

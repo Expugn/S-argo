@@ -1,5 +1,6 @@
 package io.github.spugn.Sargo.Objects;
 
+import io.github.spugn.Sargo.Managers.CommandManager;
 import sx.blah.discord.util.EmbedBuilder;
 
 /**
@@ -27,7 +28,7 @@ public class BannerListMenu
 
         builder.appendField(Text.BANNER_LIST_BANNER_HEADER.get(), bannerList, false);
 
-        builder.withFooterText(Text.BANNER_LIST_FOOTER.get());
+        builder.withFooterText("'" + CommandManager.commandPrefix + "scout [Banner ID]' for more banner info.  |  '" + CommandManager.commandPrefix + "scout p[Page]' to view another page.");
     }
 
     public EmbedBuilder get()

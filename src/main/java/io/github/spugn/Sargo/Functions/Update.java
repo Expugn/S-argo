@@ -1,5 +1,6 @@
 package io.github.spugn.Sargo.Functions;
 
+import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
@@ -227,7 +228,7 @@ public class Update
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use 'scout' for a list of banners.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.commandPrefix + "**scout**' for a list of banners.").get().build());
         }
     }
 
