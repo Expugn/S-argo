@@ -32,6 +32,12 @@ public enum Images
     TUGLOW_WHAT("images/Tuglow/Tuglow_What.png"),
     TUGLOW_GASM("images/Tuglow/Tuglow_Gasm.png"),
 
+    /* images/Naruto/ */
+    NARUTO_SMILE("images/Naruto/Naruto_Smile.png"),
+    NARUTO_GRIN("images/Naruto/Naruto_Grin.png"),
+    NARUTO_THUMBUP("images/Naruto/Naruto_ThumbUp.png"),
+    NARUTO_WINK("images/Naruto/Naruto_Wink.png"),
+
     /* images/Miscellaneous/ */
     SCOUT_ICON("images/Miscellaneous/Scout_Icon.png"),
     MEMORY_DIAMOND_ICON("images/Miscellaneous/Memory_Diamond_Icon.png"),

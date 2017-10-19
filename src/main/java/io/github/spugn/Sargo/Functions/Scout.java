@@ -1003,6 +1003,18 @@ public class Scout
             image3 = Images.TUGLOW_WHAT.getUrl();
             image4 = Images.TUGLOW_GASM.getUrl();
         }
+        else if (secretWord.equalsIgnoreCase("Naruto"))
+        {
+            text1 = "*\"I will become hokage, believe it!\"*";
+            text2 = "*\"Believe it!\"*";
+            text3 = "*\"To become hokage is my dream!\"*";
+            text4 = "*\"I won't run away anymore...\nI won't go back on my word...\nthat is my ninja way!\"*";
+
+            image1 = Images.NARUTO_SMILE.getUrl();
+            image2 = Images.NARUTO_GRIN.getUrl();
+            image3 = Images.NARUTO_THUMBUP.getUrl();
+            image4 = Images.NARUTO_WINK.getUrl();
+        }
 
         if (aText < 0.25)
         {
@@ -1024,14 +1036,7 @@ public class Scout
         switch (highestRarity)
         {
             case 2:
-                if (aFace < 0.75)
-                {
-                    argoFace = image1;
-                }
-                else
-                {
-                    argoFace = image2;
-                }
+                argoFace = image1;
                 break;
 
             case 3:
