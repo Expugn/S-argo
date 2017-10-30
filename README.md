@@ -6,7 +6,9 @@ This Discord bot's main use is to be a "summon simulator" for the mobile game *S
 ## Features
 S'argo simulates the scouting system from *Sword Art Online: Memory Defrag*.
 
-This includes:
+This includes:  
+
+[Characters]
 * **Normal Scouts**  
 Static pull rates every time, nothing special.
 * **Step Up Scouts**  
@@ -23,8 +25,14 @@ Same thing as Record Crystal, but the first scout is 50% off.
 Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond.
 * **Step Up v3 Scouts**  
 50% off multi scout on Step 1, Increased 2.0x platinum character chance on Step 3.
-* **Weapon Scouts**  
-Same as normal scouts, but with weapons instead of characters.
+
+[Weapons]
+* **Normal Weapon Scouts**  
+Same as normal scouts. Static pull rates every time.
+* **Step Up Weapon Scouts**  
+100 MD scout on Step 1, Increased 2.0x gold weapon chance on Step 3.
+
+[Miscellaneous]
 * **Normal/Plus Ticket Scouts**  
 A special type of scout that doesn't use Memory Diamonds.
 
