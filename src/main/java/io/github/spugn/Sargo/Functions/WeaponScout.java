@@ -40,6 +40,8 @@ public class WeaponScout
 
     private Banner SELECTED_BANNER;
     private List<Weapon> BANNER_WEAPONS;
+    private int bannerType;
+    private int bannerTypeData;
 
     private String imageString;
     private String imageStrings[];
@@ -125,6 +127,7 @@ public class WeaponScout
             USER.setMemoryDiamonds(userMemoryDiamonds);
 
             doMultiPull();
+            updateBannerData();
         }
         else
         {
@@ -189,7 +192,7 @@ public class WeaponScout
 
     private void initSettings()
     {
-        COPPER = (int) (SETTINGS.getTwoRates() * 100);
+        COPPER = (int) ((SETTINGS.getTwoRates() * 100) + (SETTINGS.getFiveRates() * 100));
         SILVER = (int) (SETTINGS.getThreeRates() * 100);
         GOLD = (int) (SETTINGS.getFourRates() * 100);
         IMAGE_DISABLED = SETTINGS.isDisableImages();
@@ -199,6 +202,42 @@ public class WeaponScout
     {
         SELECTED_BANNER = BANNERS.get(BANNER_ID);
         BANNER_WEAPONS = SELECTED_BANNER.getWeapons();
+
+        bannerType = Integer.parseInt(SELECTED_BANNER.getBannerWepType());
+        bannerTypeData = USER.getBannerData(SELECTED_BANNER.getBannerName() + " Weapons");
+
+        if (USER.isBannerInfoExists(SELECTED_BANNER.getBannerName() + " Weapons") == -1)
+        {
+            int newBannerInfoValue;
+
+            if (bannerType == 1)
+            {
+                newBannerInfoValue = 1;
+            }
+            else
+            {
+                newBannerInfoValue = 0;
+            }
+
+            USER.addBannerInfo(SELECTED_BANNER.getBannerName() + " Weapons", newBannerInfoValue);
+            bannerTypeData = newBannerInfoValue;
+        }
+
+        if (bannerType == 1)
+        {
+            switch (bannerTypeData)
+            {
+                case 1:
+                    multiScoutPrice = 100;
+                    break;
+                case 3:
+                    COPPER = COPPER - ((GOLD * 2.0) - GOLD) ;
+                    GOLD = GOLD * 2.0;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void initUser()
@@ -258,6 +297,23 @@ public class WeaponScout
 
         generateImageStrings();
         drawImage(imageStrings);
+    }
+
+    private void updateBannerData()
+    {
+        if (bannerType == 1)
+        {
+            int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName() + " Weapons");
+            currentStep++;
+            if (currentStep > 3)
+            {
+                USER.changeValue(SELECTED_BANNER.getBannerName() + " Weapons", 1);
+            }
+            else
+            {
+                USER.changeValue(SELECTED_BANNER.getBannerName() + " Weapons", currentStep);
+            }
+        }
     }
 
     /* IMAGE DRAWING ================================================================================================ */
@@ -456,6 +512,20 @@ public class WeaponScout
         else if (CHOICE.equalsIgnoreCase("wm") || CHOICE.equalsIgnoreCase("wmi"))
         {
             scoutMenu.setPullType(Text.MULTI_PULL.get());
+        }
+
+        if (bannerType == 0)
+        {
+            scoutMenu.setBannerType("Weapon Scout");
+        }
+        else if (bannerType == 1)
+        {
+            scoutMenu.setBannerType("Step Up Weapon Scout");
+            scoutMenu.setTypeData(bannerTypeData + "");
+        }
+        else
+        {
+            scoutMenu.setBannerType("Weapon Scout");
         }
 
         if (!generateImage)

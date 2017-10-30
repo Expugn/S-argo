@@ -7,6 +7,7 @@ public class Banner
     private String bannerID;
     private String bannerName;
     private String bannerType;
+    private String bannerWepType;
     private ArrayList<Character> characters;
     private ArrayList<Weapon> weapons;
 
@@ -23,6 +24,11 @@ public class Banner
     public String getBannerType()
     {
         return bannerType;
+    }
+
+    public String getBannerWepType()
+    {
+        return bannerWepType;
     }
 
     public ArrayList<Character> getCharacters()
@@ -48,6 +54,11 @@ public class Banner
     public void setBannerType(String bannerType)
     {
         this.bannerType = bannerType;
+    }
+
+    public void setBannerWepType(String bannerWepType)
+    {
+        this.bannerWepType = bannerWepType;
     }
 
     public void setCharacters(ArrayList<Character> characters)

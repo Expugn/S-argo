@@ -111,6 +111,7 @@ public class BannerInfo
             int charIndex = rng.nextInt(banner.getCharacters().size());
 
             menu.setBannerType(banner.bannerTypeToString());
+            menu.setBannerWepType(banner.getBannerWepType());
             menu.setBannerName(banner.getBannerName());
             menu.setCharacterAmount(banner.getCharacters().size());
             menu.setBannerID(bannerID);
@@ -295,6 +296,23 @@ public class BannerInfo
                 stepThreeRates += "[2 ★] " + tC + "%\n";
                 stepThreeRates += "**(5 ★ Scout Rates 2.0x)**";
                 menu.setStepThreeRatesList(stepThreeRates);
+            }
+
+
+
+            /* WEAPON BANNER IS STEP UP */
+            if (banner.getBannerWepType().equals("1"))
+            {
+                double tC = (copper + platinum) - ((gold * 2.0) - gold);
+                double tS = silver;
+                double tG = gold * 2.0;
+
+                String stepThreeRates = "";
+                stepThreeRates += "[4 ★] " + tG + "%\n";
+                stepThreeRates += "[3 ★] " + tS + "%\n";
+                stepThreeRates += "[2 ★] " + tC + "%\n";
+                stepThreeRates += "**(4 ★ Weapon Rates 2.0x)**";
+                menu.setStepThreeWeaponRatesList(stepThreeRates);
             }
 
             CHANNEL.sendMessage(menu.get().build());

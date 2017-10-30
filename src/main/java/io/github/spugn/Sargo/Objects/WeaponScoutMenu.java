@@ -8,6 +8,8 @@ public class WeaponScoutMenu
 
     private String bannerName = "";
     private String pullType = "";
+    private String bannerType = "";
+    private String typeData = "";
     private String authorIcon = Images.SCOUT_ICON.getUrl();
     private String thumbnail = Images.CHEST_BROWN.getUrl();
     private String footerIcon = Images.MEMORY_DIAMOND_ICON.getUrl();
@@ -28,7 +30,18 @@ public class WeaponScoutMenu
 
         if (pullType.equals(Text.MULTI_PULL.get()))
         {
-            builder.withTitle("[Weapon Scout] - Multi Pull");
+            if (bannerType.equalsIgnoreCase("Weapon Scout"))
+            {
+                builder.withTitle("[" + bannerType + "] - Multi Pull");
+            }
+            else if (bannerType.equalsIgnoreCase("Step Up Weapon Scout"))
+            {
+                builder.withTitle("[" + bannerType + "] - Step " + typeData);
+            }
+            else
+            {
+                builder.withTitle("[" + bannerType + "] - Multi Pull");
+            }
         }
         else
         {
@@ -81,5 +94,15 @@ public class WeaponScoutMenu
     public void setWeaponString(String weaponString)
     {
         this.weaponString = weaponString;
+    }
+
+    public void setBannerType(String bannerType)
+    {
+        this.bannerType = bannerType;
+    }
+
+    public void setTypeData(String typeData)
+    {
+        this.typeData = typeData;
     }
 }

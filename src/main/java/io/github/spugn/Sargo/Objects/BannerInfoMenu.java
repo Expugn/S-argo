@@ -7,6 +7,7 @@ public class BannerInfoMenu
 {
     private EmbedBuilder builder;
     private String bannerType;
+    private String bannerWepType;
     private String bannerName;
     private int characterAmount;
     private String characterList;
@@ -16,6 +17,7 @@ public class BannerInfoMenu
     private String stepThreeRatesList;
     private String stepFiveRatesList;
     private String stepSixRatesList;
+    private String stepThreeWeaponRatesList;
     private String recordCrystalRatesList;
     private int bannerID;
     private String imageURL;
@@ -27,7 +29,15 @@ public class BannerInfoMenu
 
     private void build()
     {
-        builder.withAuthorName("[" + bannerType + "] " + bannerName);
+        if (bannerWepType.equalsIgnoreCase("1"))
+        {
+            builder.withAuthorName("[" + bannerType + " / Weapon Step Up] " + bannerName);
+        }
+        else
+        {
+            builder.withAuthorName("[" + bannerType + "] " + bannerName);
+        }
+
         builder.withDesc(characterAmount + Text.BANNER_INFO_CHARACTER_COUNT.get());
         builder.withColor(0, 153, 153);
         builder.withThumbnail(imageURL);
@@ -64,6 +74,11 @@ public class BannerInfoMenu
         else if (bannerType.equalsIgnoreCase("Step Up v3"))
         {
             builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+        }
+
+        if (bannerWepType.equalsIgnoreCase("1"))
+        {
+            builder.appendField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
         }
 
         String footer = "[s/si";
@@ -116,6 +131,11 @@ public class BannerInfoMenu
     public void setBannerType(String bannerType)
     {
         this.bannerType = bannerType;
+    }
+
+    public void setBannerWepType(String bannerWepType)
+    {
+        this.bannerWepType = bannerWepType;
     }
 
     public void setBannerName(String bannerName)
@@ -171,6 +191,11 @@ public class BannerInfoMenu
     public void setStepSixRatesList(String stepSixRatesList)
     {
         this.stepSixRatesList = stepSixRatesList;
+    }
+
+    public void setStepThreeWeaponRatesList(String stepThreeWeaponRatesList)
+    {
+        this.stepThreeWeaponRatesList = stepThreeWeaponRatesList;
     }
 
     public void setRecordCrystalRatesList(String recordCrystalRatesList)
