@@ -25,6 +25,7 @@ public class BannerParser
     static final String ID = "id";
     static final String NAME = "name";
     static final String TYPE = "type";
+    static final String WEPTYPE = "wepType";
 
     /* CHARACTER OBJECT TAGS */
     static final String CHARACTER = "Character";
@@ -96,6 +97,14 @@ public class BannerParser
                     {
                         event = eventReader.nextEvent();
                         banner.setBannerType(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE WEAPON BANNER TYPE */
+                    if (event.asStartElement().getName().getLocalPart().equals(WEPTYPE))
+                    {
+                        event = eventReader.nextEvent();
+                        banner.setBannerWepType(event.asCharacters().getData());
                         continue;
                     }
 

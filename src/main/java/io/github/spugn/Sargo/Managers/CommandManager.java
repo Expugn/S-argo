@@ -193,7 +193,7 @@ public class CommandManager
                         }
                         else
                         {
-                        /* FIRST CHARACTER IS NOT 'P' */
+                            /* FIRST CHARACTER IS NOT 'P' */
                             CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
                         }
                     }
