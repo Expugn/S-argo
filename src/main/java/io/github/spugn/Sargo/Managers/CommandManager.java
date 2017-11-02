@@ -59,6 +59,10 @@ public class CommandManager
         {
             botName = "S'aruto";
         }
+        else if (SETTINGS.getSecretWord().equalsIgnoreCase("Santa"))
+        {
+            botName = "S'anta";
+        }
         else
         {
             botName = "S'argo";

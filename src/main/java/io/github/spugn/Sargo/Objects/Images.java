@@ -38,6 +38,12 @@ public enum Images
     NARUTO_THUMBUP("images/Naruto/Naruto_ThumbUp.png"),
     NARUTO_WINK("images/Naruto/Naruto_Wink.png"),
 
+    /* images/Santa/ */
+    SANTA_SMILE("images/Santa/Santa_Smile.png"),
+    SANTA_HAPPY("images/Santa/Santa_Happy.png"),
+    SANTA_WOAH("images/Santa/Santa_Woah.png"),
+    SANTA_WINK("images/Santa/Santa_Wink.png"),
+
     /* images/Miscellaneous/ */
     SCOUT_ICON("images/Miscellaneous/Scout_Icon.png"),
     MEMORY_DIAMOND_ICON("images/Miscellaneous/Memory_Diamond_Icon.png"),

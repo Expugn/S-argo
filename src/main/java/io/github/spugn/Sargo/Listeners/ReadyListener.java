@@ -42,6 +42,10 @@ public class ReadyListener
         {
             botName = "S'aruto";
         }
+        else if (settings.getSecretWord().equalsIgnoreCase("Santa"))
+        {
+            botName = "S'anta";
+        }
         else
         {
             botName = "S'argo";

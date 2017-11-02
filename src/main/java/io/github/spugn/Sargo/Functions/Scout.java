@@ -1015,6 +1015,18 @@ public class Scout
             image3 = Images.NARUTO_THUMBUP.getUrl();
             image4 = Images.NARUTO_WINK.getUrl();
         }
+        else if (secretWord.equalsIgnoreCase("Santa"))
+        {
+            text1 = "*\"Ho ho ho!\"*";
+            text2 = "*\"Merry Christmas!\"*";
+            text3 = "*\"What would you like for Christmas?\"*";
+            text4 = "*\"Have you been naughty or nice this year?\"*";
+
+            image1 = Images.SANTA_SMILE.getUrl();
+            image2 = Images.SANTA_HAPPY.getUrl();
+            image3 = Images.SANTA_WOAH.getUrl();
+            image4 = Images.SANTA_WINK.getUrl();
+        }
 
         if (aText < 0.25)
         {
