@@ -168,6 +168,7 @@ public class Update
                     ImageIO.write(image, "png", file);
 
                     builder.appendField(c.toString(), "[Image Link](" + url + ")", false);
+                    System.out.println("Updated " + c.toString());
                 }
 
                 for (Weapon w : bannerWeapons)
@@ -200,6 +201,7 @@ public class Update
                     ImageIO.write(image, "png", file);
 
                     builder2.appendField(w.toString(), "[Image Link](" + url + ")", false);
+                    System.out.println("Updated " + w.toString());
                 }
             }
             catch (MalformedURLException e)
