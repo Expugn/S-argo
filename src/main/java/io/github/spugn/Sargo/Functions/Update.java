@@ -6,6 +6,7 @@ import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.EmbedBuilder;
 
 import javax.imageio.ImageIO;
@@ -15,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Update
@@ -129,7 +131,11 @@ public class Update
             List<Character> bannerCharacters = selectedBanner.getCharacters();
             List<Weapon> bannerWeapons = selectedBanner.getWeapons();
             EmbedBuilder builder = new EmbedBuilder();
-            EmbedBuilder builder2 = new EmbedBuilder();
+            builder.withTitle("Update: [" + selectedBanner.getBannerName() + "]");
+            IMessage statusMessage = CHANNEL.sendMessage(builder.build());
+            String characterList = "";
+            String weaponList = "";
+            DecimalFormat df = new DecimalFormat("0.00");
 
             boolean imageFolderExists = new File("images").exists();
             boolean characterFolderExists = new File("images/Characters").exists();
@@ -138,22 +144,20 @@ public class Update
 
             try
             {
-                for (Character c : bannerCharacters)
-                {
+                int counter = 0;
+
+                for (Character c : bannerCharacters) {
                     bannerFolderExists = new File("images/Characters/" + selectedBanner.getBannerName()).exists();
 
-                    if (!imageFolderExists)
-                    {
+                    if (!imageFolderExists) {
                         new File("images").mkdir();
                     }
 
-                    if (!characterFolderExists)
-                    {
-                        new File ("images/Characters").mkdir();
+                    if (!characterFolderExists) {
+                        new File("images/Characters").mkdir();
                     }
 
-                    if (!bannerFolderExists)
-                    {
+                    if (!bannerFolderExists) {
                         new File("images/Characters/" + selectedBanner.getBannerName()).mkdir();
                     }
 
@@ -167,8 +171,27 @@ public class Update
                     File file = new File(c.getImagePath());
                     ImageIO.write(image, "png", file);
 
-                    builder.appendField(c.toString(), "[Image Link](" + url + ")", false);
-                    System.out.println("Updated " + c.toString());
+                    builder.clearFields();
+
+                    characterList += "Updated " + c.toString() + "\n";
+                    counter++;
+
+                    if (counter % 3 == 0)
+                    {
+                        builder.withTitle("Update: [" + selectedBanner.getBannerName() + "]");
+                        builder.appendField("- Progress -", df.format((((double) counter / (selectedBanner.getCharacters().size() + selectedBanner.getWeapons().size())) * 100)) + "%", false);
+                        builder.appendField("- Characters -", characterList, false);
+
+                        try
+                        {
+                            statusMessage.edit(builder.build());
+                            Thread.sleep(1000);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
                 }
 
                 for (Weapon w : bannerWeapons)
@@ -200,9 +223,32 @@ public class Update
                     File file = new File(w.getImagePath());
                     ImageIO.write(image, "png", file);
 
-                    builder2.appendField(w.toString(), "[Image Link](" + url + ")", false);
-                    System.out.println("Updated " + w.toString());
+                    builder.clearFields();
+
+                    weaponList += "Updated " + w.toString() + "\n";
+                    counter++;
+
+                    if (counter % 3 == 0)
+                    {
+                        builder.withTitle("Update: [" + selectedBanner.getBannerName() + "]");
+                        builder.appendField("- Progress -", df.format((((double) counter / (selectedBanner.getCharacters().size() + selectedBanner.getWeapons().size())) * 100)) + "%", false);
+                        builder.appendField("- Characters -", characterList, false);
+                        builder.appendField("- Weapons -", weaponList, false);
+                        try
+                        {
+                            statusMessage.edit(builder.build());
+                            Thread.sleep(1000);
+                        }
+                        catch (InterruptedException e)
+                        {
+                            e.printStackTrace();
+                        }
+                    }
                 }
+            }
+            catch (FileNotFoundException e)
+            {
+                CHANNEL.sendMessage(new WarningMessage("[FileNotFoundException] Whoops. Something went wrong.", "Access is denied, try again later!").get().build());
             }
             catch (MalformedURLException e)
             {
@@ -215,18 +261,21 @@ public class Update
                 return;
             }
 
-            builder.withAuthorName("Updated the following character images:");
-            builder2.withAuthorName("Updated the following weapon images:");
+            builder.clearFields();
+            builder.withTitle("Update: [" + selectedBanner.getBannerName() + "]");
+            builder.appendField("- Progress -",  "DONE", false);
 
             if (bannerCharacters.size() > 0)
             {
-                CHANNEL.sendMessage(builder.build());
+                builder.appendField("- Characters -", characterList, false);
             }
 
             if (bannerWeapons.size() > 0)
             {
-                CHANNEL.sendMessage(builder2.build());
+                builder.appendField("- Weapons -", weaponList, false);
             }
+
+            statusMessage.edit(builder.build());
         }
         else
         {
