@@ -384,23 +384,26 @@ public class Profile
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
         List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
-        List<String> allGoldCharacterPrefixes = new ArrayList<>();
-        List<String> allPlatinumCharacterPrefixes = new ArrayList<>();
+
+        List<String> allGoldCharacters = new ArrayList<>();
+        List<String> allPlatinumCharacters = new ArrayList<>();
 
         for (Banner b : banners)
         {
             /* GET CHARACTERS */
             for (Character c : b.getCharacters())
             {
-                if (c.getRarity().equals("4") && !(allGoldCharacterPrefixes.contains(c.getPrefix())))
+                if (c.getRarity().equals("4") &&
+                        !(allGoldCharacters.contains(c.getPrefix() + c.getName())))
                 {
                     goldCount++;
-                    allGoldCharacterPrefixes.add(c.getPrefix());
+                    allGoldCharacters.add(c.getPrefix() + c.getName());
                 }
-                else if (c.getRarity().equals("5") && !(allPlatinumCharacterPrefixes.contains(c.getPrefix())))
+                else if (c.getRarity().equals("5") &&
+                        !(allPlatinumCharacters.contains(c.getPrefix() + c.getName())))
                 {
                     platinumCount++;
-                    allPlatinumCharacterPrefixes.add(c.getPrefix());
+                    allPlatinumCharacters.add(c.getPrefix() + c.getName());
                 }
             }
 
@@ -409,6 +412,45 @@ public class Profile
             {
                 bannerType.put(b.getBannerName(), Integer.parseInt(b.getBannerType()));
             }
+        }
+
+        purgeDeletedCharacters(allGoldCharacters, allPlatinumCharacters);
+    }
+
+    private void purgeDeletedCharacters(List<String> gold, List<String> plat)
+    {
+        boolean unsavedChanges = false;
+        List<Character> newUserCharacterBox = new ArrayList<>();
+        for (Character c : user.getCharacterBox())
+        {
+            if (c.getRarity().equals("4"))
+            {
+                if (gold.contains(c.getPrefix() + c.getName()))
+                    newUserCharacterBox.add(c);
+                else
+                    if (!unsavedChanges)
+                        unsavedChanges = true;
+
+            }
+            else if (c.getRarity().equals("5"))
+            {
+                if (plat.contains(c.getPrefix() + c.getName()))
+                    newUserCharacterBox.add(c);
+                else
+                    if (!unsavedChanges)
+                        unsavedChanges = true;
+            }
+            else
+            {
+                newUserCharacterBox.add(c);
+            }
+        }
+
+        if (unsavedChanges)
+        {
+            user.setCharacterBox(newUserCharacterBox);
+            user.saveData();
+            user = new UserParser(DISCORD_ID);
         }
     }
 }
