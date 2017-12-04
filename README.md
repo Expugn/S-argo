@@ -86,7 +86,7 @@ Invite link for the server is down in Related Links.
 
 ## Related Links
 [S'argo Official Wiki](https://github.com/Expugn/S-argo/wiki "Wiki")  
-[S'argo Official Data Repository](https://github.com/Expugn/S-argo_Data "Official Data Repository")  
+[S'argo Official Data Repository](https://github.com/Expugn/S-argo_Data_v2 "Official Data Repository")  
 [*Sword Art Online: Memory Defrag* Subreddit](https://www.reddit.com/r/MemoryDefrag/ "Fan Subreddit")  
 [Subreddit Discord Invite Link](http://discord.gg/MemoryDefrag "Discord Invite Link")  
 [4★ Character Database](https://www.reddit.com/r/MemoryDefrag/comments/5yyr4j/sao_md_4_database/ "4★ Character Database")
