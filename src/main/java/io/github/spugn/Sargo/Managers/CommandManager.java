@@ -119,14 +119,17 @@ public class CommandManager
         catch (RateLimitException e)
         {
             System.out.println("[CommandManager] - Rate Limit Exception.");
+            CHANNEL.setTypingStatus(false);
         }
         catch (DiscordException e)
         {
             event.getChannel().sendMessage(new WarningMessage("DISCORD EXCEPTION", "Something went wrong.").get().build());
+            CHANNEL.setTypingStatus(false);
         }
         catch (MissingPermissionsException e)
         {
             System.out.println("[CommandManager] - Not Enough Permissions.");
+            CHANNEL.setTypingStatus(false);
         }
     }
 

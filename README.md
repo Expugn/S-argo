@@ -84,48 +84,8 @@ Invite link for the server is down in Related Links.
 '**update** o(verwrite)' - Replace all character/weapon files with a new copy.   
 '**stop**' - Stop the bot.  
 
-## Startup Guide
-If you're just starting, grab the S-argo_Startup_Kit.zip in v1.0's release information.  
-Do **NOT** download/add any newer versioned files until you confirm that v1.0 works correctly.  
-1) Open the Settings.xml file located in the data folder.
-2) Place your Discord ID and Bot Token in the appropriate location.
-3) Modify the other settings as you please.
-3) Run the .jar file; a GUI should appear and it should show your Bot's name and discriminator.
-4) In any non-ignored channel, type '**update banners**', this should grab the Banners.xml file from the GitHub repository under Settings.xml.
-6) Scouting is now available, but if you try to generate an image, gold/platinum character images will be placeholders if you didn't grab the Character_Images.zip file.
-7) You can also download character images by running '**update images [Banner ID]**' in any non-ignored channel.
-8) Once all the character images for each banner are saved in their appropriate location, the bot is now ready for use.  
-
-To update your bot to the latest version, work your way up by updating from v1.0 to the latest version. You can ignore
-any .jar file changes from versions that aren't the latest, but make sure to grab any new required system files and place
-them in their designated locations or the bot will have issues.
-
-As troublesome as this may be, it's the only way to update from v1.0 to the latest version until a better method is
-figured out.
-
-## Updating Guide
-### S'argo (.jar File)
-Grab the latest release of S'argo. After stopping your bot, you can delete your old .jar file and replace it 
-with the new latest release .jar file. Make sure to check for any Settings.xml changes and update your Settings.xml
-file if there are any.
-
-### Banners.xml
-When the bot is running, you can use '**update banners**' to grab the latest Banner.xml file from the GitHub Data
-Repository linked in Settings.xml.  
-If you wish to update manually, fill out the banner details in a similar format to the other banners.
-
-### Character Images
-When the bot is running, you can use '**update images [Banner ID]**' to grab the images for that banner. Make sure
-you've updated to the latest banner file first before doing so.  
-If you wish to update manually, make a new folder with the banner name under images/Characters/ and put your
-image files inside.
-
-### Settings.xml
-You can grab the latest version of the Settings.xml file by using '**update settings**' when the bot is running.
-This will save a file named "new_Settings.xml" in your data folder from the GitHub Data Repository.  
-You can modify the settings in there as you please, and then delete your old Settings.xml file and rename the new Settings.xml file to "Settings.xml".
-
 ## Related Links
+[S'argo Official Wiki](https://github.com/Expugn/S-argo/wiki "Wiki")
 [S'argo Official Data Repository](https://github.com/Expugn/S-argo_Data "Official Data Repository")  
 [*Sword Art Online: Memory Defrag* Subreddit](https://www.reddit.com/r/MemoryDefrag/ "Fan Subreddit")  
 [Subreddit Discord Invite Link](http://discord.gg/MemoryDefrag "Discord Invite Link")  

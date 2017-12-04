@@ -8,7 +8,7 @@ Make sure you have a Banners.xml file. Grab the latest copy with 'update banners
 Make sure you've put your Discord ID in the appropriate location in Settings.xml.  
 Your Discord ID is not your username and discriminator (i.e.: S'pugn#2612). 
  
-To get your Discord ID, go to "User Settings" > "Appearance" and under turn on 
+To get your Discord ID, go to "User Settings" > "Appearance" and turn on 
 "Developer Mode" which is located under "Advanced". Once Developer Mode is enabled,
 you can now right click your name/profile picture and click "Copy ID". Paste the ID
 under the appropriate location in Settings.xml.
