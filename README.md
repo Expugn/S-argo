@@ -85,7 +85,7 @@ Invite link for the server is down in Related Links.
 '**stop**' - Stop the bot.  
 
 ## Related Links
-[S'argo Official Wiki](https://github.com/Expugn/S-argo/wiki "Wiki")
+[S'argo Official Wiki](https://github.com/Expugn/S-argo/wiki "Wiki")  
 [S'argo Official Data Repository](https://github.com/Expugn/S-argo_Data "Official Data Repository")  
 [*Sword Art Online: Memory Defrag* Subreddit](https://www.reddit.com/r/MemoryDefrag/ "Fan Subreddit")  
 [Subreddit Discord Invite Link](http://discord.gg/MemoryDefrag "Discord Invite Link")  
