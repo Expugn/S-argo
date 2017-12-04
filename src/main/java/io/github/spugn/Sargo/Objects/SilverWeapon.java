@@ -44,8 +44,8 @@ public class SilverWeapon
         {
             sW = new Weapon();
             sW.setName(name);
-            sW.setRarity("3");
-            sW.setImagePath("images/Weapons/Silver/" + name.replaceAll(" ", "_") + ".png");
+            sW.setRarity(3);
+            sW.setImagePath("images/Weapons/" + name.replaceAll(" ", "_") + ".png");
 
             weaponList.add(sW);
         }

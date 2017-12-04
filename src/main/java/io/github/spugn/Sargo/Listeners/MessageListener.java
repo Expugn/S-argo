@@ -10,6 +10,18 @@ import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
 
+/**
+ * MESSAGE LISTENER
+ * <p>
+ *     Triggers whenever a message is sent in the guild that the
+ *     bot is in.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v1.0
+ * @see MessageReceivedEvent
+ */
 public class MessageListener
 {
     private IDiscordClient client;
@@ -33,7 +45,7 @@ public class MessageListener
         }
         catch (RateLimitException e)
         {
-            System.out.println("Rate Limit Exception.");
+            System.out.println("[MessageListener] - Rate Limit Exception.");
         }
         catch (DiscordException e)
         {

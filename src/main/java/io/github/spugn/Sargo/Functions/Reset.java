@@ -1,8 +1,10 @@
 package io.github.spugn.Sargo.Functions;
 
 import io.github.spugn.Sargo.Managers.CommandManager;
-import io.github.spugn.Sargo.Objects.*;
+import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
+import io.github.spugn.Sargo.Objects.WarningMessage;
+import io.github.spugn.Sargo.Objects.Weapon;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import sx.blah.discord.handle.obj.IChannel;
@@ -13,23 +15,46 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * RESET
+ * <p>
+ *     This class modifies a user's file to remove data and provide a clean
+ *     slate.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.1
+ * @since v1.0
+ */
 public class Reset
 {
     private IChannel CHANNEL;
+
+    /**
+     * Warns the user that if they type the command in the warning message their entire
+     * user file will be deleted.
+     *
+     * @param channel  Channel where the message should be sent.
+     */
     public Reset(IChannel channel)
     {
         CHANNEL = channel;
-        CHANNEL.sendMessage(new WarningMessage("WARNING", "Continuing forward will erase all your data. Are you sure?\nType '" + CommandManager.commandPrefix + "**reset** y' to proceed.").get().build());
+        CHANNEL.sendMessage(new WarningMessage("WARNING", "Continuing forward will erase all your data. Are you sure?\nType '" + CommandManager.getCommandPrefix() + "**reset** y' to proceed.").get().build());
     }
 
-    public Reset (IChannel channel, String discordID)
+    /**
+     * Removes everything in the user's file.
+     *
+     * @param channel  Channel where the message should be sent.
+     * @param discordID  Discord ID of the user.
+     */
+    public Reset(IChannel channel, String discordID)
     {
         CHANNEL = channel;
         File userFile = new File("data/Users/USER_" + discordID + ".xml");
 
         if (userFile.exists())
         {
-            //userFile.delete();
             new UserParser(discordID).resetUser();
 
             IUser discordUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
@@ -41,7 +66,16 @@ public class Reset
         }
     }
 
-    public Reset (IChannel channel, String discordID, int bannerID, String choice, boolean yes)
+    /**
+     * Removes either the characters, weapons, or all data of a specific banner.
+     *
+     * @param channel  Channel where the data should be displayed.
+     * @param discordID  Discord ID of the user.
+     * @param bannerID  ID of the banner that should be deleted.
+     * @param choice  Choice of the type of deletion that should be processed.
+     * @param yes  If true, then delete data; if false, then warn the user and display data that will be deleted.
+     */
+    public Reset(IChannel channel, String discordID, int bannerID, String choice, boolean yes)
     {
         CHANNEL = channel;
         bannerID--;
@@ -55,7 +89,7 @@ public class Reset
 
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
+        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
 
         if (bannerID < banners.size() && bannerID >= 0)
         {
@@ -72,7 +106,7 @@ public class Reset
             {
                 for (Character uC : user.getCharacterBox())
                 {
-                    if (c.getRarity().equalsIgnoreCase(uC.getRarity()) &&
+                    if (c.getRarity() == uC.getRarity() &&
                             c.getPrefix().equalsIgnoreCase(uC.getPrefix()) &&
                             c.getName().equalsIgnoreCase(uC.getName()))
                     {
@@ -85,7 +119,7 @@ public class Reset
             {
                 for (Weapon uW : user.getWeaponBox())
                 {
-                    if (w.getRarity().equalsIgnoreCase(uW.getRarity()) &&
+                    if (w.getRarity() == uW.getRarity() &&
                             w.getName().equalsIgnoreCase(uW.getName()))
                     {
                         weapString += w.toString() + "\n";
@@ -93,7 +127,7 @@ public class Reset
                 }
             }
 
-            if (Integer.parseInt(banners.get(bannerID).getBannerType()) != 0)
+            if (banners.get(bannerID).getBannerType() != 0)
             {
                 bannerData = user.getBannerData(banners.get(bannerID).getBannerName());
             }
@@ -104,12 +138,12 @@ public class Reset
                 {
                     List<Character> userCharacters = user.getCharacterBox();
 
-                    for (Iterator<Character> iter = userCharacters.listIterator() ; iter.hasNext() ; )
+                    for (Iterator<Character> iter = userCharacters.listIterator(); iter.hasNext() ; )
                     {
                         Character userCharacter = iter.next();
                         for (Character c : bannerCharacters)
                         {
-                            if (c.getRarity().equalsIgnoreCase(userCharacter.getRarity()) &&
+                            if (c.getRarity() == userCharacter.getRarity() &&
                                     c.getPrefix().equalsIgnoreCase(userCharacter.getPrefix()) &&
                                     c.getName().equalsIgnoreCase(userCharacter.getName()))
                             {
@@ -125,12 +159,12 @@ public class Reset
                 {
                     List<Weapon> userWeapons = user.getWeaponBox();
 
-                    for (Iterator<Weapon> iter = userWeapons.listIterator() ; iter.hasNext() ; )
+                    for (Iterator<Weapon> iter = userWeapons.listIterator(); iter.hasNext() ; )
                     {
                         Weapon userWeapon = iter.next();
                         for (Weapon w : bannerWeapons)
                         {
-                            if (w.getRarity().equalsIgnoreCase(userWeapon.getRarity()) &&
+                            if (w.getRarity() == userWeapon.getRarity() &&
                                     w.getName().equalsIgnoreCase(userWeapon.getName()))
                             {
                                 iter.remove();
@@ -141,9 +175,9 @@ public class Reset
                     user.setWeaponBox(userWeapons);
                 }
 
-                if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType().equalsIgnoreCase("0")))
+                if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType() == 0))
                 {
-                    int bannerType = Integer.parseInt(banners.get(bannerID).getBannerType());
+                    int bannerType = banners.get(bannerID).getBannerType();
                     if (bannerType == 1 || bannerType == 3 || bannerType == 4 || bannerType == 7)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 1);
@@ -169,7 +203,7 @@ public class Reset
                 EmbedBuilder builder = new EmbedBuilder();
                 builder.withAuthorName("WARNING");
                 builder.withTitle("Continuing forward will erase the following data from your file:");
-                builder.withFooterText("Type '" + CommandManager.commandPrefix + "reset " + (bannerID + 1) + " " + choice + " y' to proceed.");
+                builder.withFooterText("Type '" + CommandManager.getCommandPrefix() + "reset " + (bannerID + 1) + " " + choice + " y' to proceed.");
                 builder.withColor(255, 0, 0);
 
                 builder.appendField("- Banner -", banners.get(bannerID).getBannerName(), false);
@@ -186,10 +220,10 @@ public class Reset
                     hasData = true;
                 }
 
-                if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType().equalsIgnoreCase("0")))
+                if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType() == 0))
                 {
                     String dataString = "";
-                    int bannerType = Integer.parseInt(banners.get(bannerID).getBannerType());
+                    int bannerType = banners.get(bannerID).getBannerType();
 
                     if (bannerType == 1 || bannerType == 3 || bannerType == 4 || bannerType == 7)
                     {
@@ -219,7 +253,7 @@ public class Reset
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.commandPrefix + "**scout**' for a list of banners.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
         }
     }
 }

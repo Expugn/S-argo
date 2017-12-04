@@ -3,11 +3,23 @@ package io.github.spugn.Sargo.Objects;
 import io.github.spugn.Sargo.Managers.CommandManager;
 import sx.blah.discord.util.EmbedBuilder;
 
+/**
+ * BANNER INFO MENU
+ * <p>
+ *     Creates the Embed Message used when displaying data about a
+ *     certain banner.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v1.0
+ * @see io.github.spugn.Sargo.Functions.BannerInfo
+ */
 public class BannerInfoMenu
 {
     private EmbedBuilder builder;
     private String bannerType;
-    private String bannerWepType;
+    private int bannerWepType;
     private String bannerName;
     private int characterAmount;
     private String characterList;
@@ -29,7 +41,7 @@ public class BannerInfoMenu
 
     private void build()
     {
-        if (bannerWepType.equalsIgnoreCase("1"))
+        if (bannerWepType == 1)
         {
             builder.withAuthorName("[" + bannerType + " / Weapon Step Up] " + bannerName);
         }
@@ -38,18 +50,18 @@ public class BannerInfoMenu
             builder.withAuthorName("[" + bannerType + "] " + bannerName);
         }
 
-        builder.withDesc(characterAmount + Text.BANNER_INFO_CHARACTER_COUNT.get());
+        builder.withDesc(characterAmount + " characters available.");
         builder.withColor(0, 153, 153);
         builder.withThumbnail(imageURL);
 
-        builder.appendField(Text.BANNER_INFO_CHARACTER_HEADER.get(), characterList, (weaponAmount > 0));
+        builder.appendField("- Characters -", characterList, (weaponAmount > 0));
 
         if (weaponAmount > 0)
         {
             builder.appendField("- Weapons -", weaponList, true);
         }
 
-        builder.appendField(Text.BANNER_INFO_RATES_HEADER.get(), ratesList, true);
+        builder.appendField("- Pull Rates -", ratesList, true);
 
         if (bannerType.equalsIgnoreCase("Step Up"))
         {
@@ -76,7 +88,7 @@ public class BannerInfoMenu
             builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
         }
 
-        if (bannerWepType.equalsIgnoreCase("1"))
+        if (bannerWepType == 1)
         {
             builder.appendField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
         }
@@ -119,7 +131,7 @@ public class BannerInfoMenu
             footer += "]' to scout.";
         }
 
-        builder.withFooterText("Use '" + CommandManager.commandPrefix + "scout " + (bannerID + 1) + " " + footer);
+        builder.withFooterText("Use '" + CommandManager.getCommandPrefix() + "scout " + (bannerID + 1) + " " + footer);
     }
 
     public EmbedBuilder get()
@@ -133,7 +145,7 @@ public class BannerInfoMenu
         this.bannerType = bannerType;
     }
 
-    public void setBannerWepType(String bannerWepType)
+    public void setBannerWepType(int bannerWepType)
     {
         this.bannerWepType = bannerWepType;
     }

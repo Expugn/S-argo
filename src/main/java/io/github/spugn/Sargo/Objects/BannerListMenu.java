@@ -1,10 +1,19 @@
 package io.github.spugn.Sargo.Objects;
 
 import io.github.spugn.Sargo.Managers.CommandManager;
+import io.github.spugn.Sargo.Utilities.GitHubImage;
 import sx.blah.discord.util.EmbedBuilder;
 
 /**
- * Gives templates for the BannerList menu.
+ * BANNER LIST MENU
+ * <p>
+ *     Creates the Embed Message used when listing available banners.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v1.0
+ * @see io.github.spugn.Sargo.Functions.BannerInfo
  */
 public class BannerListMenu
 {
@@ -21,14 +30,14 @@ public class BannerListMenu
 
     private void build()
     {
-        builder.withAuthorName(Text.BANNER_LIST_TITLE.get() + " (Page " + currentPage + " of " + highestPage + ")");
-        builder.withDesc(bannerCount + Text.BANNER_LIST_BANNER_COUNT.get());
-        builder.withThumbnail(Images.SCOUT_ICON.getUrl());
+        builder.withAuthorName("Banner List (Page " + currentPage + " of " + highestPage + ")");
+        builder.withDesc(bannerCount + " banners available.");
+        builder.withThumbnail(new GitHubImage("images/System/Scout_Icon.png").getURL());
         builder.withColor(153, 0, 153);
 
-        builder.appendField(Text.BANNER_LIST_BANNER_HEADER.get(), bannerList, false);
+        builder.appendField("- Banners -", bannerList, false);
 
-        builder.withFooterText("'" + CommandManager.commandPrefix + "scout [Banner ID]' for more banner info.  |  '" + CommandManager.commandPrefix + "scout p[Page]' to view another page.");
+        builder.withFooterText("'" + CommandManager.getCommandPrefix() + "scout [Banner ID]' for more banner info.  |  '" + CommandManager.getCommandPrefix() + "scout p[Page]' to view another page.");
     }
 
     public EmbedBuilder get()

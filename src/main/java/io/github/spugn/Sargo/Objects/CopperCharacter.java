@@ -15,8 +15,8 @@ public class CopperCharacter
         /* CREATE KIRITO FIRST SINCE HE'S THE ONLY ONE WITH A PREFIX */
         cC.setPrefix("Former Beta Tester");
         cC.setName("Kirito");
-        cC.setRarity("2");
-        cC.setImagePath("images/Characters/Copper/Kirito.png");
+        cC.setRarity(2);
+        cC.setImagePath("images/Characters/Kirito.png");
         characters.add(cC);
 
         /* CREATE NAME ARRAY */
@@ -51,8 +51,8 @@ public class CopperCharacter
 
             cC.setPrefix("");
             cC.setName(name);
-            cC.setRarity("2");
-            cC.setImagePath("images/Characters/Copper/" + name + ".png");
+            cC.setRarity(2);
+            cC.setImagePath("images/Characters/" + name + ".png");
 
             characters.add(cC);
         }

@@ -1,11 +1,26 @@
 package io.github.spugn.Sargo.Listeners;
 
+import io.github.spugn.Sargo.Functions.Update;
 import io.github.spugn.Sargo.GUI.GUI;
+import io.github.spugn.Sargo.XMLParsers.ScoutMasterParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
 
+/**
+ * READY LISTENER
+ * <p>
+ *     Triggers when the bot initially logs in.
+ *     At this state, the bot is ready to do things such
+ *     as send messages or change it's playing text.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v1.0
+ * @see ReadyEvent
+ */
 public class ReadyListener
 {
     private final IDiscordClient CLIENT;
@@ -20,46 +35,36 @@ public class ReadyListener
     public void onReadyEvent(ReadyEvent event)
     {
         SettingsParser settings = new SettingsParser();
+        botName = new ScoutMasterParser().getBotName();
 
         if (!settings.isNoGUI())
         {
             new GUI(CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
         }
 
-        if (settings.getSecretWord().equalsIgnoreCase("Ushi"))
-        {
-            botName = "S'ushi";
-        }
-        else if (settings.getSecretWord().equalsIgnoreCase("Legacy"))
-        {
-            botName = "S'egacy ∞";
-        }
-        else if (settings.getSecretWord().equalsIgnoreCase("Tuglow"))
-        {
-            botName = "S'uglow";
-        }
-        else if (settings.getSecretWord().equalsIgnoreCase("Naruto"))
-        {
-            botName = "S'aruto";
-        }
-        else if (settings.getSecretWord().equalsIgnoreCase("Santa"))
-        {
-            botName = "S'anta";
-        }
-        else
-        {
-            botName = "S'argo";
-        }
-
-
+        String playingText;
+        String commandPrefix;
         if (settings.isUseMention())
         {
-            CLIENT.changePlayingText(botName + " | @" + CLIENT.getOurUser().getName() + " help");
+            commandPrefix = "@" + CLIENT.getOurUser().getName() + " ";
         }
         else
         {
-            CLIENT.changePlayingText(botName + " | " + settings.getCommandPrefix() + "help");
+            commandPrefix = settings.getCommandPrefix() + "";
         }
+
+        if (CLIENT.getOurUser().getStringID().equalsIgnoreCase("356981380338679810") ||
+                CLIENT.getOurUser().getStringID().equalsIgnoreCase("309620271621341185"))
+        {
+            playingText = botName + " devBot | " + commandPrefix + "help";
+        }
+        else
+        {
+            playingText = botName + " | " + commandPrefix + "help";
+        }
+        CLIENT.changePlayingText(playingText);
+
+        new Update();
     }
 }
 

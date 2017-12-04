@@ -1,4 +1,4 @@
-package io.github.spugn.Sargo.Objects;
+package io.github.spugn.Sargo.Utilities;
 
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 

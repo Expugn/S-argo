@@ -43,8 +43,8 @@ public class CopperWeapon
             cW = new Weapon();
 
             cW.setName(name);
-            cW.setRarity("2");
-            cW.setImagePath("images/Weapons/Copper/" + name.replaceAll(" ", "_") + ".png");
+            cW.setRarity(2);
+            cW.setImagePath("images/Weapons/" + name.replaceAll(" ", "_") + ".png");
 
             weaponList.add(cW);
         }

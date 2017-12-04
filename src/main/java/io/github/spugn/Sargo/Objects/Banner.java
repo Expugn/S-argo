@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Banner
 {
-    private String bannerID;
+    private int bannerID;
     private String bannerName;
-    private String bannerType;
-    private String bannerWepType;
+    private int bannerType;
+    private int bannerWepType;
     private ArrayList<Character> characters;
     private ArrayList<Weapon> weapons;
 
-    public String getBannerID()
+    public int getBannerID()
     {
         return bannerID;
     }
@@ -21,12 +21,12 @@ public class Banner
         return bannerName;
     }
 
-    public String getBannerType()
+    public int getBannerType()
     {
         return bannerType;
     }
 
-    public String getBannerWepType()
+    public int getBannerWepType()
     {
         return bannerWepType;
     }
@@ -41,7 +41,7 @@ public class Banner
         return weapons;
     }
 
-    public void setBannerID(String bannerID)
+    public void setBannerID(int bannerID)
     {
         this.bannerID = bannerID;
     }
@@ -51,12 +51,12 @@ public class Banner
         this.bannerName = bannerName;
     }
 
-    public void setBannerType(String bannerType)
+    public void setBannerType(int bannerType)
     {
         this.bannerType = bannerType;
     }
 
-    public void setBannerWepType(String bannerWepType)
+    public void setBannerWepType(int bannerWepType)
     {
         this.bannerWepType = bannerWepType;
     }
@@ -73,9 +73,7 @@ public class Banner
 
     public String bannerTypeToString()
     {
-        int type = Integer.parseInt(bannerType);
-
-        switch(type)
+        switch(bannerType)
         {
             case 0:
                 return "Normal";

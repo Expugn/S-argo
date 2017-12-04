@@ -116,8 +116,8 @@ public class SilverCharacter
 
             sC.setPrefix(prefixes.get(i));
             sC.setName(names.get(i));
-            sC.setRarity("3");
-            sC.setImagePath("images/Characters/Silver/" + prefixes.get(i).replaceAll(" ", "_") + "_" + names.get(i).replaceAll(" ", "_") + ".png");
+            sC.setRarity(3);
+            sC.setImagePath("images/Characters/" + prefixes.get(i).replaceAll(" ", "_") + "_" + names.get(i).replaceAll(" ", "_") + ".png");
 
             characters.add(sC);
         }

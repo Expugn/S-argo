@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/S-argo.iml" filepath="$PROJECT_DIR$/S-argo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Sargo.iml" filepath="$PROJECT_DIR$/Sargo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Sargov2.iml" filepath="$PROJECT_DIR$/Sargov2.iml" />
     </modules>
   </component>
 </project>

@@ -1,17 +1,31 @@
 package io.github.spugn.Sargo.Functions;
 
-import io.github.spugn.Sargo.Objects.Images;
+import io.github.spugn.Sargo.Utilities.GitHubImage;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.util.EmbedBuilder;
 
+/**
+ * HELP
+ * <p>
+ *     Displays a help menu full of available commands.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v1.0
+ */
 public class Help
 {
+    /**
+     * Displays the help menu.
+     * @param channel  The channel where the help menu should be displayed.
+     */
     public Help(IChannel channel)
     {
         EmbedBuilder builder = new EmbedBuilder();
 
         builder.withAuthorName("Help Menu");
-        builder.withAuthorIcon(Images.HELP_ICON.getUrl());
+        builder.withAuthorIcon(new GitHubImage("images/System/Help_Icon.png").getURL());
 
         String scoutingHelp = "";
         scoutingHelp += "'**scout**' - View a list of available banners." + "\n";

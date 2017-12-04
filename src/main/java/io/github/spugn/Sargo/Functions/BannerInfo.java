@@ -3,6 +3,7 @@ package io.github.spugn.Sargo.Functions;
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
+import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import sx.blah.discord.handle.obj.IChannel;
@@ -10,6 +11,20 @@ import sx.blah.discord.handle.obj.IChannel;
 import java.text.DecimalFormat;
 import java.util.*;
 
+/**
+ * BANNER INFO
+ * <p>
+ *     Manages the information in the Embed Messages when
+ *     listing available banners or information about a
+ *     specific banner.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v1.0
+ * @see BannerListMenu
+ * @see BannerInfoMenu
+ */
 public class BannerInfo
 {
     private static IChannel CHANNEL;
@@ -32,7 +47,7 @@ public class BannerInfo
 
         /* READ Banners.xml */
         BannerParser bannersXML = new BannerParser();
-        BANNERS = bannersXML.readConfig(Files.BANNER_XML.get());
+        BANNERS = bannersXML.readConfig("data/Banners.xml");
 
         this.page = Integer.parseInt(page);
         if (this.page < 1)
@@ -50,14 +65,14 @@ public class BannerInfo
 
         /* READ Banners.xml */
         BannerParser bannersXML = new BannerParser();
-        BANNERS = bannersXML.readConfig(Files.BANNER_XML.get());
+        BANNERS = bannersXML.readConfig("data/Banners.xml");
 
         SettingsParser settings = new SettingsParser();
 
-        copper = (int) (settings.getTwoRates() * 100);
-        silver = (int) (settings.getThreeRates() * 100);
-        gold = (int) (settings.getFourRates() * 100);
-        platinum = (int) (settings.getFiveRates() * 100);
+        copper = (int) (settings.getCopperRates() * 100);
+        silver = (int) (settings.getSilverRates() * 100);
+        gold = (int) (settings.getGoldRates() * 100);
+        platinum = (int) (settings.getPlatinumRates() * 100);
         recordCrystal = settings.getRecordCrystalRates();
 
         getBannerInfo();
@@ -73,7 +88,7 @@ public class BannerInfo
 
         for (Banner b : BANNERS)
         {
-            bannerList.put(Integer.parseInt(b.getBannerID()), b.getBannerName());
+            bannerList.put(b.getBannerID(), b.getBannerName());
         }
 
         String message = "";
@@ -144,11 +159,11 @@ public class BannerInfo
             /* SORT GOLD AND PLATINUM CHARACTERS AND STORE THEM IN THEIR OWN ARRAYS */
             for (Character character : banner.getCharacters())
             {
-                if (Integer.parseInt(character.getRarity()) == 4)
+                if (character.getRarity() == 4)
                 {
                     goldCharacters.add(character);
                 }
-                else if (Integer.parseInt(character.getRarity()) == 5)
+                else if (character.getRarity() == 5)
                 {
                     platinumCharacters.add(character);
                 }
@@ -171,7 +186,7 @@ public class BannerInfo
             menu.setRatesList(ratesList);
 
             /* BANNER IS STEP UP */
-            if (banner.getBannerType().equals("1"))
+            if (banner.getBannerType() == 1)
             {
                 double tC = copper - ((gold * 1.5) - gold);
                 double tS = silver;
@@ -202,7 +217,7 @@ public class BannerInfo
                 menu.setStepFiveRatesList(stepFiveRates);
             }
             /* BANNER IS STEP UP V2 */
-            else if (banner.getBannerType().equals("3"))
+            else if (banner.getBannerType() == 3)
             {
                 double tC = copper - ((platinum * 1.5) - platinum);
                 double tS = silver;
@@ -224,8 +239,7 @@ public class BannerInfo
                 tP = 100.0;
 
                 String stepFiveRates = "";
-                if (tP != 0)
-                    stepFiveRates += "[5 ★] " + tP + "%\n";
+                stepFiveRates += "[5 ★] " + tP + "%\n";
                 stepFiveRates += "[4 ★] " + tG + "%\n";
                 stepFiveRates += "[3 ★] " + tS + "%\n";
                 stepFiveRates += "[2 ★] " + tC + "%\n";
@@ -247,7 +261,7 @@ public class BannerInfo
                 menu.setStepSixRatesList(stepSixRates);
             }
             /* BANNER IS BIRTHDAY STEP UP */
-            else if (banner.getBannerType().equals("4"))
+            else if (banner.getBannerType() == 4)
             {
                 double tC = copper - (((platinum * 2.0) - platinum) + ((gold * 2.0) - gold));
                 double tS = silver;
@@ -264,7 +278,7 @@ public class BannerInfo
                 menu.setStepThreeRatesList(stepThreeRates);
             }
             /* BANNER IS RECORD CRYSTAL */
-            else if (banner.getBannerType().equals("2") || banner.getBannerType().equals("5"))
+            else if (banner.getBannerType() == 2 || banner.getBannerType() == 5)
             {
                 int counter = 0;
                 String recordCrystalRates = "";
@@ -281,7 +295,7 @@ public class BannerInfo
                 menu.setRecordCrystalRatesList(recordCrystalRates);
             }
             /* BANNER IS STEP UP V3 */
-            else if (banner.getBannerType().equals("7"))
+            else if (banner.getBannerType() == 7)
             {
                 double tC = copper - ((platinum * 2.0) - platinum);
                 double tS = silver;
@@ -301,7 +315,7 @@ public class BannerInfo
 
 
             /* WEAPON BANNER IS STEP UP */
-            if (banner.getBannerWepType().equals("1"))
+            if (banner.getBannerWepType() == 1)
             {
                 double tC = (copper + platinum) - ((gold * 2.0) - gold);
                 double tS = silver;
@@ -319,7 +333,7 @@ public class BannerInfo
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.commandPrefix + "**scout**' for a list of banners.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
         }
     }
 }

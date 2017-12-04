@@ -1,0 +1,68 @@
+package io.github.spugn.Sargo.Managers;
+
+import io.github.spugn.Sargo.Objects.Banner;
+import io.github.spugn.Sargo.Objects.WarningMessage;
+import io.github.spugn.Sargo.WeaponScout.Normal;
+import io.github.spugn.Sargo.WeaponScout.StepUp;
+import io.github.spugn.Sargo.XMLParsers.BannerParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import sx.blah.discord.handle.obj.IChannel;
+
+import java.util.List;
+
+/**
+ * WEAPON SCOUT MANAGER
+ * <p>
+ *     This class takes a desired banner ID and makes sure the banner is within bounds.
+ *     It will then check if there are weapons available before reading the banner type
+ *     of that character to redirect it to the appropriate scout type class.
+ *     If there are no weapons available in the banner, the process is stopped.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v2.0
+ */
+class WeaponScoutManager
+{
+    private static final Logger LOGGER = LoggerFactory.getLogger(TicketScoutManager.class);
+
+    WeaponScoutManager(IChannel channel, int bannerID, String choice, String discordID)
+    {
+        List<Banner> banners = new BannerParser().readConfig("data/Banners.xml");
+        if (!(bannerID - 1 < banners.size() && bannerID - 1 >= 0))
+        {
+            channel.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
+            return;
+        }
+
+        LOGGER.debug("Starting WEAPON Scout...");
+        channel.setTypingStatus(true);
+        Banner selectedBanner = banners.get(bannerID - 1);
+
+        if (selectedBanner.getWeapons().size() <= 0)
+        {
+            channel.sendMessage(new WarningMessage("NO WEAPONS AVAILABLE", "This banner does not have a weapon scout.").get().build());
+            channel.setTypingStatus(false);
+            return;
+        }
+
+        switch (selectedBanner.getBannerWepType())
+        {
+            case 0:
+                LOGGER.debug("[NORMAL] " + banners.get(bannerID - 1).getBannerName() + " \"" + choice + "\" in Channel \"" + channel.getName() + "\"");
+                new Normal(channel, bannerID, choice, discordID);
+                break;
+            case 1:
+                LOGGER.debug("[STEP UP] " + banners.get(bannerID - 1).getBannerName() + " \"" + choice + "\" in Channel \"" + channel.getName() + "\"");
+                new StepUp(channel, bannerID, choice, discordID);
+                break;
+            default:
+                channel.sendMessage(new WarningMessage("UNKNOWN BANNER TYPE", "Please correct the issue in the Banners.xml file.").get().build());
+                break;
+        }
+        LOGGER.debug("WEAPON Scout Complete!");
+        channel.setTypingStatus(false);
+    }
+}

@@ -15,7 +15,7 @@ under the appropriate location in Settings.xml.
 
 If you don't wish to keep developer mode, feel free to turn it back off.
 
-> The bot doesn't recognize anything but '@botname help'!
+> The bot doesn't recognize anything but '@botname <command>'!
 
 Set "UseMention" in the Settings.xml file to false.
 
@@ -27,22 +27,6 @@ you just did for the *Start Dash* banner.
 
 If that isn't the case, make sure "DisableImages" in the Settings.xml file
 is set to false.
-
-> I get "IO EXCEPTION, Failed to create scout result image." when trying to scout!
-
-Make sure you have all the necessary system files.  
-This includes:
-
-- images/Characters/Placeholders/
-- images/Characters/Copper/
-- images/Characters/Silver/
-- images/Weapons/Placeholders/
-- images/Weapons/Copper/
-- images/Weapons/Silver/
-- images/Miscellaneous/Owned_Character_Shade.png
-- images/Scout Backgrounds/
-
-(If just the directory is listed, I mean every file that was in that directory.)
 
 # Contributing to S'argo
 

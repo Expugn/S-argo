@@ -3,6 +3,7 @@ package io.github.spugn.Sargo.Functions;
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
+import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import sx.blah.discord.handle.obj.IChannel;
@@ -13,6 +14,16 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.util.*;
 
+/**
+ * PROFILE
+ * <p>
+ *     Displays a user's statistics from scouting.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.1
+ * @since v1.0
+ */
 public class Profile
 {
     private static IChannel CHANNEL;
@@ -28,6 +39,12 @@ public class Profile
 
     private SortedMap<String, Integer> bannerType;
 
+    /**
+     * Generates and displays a user's basic profile.
+     *
+     * @param channel  Channel where the profile should be displayed
+     * @param discordID  Discord ID of the user.
+     */
     public Profile(IChannel channel, String discordID)
     {
         CHANNEL = channel;
@@ -41,7 +58,7 @@ public class Profile
             builder.withAuthorName(foundUser.getName() + "#" + foundUser.getDiscriminator() + "'s Profile");
             builder.withAuthorIcon(foundUser.getAvatarURL());
             builder.withColor(255, 86, 91);
-            builder.withThumbnail(Images.PROFILE_ICON.getUrl());
+            builder.withThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
             builder.appendField("USER FILE DOES NOT EXIST", "There is no data for this user.", false);
 
             CHANNEL.sendMessage(builder.build());
@@ -107,7 +124,14 @@ public class Profile
         CHANNEL.sendMessage(builder.build());
     }
 
-    public Profile (IChannel channel, String discordID, int menuOption)
+    /**
+     * Constructor that determines if a different profile type should be displayed.
+     *
+     * @param channel  Channel where the data should be displayed.
+     * @param discordID  Discord ID of the user.
+     * @param menuOption  Profile data type that should be displayed.
+     */
+    public Profile(IChannel channel, String discordID, int menuOption)
     {
         CHANNEL = channel;
         DISCORD_ID = discordID;
@@ -126,7 +150,15 @@ public class Profile
         }
     }
 
-    public Profile (IChannel channel, String discordID, int menuOption, String data)
+    /**
+     * Constructor that redirects to banner info or a character search.
+     *
+     * @param channel  Channel where the data should be displayed
+     * @param discordID  Discord ID of the user.
+     * @param menuOption  Menu type that should be looked up.
+     * @param data  Banner ID or character name.
+     */
+    public Profile(IChannel channel, String discordID, int menuOption, String data)
     {
         CHANNEL = channel;
         DISCORD_ID = discordID;
@@ -142,7 +174,6 @@ public class Profile
         /* 'profile search <character name>' */
         else if (menuOption == 3)
         {
-            System.out.println("data " + data);
             bannerSearchMenu(data);
         }
         else
@@ -151,6 +182,10 @@ public class Profile
         }
     }
 
+    /**
+     * Displays the amount of record crystals or what step a user is on in
+     * banners that have that type of data.
+     */
     private void bannerDataMenu()
     {
         /* BANNER INFO */
@@ -190,13 +225,20 @@ public class Profile
         CHANNEL.sendMessage(builder.build());
     }
 
+    /**
+     * Displays if the user is missing characters or weapons and if they do happen
+     * to have the characters or weapons it will tell them that they obtained them
+     * and for weapons it will tell them how much they have obtained of that weapon.
+     *
+     * @param bannerIDString  The banner ID in string form.
+     */
     private void bannerInfoMenu(String bannerIDString)
     {
         int bannerID = Integer.parseInt(bannerIDString) - 1;
 
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
+        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
 
         if (bannerID < banners.size() && bannerID >= 0)
         {
@@ -213,7 +255,7 @@ public class Profile
                 /* TRY AND FIND CHARACTER IN USER BOX */
                 for (Character oC : user.getCharacterBox())
                 {
-                    if (c.getPrefix().equals(oC.getPrefix()) && c.getName().equals(oC.getName()) && c.getRarity().equals(oC.getRarity()))
+                    if (c.getPrefix().equals(oC.getPrefix()) && c.getName().equals(oC.getName()) && (c.getRarity() == oC.getRarity()))
                     {
                         /* CHARACTER IS SAME */
                         characterFound = true;
@@ -321,13 +363,19 @@ public class Profile
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.commandPrefix + "**scout**' for a list of banners.").get().build());
+            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
             return;
         }
 
         CHANNEL.sendMessage(builder.build());
     }
 
+    /**
+     * Searches for characters with the given name and displays a list
+     * of all those characters that the user has.
+     *
+     * @param characterName  Character to be looked up.
+     */
     private void bannerSearchMenu(String characterName)
     {
         String characterList = "";
@@ -363,6 +411,9 @@ public class Profile
         CHANNEL.sendMessage(builder.build());
     }
 
+    /**
+     * Initializes the EmbedMessage and variables.
+     */
     private void init()
     {
         builder = new EmbedBuilder();
@@ -376,14 +427,21 @@ public class Profile
         builder.withAuthorName(userName + "'s Profile");
         builder.withAuthorIcon(iUser.getAvatarURL());
         builder.withColor(255, 86, 91);
-        builder.withThumbnail(Images.PROFILE_ICON.getUrl());
+        builder.withThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
     }
 
+    /**
+     * Initializes the banner file and constructs a list of all gold/platinum characters
+     * in the banner file.
+     *
+     * This will also delete any characters that the user has that no longer exists in
+     * the banners.xml file.
+     */
     private void initBannerInfo()
     {
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
+        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
 
         List<String> allGoldCharacters = new ArrayList<>();
         List<String> allPlatinumCharacters = new ArrayList<>();
@@ -393,13 +451,13 @@ public class Profile
             /* GET CHARACTERS */
             for (Character c : b.getCharacters())
             {
-                if (c.getRarity().equals("4") &&
+                if (c.getRarity() == 4 &&
                         !(allGoldCharacters.contains(c.getPrefix() + c.getName())))
                 {
                     goldCount++;
                     allGoldCharacters.add(c.getPrefix() + c.getName());
                 }
-                else if (c.getRarity().equals("5") &&
+                else if (c.getRarity() == 5 &&
                         !(allPlatinumCharacters.contains(c.getPrefix() + c.getName())))
                 {
                     platinumCount++;
@@ -408,22 +466,29 @@ public class Profile
             }
 
             /* CHECK IF BANNER IS NOT NORMAL */
-            if (!b.getBannerType().equals("0"))
+            if (!(b.getBannerType() == 0))
             {
-                bannerType.put(b.getBannerName(), Integer.parseInt(b.getBannerType()));
+                bannerType.put(b.getBannerName(), b.getBannerType());
             }
         }
 
         purgeDeletedCharacters(allGoldCharacters, allPlatinumCharacters);
     }
 
+    /**
+     * Deletes any gold/platinum character that no longer exists in the
+     * Banners.xml file that the user has in their character box.
+     *
+     * @param gold  List of all gold characters in the banners file
+     * @param plat  List of all platinum characters in the banners file
+     */
     private void purgeDeletedCharacters(List<String> gold, List<String> plat)
     {
         boolean unsavedChanges = false;
         List<Character> newUserCharacterBox = new ArrayList<>();
         for (Character c : user.getCharacterBox())
         {
-            if (c.getRarity().equals("4"))
+            if (c.getRarity() == 4)
             {
                 if (gold.contains(c.getPrefix() + c.getName()))
                     newUserCharacterBox.add(c);
@@ -432,7 +497,7 @@ public class Profile
                         unsavedChanges = true;
 
             }
-            else if (c.getRarity().equals("5"))
+            else if (c.getRarity() == 5)
             {
                 if (plat.contains(c.getPrefix() + c.getName()))
                     newUserCharacterBox.add(c);

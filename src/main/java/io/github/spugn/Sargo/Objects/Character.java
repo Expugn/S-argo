@@ -4,14 +4,14 @@ public class Character
 {
     private String prefix;
     private String name;
-    private String rarity;
+    private int rarity;
     private String imagePath;
 
     public Character()
     {
         prefix = "";
         name = "null";
-        rarity = "1";
+        rarity = 1;
         imagePath = "";
     }
 
@@ -25,7 +25,7 @@ public class Character
         this.name = name;
     }
 
-    public void setRarity(String rarity)
+    public void setRarity(int rarity)
     {
         this.rarity = rarity;
     }
@@ -45,7 +45,7 @@ public class Character
         return name;
     }
 
-    public String getRarity()
+    public int getRarity()
     {
         return rarity;
     }

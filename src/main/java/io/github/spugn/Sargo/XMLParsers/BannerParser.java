@@ -3,6 +3,7 @@ package io.github.spugn.Sargo.XMLParsers;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Objects.Weapon;
+import org.apache.commons.io.IOUtils;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -18,27 +19,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * BANNER PARSER
+ * <p>
+ *     This class reads and returns the data found in 'data/Banners.xml'
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v1.0
+ */
 public class BannerParser
 {
-    /* BANNER OBJECT TAGS */
-    static final String BANNER = "Banner";
-    static final String ID = "id";
-    static final String NAME = "name";
-    static final String TYPE = "type";
-    static final String WEPTYPE = "wepType";
-
-    /* CHARACTER OBJECT TAGS */
-    static final String CHARACTER = "Character";
-    static final String PREFIX = "prefix";
-    static final String CHARACTER_NAME = "char";
-    static final String RARITY = "rarity";
-
-    static final String WEAPON = "Weapon";
-    static final String WEAPON_NAME = "name";
-
+    /**
+     * Reads the banners.xml file and returns a List of Banner objects.
+     *
+     * @param configFile  Path where the file is located.
+     * @return  List of Banner objects.
+     */
+    @SuppressWarnings("unchecked")
     public List<Banner> readConfig(String configFile)
     {
         List<Banner> banners = new ArrayList();
+        InputStream in = null;
+        XMLEventReader eventReader = null;
         try
         {
             Banner banner = null;
@@ -50,8 +54,8 @@ public class BannerParser
 
             /* CREATE XMLInputFactory AND XMLEventReader */
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-            InputStream in = new FileInputStream(configFile);
-            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+            in = new FileInputStream(configFile);
+            eventReader = inputFactory.createXMLEventReader(in);
 
             /* READ XML FILE */
             while (eventReader.hasNext())
@@ -63,7 +67,7 @@ public class BannerParser
                     StartElement startElement = event.asStartElement();
 
                     /* CREATE NEW BANNER AND CHARACTER LIST OBJECT */
-                    if (startElement.getName().getLocalPart().equals(BANNER))
+                    if (startElement.getName().getLocalPart().equals("Banner"))
                     {
                         banner = new Banner();
                         characters = new ArrayList();
@@ -74,9 +78,9 @@ public class BannerParser
                         while (attributes.hasNext())
                         {
                             Attribute attribute = attributes.next();
-                            if (attribute.getName().toString().equals(ID))
+                            if (attribute.getName().toString().equals("id"))
                             {
-                                banner.setBannerID(attribute.getValue());
+                                banner.setBannerID(Integer.parseInt(attribute.getValue()));
                             }
                         }
                     }
@@ -84,7 +88,7 @@ public class BannerParser
                     /* GET AND SAVE BANNER NAME */
                     if (event.isStartElement())
                     {
-                        if (event.asStartElement().getName().getLocalPart().equals(NAME))
+                        if (event.asStartElement().getName().getLocalPart().equals("name"))
                         {
                             event = eventReader.nextEvent();
                             banner.setBannerName(event.asCharacters().getData());
@@ -93,23 +97,23 @@ public class BannerParser
                     }
 
                     /* GET AND SAVE BANNER TYPE */
-                    if (event.asStartElement().getName().getLocalPart().equals(TYPE))
+                    if (event.asStartElement().getName().getLocalPart().equals("type"))
                     {
                         event = eventReader.nextEvent();
-                        banner.setBannerType(event.asCharacters().getData());
+                        banner.setBannerType(Integer.parseInt(event.asCharacters().getData()));
                         continue;
                     }
 
                     /* GET AND SAVE WEAPON BANNER TYPE */
-                    if (event.asStartElement().getName().getLocalPart().equals(WEPTYPE))
+                    if (event.asStartElement().getName().getLocalPart().equals("wepType"))
                     {
                         event = eventReader.nextEvent();
-                        banner.setBannerWepType(event.asCharacters().getData());
+                        banner.setBannerWepType(Integer.parseInt(event.asCharacters().getData()));
                         continue;
                     }
 
                     /* GET AND SAVE CHARACTER */
-                    if (event.asStartElement().getName().getLocalPart().equals(CHARACTER))
+                    if (event.asStartElement().getName().getLocalPart().equals("Character"))
                     {
                         character = new Character();
 
@@ -117,29 +121,30 @@ public class BannerParser
                         while (attributes.hasNext())
                         {
                             Attribute attribute = attributes.next();
-                            if (attribute.getName().toString().equals(PREFIX))
+                            if (attribute.getName().toString().equals("prefix"))
                             {
                                 character.setPrefix(attribute.getValue());
                             }
-                            if (attribute.getName().toString().equals(CHARACTER_NAME))
+                            if (attribute.getName().toString().equals("char"))
                             {
                                 character.setName(attribute.getValue());
                             }
-                            if (attribute.getName().toString().equals(RARITY))
+                            if (attribute.getName().toString().equals("rarity"))
                             {
-                                character.setRarity(attribute.getValue());
+                                character.setRarity(Integer.parseInt(attribute.getValue()));
                             }
                         }
 
                         /* GENERATE IMAGE FILE PATH*/
-                        character.setImagePath("images/Characters/" + banner.getBannerName() + "/" + character.getPrefix().replaceAll(" ", "_") + ".png");
+                        String characterImage = character.getPrefix() + " " + character.getName();
+                        character.setImagePath("images/Characters/" + characterImage.replaceAll(" ", "_") + ".png");
 
                         /* ADD CHARACTER TO CHARACTER LIST */
                         characters.add(character);
                     }
 
                     /* GET AND SAVE WEAPON */
-                    if (event.asStartElement().getName().getLocalPart().equals(WEAPON))
+                    if (event.asStartElement().getName().getLocalPart().equals("Weapon"))
                     {
                         weapon = new Weapon();
 
@@ -147,18 +152,18 @@ public class BannerParser
                         while (attributes.hasNext())
                         {
                             Attribute attribute = attributes.next();
-                            if (attribute.getName().toString().equals(WEAPON_NAME))
+                            if (attribute.getName().toString().equals("name"))
                             {
                                 weapon.setName(attribute.getValue());
                             }
-                            if (attribute.getName().toString().equals(RARITY))
+                            if (attribute.getName().toString().equals("rarity"))
                             {
-                                weapon.setRarity(attribute.getValue());
+                                weapon.setRarity(Integer.parseInt(attribute.getValue()));
                             }
                         }
 
                         /* GENERATE IMAGE FILE PATH*/
-                        weapon.setImagePath("images/Weapons/" + banner.getBannerName() + "/" + weapon.getName().replaceAll(" ", "_") + ".png");
+                        weapon.setImagePath("images/Weapons/" + weapon.getName().replaceAll(" ", "_") + ".png");
 
                         /* ADD WEAPON TO WEAPON LIST */
                         weapons.add(weapon);
@@ -169,7 +174,7 @@ public class BannerParser
                 if (event.isEndElement())
                 {
                     EndElement endElement = event.asEndElement();
-                    if (endElement.getName().getLocalPart().equals(BANNER))
+                    if (endElement.getName().getLocalPart().equals("Banner"))
                     {
                         banner.setCharacters(characters);
                         banner.setWeapons(weapons);
@@ -180,11 +185,24 @@ public class BannerParser
         }
         catch (FileNotFoundException e)
         {
+            System.out.println("[BannerParser] - File Not Found Exception");
             e.printStackTrace();
         }
         catch (XMLStreamException e)
         {
+            System.out.println("[BannerParser] - XML Stream Exception");
             e.printStackTrace();
+        }
+        catch (NullPointerException e)
+        {
+            System.out.println("[BannerParser] - Null Pointer Exception");
+            e.printStackTrace();
+        }
+        finally
+        {
+            IOUtils.closeQuietly(in);
+            try { if (eventReader != null) { eventReader.close(); } }
+                catch (XMLStreamException e) { /* IGNORED */ }
         }
         return banners;
     }

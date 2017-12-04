@@ -40,4 +40,9 @@ public class Sargo
             return null;
         }
     }
+
+    public static IDiscordClient getCLIENT()
+    {
+        return CLIENT;
+    }
 }

@@ -2,14 +2,24 @@ package io.github.spugn.Sargo.XMLParsers;
 
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
-import io.github.spugn.Sargo.Objects.Files;
 import io.github.spugn.Sargo.Objects.Weapon;
+import org.apache.commons.io.IOUtils;
 
 import javax.xml.stream.*;
 import javax.xml.stream.events.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * USER PARSER
+ * <p>
+ *     This class reads a user file and saves the data to variables.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v1.0
+ */
 public class UserParser
 {
     private String FILE_PATH;
@@ -76,6 +86,12 @@ public class UserParser
     private int gC;
     private int pC;
 
+    /**
+     * Initializes variables, makes a directory/user file if needed, then reads the
+     * user file.
+     *
+     * @param discordID  Discord ID of the user.
+     */
     public UserParser(String discordID)
     {
         bannerInfo = new TreeMap<>();
@@ -316,6 +332,9 @@ public class UserParser
         }
     }
 
+    /**
+     * Makes the Users file directory if it doesn't exist.
+     */
     private void makeDirectory()
     {
         File userDir = new File(USER_DIR_FILE_PATH);
@@ -326,14 +345,19 @@ public class UserParser
         }
     }
 
+    /**
+     * Reads the user file and saves the data to variables.
+     */
     private void readConfig()
     {
+        InputStream in = null;
+        XMLEventReader eventReader = null;
         try
         {
             /* CREATE XMLInputFactory AND XMLEventReader */
             XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-            InputStream in = new FileInputStream(FILE_PATH);
-            XMLEventReader eventReader = inputFactory.createXMLEventReader(in);
+            in = new FileInputStream(FILE_PATH);
+            eventReader = inputFactory.createXMLEventReader(in);
 
             /* READ XML FILE */
             while (eventReader.hasNext())
@@ -455,12 +479,12 @@ public class UserParser
                             }
                             if (attribute.getName().toString().equals(CHARACTER_RARITY))
                             {
-                                character.setRarity(attribute.getValue());
+                                character.setRarity(Integer.parseInt(attribute.getValue()));
                             }
                         }
 
                         /* GENERATE IMAGE FILE PATH */
-                        character.setImagePath(Files.GRAY_PLACEHOLDER.get());
+                        character.setImagePath("images/System/Character_Placeholder.png");
 
                         /* ADD CHARACTER TO CHARACTER LIST */
                         characterBox.add(character);
@@ -482,7 +506,7 @@ public class UserParser
                             }
                             if (attribute.getName().toString().equals(WEAPON_RARITY))
                             {
-                                weapon.setRarity(attribute.getValue());
+                                weapon.setRarity(Integer.parseInt(attribute.getValue()));
                             }
                             if (attribute.getName().toString().equals(WEAPON_COUNT))
                             {
@@ -491,7 +515,7 @@ public class UserParser
                         }
 
                         /* GENERATE IMAGE FILE PATH */
-                        weapon.setImagePath("images/Weapons/Placeholders/Gray.png");
+                        weapon.setImagePath("images/System/Weapon_Placeholder.png");
 
                         /* ADD CHARACTER TO CHARACTER LIST */
                         weaponBox.add(weapon);
@@ -503,19 +527,19 @@ public class UserParser
             {
                 for (Character c : characterBox)
                 {
-                    if (Integer.parseInt(c.getRarity()) == 5)
+                    if (c.getRarity() == 5)
                     {
                         pC++;
                     }
-                    else if (Integer.parseInt(c.getRarity()) == 4)
+                    else if (c.getRarity() == 4)
                     {
                         gC++;
                     }
-                    else if (Integer.parseInt(c.getRarity()) == 3)
+                    else if (c.getRarity() == 3)
                     {
                         sC++;
                     }
-                    else if (Integer.parseInt(c.getRarity()) == 2)
+                    else if (c.getRarity() == 2)
                     {
                         cC++;
                     }
@@ -530,8 +554,17 @@ public class UserParser
         {
             e.printStackTrace();
         }
+        finally
+        {
+            IOUtils.closeQuietly(in);
+            try { if (eventReader != null) { eventReader.close(); } }
+                catch (XMLStreamException e) { /* IGNORED */ }
+        }
     }
 
+    /**
+     * Creates a new user file if it doesn't exist already.
+     */
     private void createNewUser()
     {
         File userFile = new File(FILE_PATH);
@@ -615,6 +648,12 @@ public class UserParser
         }
     }
 
+    /**
+     * Write the defaults for banner data.
+     *
+     * @param eventWriter  Event writer.
+     * @throws XMLStreamException  If there is an error when writing.
+     */
     private void writeDefaultBannerData(XMLEventWriter eventWriter) throws XMLStreamException
     {
         /* INITIALIZE VARIABLES */
@@ -625,7 +664,7 @@ public class UserParser
         XMLEvent tab = eventFactory.createDTD("\t");
 
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig(Files.BANNER_XML.get());
+        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
 
         eventWriter.add(tab);
         StartElement sElement = eventFactory.createStartElement("", "", BANNER_DATA);
@@ -634,7 +673,7 @@ public class UserParser
         for (Banner b : banners)
         {
             /* BANNER IS NOT NORMAL */
-            if (!b.getBannerType().equals("0"))
+            if (!(b.getBannerType() == 0))
             {
                 /* WRITE ELEMENT NAME, BANNER NAME, AND BANNER DATA */
                 StringWriter bannerElement = new StringWriter();
@@ -644,17 +683,17 @@ public class UserParser
                 writer.writeAttribute(B_NAME, b.getBannerName());
 
                 /* IS STEP UP UP OR STEP UP V2 */
-                if (b.getBannerType().equals("1") || b.getBannerType().equals("3") || b.getBannerType().equals("4") || b.getBannerType().equals("7"))
+                if (b.getBannerType() == 1 || b.getBannerType() == 3 || b.getBannerType() == 4 || b.getBannerType() == 7)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_STEP);
                 }
                 /* IS RECORD CRYSTAL */
-                else if (b.getBannerType().equals("2"))
+                else if (b.getBannerType() == 2)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL);
                 }
                 /* IS RECORD CRYSTAL v2 */
-                else if (b.getBannerType().equals("5"))
+                else if (b.getBannerType() == 5)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL_V2);
                 }
@@ -681,6 +720,9 @@ public class UserParser
         eventWriter.add(end);
     }
 
+    /**
+     * Writes new data over the user's data file.
+     */
     public void saveData()
     {
         try
@@ -738,6 +780,13 @@ public class UserParser
         }
     }
 
+    /**
+     * Write a node.
+     * @param eventWriter  Event writer.
+     * @param name  Name of the node.
+     * @param value  Value of the node.
+     * @throws XMLStreamException  If there is an error when writing.
+     */
     private void writeNode(XMLEventWriter eventWriter, String name, String value) throws XMLStreamException
     {
         /* INITIALIZE VARIABLES */
@@ -761,6 +810,11 @@ public class UserParser
         eventWriter.add(end);
     }
 
+    /**
+     * Writes the character box using the List of Characters from the class.
+     * @param eventWriter  Event writer.
+     * @throws XMLStreamException  If there is an errow when writing.
+     */
     private void writeCharacterBox(XMLEventWriter eventWriter) throws XMLStreamException
     {
         /* INITIALIZE VARIABLES */
@@ -777,7 +831,7 @@ public class UserParser
         {
             for (int b = 1 ; b < characterBox.size() ; b++)
             {
-                if (Integer.parseInt(characterBox.get(b-1).getRarity()) <= Integer.parseInt(characterBox.get(b).getRarity()))
+                if (characterBox.get(b-1).getRarity() <= characterBox.get(b).getRarity())
                 {
                     tempCharacter = characterBox.get(b-1);
                     characterBox.set(b-1, characterBox.get(b));
@@ -802,7 +856,7 @@ public class UserParser
             writer.writeEmptyElement(CHARACTER);
             writer.writeAttribute(CHARACTER_PREFIX, character.getPrefix());
             writer.writeAttribute(CHARACTER_NAME, character.getName());
-            writer.writeAttribute(CHARACTER_RARITY, character.getRarity());
+            writer.writeAttribute(CHARACTER_RARITY, String.valueOf(character.getRarity()));
             writer.writeEndDocument();
             writer.flush();
             writer.close();
@@ -826,6 +880,12 @@ public class UserParser
         eventWriter.add(end);
     }
 
+    /**
+     * Writes the weapon box using the List of Weapons from the class.
+     *
+     * @param eventWriter  Event writer.
+     * @throws XMLStreamException  If there is an error when writing.
+     */
     private void writeWeaponBox(XMLEventWriter eventWriter) throws XMLStreamException
     {
         /* INITIALIZE VARIABLES */
@@ -851,7 +911,7 @@ public class UserParser
             /* WRITE ELEMENT NAME, CHARACTER PREFIX, CHARACTER NAME, AND RARITY */
             writer.writeEmptyElement(WEAPON);
             writer.writeAttribute(WEAPON_NAME, weapon.getName());
-            writer.writeAttribute(WEAPON_RARITY, weapon.getRarity());
+            writer.writeAttribute(WEAPON_RARITY, String.valueOf(weapon.getRarity()));
             writer.writeAttribute(WEAPON_COUNT, String.valueOf(weapon.getCount()));
             writer.writeEndDocument();
             writer.flush();
@@ -876,6 +936,12 @@ public class UserParser
         eventWriter.add(end);
     }
 
+    /**
+     * Writes the banner data.
+     *
+     * @param eventWriter  Event writer.
+     * @throws XMLStreamException  If there is an error when writing.
+     */
     private void writeBannerData(XMLEventWriter eventWriter) throws XMLStreamException
     {
         /* INITIALIZE VARIABLES */
@@ -925,6 +991,9 @@ public class UserParser
         eventWriter.add(end);
     }
 
+    /**
+     * Clears all data in the user's data file.
+     */
     public void resetUser()
     {
         try

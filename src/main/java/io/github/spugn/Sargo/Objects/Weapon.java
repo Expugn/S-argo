@@ -3,14 +3,14 @@ package io.github.spugn.Sargo.Objects;
 public class Weapon
 {
     private String name;
-    private String rarity;
+    private int rarity;
     private String imagePath;
     private int count;
 
     public Weapon()
     {
         name = "null";
-        rarity = "1";
+        rarity = 1;
         imagePath = "";
         count = 0;
     }
@@ -20,7 +20,7 @@ public class Weapon
         this.name = name;
     }
 
-    public void setRarity(String rarity)
+    public void setRarity(int rarity)
     {
         this.rarity = rarity;
     }
@@ -40,7 +40,7 @@ public class Weapon
         return name;
     }
 
-    public String getRarity()
+    public int getRarity()
     {
         return rarity;
     }

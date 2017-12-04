@@ -79,7 +79,9 @@ Invite link for the server is down in Related Links.
 **Resetting all data includes your Step or Record Crystal data as well.**
 
 - **BOT OWNERS**  
-'**update**' - Download image files from the GitHub Data Repository.  
+'**update**' - Download any missing character/weapon images from the data repository.  
+'**update** r(eset)' - Delete all files in the character/weapon folders and re-download them.  
+'**update** o(verwrite)' - Replace all character/weapon files with a new copy.   
 '**stop**' - Stop the bot.  
 
 ## Startup Guide

@@ -4,6 +4,7 @@ import io.github.spugn.Sargo.Functions.*;
 import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.Utilities.CommandLine;
 import io.github.spugn.Sargo.Utilities.DiscordCommand;
+import io.github.spugn.Sargo.XMLParsers.ScoutMasterParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -14,8 +15,18 @@ import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
-import sx.blah.discord.util.cache.LongMap;
 
+/**
+ * COMMAND MANAGER
+ * <p>
+ *     This class parses a command string and redirects the system
+ *     to the proper function to be executed.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.1
+ * @since v1.0
+ */
 public class CommandManager
 {
     private final IChannel CHANNEL;
@@ -25,8 +36,7 @@ public class CommandManager
     private final SettingsParser SETTINGS;
     private final DiscordCommand DISCORD_COMMAND;
     private final CommandLine COMMAND_LINE;
-    private String botName;
-    public static String commandPrefix;
+    private static String commandPrefix;
 
     public CommandManager(IDiscordClient client, MessageReceivedEvent event)
     {
@@ -43,41 +53,27 @@ public class CommandManager
         DISCORD_COMMAND.setCommandPrefix(SETTINGS.getCommandPrefix());
         DISCORD_COMMAND.setDeleteUserMessage(SETTINGS.isDeleteUserMessage());
 
-        if (SETTINGS.getSecretWord().equalsIgnoreCase("Ushi"))
-        {
-            botName = "S'ushi";
-        }
-        else if (SETTINGS.getSecretWord().equalsIgnoreCase("Legacy"))
-        {
-            botName = "S'egacy ∞";
-        }
-        else if (SETTINGS.getSecretWord().equalsIgnoreCase("Tuglow"))
-        {
-            botName = "S'uglow";
-        }
-        else if (SETTINGS.getSecretWord().equalsIgnoreCase("Naruto"))
-        {
-            botName = "S'aruto";
-        }
-        else if (SETTINGS.getSecretWord().equalsIgnoreCase("Santa"))
-        {
-            botName = "S'anta";
-        }
-        else
-        {
-            botName = "S'argo";
-        }
-
+        String playingText;
+        String botName = new ScoutMasterParser().getBotName();
         if (DISCORD_COMMAND.getUseMention())
         {
             commandPrefix = "@" + client.getOurUser().getName() + " ";
-            client.changePlayingText(botName + " | " + commandPrefix + "help");
         }
         else
         {
             commandPrefix = DISCORD_COMMAND.getCommandPrefix() + "";
-            client.changePlayingText(botName + " | " + commandPrefix + "help");
         }
+
+        if (client.getOurUser().getStringID().equalsIgnoreCase("356981380338679810") ||
+                client.getOurUser().getStringID().equalsIgnoreCase("309620271621341185"))
+        {
+            playingText = botName + " devBot | " + commandPrefix + "help";
+        }
+        else
+        {
+            playingText = botName + " | " + commandPrefix + "help";
+        }
+        client.changePlayingText(playingText);
 
         COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
 
@@ -85,16 +81,13 @@ public class CommandManager
         {
             if (COMMAND_LINE != null)
             {
-                /* WARN USERS ABOUT ERROR IN SETTINGS */
-                sayWarning();
-
-                if (COMMAND_LINE.getCommand().equalsIgnoreCase("help"))
-                {
-                    new Help(CHANNEL);
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("scout"))
+                if (COMMAND_LINE.getCommand().equalsIgnoreCase("scout"))
                 {
                     scoutCommand();
+                }
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("help"))
+                {
+                    new Help(CHANNEL);
                 }
                 else if (COMMAND_LINE.getCommand().equalsIgnoreCase("shop"))
                 {
@@ -125,7 +118,7 @@ public class CommandManager
         }
         catch (RateLimitException e)
         {
-            System.out.println("Rate Limit Exception.");
+            System.out.println("[CommandManager] - Rate Limit Exception.");
         }
         catch (DiscordException e)
         {
@@ -133,11 +126,11 @@ public class CommandManager
         }
         catch (MissingPermissionsException e)
         {
-            System.out.println("Not Enough Permissions.");
+            System.out.println("[CommandManager] - Not Enough Permissions.");
         }
     }
 
-    private void scoutCommand() throws RateLimitException, DiscordException, MissingPermissionsException
+    private void scoutCommand()
     {
         try
         {
@@ -148,11 +141,11 @@ public class CommandManager
                         COMMAND_LINE.getArgument(2).equalsIgnoreCase("wm") ||
                         COMMAND_LINE.getArgument(2).equalsIgnoreCase("wmi"))
                 {
-                    new WeaponScout(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
+                    new WeaponScoutManager(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
                 }
                 else
                 {
-                    new Scout(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
+                    new ScoutManager(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
                 }
 
             }
@@ -178,7 +171,7 @@ public class CommandManager
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptm") ||
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptmi"))
                 {
-                    new TicketScout(CHANNEL, COMMAND_LINE.getArgument(1), DISCORD_ID);
+                    new TicketScoutManager(CHANNEL, COMMAND_LINE.getArgument(1), DISCORD_ID);
                 }
                 else
                 {
@@ -210,7 +203,6 @@ public class CommandManager
                         CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
                     }
                 }
-
             }
             else
             {
@@ -219,7 +211,7 @@ public class CommandManager
         }
     }
 
-    private void shopCommand() throws RateLimitException, DiscordException, MissingPermissionsException
+    private void shopCommand()
     {
         if (COMMAND_LINE.getArgumentCount() >= 1)
         {
@@ -249,7 +241,6 @@ public class CommandManager
             {
                 new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1);
             }
-
         }
         else
         {
@@ -257,7 +248,7 @@ public class CommandManager
         }
     }
 
-    private void profileCommand() throws RateLimitException, DiscordException, MissingPermissionsException
+    private void profileCommand()
     {
         if (COMMAND_LINE.getArgumentCount() >= 2)
         {
@@ -306,7 +297,7 @@ public class CommandManager
         }
     }
 
-    private void userCommand() throws RateLimitException, DiscordException, MissingPermissionsException
+    private void userCommand()
     {
         if (COMMAND_LINE.getArgumentCount() >= 1)
         {
@@ -350,7 +341,7 @@ public class CommandManager
         }
     }
 
-    private void resetCommand() throws RateLimitException, DiscordException, MissingPermissionsException
+    private void resetCommand()
     {
         if (COMMAND_LINE.getArgumentCount() >= 3)
         {
@@ -400,23 +391,33 @@ public class CommandManager
         }
     }
 
-    private void updateCommand() throws RateLimitException, DiscordException, MissingPermissionsException
+    private void updateCommand()
     {
-        if (COMMAND_LINE.getArgumentCount() >= 2)
+        if (COMMAND_LINE.getArgumentCount() >= 1)
         {
-            new Update(CHANNEL, COMMAND_LINE.getArgument(1), COMMAND_LINE.getArgument(2));
+            /* RESET */
+            if (COMMAND_LINE.getArgument(1).equalsIgnoreCase("r"))
+            {
+                new Update(CHANNEL, true, true);
+            }
+            /* OVERWRITE */
+            else if (COMMAND_LINE.getArgument(1).equalsIgnoreCase("o"))
+            {
+                new Update(CHANNEL, false, true);
+            }
+            else
+            {
+                new Update(CHANNEL, false, false);
+            }
         }
-        else if (COMMAND_LINE.getArgumentCount() >= 1)
+        else
         {
-            new Update(CHANNEL, COMMAND_LINE.getArgument(1));
+            new Update(CHANNEL, false, false);
         }
     }
 
-    private void sayWarning()
+    public static String getCommandPrefix()
     {
-        if (SETTINGS.isErrorInRates())
-        {
-            CHANNEL.sendMessage(new WarningMessage("SCOUT RATE ERROR", "Scout rates do not add up to 1.0. Please review your settings file.").get().build());
-        }
+        return commandPrefix;
     }
 }
