@@ -1,8 +1,4 @@
 # Frequently Asked Questions
-> I just downloaded the bot, but 'scout' isn't working!
-
-Make sure you have a Banners.xml file. Grab the latest copy with 'update banners'.
-
 > I can't use bot owner commands! (update, stop, etc)
 
 Make sure you've put your Discord ID in the appropriate location in Settings.xml.  
