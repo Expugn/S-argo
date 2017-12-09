@@ -67,7 +67,8 @@ not a part of the Reddit Discord for my safety.**
 
 I am open to all suggestions, but I will only accept suggestions that are actual features in
 *Sword Art Online: Memory Defrag*. So if you want to suggest something that is not a part of
-the game (i.e: Step Ups/Guaranteed Scouts for Weapons), then it will likely be declined.
+the game, then it will likely be declined. However, suggestions that improve the usability of 
+the bot will always be taken into consideration.
 
 ## Pull Requests
 I'm not accepting pull requests at the moment. Sorry!  
