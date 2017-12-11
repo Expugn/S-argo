@@ -43,6 +43,7 @@ public class SettingsParser
     /* SCOUT SETTINGS */
     private boolean isDisableImages;
     private boolean isSimpleMessage;
+    private boolean isRarityStars;
     private String scoutMaster;
     private double copperRates;
     private double silverRates;
@@ -73,6 +74,7 @@ public class SettingsParser
 
     public boolean isDisableImages() { return isDisableImages; }
     public boolean isSimpleMessage() { return isSimpleMessage; }
+    public boolean isRarityStars() { return  isRarityStars; }
     public String getScoutMaster() { return scoutMaster; }
     public double getCopperRates() { return copperRates; }
     public double getSilverRates() { return silverRates; }
@@ -183,6 +185,12 @@ public class SettingsParser
                     {
                         event = eventReader.nextEvent();
                         isSimpleMessage = Boolean.parseBoolean(event.asCharacters().getData());
+                        continue;
+                    }
+                    if (event.asStartElement().getName().getLocalPart().equals("RarityStars"))
+                    {
+                        event = eventReader.nextEvent();
+                        isRarityStars = Boolean.parseBoolean(event.asCharacters().getData());
                         continue;
                     }
                     if (event.asStartElement().getName().getLocalPart().equals("ScoutMaster"))

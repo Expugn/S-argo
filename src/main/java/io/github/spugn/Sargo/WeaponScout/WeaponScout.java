@@ -57,6 +57,7 @@ abstract class WeaponScout
 
     /* PRIVATE VARIABLES */
     private String DISCORD_ID;
+    private boolean IS_RARITY_STARS;
     private double SILVER;
     private List<Weapon> BANNER_WEAPONS;
     private Random RNG;
@@ -92,6 +93,7 @@ abstract class WeaponScout
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */
+        IS_RARITY_STARS = SETTINGS.isRarityStars();
         COPPER = (int) ((SETTINGS.getCopperRates() * 100) + (SETTINGS.getPlatinumRates() * 100));
         SILVER = (int) (SETTINGS.getSilverRates() * 100);
         GOLD = (int) (SETTINGS.getGoldRates() * 100);
@@ -186,7 +188,7 @@ abstract class WeaponScout
             USER.addWeapon(weapons.get(0));
         }
         if (generateImage && !IMAGE_DISABLED)
-            new ImageEditor().drawWeaponImage(weapons.get(0).getImagePath(), weapons.get(0).getRarity(), tempUserDirectory + "/temp_" + 0 + ".png");
+            new ImageEditor().drawWeaponImage(weapons.get(0).getImagePath(), weapons.get(0).getRarity(), IS_RARITY_STARS, tempUserDirectory + "/temp_" + 0 + ".png");
         weaponString += weapons.get(0).toString() + "\n";
         imageString = tempUserDirectory + "/temp_" + 0 + ".png";
     }
@@ -204,7 +206,7 @@ abstract class WeaponScout
                 USER.addWeapon(weapons.get(i));
             }
             if (generateImage && !IMAGE_DISABLED)
-                new ImageEditor().drawWeaponImage(weapons.get(i).getImagePath(), weapons.get(i).getRarity(), tempUserDirectory + "/temp_" + i + ".png");
+                new ImageEditor().drawWeaponImage(weapons.get(i).getImagePath(), weapons.get(i).getRarity(), IS_RARITY_STARS, tempUserDirectory + "/temp_" + i + ".png");
             weaponString += weapons.get(i).toString() + "\n";
             imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
         }

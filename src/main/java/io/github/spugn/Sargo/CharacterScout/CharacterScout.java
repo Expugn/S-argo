@@ -71,6 +71,7 @@ abstract class CharacterScout
     /* PRIVATE VARIABLES */
     private String DISCORD_ID;
     private SettingsParser SETTINGS;
+    private boolean IS_RARITY_STARS;
     private double SILVER;
     private List<Double> RECORD_CRYSTAL_RATES;
     private List<Character> BANNER_CHARACTERS;
@@ -110,6 +111,7 @@ abstract class CharacterScout
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */
+        IS_RARITY_STARS = SETTINGS.isRarityStars();
         COPPER = (int) (SETTINGS.getCopperRates() * 100);
         SILVER = (int) (SETTINGS.getSilverRates() * 100);
         GOLD = (int) (SETTINGS.getGoldRates() * 100);
@@ -252,7 +254,7 @@ abstract class CharacterScout
                     giveHackingCrystals(characters.get(0));
                     characterString += "~~" + characters.get(0).toString() + "~~" + "\n";
                     if (generateImage && !IMAGE_DISABLED)
-                        new ImageEditor().drawCharacterImage(characters.get(0).getImagePath(), characters.get(0).getRarity(), true, tempUserDirectory + "/temp_" + 0 + ".png");
+                        new ImageEditor().drawCharacterImage(characters.get(0).getImagePath(), characters.get(0).getRarity(), true, IS_RARITY_STARS,tempUserDirectory + "/temp_" + 0 + ".png");
                     imageString = tempUserDirectory + "/temp_" + 0 + ".png";
                     return;
                 }
@@ -261,7 +263,7 @@ abstract class CharacterScout
         USER.addCharacter(characters.get(0));
         characterString += "**" + characters.get(0).toString() + "**\n";
         if (generateImage && !IMAGE_DISABLED)
-            new ImageEditor().drawCharacterImage(characters.get(0).getImagePath(), characters.get(0).getRarity(), false, tempUserDirectory + "/temp_" + 0 + ".png");
+            new ImageEditor().drawCharacterImage(characters.get(0).getImagePath(), characters.get(0).getRarity(), false, IS_RARITY_STARS, tempUserDirectory + "/temp_" + 0 + ".png");
         imageString = tempUserDirectory + "/temp_" + 0 + ".png";
     }
 
@@ -288,7 +290,7 @@ abstract class CharacterScout
 
                         characterString += "~~" + characters.get(i).toString() + "~~" + "\n";
                         if (generateImage && !IMAGE_DISABLED)
-                            new ImageEditor().drawCharacterImage(characters.get(i).getImagePath(), characters.get(i).getRarity(), true, tempUserDirectory + "/temp_" + i + ".png");
+                            new ImageEditor().drawCharacterImage(characters.get(i).getImagePath(), characters.get(i).getRarity(), true, IS_RARITY_STARS, tempUserDirectory + "/temp_" + i + ".png");
                     }
                 }
 
@@ -297,7 +299,7 @@ abstract class CharacterScout
                     USER.addCharacter(characters.get(i));
                     characterString += "**" + characters.get(i).toString() + "**\n";
                     if (generateImage && !IMAGE_DISABLED)
-                        new ImageEditor().drawCharacterImage(characters.get(i).getImagePath(), characters.get(i).getRarity(), false, tempUserDirectory + "/temp_" + i + ".png");
+                        new ImageEditor().drawCharacterImage(characters.get(i).getImagePath(), characters.get(i).getRarity(), false, IS_RARITY_STARS, tempUserDirectory + "/temp_" + i + ".png");
                 }
                 foundDuplicate = false;
             }
@@ -306,7 +308,7 @@ abstract class CharacterScout
                 USER.addCharacter(characters.get(i));
                 characterString += "**" + characters.get(i).toString() + "**\n";
                 if (generateImage && !IMAGE_DISABLED)
-                    new ImageEditor().drawCharacterImage(characters.get(i).getImagePath(), characters.get(i).getRarity(), false, tempUserDirectory + "/temp_" + i + ".png");
+                    new ImageEditor().drawCharacterImage(characters.get(i).getImagePath(), characters.get(i).getRarity(), false, IS_RARITY_STARS, tempUserDirectory + "/temp_" + i + ".png");
             }
             imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
         }

@@ -533,12 +533,14 @@ public class Update
         fileNames.add("Character_Placeholder.png");
         fileNames.add("Character_Shade.png");
         fileNames.add("Copper_Border.png");
+        fileNames.add("Empty_Rarity_Star.png");
         fileNames.add("Gold_Border.png");
         fileNames.add("Gray_Border.png");
         fileNames.add("Item_Placeholder.png");
         fileNames.add("Multi_Character.png");
         fileNames.add("Multi_Weapon.png");
         fileNames.add("Platinum_Border.png");
+        fileNames.add("Rarity_Star.png");
         fileNames.add("Silver_Border.png");
         fileNames.add("Single_Character.png");
         fileNames.add("Single_Weapon.png");

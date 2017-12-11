@@ -60,6 +60,9 @@ abstract class TicketScout
     protected boolean generateImage;
     protected boolean stopScout;
 
+    /* PRIVATE VARIABLES */
+    private boolean IS_RARITY_STARS;
+
     TicketScout(IChannel channel, String choice, String discordID)
     {
         CHANNEL = channel;
@@ -82,6 +85,7 @@ abstract class TicketScout
         /* SETTINGS */
         IMAGE_DISABLED = SETTINGS.isDisableImages();
         SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
+        IS_RARITY_STARS = SETTINGS.isRarityStars();
 
         /* USER */
         userColBalance = USER.getColBalance();
@@ -174,7 +178,7 @@ abstract class TicketScout
         }
         itemString += items.get(0).toString() + "\n";
         if (generateImage && !IMAGE_DISABLED)
-            new ImageEditor().drawItemImage(items.get(0).getImagePath(), rarity, tempUserDirectory + "/temp_" + 0 + ".png");
+            new ImageEditor().drawItemImage(items.get(0).getImagePath(), rarity, IS_RARITY_STARS, tempUserDirectory + "/temp_" + 0 + ".png");
         imageString = tempUserDirectory + "/temp_" + 0 + ".png";
     }
 
@@ -213,7 +217,7 @@ abstract class TicketScout
             }
             itemString += items.get(i).toString() + "\n";
             if (generateImage && !IMAGE_DISABLED)
-                new ImageEditor().drawItemImage(items.get(i).getImagePath(), rarity, tempUserDirectory + "/temp_" + i + ".png");
+                new ImageEditor().drawItemImage(items.get(i).getImagePath(), rarity, IS_RARITY_STARS, tempUserDirectory + "/temp_" + i + ".png");
             imageStrings[i] = tempUserDirectory + "/temp_" + i + ".png";
         }
     }

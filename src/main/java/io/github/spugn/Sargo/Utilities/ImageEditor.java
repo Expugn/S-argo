@@ -20,14 +20,14 @@ import java.io.IOException;
  * </p>
  *
  * @author S'pugn
- * @version 1.0
+ * @version 1.1
  * @since v2.0
  */
 public class ImageEditor
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(ImageEditor.class);
 
-    public void drawCharacterImage(String charImageString, int rarity, boolean exists, String fileName)
+    public void drawCharacterImage(String charImageString, int rarity, boolean exists, boolean useRarityStars, String fileName)
     {
         try
         {
@@ -47,6 +47,42 @@ public class ImageEditor
             BufferedImage result = new BufferedImage(character.getWidth(null), character.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             Graphics g = result.getGraphics();
             g.drawImage(character, 0, 0, null);
+
+            /* RARITY STARS */
+            if (useRarityStars)
+            {
+                int starX = result.getWidth() / 2;
+                int starY = 175;
+                BufferedImage rStar = ImageIO.read(new File("images/System/Rarity_Star.png"));
+                switch (rarity)
+                {
+                    case 5:
+                        g.drawImage(rStar, starX + 51, starY, null);
+                        g.drawImage(rStar, starX + 17, starY, null);
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    case 4:
+                        g.drawImage(rStar, starX + 34, starY, null);
+                        g.drawImage(rStar, starX, starY, null);
+                        g.drawImage(rStar, starX - 34, starY, null);
+                        g.drawImage(rStar, starX - 68, starY, null);
+                        break;
+                    case 3:
+                        g.drawImage(rStar, starX + 17, starY, null);
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        break;
+                    case 2:
+                        g.drawImage(rStar, starX, starY, null);
+                        g.drawImage(rStar, starX - 34, starY, null);
+                        break;
+                    default:
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        break;
+                }
+            }
 
             /* RARITY BORDER */
             switch (rarity)
@@ -90,7 +126,7 @@ public class ImageEditor
         }
     }
 
-    public void drawWeaponImage(String weapImageString, int rarity, String fileName)
+    public void drawWeaponImage(String weapImageString, int rarity, boolean useRarityStars, String fileName)
     {
         try
         {
@@ -110,6 +146,50 @@ public class ImageEditor
             BufferedImage result = new BufferedImage(weapon.getWidth(null), weapon.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             Graphics g = result.getGraphics();
             g.drawImage(weapon, 0, 0, null);
+
+            /* RARITY STARS */
+            if (useRarityStars)
+            {
+                int starX = (result.getWidth() / 2);
+                int starY = 175;
+                BufferedImage rStar = ImageIO.read(new File("images/System/Rarity_Star.png"));
+                BufferedImage erStar = ImageIO.read(new File("images/System/Empty_Rarity_Star.png"));
+                switch (rarity)
+                {
+                    case 5:
+                        g.drawImage(rStar, starX + 51, starY, null);
+                        g.drawImage(rStar, starX + 17, starY, null);
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    case 4:
+                        g.drawImage(erStar, starX + 51, starY, null);
+                        g.drawImage(rStar, starX + 17, starY, null);
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    case 3:
+                        g.drawImage(erStar, starX + 17, starY, null);
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    case 2:
+                        g.drawImage(erStar, starX + 17, starY, null);
+                        g.drawImage(erStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    default:
+                        g.drawImage(erStar, starX + 17, starY, null);
+                        g.drawImage(erStar, starX - 17, starY, null);
+                        g.drawImage(erStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                }
+            }
 
             /* RARITY BORDER */
             switch (rarity)
@@ -146,7 +226,7 @@ public class ImageEditor
         }
     }
 
-    public void drawItemImage(String itemImageString, int rarity, String fileName)
+    public void drawItemImage(String itemImageString, int rarity, boolean useRarityStars, String fileName)
     {
         try
         {
@@ -166,6 +246,46 @@ public class ImageEditor
             BufferedImage result = new BufferedImage(item.getWidth(null), item.getHeight(null), BufferedImage.TYPE_INT_ARGB);
             Graphics g = result.getGraphics();
             g.drawImage(item, 0, 0, null);
+
+            /* RARITY STARS */
+            if (useRarityStars)
+            {
+                int starX = (result.getWidth() / 2);
+                int starY = 175;
+                BufferedImage rStar = ImageIO.read(new File("images/System/Rarity_Star.png"));
+                BufferedImage erStar = ImageIO.read(new File("images/System/Empty_Rarity_Star.png"));
+                switch (rarity)
+                {
+                    case 5:
+                        g.drawImage(rStar, starX + 51, starY, null);
+                        g.drawImage(rStar, starX + 17, starY, null);
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    case 4:
+                        g.drawImage(erStar, starX + 51, starY, null);
+                        g.drawImage(rStar, starX + 17, starY, null);
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    case 3:
+                        g.drawImage(erStar, starX + 17, starY, null);
+                        g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    case 2:
+                        g.drawImage(erStar, starX + 17, starY, null);
+                        g.drawImage(erStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX - 85, starY, null);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             /* RARITY BORDER */
             switch (rarity)
