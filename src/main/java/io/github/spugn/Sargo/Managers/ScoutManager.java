@@ -35,7 +35,6 @@ class ScoutManager
         }
 
         LOGGER.debug("Starting CHARACTER Scout...");
-        channel.setTypingStatus(true);
         Banner selectedBanner = banners.get(bannerID - 1);
         switch (selectedBanner.getBannerType())
         {
@@ -76,6 +75,5 @@ class ScoutManager
                 break;
         }
         LOGGER.debug("CHARACTER Scout Complete!");
-        channel.setTypingStatus(false);
     }
 }

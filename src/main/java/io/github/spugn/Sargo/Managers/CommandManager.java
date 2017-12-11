@@ -83,7 +83,15 @@ public class CommandManager
             {
                 if (COMMAND_LINE.getCommand().equalsIgnoreCase("scout"))
                 {
+                    if (!CHANNEL.getTypingStatus())
+                    {
+                        CHANNEL.setTypingStatus(true);
+                    }
                     scoutCommand();
+                    if (CHANNEL.getTypingStatus())
+                    {
+                        CHANNEL.setTypingStatus(false);
+                    }
                 }
                 else if (COMMAND_LINE.getCommand().equalsIgnoreCase("help"))
                 {
@@ -119,17 +127,21 @@ public class CommandManager
         catch (RateLimitException e)
         {
             System.out.println("[CommandManager] - Rate Limit Exception.");
-            CHANNEL.setTypingStatus(false);
         }
         catch (DiscordException e)
         {
             event.getChannel().sendMessage(new WarningMessage("DISCORD EXCEPTION", "Something went wrong.").get().build());
-            CHANNEL.setTypingStatus(false);
         }
         catch (MissingPermissionsException e)
         {
             System.out.println("[CommandManager] - Not Enough Permissions.");
-            CHANNEL.setTypingStatus(false);
+        }
+        finally
+        {
+            if (CHANNEL.getTypingStatus())
+            {
+                CHANNEL.setTypingStatus(false);
+            }
         }
     }
 
