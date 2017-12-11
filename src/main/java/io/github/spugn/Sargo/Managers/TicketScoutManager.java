@@ -25,7 +25,6 @@ class TicketScoutManager
         choice = choice.toLowerCase();
 
         LOGGER.debug("Starting TICKET Scout...");
-        channel.setTypingStatus(true);
         switch (choice)
         {
             case "nts":
@@ -46,6 +45,5 @@ class TicketScoutManager
                 break;
         }
         LOGGER.debug("TICKET Scout Complete!");
-        channel.setTypingStatus(false);
     }
 }

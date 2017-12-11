@@ -36,9 +36,7 @@ class WeaponScoutManager
             channel.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
             return;
         }
-
         LOGGER.debug("Starting WEAPON Scout...");
-        channel.setTypingStatus(true);
         Banner selectedBanner = banners.get(bannerID - 1);
 
         if (selectedBanner.getWeapons().size() <= 0)
@@ -63,6 +61,5 @@ class WeaponScoutManager
                 break;
         }
         LOGGER.debug("WEAPON Scout Complete!");
-        channel.setTypingStatus(false);
     }
 }
