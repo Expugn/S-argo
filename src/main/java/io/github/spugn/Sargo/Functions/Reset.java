@@ -101,6 +101,7 @@ public class Reset
             String charString = "";
             String weapString = "";
             int bannerData = 0;
+            int bannerWepData = 0;
 
             for (Character c : bannerCharacters)
             {
@@ -130,6 +131,11 @@ public class Reset
             if (banners.get(bannerID).getBannerType() != 0)
             {
                 bannerData = user.getBannerData(banners.get(bannerID).getBannerName());
+            }
+
+            if (banners.get(bannerID).getBannerWepType() != 0)
+            {
+                bannerWepData = user.getBannerData(banners.get(bannerID).getBannerName() + " Weapons");
             }
 
             if (yes)
@@ -190,12 +196,32 @@ public class Reset
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), -1);
                     }
+
+                    int wepBannerType = banners.get(bannerID).getBannerWepType();
+                    if (wepBannerType == 1)
+                    {
+                        user.changeValue(banners.get(bannerID).getBannerName() + " Weapons", 1);
+                    }
                 }
 
                 user.saveData();
 
+                String dataType;
+                if (choice.equalsIgnoreCase("c"))
+                {
+                    dataType = "character data";
+                }
+                else if (choice.equalsIgnoreCase("w"))
+                {
+                    dataType = "weapon data";
+                }
+                else
+                {
+                    dataType = "data";
+                }
+
                 IUser discordUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
-                CHANNEL.sendMessage(new WarningMessage("USER BANNER DATA RESET", "**" + discordUser.getName() + "#" + discordUser.getDiscriminator() + "**'s data for **" + banners.get(bannerID).getBannerName() + "** has been reset.").get().build());
+                CHANNEL.sendMessage(new WarningMessage("USER BANNER DATA RESET", "**" + discordUser.getName() + "#" + discordUser.getDiscriminator() + "**'s " + dataType + " for **" + banners.get(bannerID).getBannerName() + "** has been reset.").get().build());
             }
             else
             {
@@ -220,10 +246,11 @@ public class Reset
                     hasData = true;
                 }
 
-                if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType() == 0))
+                if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType() == 0 || banners.get(bannerID).getBannerType() == 6))
                 {
                     String dataString = "";
                     int bannerType = banners.get(bannerID).getBannerType();
+                    int bannerWepType = banners.get(bannerID).getBannerWepType();
 
                     if (bannerType == 1 || bannerType == 3 || bannerType == 4 || bannerType == 7)
                     {
@@ -239,6 +266,11 @@ public class Reset
                         {
                             dataString = "Record Crystals: " + bannerData + " -> 0";
                         }
+                    }
+
+                    if (bannerWepType == 1)
+                    {
+                        dataString += "\nWeapon Step " + bannerWepData + " -> Weapon Step 1";
                     }
                     builder.appendField("- Data -", dataString, false);
                     hasData = true;
