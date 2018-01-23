@@ -57,7 +57,7 @@ class WeaponScoutManager
                 new StepUp(channel, bannerID, choice, discordID);
                 break;
             default:
-                channel.sendMessage(new WarningMessage("UNKNOWN BANNER TYPE", "Please correct the issue in the Banners.xml file.").get().build());
+                channel.sendMessage(new WarningMessage("UNKNOWN BANNER TYPE", "Please correct the issue or update the bot.").get().build());
                 break;
         }
         LOGGER.debug("WEAPON Scout Complete!");

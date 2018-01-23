@@ -328,7 +328,7 @@ abstract class CharacterScout
 
         if (guaranteedScout)
         {
-            if (bannerType == 5)
+            if (bannerType == 5 || bannerType == 8)
             {
                 return 5;
             }
@@ -484,6 +484,34 @@ abstract class CharacterScout
         double d = RNG.nextDouble();
         double recordCrystalRate = RECORD_CRYSTAL_RATES.get(0);
 
+        for (int i = 0 ; i < RECORD_CRYSTAL_RATES.size() ; i++)
+        {
+            recordCrystalRate += RECORD_CRYSTAL_RATES.get(i);
+            if (d < recordCrystalRate)
+            {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Used in Record Crystal v3 scouts; determine how many record crystals (1-5)
+     * should be returned to the user.
+     *
+     * @return  The amount of Record Crystals (1-5) that are returned to the user.
+     */
+    int getCirculatedRecordCrystals()
+    {
+        double rcOneToFiveRate = RECORD_CRYSTAL_RATES.get(0);
+        for (int a = 0 ; a < 6 ; a++)
+        {
+            rcOneToFiveRate += RECORD_CRYSTAL_RATES.get(a);
+        }
+
+        double d = Math.random() * rcOneToFiveRate;
+        double recordCrystalRate = RECORD_CRYSTAL_RATES.get(0);
         for (int i = 0 ; i < RECORD_CRYSTAL_RATES.size() ; i++)
         {
             recordCrystalRate += RECORD_CRYSTAL_RATES.get(i);

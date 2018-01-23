@@ -9,27 +9,34 @@ import sx.blah.discord.handle.obj.IChannel;
 import java.util.List;
 
 /**
- * RECORD CRYSTAL V2 CHARACTER SCOUT
+ * RECORD CRYSTAL V3 CHARACTER SCOUT
  * <p>
+ *     Also known as Circulating Record Crystal scouts.
+ *
  *     View {@link RecordCrystal}'s JavaDoc for more information
  *     about Record Crystal scouts in general.<br>
  *
- *     Compared to Record Crystal scouts, Record Crystal v2 scouts
+ *     Compared to Record Crystal scouts, Record Crystal v3 scouts
  *     feature a wider collection of gold variant characters to
  *     obtain if you miss the 60% needed to get a banner character.
- *     Also, Record Crystal v2 scouts have the added benefit of having
- *     the first scout be 50% off.
+ *     Record Crystal v3 scouts also have the  same added benefit of
+ *     Record Crystal v2 where the first scout be 50% off.
+ *     Record Crystal v3 introduces a new mechanic where with every
+ *     record crystal scout you perform you have a chance to win 1-5
+ *     record crystals back.
  * </p>
  *
  * @author S'pugn
  * @version 1.0
- * @since v2.0
+ * @since v2.2
  * @see RecordCrystal
  * @see CharacterScout
  */
-public class RecordCrystalv2 extends CharacterScout
+public class RecordCrystalv3 extends CharacterScout
 {
-    public RecordCrystalv2(IChannel channel, int bannerID, String choice, String discordID)
+    private int circluatedRecordCrystals;
+
+    public RecordCrystalv3(IChannel channel, int bannerID, String choice, String discordID)
     {
         super(channel, bannerID, choice, discordID);
         run();
@@ -87,14 +94,14 @@ public class RecordCrystalv2 extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[Record Crystal v2] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")");
+                    scoutMenu.withTitle("[Record Crystal v3] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")");
                     break;
                 case "rc":
                 case "rci":
-                    scoutMenu.withTitle("[Guaranteed Scout] - " + (bannerTypeData - 10) + " Record Crystals Left");
+                    scoutMenu.withTitle("**[Guaranteed Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")**" + "\n");
                     break;
                 default:
-                    scoutMenu.withTitle("[Record Crystal v2] - Unknown");
+                    scoutMenu.withTitle("[Record Crystal v3] - Unknown");
                     break;
             }
         }
@@ -108,14 +115,14 @@ public class RecordCrystalv2 extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    simpleMessage += "**[Record Crystal v2] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")**" + "\n";
+                    simpleMessage += "**[Record Crystal v3] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")**" + "\n";
                     break;
                 case "rc":
                 case "rci":
-                    simpleMessage += "**[Guaranteed Scout] - " + (bannerTypeData - 10) + " Record Crystals Left**" + "\n";
+                    simpleMessage += "**[Guaranteed Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")**" + "\n";
                     break;
                 default:
-                    simpleMessage += "**[Record Crystal v2] - Unknown**" + "\n";
+                    simpleMessage += "**[Record Crystal v3] - Unknown**" + "\n";
                     break;
             }
         }
@@ -177,7 +184,9 @@ public class RecordCrystalv2 extends CharacterScout
                     return;
                 }
 
+                circluatedRecordCrystals = getCirculatedRecordCrystals();
                 userRecordCrystals -= 10;
+                userRecordCrystals += circluatedRecordCrystals;
                 USER.changeValue(SELECTED_BANNER.getBannerName(), userRecordCrystals);
                 guaranteedScout = true;
                 doSinglePull();

@@ -31,6 +31,7 @@ public class BannerInfoMenu
     private String stepSixRatesList;
     private String stepThreeWeaponRatesList;
     private String recordCrystalRatesList;
+    private String circulatingRecordCrystalRatesList;
     private int bannerID;
     private String imageURL;
 
@@ -79,9 +80,15 @@ public class BannerInfoMenu
             builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
         }
         else if (bannerType.equalsIgnoreCase("Record Crystal") ||
-                bannerType.equalsIgnoreCase("Record Crystal v2"))
+                bannerType.equalsIgnoreCase("Record Crystal v2") ||
+                bannerType.equalsIgnoreCase("Record Crystal v3"))
         {
             builder.appendField("- Record Crystal Rates -", recordCrystalRatesList, true);
+
+            if (bannerType.equalsIgnoreCase("Record Crystal v3"))
+            {
+                builder.appendField("- Circulating Record Crystal Rates -", circulatingRecordCrystalRatesList, true);
+            }
         }
         else if (bannerType.equalsIgnoreCase("Step Up v3"))
         {
@@ -111,7 +118,8 @@ public class BannerInfoMenu
             }
         }
         else if (bannerType.equalsIgnoreCase("Record Crystal") ||
-                bannerType.equalsIgnoreCase("Record Crystal v2"))
+                bannerType.equalsIgnoreCase("Record Crystal v2") ||
+                bannerType.equalsIgnoreCase("Record Crystal v3"))
         {
             if (weaponAmount > 0)
             {
@@ -213,5 +221,10 @@ public class BannerInfoMenu
     public void setRecordCrystalRatesList(String recordCrystalRatesList)
     {
         this.recordCrystalRatesList = recordCrystalRatesList;
+    }
+
+    public void setCirculatingRecordCrystalRatesList(String circulatingRecordCrystalRatesList)
+    {
+        this.circulatingRecordCrystalRatesList = circulatingRecordCrystalRatesList;
     }
 }

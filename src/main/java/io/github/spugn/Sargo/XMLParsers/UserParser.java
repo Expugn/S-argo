@@ -692,8 +692,8 @@ public class UserParser
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL);
                 }
-                /* IS RECORD CRYSTAL v2 */
-                else if (b.getBannerType() == 5)
+                /* IS RECORD CRYSTAL v2 OR RECORD CRYSTAL v3 */
+                else if (b.getBannerType() == 5 || b.getBannerType() == 8)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL_V2);
                 }

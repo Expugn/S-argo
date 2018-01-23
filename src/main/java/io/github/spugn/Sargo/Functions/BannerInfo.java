@@ -278,7 +278,7 @@ public class BannerInfo
                 menu.setStepThreeRatesList(stepThreeRates);
             }
             /* BANNER IS RECORD CRYSTAL */
-            else if (banner.getBannerType() == 2 || banner.getBannerType() == 5)
+            else if (banner.getBannerType() == 2 || banner.getBannerType() == 5 || banner.getBannerType() == 8)
             {
                 int counter = 0;
                 String recordCrystalRates = "";
@@ -293,6 +293,30 @@ public class BannerInfo
                 }
 
                 menu.setRecordCrystalRatesList(recordCrystalRates);
+
+                if (banner.getBannerType() == 8)
+                {
+                    String circluatingRecordCrystalRates = "";
+                    double rcOneToFiveRate = 0;
+                    for (int a = 0 ; a < 6 ; a++)
+                    {
+                        if (a != 0)
+                        {
+                            rcOneToFiveRate += recordCrystal.get(a);
+                        }
+                    }
+
+                    for (int i = 0 ; i < 6 ; i++)
+                    {
+                        if (i != 0)
+                        {
+                            circluatingRecordCrystalRates += "[" + i + " RC] " + df.format(((recordCrystal.get(i) / rcOneToFiveRate) * 100)) + "%\n";
+                        }
+                    }
+                    circluatingRecordCrystalRates += "***RATES ARE NOT CONFIRMED***\n";
+
+                    menu.setCirculatingRecordCrystalRatesList(circluatingRecordCrystalRates);
+                }
             }
             /* BANNER IS STEP UP V3 */
             else if (banner.getBannerType() == 7)
