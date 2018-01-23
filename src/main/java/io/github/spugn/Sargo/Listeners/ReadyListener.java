@@ -2,8 +2,11 @@ package io.github.spugn.Sargo.Listeners;
 
 import io.github.spugn.Sargo.Functions.Update;
 import io.github.spugn.Sargo.GUI.GUI;
+import io.github.spugn.Sargo.System.SystemData;
 import io.github.spugn.Sargo.XMLParsers.ScoutMasterParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
@@ -17,7 +20,7 @@ import sx.blah.discord.handle.impl.events.ReadyEvent;
  * </p>
  *
  * @author S'pugn
- * @version 1.0
+ * @version 1.1
  * @since v1.0
  * @see ReadyEvent
  */
@@ -25,6 +28,7 @@ public class ReadyListener
 {
     private final IDiscordClient CLIENT;
     private String botName;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReadyListener.class);
 
     public ReadyListener(IDiscordClient discordClient)
     {
@@ -64,6 +68,8 @@ public class ReadyListener
         }
         CLIENT.changePlayingText(playingText);
 
+        System.out.println();
+        LOGGER.info("Starting up S'argo v" + SystemData.getVERSION() + " - SAO:MD Summon Simulator Discord Bot by S'pugn#2612");
         new Update();
     }
 }

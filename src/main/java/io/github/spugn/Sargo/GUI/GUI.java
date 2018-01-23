@@ -68,7 +68,7 @@ public class GUI extends JFrame
             System.out.println("[GUI] - Unsupported Look and Feel Exception");
         }
 
-        setTitle("S'argo " + SystemData.getVERSION() + " - SAO:MD Summon Simulator Discord Bot by S'pugn#2612");
+        setTitle("S'argo v" + SystemData.getVERSION() + " - SAO:MD Summon Simulator Discord Bot by S'pugn#2612");
         setSize(WIDTH, HEIGHT);
         setResizable(false);
         setVisible(true);
