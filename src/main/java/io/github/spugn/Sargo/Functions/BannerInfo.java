@@ -36,6 +36,7 @@ public class BannerInfo
     private double platinum;
 
     private List<Double> recordCrystal;
+    private List<Double> circulatingRecordCrystal;
 
     private int bannerID;
 
@@ -74,6 +75,7 @@ public class BannerInfo
         gold = (int) (settings.getGoldRates() * 100);
         platinum = (int) (settings.getPlatinumRates() * 100);
         recordCrystal = settings.getRecordCrystalRates();
+        circulatingRecordCrystal = settings.getCirculatingRecordCrystalRates();
 
         getBannerInfo();
     }
@@ -296,25 +298,15 @@ public class BannerInfo
 
                 if (banner.getBannerType() == 8)
                 {
+                    int counter2 = 0;
                     String circluatingRecordCrystalRates = "";
-                    double rcOneToFiveRate = 0;
-                    for (int a = 0 ; a < 6 ; a++)
+                    for (double d : circulatingRecordCrystal)
                     {
-                        if (a != 0)
+                        if (d != 0)
                         {
-                            rcOneToFiveRate += recordCrystal.get(a);
+                            circluatingRecordCrystalRates += "[" + ++counter2 + " RC] " + df.format((d * 100)) + "%\n";
                         }
                     }
-
-                    for (int i = 0 ; i < 6 ; i++)
-                    {
-                        if (i != 0)
-                        {
-                            circluatingRecordCrystalRates += "[" + i + " RC] " + df.format(((recordCrystal.get(i) / rcOneToFiveRate) * 100)) + "%\n";
-                        }
-                    }
-                    circluatingRecordCrystalRates += "***RATES ARE NOT CONFIRMED***\n";
-
                     menu.setCirculatingRecordCrystalRatesList(circluatingRecordCrystalRates);
                 }
             }

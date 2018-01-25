@@ -50,6 +50,7 @@ public class SettingsParser
     private double goldRates;
     private double platinumRates;
     private List<Double> recordCrystalRates;
+    private List<Double> circulatingRecordCrystalRates;
     private List<Integer> goldBanners;
     private List<Integer> goldBannersv2;
 
@@ -81,6 +82,7 @@ public class SettingsParser
     public double getGoldRates() { return goldRates; }
     public double getPlatinumRates() { return platinumRates; }
     public List<Double> getRecordCrystalRates() { return recordCrystalRates; }
+    public List<Double> getCirculatingRecordCrystalRates() { return circulatingRecordCrystalRates; }
     public List<Integer> getGoldBanners() { return goldBanners; }
     public List<Integer> getGoldBannersv2() { return goldBannersv2; }
 
@@ -104,6 +106,7 @@ public class SettingsParser
 
             ignoredChannelNames = new ArrayList<>();
             recordCrystalRates = new ArrayList<>();
+            circulatingRecordCrystalRates = new ArrayList<>();
             goldBanners = new ArrayList<>();
             goldBannersv2 = new ArrayList<>();
             shopItems = new TreeMap<>();
@@ -244,6 +247,22 @@ public class SettingsParser
                             }
                         }
                         recordCrystalRates.add(rate);
+                        continue;
+                    }
+                    if (event.asStartElement().getName().getLocalPart().equals("CirculatingRecordCrystal"))
+                    {
+                        double rate = 0.0;
+
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals("rate"))
+                            {
+                                rate = Double.parseDouble(attribute.getValue());
+                            }
+                        }
+                        circulatingRecordCrystalRates.add(rate);
                         continue;
                     }
                     if (event.asStartElement().getName().getLocalPart().equals("BannerID"))

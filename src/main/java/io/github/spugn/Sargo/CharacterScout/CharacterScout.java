@@ -74,6 +74,7 @@ abstract class CharacterScout
     private boolean IS_RARITY_STARS;
     private double SILVER;
     private List<Double> RECORD_CRYSTAL_RATES;
+    private List<Double> CIRCULATING_RECORD_CRYSTAL_RATES;
     private List<Character> BANNER_CHARACTERS;
     private int bannerType;
     private List<Character> goldCharacters;
@@ -117,6 +118,7 @@ abstract class CharacterScout
         GOLD = (int) (SETTINGS.getGoldRates() * 100);
         PLATINUM = (int) (SETTINGS.getPlatinumRates() * 100);
         RECORD_CRYSTAL_RATES = SETTINGS.getRecordCrystalRates();
+        CIRCULATING_RECORD_CRYSTAL_RATES = SETTINGS.getCirculatingRecordCrystalRates();
         GOLD_BANNERS = SETTINGS.getGoldBanners();
         GOLD_BANNERS_V2 = SETTINGS.getGoldBannersv2();
         IMAGE_DISABLED = SETTINGS.isDisableImages();
@@ -504,18 +506,13 @@ abstract class CharacterScout
      */
     int getCirculatedRecordCrystals()
     {
-        double rcOneToFiveRate = RECORD_CRYSTAL_RATES.get(0);
-        for (int a = 0 ; a < 6 ; a++)
-        {
-            rcOneToFiveRate += RECORD_CRYSTAL_RATES.get(a);
-        }
+        double d = RNG.nextDouble();
+        double circulatingRecordCrystalRate = CIRCULATING_RECORD_CRYSTAL_RATES.get(0);
 
-        double d = Math.random() * rcOneToFiveRate;
-        double recordCrystalRate = RECORD_CRYSTAL_RATES.get(0);
-        for (int i = 0 ; i < RECORD_CRYSTAL_RATES.size() ; i++)
+        for (int i = 0 ; i < CIRCULATING_RECORD_CRYSTAL_RATES.size() ; i++)
         {
-            recordCrystalRate += RECORD_CRYSTAL_RATES.get(i);
-            if (d < recordCrystalRate)
+            circulatingRecordCrystalRate += CIRCULATING_RECORD_CRYSTAL_RATES.get(i);
+            if (d < circulatingRecordCrystalRate)
             {
                 return i;
             }
