@@ -3,7 +3,6 @@ package io.github.spugn.Sargo.XMLParsers;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Objects.Weapon;
-import org.apache.commons.io.IOUtils;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -14,6 +13,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -200,7 +200,9 @@ public class BannerParser
         }
         finally
         {
-            IOUtils.closeQuietly(in);
+            try { if (in != null) {in.close();} }
+                catch (IOException e) { /* IGNORED */ }
+
             try { if (eventReader != null) { eventReader.close(); } }
                 catch (XMLStreamException e) { /* IGNORED */ }
         }

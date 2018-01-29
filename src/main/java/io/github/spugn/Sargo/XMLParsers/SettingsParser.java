@@ -1,7 +1,5 @@
 package io.github.spugn.Sargo.XMLParsers;
 
-import org.apache.commons.io.IOUtils;
-
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -9,6 +7,7 @@ import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.XMLEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
@@ -341,7 +340,9 @@ public class SettingsParser
         }
         finally
         {
-            IOUtils.closeQuietly(in);
+            try { if (in != null) {in.close();} }
+                catch (IOException e) { /* IGNORED */ }
+
             try { if (eventReader != null) { eventReader.close(); } }
                 catch (XMLStreamException e) { /* IGNORED */ }
         }

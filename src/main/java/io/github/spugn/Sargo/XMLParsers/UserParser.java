@@ -3,7 +3,6 @@ package io.github.spugn.Sargo.XMLParsers;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Objects.Weapon;
-import org.apache.commons.io.IOUtils;
 
 import javax.xml.stream.*;
 import javax.xml.stream.events.*;
@@ -556,7 +555,9 @@ public class UserParser
         }
         finally
         {
-            IOUtils.closeQuietly(in);
+            try { if (in != null) {in.close();} }
+                catch (IOException e) { /* IGNORED */ }
+
             try { if (eventReader != null) { eventReader.close(); } }
                 catch (XMLStreamException e) { /* IGNORED */ }
         }

@@ -1,7 +1,6 @@
 package io.github.spugn.Sargo.XMLParsers;
 
 import io.github.spugn.Sargo.Utilities.GitHubImage;
-import org.apache.commons.io.IOUtils;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -270,7 +269,9 @@ public class ScoutMasterParser
         }
         finally
         {
-            IOUtils.closeQuietly(in);
+            try { if (in != null) {in.close();} }
+                catch (IOException e) { /* IGNORED */ }
+
             try { if (eventReader != null) { eventReader.close(); } }
                 catch (XMLStreamException e) { /* IGNORED */ }
         }
