@@ -192,7 +192,7 @@ public class Reset
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 0);
                     }
-                    else if (bannerType == 5)
+                    else if (bannerType == 5 || bannerType == 8)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), -1);
                     }
@@ -256,7 +256,7 @@ public class Reset
                     {
                         dataString = "Step " + bannerData + " -> Step 1";
                     }
-                    else if (bannerType == 2 || bannerType == 5)
+                    else if (bannerType == 2 || bannerType == 5 || bannerType == 8)
                     {
                         if (bannerData < 0)
                         {
