@@ -81,11 +81,13 @@ public class BannerInfoMenu
         }
         else if (bannerType.equalsIgnoreCase("Record Crystal") ||
                 bannerType.equalsIgnoreCase("Record Crystal v2") ||
-                bannerType.equalsIgnoreCase("Record Crystal v3"))
+                bannerType.equalsIgnoreCase("Record Crystal v3") ||
+                bannerType.equalsIgnoreCase("Record Crystal v4"))
         {
             builder.appendField("- Record Crystal Rates -", recordCrystalRatesList, true);
 
-            if (bannerType.equalsIgnoreCase("Record Crystal v3"))
+            if (bannerType.equalsIgnoreCase("Record Crystal v3") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v4"))
             {
                 builder.appendField("- Circulating Record Crystal Rates -", circulatingRecordCrystalRatesList, true);
             }
@@ -119,7 +121,8 @@ public class BannerInfoMenu
         }
         else if (bannerType.equalsIgnoreCase("Record Crystal") ||
                 bannerType.equalsIgnoreCase("Record Crystal v2") ||
-                bannerType.equalsIgnoreCase("Record Crystal v3"))
+                bannerType.equalsIgnoreCase("Record Crystal v3") ||
+                bannerType.equalsIgnoreCase("Record Crystal v4"))
         {
             if (weaponAmount > 0)
             {

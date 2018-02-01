@@ -27,6 +27,8 @@ Static pull rates, but multi pulls are disabled and single pulls only cost 1 Mem
 50% off multi scout on Step 1, Increased 2.0x platinum character chance on Step 3.
 * **Record Crystal v3 Scouts**
 Same thing as Record Crystal with Record Crystal v2's first scout discount, but every Record Crystal scout returns 1-5 Record Crystals.
+* **Record Crystal v4 Scouts**
+Same thing as Record Crystal v3, but every Record Crystal scout returns 1-10 Record Crystals.
 
 [Weapons]
 * **Normal Weapon Scouts**  

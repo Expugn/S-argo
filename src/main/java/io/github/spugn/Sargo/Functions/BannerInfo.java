@@ -280,7 +280,10 @@ public class BannerInfo
                 menu.setStepThreeRatesList(stepThreeRates);
             }
             /* BANNER IS RECORD CRYSTAL */
-            else if (banner.getBannerType() == 2 || banner.getBannerType() == 5 || banner.getBannerType() == 8)
+            else if (banner.getBannerType() == 2 ||
+                    banner.getBannerType() == 5 ||
+                    banner.getBannerType() == 8 ||
+                    banner.getBannerType() == 9)
             {
                 int counter = 0;
                 String recordCrystalRates = "";
@@ -296,15 +299,28 @@ public class BannerInfo
 
                 menu.setRecordCrystalRatesList(recordCrystalRates);
 
-                if (banner.getBannerType() == 8)
+                if (banner.getBannerType() == 8 || banner.getBannerType() == 9)
                 {
                     int counter2 = 0;
                     String circluatingRecordCrystalRates = "";
-                    for (double d : circulatingRecordCrystal)
+                    if (banner.getBannerType() == 8)
                     {
-                        if (d != 0)
+                        for (double d : circulatingRecordCrystal)
                         {
-                            circluatingRecordCrystalRates += "[" + ++counter2 + " RC] " + df.format((d * 100)) + "%\n";
+                            if (d != 0)
+                            {
+                                circluatingRecordCrystalRates += "[" + ++counter2 + " RC] " + df.format((d * 100)) + "%\n";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (double d : recordCrystal)
+                        {
+                            if (d != 0)
+                            {
+                                circluatingRecordCrystalRates += "[" + ++counter2 + " RC] " + df.format((d * 100)) + "%\n";
+                            }
                         }
                     }
                     menu.setCirculatingRecordCrystalRatesList(circluatingRecordCrystalRates);

@@ -256,7 +256,10 @@ public class Reset
                     {
                         dataString = "Step " + bannerData + " -> Step 1";
                     }
-                    else if (bannerType == 2 || bannerType == 5 || bannerType == 8)
+                    else if (bannerType == 2 ||
+                            bannerType == 5 ||
+                            bannerType == 8 ||
+                            bannerType == 9)
                     {
                         if (bannerData < 0)
                         {

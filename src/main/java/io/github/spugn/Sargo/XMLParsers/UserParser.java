@@ -494,7 +494,6 @@ public class UserParser
                     {
                         Weapon weapon = new Weapon();
 
-                        //<Weapon name="garbage" rarity="4" count="1"/>
                         Iterator<Attribute> attributes = event.asStartElement().getAttributes();
                         while (attributes.hasNext())
                         {
@@ -693,8 +692,10 @@ public class UserParser
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL);
                 }
-                /* IS RECORD CRYSTAL v2 OR RECORD CRYSTAL v3 */
-                else if (b.getBannerType() == 5 || b.getBannerType() == 8)
+                /* IS RECORD CRYSTAL v2, v3, OR v4 */
+                else if (b.getBannerType() == 5 ||
+                        b.getBannerType() == 8 ||
+                        b.getBannerType() == 9)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_RECORD_CRYSTAL_V2);
                 }
