@@ -3,6 +3,21 @@ package io.github.spugn.Sargo.Exceptions;
 import sx.blah.discord.api.internal.json.objects.EmbedObject;
 import sx.blah.discord.util.EmbedBuilder;
 
+/**
+ * S'ARGO EXCEPTION
+ * <p>
+ *      This class is a base class for any exceptions/warnings
+ *      that may appear during the use of S'argo.<br>
+ *
+ *      Any class that extends from this class will contain data
+ *      for that specific exception as well as the common cause
+ *      and solution for that issue in their JavaDoc. <br>
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v2.4
+ */
 public abstract class SargoException extends Exception
 {
     public SargoException()
@@ -22,5 +37,5 @@ public abstract class SargoException extends Exception
         return builder.build();
     }
 
-    protected abstract void displayErrorMessage();
+    public abstract void displayErrorMessage();
 }
