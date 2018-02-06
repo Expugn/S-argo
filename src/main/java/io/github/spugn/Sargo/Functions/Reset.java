@@ -258,8 +258,7 @@ public class Reset
                     }
                     else if (bannerType == 2 ||
                             bannerType == 5 ||
-                            bannerType == 8 ||
-                            bannerType == 9)
+                            bannerType == 8)
                     {
                         if (bannerData < 0)
                         {

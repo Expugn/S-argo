@@ -282,8 +282,7 @@ public class BannerInfo
             /* BANNER IS RECORD CRYSTAL */
             else if (banner.getBannerType() == 2 ||
                     banner.getBannerType() == 5 ||
-                    banner.getBannerType() == 8 ||
-                    banner.getBannerType() == 9)
+                    banner.getBannerType() == 8)
             {
                 int counter = 0;
                 String recordCrystalRates = "";
@@ -299,7 +298,7 @@ public class BannerInfo
 
                 menu.setRecordCrystalRatesList(recordCrystalRates);
 
-                if (banner.getBannerType() == 8 || banner.getBannerType() == 9)
+                if (banner.getBannerType() == 8)
                 {
                     int counter2 = 0;
                     String circluatingRecordCrystalRates = "";
