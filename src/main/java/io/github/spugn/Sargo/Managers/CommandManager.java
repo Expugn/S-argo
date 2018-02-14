@@ -83,15 +83,19 @@ public class CommandManager
             {
                 if (COMMAND_LINE.getCommand().equalsIgnoreCase("scout"))
                 {
+                    /*
                     if (!CHANNEL.getTypingStatus())
                     {
                         CHANNEL.setTypingStatus(true);
                     }
+                    */
                     scoutCommand();
+                    /*
                     if (CHANNEL.getTypingStatus())
                     {
                         CHANNEL.setTypingStatus(false);
                     }
+                    */
                 }
                 else if (COMMAND_LINE.getCommand().equalsIgnoreCase("help"))
                 {
@@ -138,10 +142,12 @@ public class CommandManager
         }
         finally
         {
+            /*
             if (CHANNEL.getTypingStatus())
             {
                 CHANNEL.setTypingStatus(false);
             }
+            */
         }
     }
 

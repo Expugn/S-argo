@@ -39,7 +39,7 @@ public class Shop
         int counter = 1;
 
         builder.withAuthorName("Shop");
-        builder.withDesc("The cash required is virtual, not real.");
+        builder.withDesc("***No actual currency is required to get Memory Diamonds.***");
         builder.withColor(233, 228, 232);
         builder.withThumbnail(new GitHubImage("images/System/Shop_Icon.png").getURL());
 
