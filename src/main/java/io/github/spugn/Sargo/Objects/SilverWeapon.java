@@ -39,6 +39,7 @@ public class SilverWeapon
         names.add("Pale Shooter");
         names.add("Behemoth Sniper");
         names.add("Long-Range Barrett");
+        names.add("Rebecca");
 
         for (String name : names)
         {

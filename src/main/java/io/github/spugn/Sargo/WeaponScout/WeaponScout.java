@@ -49,6 +49,8 @@ abstract class WeaponScout
     int bannerTypeData;
     EmbedBuilder scoutMenu;
     String simpleMessage;
+    boolean guaranteeAutomaticRifle;
+    boolean guaranteeOneGold;
     int userMemoryDiamonds;
     int singleScoutPrice;
     int multiScoutPrice;
@@ -112,6 +114,8 @@ abstract class WeaponScout
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
         scoutMenu = new EmbedBuilder();
         simpleMessage = "";
+        guaranteeAutomaticRifle = false;
+        guaranteeOneGold = false;
 
         /* MEMORY DIAMOND PRICES */
         singleScoutPrice = 15;
@@ -218,6 +222,12 @@ abstract class WeaponScout
      */
     private int scout()
     {
+        if (guaranteeOneGold)
+        {
+            guaranteeOneGold = false;
+            return 4;
+        }
+
         double d;
         d = RNG.nextDouble() * 100;
 
@@ -252,13 +262,39 @@ abstract class WeaponScout
         Weapon weapon;
         if (rarity == 2)
         {
-            CopperWeapon cW = new CopperWeapon();
-            weapon = cW.getWeapon(RNG.nextInt(cW.getSize()));
+            if (guaranteeAutomaticRifle)
+            {
+                Weapon copperAR = new Weapon();
+                String copperARName = "Eliza";
+                copperAR.setName(copperARName);
+                copperAR.setRarity(2);
+                copperAR.setImagePath("images/Weapons/" + copperARName.replaceAll(" ", "_") + ".png");
+                weapon = copperAR;
+                guaranteeAutomaticRifle = false;
+            }
+            else
+            {
+                CopperWeapon cW = new CopperWeapon();
+                weapon = cW.getWeapon(RNG.nextInt(cW.getSize()));
+            }
         }
         else if (rarity == 3)
         {
-            SilverWeapon sW = new SilverWeapon();
-            weapon = sW.getWeapon(RNG.nextInt(sW.getSize()));
+            if (guaranteeAutomaticRifle)
+            {
+                Weapon silverAR = new Weapon();
+                String silverARName = "Rebecca";
+                silverAR.setName(silverARName);
+                silverAR.setRarity(3);
+                silverAR.setImagePath("images/Weapons/" + silverARName.replaceAll(" ", "_") + ".png");
+                weapon = silverAR;
+                guaranteeAutomaticRifle = false;
+            }
+            else
+            {
+                SilverWeapon sW = new SilverWeapon();
+                weapon = sW.getWeapon(RNG.nextInt(sW.getSize()));
+            }
         }
         else
         {

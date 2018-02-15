@@ -788,6 +788,7 @@ public class Update
         fileNames.add("Stealth_Rifle.png");
         fileNames.add("Double-Stack_Magazine.png");
         fileNames.add("Precision_Rifle.png");
+        fileNames.add("Eliza.png");
 
         try
         {
@@ -869,6 +870,7 @@ public class Update
         fileNames.add("Behemoth_Sniper.png");
         fileNames.add("Long-Range_Barrett.png");
         fileNames.add("Moonlight_Kukri.png");
+        fileNames.add("Rebecca.png");
 
         try
         {

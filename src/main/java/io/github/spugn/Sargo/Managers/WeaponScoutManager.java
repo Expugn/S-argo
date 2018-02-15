@@ -2,6 +2,7 @@ package io.github.spugn.Sargo.Managers;
 
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.WarningMessage;
+import io.github.spugn.Sargo.WeaponScout.GGOStepUp;
 import io.github.spugn.Sargo.WeaponScout.Normal;
 import io.github.spugn.Sargo.WeaponScout.StepUp;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
@@ -55,6 +56,10 @@ class WeaponScoutManager
             case 1:
                 LOGGER.debug("[STEP UP] " + banners.get(bannerID - 1).getBannerName() + " \"" + choice + "\" in Channel \"" + channel.getName() + "\"");
                 new StepUp(channel, bannerID, choice, discordID);
+                break;
+            case 2:
+                LOGGER.debug("[GGO STEP UP] " + banners.get(bannerID - 1).getBannerName() + " \"" + choice + "\" in Channel \"" + channel.getName() + "\"");
+                new GGOStepUp(channel, bannerID, choice, discordID);
                 break;
             default:
                 channel.sendMessage(new WarningMessage("UNKNOWN BANNER TYPE", "Please correct the issue or update the bot.").get().build());

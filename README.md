@@ -33,6 +33,8 @@ Same thing as Record Crystal with Record Crystal v2's first scout discount, but 
 Same as normal scouts. Static pull rates every time.
 * **Step Up Weapon Scouts**  
 100 MD scout on Step 1, Increased 2.0x gold weapon chance on Step 3.
+* **GGO Step Up Weapon Scouts**  
+100 MD scout and guaranteed Copper+ rarity Automatic Rifle on Step 1, Increased 1.5x gold weapon chance on Step 3, guaranteed gold weapon on Step 5, and 2.0x gold weapon rates on Step 6 which repeats.
 
 [Miscellaneous]
 * **Normal/Plus Ticket Scouts**  

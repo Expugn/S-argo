@@ -30,6 +30,8 @@ public class BannerInfoMenu
     private String stepFiveRatesList;
     private String stepSixRatesList;
     private String stepThreeWeaponRatesList;
+    private String stepFiveWeaponRatesList;
+    private String stepSixWeaponRatesList;
     private String recordCrystalRatesList;
     private String circulatingRecordCrystalRatesList;
     private int bannerID;
@@ -45,6 +47,10 @@ public class BannerInfoMenu
         if (bannerWepType == 1)
         {
             builder.withAuthorName("[" + bannerType + " / Weapon Step Up] " + bannerName);
+        }
+        if (bannerWepType == 2)
+        {
+            builder.withAuthorName("[" + bannerType + " / GGO Step Up] " + bannerName);
         }
         else
         {
@@ -100,6 +106,12 @@ public class BannerInfoMenu
         if (bannerWepType == 1)
         {
             builder.appendField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
+        }
+        else if (bannerWepType == 2)
+        {
+            builder.appendField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
+            builder.appendField("- Step 5 Weapon Pull Rates -", stepFiveWeaponRatesList, true);
+            builder.appendField("- Step 6 Weapon Pull Rates -", stepSixWeaponRatesList, true);
         }
 
         String footer = "[s/si";
@@ -218,6 +230,16 @@ public class BannerInfoMenu
     public void setStepThreeWeaponRatesList(String stepThreeWeaponRatesList)
     {
         this.stepThreeWeaponRatesList = stepThreeWeaponRatesList;
+    }
+
+    public void setStepFiveWeaponRatesList(String stepFiveWeaponRatesList)
+    {
+        this.stepFiveWeaponRatesList = stepFiveWeaponRatesList;
+    }
+
+    public void setStepSixWeaponRatesList(String stepSixWeaponRatesList)
+    {
+        this.stepSixWeaponRatesList = stepSixWeaponRatesList;
     }
 
     public void setRecordCrystalRatesList(String recordCrystalRatesList)

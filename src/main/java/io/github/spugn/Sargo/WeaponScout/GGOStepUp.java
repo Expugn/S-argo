@@ -5,29 +5,39 @@ import io.github.spugn.Sargo.Objects.WarningMessage;
 import sx.blah.discord.handle.obj.IChannel;
 
 /**
- * STEP UP WEAPON SCOUT
+ * GGO STEP UP WEAPON SCOUT
  * <p>
  *     Step Up scouts are scouts that increment "Steps" with every multi
  *     the user does. On certain Steps, scout rates may increase or the
  *     price for the scout is discounted.
+ *
+ *     As for GGO Step Up scouts, the pattern is similar to Character
+ *     Step Up v2 scouts but on Step 1 a Copper rarity or higher
+ *     automatic rifle is guaranteed.
  * </p>
  * <p>
  *     STEP CHANGES:<br>
  *     Step 1)<br>
  *          - Multi Scout price is 100 Memory Diamonds.<br>
+ *          - Copper rarity or higher Automatic Rifle is guaranteed.<br>
  *     Step 3)<br>
+ *          - Multi Scout price is 100 Memory Diamonds.<br>
+ *          - Gold rarity weapon rates increase by 1.5x.<br>
+ *     Step 5)<br>
+ *          - 1 or more Gold rarity weapon is guaranteed.<br>
+ *     Step 6)<br>
  *          - Gold rarity weapon rates increase by 2.0x.<br>
- *          - Steps reset back to 1.
+ *          - Step 6 repeats.<br>
  * </p>
  *
  * @author S'pugn
  * @version 1.0
- * @since v2.0
+ * @since v2.4
  * @see WeaponScout
  */
-public class StepUp extends WeaponScout
+public class GGOStepUp extends WeaponScout
 {
-    public StepUp(IChannel channel, int bannerID, String choice, String discordID)
+    public GGOStepUp(IChannel channel, int bannerID, String choice, String discordID)
     {
         super(channel, bannerID, choice, discordID);
         run();
@@ -47,11 +57,19 @@ public class StepUp extends WeaponScout
         {
             case 1:
                 multiScoutPrice = 100;
+                guaranteeAutomaticRifle = true;
                 break;
             case 3:
-                COPPER = COPPER - ((GOLD * 2.0) - GOLD) ;
-                GOLD = GOLD * 2.0;
+                multiScoutPrice = 100;
+                COPPER = COPPER - ((GOLD * 1.5) - GOLD);
+                GOLD = GOLD * 1.5;
                 break;
+            case 5:
+                guaranteeOneGold = true;
+                break;
+            case 6:
+                COPPER = COPPER - ((GOLD * 2.0) - GOLD);
+                GOLD = GOLD * 2.0;
             default:
                 break;
         }
@@ -62,9 +80,9 @@ public class StepUp extends WeaponScout
     {
         int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName() + " Weapons");
         currentStep++;
-        if (currentStep > 3)
+        if (currentStep > 6)
         {
-            USER.changeValue(SELECTED_BANNER.getBannerName() + " Weapons", 1);
+            USER.changeValue(SELECTED_BANNER.getBannerName() + " Weapons", 6);
         }
         else
         {
@@ -85,10 +103,10 @@ public class StepUp extends WeaponScout
                     break;
                 case "wm":
                 case "wmi":
-                    scoutMenu.withTitle("[Step Up Weapons] - Step " + bannerTypeData);
+                    scoutMenu.withTitle("[GGO Step Up Weapons] - Step " + bannerTypeData);
                     break;
                 default:
-                    scoutMenu.withTitle("[Step Up Weapons] - Unknown");
+                    scoutMenu.withTitle("[GGO Step Up Weapons] - Unknown");
                     break;
             }
         }
@@ -102,10 +120,10 @@ public class StepUp extends WeaponScout
                     break;
                 case "wm":
                 case "wmi":
-                    simpleMessage += "**[Step Up Weapons] - Step " + bannerTypeData + "**" + "\n";
+                    simpleMessage += "**[GGO Step Up Weapons] - Step " + bannerTypeData + "**" + "\n";
                     break;
                 default:
-                    simpleMessage += "**[Step Up Weapons] - Unknown**" + "\n";
+                    simpleMessage += "**[GGO Step Up Weapons] - Unknown**" + "\n";
                     break;
             }
         }

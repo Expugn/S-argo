@@ -37,6 +37,7 @@ public class CopperWeapon
         names.add("Stealth Rifle");
         names.add("Double-Stack Magazine");
         names.add("Precision Rifle");
+        names.add("Eliza");
 
         for (String name : names)
         {

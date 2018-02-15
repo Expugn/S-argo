@@ -359,6 +359,42 @@ public class BannerInfo
                 stepThreeRates += "**(4 ★ Weapon Rates 2.0x)**";
                 menu.setStepThreeWeaponRatesList(stepThreeRates);
             }
+            /* WEAPON BANNER IS STEP UP V2 */
+            else if (banner.getBannerWepType() == 2)
+            {
+                double tC = (copper + platinum) - ((gold * 1.5) - gold);
+                double tS = silver;
+                double tG = gold * 1.5;
+
+                String stepThreeRates = "";
+                stepThreeRates += "[4 ★] " + tG + "%\n";
+                stepThreeRates += "[3 ★] " + tS + "%\n";
+                stepThreeRates += "[2 ★] " + tC + "%\n";
+                stepThreeRates += "**(4 ★ Weapon Rates 1.5x)**";
+                menu.setStepThreeWeaponRatesList(stepThreeRates);
+
+                tC = 0.0;
+                tS = 0.0;
+                tG = 100.0;
+
+                String stepFiveRates = "";
+                stepFiveRates += "[4 ★] " + tG + "%\n";
+                stepFiveRates += "[3 ★] " + tS + "%\n";
+                stepFiveRates += "[2 ★] " + tC + "%\n";
+                stepFiveRates += "**(For One Weapon)**";
+                menu.setStepFiveWeaponRatesList(stepFiveRates);
+
+                tC = (copper + platinum) - ((gold * 2.0) - gold);
+                tS = silver;
+                tG = gold * 2.0;
+
+                String stepSixRates = "";
+                stepSixRates += "[4 ★] " + tG + "%\n";
+                stepSixRates += "[3 ★] " + tS + "%\n";
+                stepSixRates += "[2 ★] " + tC + "%\n";
+                stepSixRates += "**(4 ★ Weapon Rates 2.0x)**";
+                menu.setStepSixWeaponRatesList(stepSixRates);
+            }
 
             CHANNEL.sendMessage(menu.get().build());
         }
