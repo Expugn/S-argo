@@ -70,7 +70,7 @@ abstract class CharacterScout
 
     /* PRIVATE VARIABLES */
     private String DISCORD_ID;
-    private SettingsParser SETTINGS;
+    ///private SettingsParser SETTINGS;
     private boolean IS_RARITY_STARS;
     private double SILVER;
     private List<Double> RECORD_CRYSTAL_RATES;
@@ -107,22 +107,22 @@ abstract class CharacterScout
     private void init()
     {
         /* FILES */
-        SETTINGS = new SettingsParser();
-        BANNERS = new BannerParser().readConfig("data/Banners.xml");
+        //SETTINGS = new SettingsParser();
+        BANNERS = BannerParser.getBanners();
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */
-        IS_RARITY_STARS = SETTINGS.isRarityStars();
-        COPPER = (int) (SETTINGS.getCopperRates() * 100);
-        SILVER = (int) (SETTINGS.getSilverRates() * 100);
-        GOLD = (int) (SETTINGS.getGoldRates() * 100);
-        PLATINUM = (int) (SETTINGS.getPlatinumRates() * 100);
-        RECORD_CRYSTAL_RATES = SETTINGS.getRecordCrystalRates();
-        CIRCULATING_RECORD_CRYSTAL_RATES = SETTINGS.getCirculatingRecordCrystalRates();
-        GOLD_BANNERS = SETTINGS.getGoldBanners();
-        GOLD_BANNERS_V2 = SETTINGS.getGoldBannersv2();
-        IMAGE_DISABLED = SETTINGS.isDisableImages();
-        SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
+        IS_RARITY_STARS = SettingsParser.isRarityStars();
+        COPPER = (int) (SettingsParser.getCopperRates() * 100);
+        SILVER = (int) (SettingsParser.getSilverRates() * 100);
+        GOLD = (int) (SettingsParser.getGoldRates() * 100);
+        PLATINUM = (int) (SettingsParser.getPlatinumRates() * 100);
+        RECORD_CRYSTAL_RATES = SettingsParser.getRecordCrystalRates();
+        CIRCULATING_RECORD_CRYSTAL_RATES = SettingsParser.getCirculatingRecordCrystalRates();
+        GOLD_BANNERS = SettingsParser.getGoldBanners();
+        GOLD_BANNERS_V2 = SettingsParser.getGoldBannersv2();
+        IMAGE_DISABLED = SettingsParser.isDisableImages();
+        SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
 
         /* USER */
         userMemoryDiamonds = USER.getMemoryDiamonds();

@@ -25,11 +25,23 @@ import java.util.*;
  * </p>
  *
  * @author S'pugn
- * @version 1.1
+ * @version 1.2
  * @since v1.0
  */
 public class BannerParser
 {
+    private static List<Banner> bannerFile;
+
+    /**
+     * Returns a List of Banner objects.
+     *
+     * @return List of Banner objects
+     */
+    public static List<Banner> getBanners()
+    {
+        return bannerFile;
+    }
+
     /**
      * Reads the banners.xml file and returns a List of Banner objects.
      *
@@ -37,20 +49,21 @@ public class BannerParser
      * @return  List of Banner objects.
      */
     @SuppressWarnings("unchecked")
-    public static List<Banner> readConfig(String configFile)
+    public void reloadBanners(String configFile)
     {
         try
         {
-            return tryRead(configFile);
+            bannerFile = tryRead(configFile);
+            return;
         }
         catch (FailedToReadBannerFileException e)
         {
             e.displayErrorMessage();
         }
-        return Collections.emptyList();
+        bannerFile = Collections.emptyList();
     }
 
-    private static List<Banner> tryRead(String configFile) throws FailedToReadBannerFileException
+    private List<Banner> tryRead(String configFile) throws FailedToReadBannerFileException
     {
         List<Banner> banners = new ArrayList();
         InputStream in;
@@ -221,6 +234,7 @@ public class BannerParser
                     banner.setCharacters(characters);
                     banner.setWeapons(weapons);
                     banners.add(banner);
+                    System.out.println("added " + banner.getBannerName());
                 }
             }
         }

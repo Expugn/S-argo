@@ -348,7 +348,7 @@ public class Update
     private void buildCharacterAndWeaponList()
     {
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
+        List<Banner> banners = bannersXML.getBanners();
 
         for (Banner b : banners)
         {

@@ -72,6 +72,7 @@ public class ReadyListener
         LOGGER.info("Starting up S'argo v" + SystemData.getVERSION() + " - SAO:MD Summon Simulator Discord Bot by S'pugn#2612");
         LOGGER.info("Now running bot on: " + CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
         new Update();
+        //new Reload();
     }
 }
 

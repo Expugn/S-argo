@@ -664,7 +664,7 @@ public class UserParser
         XMLEvent tab = eventFactory.createDTD("\t");
 
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
+        List<Banner> banners = bannersXML.getBanners();
 
         eventWriter.add(tab);
         StartElement sElement = eventFactory.createStartElement("", "", BANNER_DATA);

@@ -48,7 +48,7 @@ public class BannerInfo
 
         /* READ Banners.xml */
         BannerParser bannersXML = new BannerParser();
-        BANNERS = bannersXML.readConfig("data/Banners.xml");
+        BANNERS = bannersXML.getBanners();
 
         this.page = Integer.parseInt(page);
         if (this.page < 1)
@@ -66,7 +66,7 @@ public class BannerInfo
 
         /* READ Banners.xml */
         BannerParser bannersXML = new BannerParser();
-        BANNERS = bannersXML.readConfig("data/Banners.xml");
+        BANNERS = bannersXML.getBanners();
 
         SettingsParser settings = new SettingsParser();
 

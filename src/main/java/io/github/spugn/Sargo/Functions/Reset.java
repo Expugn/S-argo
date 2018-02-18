@@ -89,7 +89,7 @@ public class Reset
 
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
+        List<Banner> banners = bannersXML.getBanners();
 
         if (bannerID < banners.size() && bannerID >= 0)
         {

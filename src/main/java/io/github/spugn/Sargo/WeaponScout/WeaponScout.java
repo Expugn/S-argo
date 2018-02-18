@@ -91,7 +91,7 @@ abstract class WeaponScout
     {
         /* FILES */
         SettingsParser SETTINGS = new SettingsParser();
-        List<Banner> BANNERS = new BannerParser().readConfig("data/Banners.xml");
+        List<Banner> BANNERS = new BannerParser().getBanners();
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */

@@ -238,7 +238,7 @@ public class Profile
 
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
+        List<Banner> banners = bannersXML.getBanners();
 
         if (bannerID < banners.size() && bannerID >= 0)
         {
@@ -441,7 +441,7 @@ public class Profile
     {
         /* OPEN BANNERS FILE */
         BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.readConfig("data/Banners.xml");
+        List<Banner> banners = bannersXML.getBanners();
 
         List<String> allGoldCharacters = new ArrayList<>();
         List<String> allPlatinumCharacters = new ArrayList<>();

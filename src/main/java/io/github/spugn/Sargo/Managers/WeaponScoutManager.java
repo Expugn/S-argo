@@ -31,7 +31,7 @@ class WeaponScoutManager
 
     WeaponScoutManager(IChannel channel, int bannerID, String choice, String discordID)
     {
-        List<Banner> banners = new BannerParser().readConfig("data/Banners.xml");
+        List<Banner> banners = new BannerParser().getBanners();
         if (!(bannerID - 1 < banners.size() && bannerID - 1 >= 0))
         {
             channel.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
