@@ -31,6 +31,8 @@ import java.util.*;
 public class BannerParser
 {
     private static List<Banner> bannerFile;
+    private static List<Integer> goldBanners;
+    private static List<Integer> goldBannersv2;
 
     /**
      * Returns a List of Banner objects.
@@ -40,6 +42,16 @@ public class BannerParser
     public static List<Banner> getBanners()
     {
         return bannerFile;
+    }
+
+    public static List<Integer> getGoldBanners()
+    {
+        return goldBanners;
+    }
+
+    public static List<Integer> getGoldBannersv2()
+    {
+        return goldBannersv2;
     }
 
     /**
@@ -66,6 +78,8 @@ public class BannerParser
     private List<Banner> tryRead(String configFile) throws FailedToReadBannerFileException
     {
         List<Banner> banners = new ArrayList();
+        goldBanners = new ArrayList();
+        goldBannersv2 = new ArrayList();
         InputStream in;
         XMLEventReader eventReader;
 
@@ -167,6 +181,30 @@ public class BannerParser
                     continue;
                 }
 
+                /* GET AND SAVE IF BANNER IS INCLUDED WITH GOLD BANNERS/GOLD BANNERS V2 */
+                if (event.asStartElement().getName().getLocalPart().equals("include"))
+                {
+                    try { event = eventReader.nextEvent(); }
+                    catch (XMLStreamException e)
+                    {
+                        try { in.close(); } catch (IOException ex) { /* IGNORED */ }
+                        try { eventReader.close(); } catch (XMLStreamException ex) { /* IGNORED */ }
+                        throw new FailedToReadBannerFileException();
+                    }
+                    String includeType = event.asCharacters().getData();
+                    if (includeType.equals("GoldBanners"))
+                    {
+                        try { goldBanners.add(banner.getBannerID()); }
+                        catch (NullPointerException e) { /* IGNORED */ }
+                    }
+                    else if (includeType.equals("GoldBannersv2"))
+                    {
+                        try { goldBannersv2.add(banner.getBannerID()); }
+                        catch (NullPointerException e) { /* IGNORED */ }
+                    }
+                    continue;
+                }
+
                 /* GET AND SAVE CHARACTER */
                 if (event.asStartElement().getName().getLocalPart().equals("Character"))
                 {
@@ -234,7 +272,7 @@ public class BannerParser
                     banner.setCharacters(characters);
                     banner.setWeapons(weapons);
                     banners.add(banner);
-                    System.out.println("added " + banner.getBannerName());
+                    //System.out.println("added " + banner.getBannerName());
                 }
             }
         }

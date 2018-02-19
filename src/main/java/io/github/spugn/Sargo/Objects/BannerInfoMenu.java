@@ -144,7 +144,8 @@ public class BannerInfoMenu
                 footer += " | m/mi | rc/rci]' to scout.";
             }
         }
-        else if (bannerType.equalsIgnoreCase("Memorial Scout"))
+        else if (bannerType.equalsIgnoreCase("Memorial Scout") ||
+                bannerType.equalsIgnoreCase("Event"))
         {
             footer += "]' to scout.";
         }

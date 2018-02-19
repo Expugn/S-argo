@@ -64,7 +64,8 @@ public class Update
      */
     public Update()
     {
-        gitHubDataRepository = new SettingsParser().getGitHubRepoURL();
+        //gitHubDataRepository = new SettingsParser().getGitHubRepoURL();
+        gitHubDataRepository = SettingsParser.getGitHubRepoURL();
         try
         {
             int fileCounter, itemCounter;
@@ -95,7 +96,7 @@ public class Update
     {
         CHANNEL = channel;
         builder = new EmbedBuilder();
-        gitHubDataRepository = new SettingsParser().getGitHubRepoURL();
+        gitHubDataRepository = SettingsParser.getGitHubRepoURL();
         allCharacters = new ArrayList<>();
         allWeapons = new ArrayList<>();
 
@@ -121,6 +122,7 @@ public class Update
 
                 LOGGER.debug("Updating Banners.xml File...");
                 updateBanners();
+                Reload.reloadBanners();
                 buildCharacterAndWeaponList();
 
                 builder.withDesc("Erasing All Character/Weapon Files");
@@ -265,6 +267,7 @@ public class Update
 
                 LOGGER.debug("Updating Banners.xml File...");
                 updateBanners();
+                Reload.reloadBanners();
                 buildCharacterAndWeaponList();
 
                 builder.withDesc("Updating Character Images");
@@ -347,8 +350,9 @@ public class Update
      */
     private void buildCharacterAndWeaponList()
     {
-        BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.getBanners();
+        //BannerParser bannersXML = new BannerParser();
+        //List<Banner> banners = bannersXML.getBanners();
+        List<Banner> banners = BannerParser.getBanners();
 
         for (Banner b : banners)
         {

@@ -33,7 +33,7 @@ public class CommandManager
     private final IMessage MESSAGE;
     private final String DISCORD_ID;
     private final String BOT_OWNER_DISCORD_ID;
-    private final SettingsParser SETTINGS;
+    //private final SettingsParser SETTINGS;
     private final DiscordCommand DISCORD_COMMAND;
     private final CommandLine COMMAND_LINE;
     private static String commandPrefix;
@@ -44,14 +44,18 @@ public class CommandManager
         MESSAGE = event.getMessage();
         DISCORD_ID = MESSAGE.getAuthor().getStringID();
 
-        SETTINGS = new SettingsParser();
+        //SETTINGS = new SettingsParser();
 
-        BOT_OWNER_DISCORD_ID = SETTINGS.getBotOwnerDiscordID();
+        //BOT_OWNER_DISCORD_ID = SETTINGS.getBotOwnerDiscordID();
+        BOT_OWNER_DISCORD_ID = SettingsParser.getBotOwnerDiscordID();
 
         DISCORD_COMMAND = new DiscordCommand(client);
-        DISCORD_COMMAND.setUseMention(SETTINGS.isUseMention());
-        DISCORD_COMMAND.setCommandPrefix(SETTINGS.getCommandPrefix());
-        DISCORD_COMMAND.setDeleteUserMessage(SETTINGS.isDeleteUserMessage());
+        //DISCORD_COMMAND.setUseMention(SETTINGS.isUseMention());
+        //DISCORD_COMMAND.setCommandPrefix(SETTINGS.getCommandPrefix());
+        //DISCORD_COMMAND.setDeleteUserMessage(SETTINGS.isDeleteUserMessage());
+        DISCORD_COMMAND.setUseMention(SettingsParser.isUseMention());
+        DISCORD_COMMAND.setCommandPrefix(SettingsParser.getCommandPrefix());
+        DISCORD_COMMAND.setDeleteUserMessage(SettingsParser.isDeleteUserMessage());
 
         String playingText;
         String botName = new ScoutMasterParser().getBotName();
@@ -126,6 +130,10 @@ public class CommandManager
                     CHANNEL.sendMessage(new WarningMessage("SHUTTING DOWN", "Goodbye!").get().build());
                     System.exit(0);
                 }
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("reload") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
+                {
+                    reloadCommand();
+                }
             }
         }
         catch (RateLimitException e)
@@ -198,7 +206,7 @@ public class CommandManager
                 {
                     try
                     {
-                        int pageNumber = Integer.parseInt(COMMAND_LINE.getArgument(1).charAt(1) + "");
+                        int pageNumber = Integer.parseInt(COMMAND_LINE.getArgument(1).substring(1) + "");
                         char pChar = COMMAND_LINE.getArgument(1).charAt(0);
 
                         if (pChar == 'p' || pChar == 'P')
@@ -246,9 +254,11 @@ public class CommandManager
                     {
                         quantity = 1;
                     }
-                    else if (quantity > SETTINGS.getMaxShopLimit())
+                    //else if (quantity > SETTINGS.getMaxShopLimit())
+                    else if (quantity > SettingsParser.getMaxShopLimit())
                     {
-                        quantity = SETTINGS.getMaxShopLimit();
+                        //quantity = SETTINGS.getMaxShopLimit();
+                        quantity = SettingsParser.getMaxShopLimit();
                     }
 
                     new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), quantity);
@@ -435,6 +445,13 @@ public class CommandManager
         {
             new Update(CHANNEL, false, false);
         }
+    }
+
+    private void reloadCommand()
+    {
+        Reload.reloadBanners();
+        Reload.reloadSettings();
+        CHANNEL.sendMessage(new WarningMessage("FILES RELOADED", "The Banners.xml and Settings.xml file have been reloaded.").get().build());
     }
 
     public static String getCommandPrefix()

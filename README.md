@@ -25,8 +25,10 @@ Same thing as Record Crystal, but the first scout is 50% off.
 Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond.
 * **Step Up v3 Scouts**  
 50% off multi scout on Step 1, Increased 2.0x platinum character chance on Step 3.
-* **Record Crystal v3 Scouts**
+* **Record Crystal v3 Scouts**  
 Same thing as Record Crystal with Record Crystal v2's first scout discount, but every Record Crystal scout returns 1-5 Record Crystals.
+* **Event Scouts**  
+Single pulls only and free. Guaranteed 4*+ character but gives no hacking crystals from duplicates.
 
 [Weapons]
 * **Normal Weapon Scouts**  
@@ -86,6 +88,7 @@ Invite link for the server is down in Related Links.
 '**update**' - Download any missing character/weapon images from the data repository.  
 '**update** r(eset)' - Delete all files in the character/weapon folders and re-download them.  
 '**update** o(verwrite)' - Replace all character/weapon files with a new copy.   
+'**reload**' - Reload the Banners.xml and Settings.xml files.   
 '**stop**' - Stop the bot.  
 
 ## Related Links

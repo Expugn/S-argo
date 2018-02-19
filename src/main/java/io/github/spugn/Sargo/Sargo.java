@@ -16,10 +16,10 @@ public class Sargo
 
     public static void main(String[] args)
     {
-        new Reload();
-        SettingsParser settings = new SettingsParser();
+        Reload.silentReloadSettings();
+        //SettingsParser settings = new SettingsParser();
 
-        CLIENT = buildBot(settings.getBotToken());
+        CLIENT = buildBot(SettingsParser.getBotToken());
         EventDispatcher dispatcher = CLIENT.getDispatcher();
 
         dispatcher.registerListener(new ReadyListener(CLIENT));

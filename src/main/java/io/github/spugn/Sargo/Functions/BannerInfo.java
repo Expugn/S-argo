@@ -178,6 +178,25 @@ public class BannerInfo
                 platinum = 0;
             }
 
+            /* IF EVENT SCOUT, SET EVERYTHING BUT GOLD TO 0 */
+            if (banner.getBannerType() == 9)
+            {
+                if (goldCharacters.size() > 0)
+                {
+                    copper = 0.0;
+                    silver = 0.0;
+                    gold = 100.0;
+                    platinum = 0.0;
+                }
+                else
+                {
+                    copper = 0.0;
+                    silver = 0.0;
+                    gold = 0.0;
+                    platinum = 100.0;
+                }
+            }
+
             String ratesList = "";
             if (platinum != 0)
                 ratesList += "[5 ★] " + platinum + "%\n";

@@ -322,6 +322,18 @@ abstract class CharacterScout
      */
     private int scout()
     {
+        if (bannerType == 9)
+        {
+            if (goldCharacters.size() > 0)
+            {
+                return 4;
+            }
+            else
+            {
+                return 5;
+            }
+        }
+
         if (guaranteeOnePlatinum)
         {
             guaranteeOnePlatinum = false;
@@ -438,25 +450,28 @@ abstract class CharacterScout
      */
     private void giveHackingCrystals(Character c)
     {
-        switch(c.getRarity())
+        if (bannerType != 9)
         {
-            case 2:
-                userHackingCrystals += 1;
-                break;
-            case 3:
-                userHackingCrystals += 2;
-                break;
-            case 4:
-                userHackingCrystals += 50;
-                break;
-            case 5:
-                userHackingCrystals += 100;
-                break;
-            default:
-                userHackingCrystals += 1;
-                break;
+            switch(c.getRarity())
+            {
+                case 2:
+                    userHackingCrystals += 1;
+                    break;
+                case 3:
+                    userHackingCrystals += 2;
+                    break;
+                case 4:
+                    userHackingCrystals += 50;
+                    break;
+                case 5:
+                    userHackingCrystals += 100;
+                    break;
+                default:
+                    userHackingCrystals += 1;
+                    break;
+            }
+            USER.setHackingCrystals(userHackingCrystals);
         }
-        USER.setHackingCrystals(userHackingCrystals);
     }
 
     /**

@@ -76,8 +76,8 @@ public class SettingsParser
     public static double getPlatinumRates() { return platinumRates; }
     public static List<Double> getRecordCrystalRates() { return recordCrystalRates; }
     public static List<Double> getCirculatingRecordCrystalRates() { return circulatingRecordCrystalRates; }
-    public static List<Integer> getGoldBanners() { return goldBanners; }
-    public static List<Integer> getGoldBannersv2() { return goldBannersv2; }
+    public static List<Integer> getGoldBanners() { return BannerParser.getGoldBanners(); }
+    public static List<Integer> getGoldBannersv2() { return BannerParser.getGoldBannersv2(); }
 
     public static int getMaxShopLimit() { return maxShopLimit; }
     public static SortedMap<String, SortedMap<Double, Integer>> getShopItems() { return shopItems; }
@@ -373,6 +373,7 @@ public class SettingsParser
                     circulatingRecordCrystalRates.add(rate);
                     continue;
                 }
+                /*
                 if (event.asStartElement().getName().getLocalPart().equals("BannerID"))
                 {
                     Iterator<Attribute> attributes = event.asStartElement().getAttributes();
@@ -399,6 +400,7 @@ public class SettingsParser
                     }
                     continue;
                 }
+                */
 
                 /* SHOP SETTINGS */
                 if (event.asStartElement().getName().getLocalPart().equals("MaxShopLimit"))

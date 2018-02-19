@@ -1,5 +1,6 @@
 package io.github.spugn.Sargo.Listeners;
 
+import io.github.spugn.Sargo.Functions.Reload;
 import io.github.spugn.Sargo.Functions.Update;
 import io.github.spugn.Sargo.GUI.GUI;
 import io.github.spugn.Sargo.System.SystemData;
@@ -73,6 +74,7 @@ public class ReadyListener
         LOGGER.info("Now running bot on: " + CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
         new Update();
         //new Reload();
+        Reload.reloadBanners();
     }
 }
 
