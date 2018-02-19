@@ -90,17 +90,25 @@ abstract class WeaponScout
     private void init()
     {
         /* FILES */
-        SettingsParser SETTINGS = new SettingsParser();
-        List<Banner> BANNERS = new BannerParser().getBanners();
+        //SettingsParser SETTINGS = new SettingsParser();
+        //List<Banner> BANNERS = new BannerParser().getBanners();
+        List<Banner> BANNERS = BannerParser.getBanners();
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */
-        IS_RARITY_STARS = SETTINGS.isRarityStars();
-        COPPER = (int) ((SETTINGS.getCopperRates() * 100) + (SETTINGS.getPlatinumRates() * 100));
-        SILVER = (int) (SETTINGS.getSilverRates() * 100);
-        GOLD = (int) (SETTINGS.getGoldRates() * 100);
-        IMAGE_DISABLED = SETTINGS.isDisableImages();
-        SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
+        //IS_RARITY_STARS = SETTINGS.isRarityStars();
+        //COPPER = (int) ((SETTINGS.getCopperRates() * 100) + (SETTINGS.getPlatinumRates() * 100));
+        //SILVER = (int) (SETTINGS.getSilverRates() * 100);
+        //GOLD = (int) (SETTINGS.getGoldRates() * 100);
+        //IMAGE_DISABLED = SETTINGS.isDisableImages();
+        //SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
+
+        IS_RARITY_STARS = SettingsParser.isRarityStars();
+        COPPER = (int) ((SettingsParser.getCopperRates() * 100) + (SettingsParser.getPlatinumRates() * 100));
+        SILVER = (int) (SettingsParser.getSilverRates() * 100);
+        GOLD = (int) (SettingsParser.getGoldRates() * 100);
+        IMAGE_DISABLED = SettingsParser.isDisableImages();
+        SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
 
         /* USER */
         userMemoryDiamonds = USER.getMemoryDiamonds();

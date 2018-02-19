@@ -88,8 +88,9 @@ public class Reset
         }
 
         /* OPEN BANNERS FILE */
-        BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.getBanners();
+        //BannerParser bannersXML = new BannerParser();
+        //List<Banner> banners = bannersXML.getBanners();
+        List<Banner> banners = BannerParser.getBanners();
 
         if (bannerID < banners.size() && bannerID >= 0)
         {

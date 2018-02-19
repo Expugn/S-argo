@@ -47,8 +47,9 @@ public class BannerInfo
         CHANNEL = channel;
 
         /* READ Banners.xml */
-        BannerParser bannersXML = new BannerParser();
-        BANNERS = bannersXML.getBanners();
+        //BannerParser bannersXML = new BannerParser();
+        //BANNERS = bannersXML.getBanners();
+        BANNERS = BannerParser.getBanners();
 
         this.page = Integer.parseInt(page);
         if (this.page < 1)
@@ -65,17 +66,25 @@ public class BannerInfo
         this.bannerID = bannerID - 1;
 
         /* READ Banners.xml */
-        BannerParser bannersXML = new BannerParser();
-        BANNERS = bannersXML.getBanners();
+        //BannerParser bannersXML = new BannerParser();
+        //BANNERS = bannersXML.getBanners();
+        BANNERS = BannerParser.getBanners();
 
-        SettingsParser settings = new SettingsParser();
+        //SettingsParser settings = new SettingsParser();
 
-        copper = (int) (settings.getCopperRates() * 100);
-        silver = (int) (settings.getSilverRates() * 100);
-        gold = (int) (settings.getGoldRates() * 100);
-        platinum = (int) (settings.getPlatinumRates() * 100);
-        recordCrystal = settings.getRecordCrystalRates();
-        circulatingRecordCrystal = settings.getCirculatingRecordCrystalRates();
+        //copper = (int) (settings.getCopperRates() * 100);
+        //silver = (int) (settings.getSilverRates() * 100);
+        //gold = (int) (settings.getGoldRates() * 100);
+        //platinum = (int) (settings.getPlatinumRates() * 100);
+        //recordCrystal = settings.getRecordCrystalRates();
+        //circulatingRecordCrystal = settings.getCirculatingRecordCrystalRates();
+
+        copper = (int) (SettingsParser.getCopperRates() * 100);
+        silver = (int) (SettingsParser.getSilverRates() * 100);
+        gold = (int) (SettingsParser.getGoldRates() * 100);
+        platinum = (int) (SettingsParser.getPlatinumRates() * 100);
+        recordCrystal = SettingsParser.getRecordCrystalRates();
+        circulatingRecordCrystal = SettingsParser.getCirculatingRecordCrystalRates();
 
         getBannerInfo();
     }

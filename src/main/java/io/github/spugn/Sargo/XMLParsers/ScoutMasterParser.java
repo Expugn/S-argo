@@ -45,7 +45,8 @@ public class ScoutMasterParser
     {
         useDefaults = false;
         quotes = new ArrayList<>();
-        scoutMasterName = new SettingsParser().getScoutMaster();
+        //scoutMasterName = new SettingsParser().getScoutMaster();
+        scoutMasterName = SettingsParser.getScoutMaster();
 
         if (!(new File("data/mods/" + scoutMasterName + ".xml").exists()))
             useDefaults = true;

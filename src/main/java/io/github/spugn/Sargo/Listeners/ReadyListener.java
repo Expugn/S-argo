@@ -39,23 +39,26 @@ public class ReadyListener
     @EventSubscriber
     public void onReadyEvent(ReadyEvent event)
     {
-        SettingsParser settings = new SettingsParser();
+        //SettingsParser settings = new SettingsParser();
         botName = new ScoutMasterParser().getBotName();
 
-        if (!settings.isNoGUI())
+        //if (!settings.isNoGUI())
+        if (!SettingsParser.isNoGUI())
         {
             new GUI(CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
         }
 
         String playingText;
         String commandPrefix;
-        if (settings.isUseMention())
+        //if (settings.isUseMention())
+        if (SettingsParser.isUseMention())
         {
             commandPrefix = "@" + CLIENT.getOurUser().getName() + " ";
         }
         else
         {
-            commandPrefix = settings.getCommandPrefix() + "";
+            //commandPrefix = settings.getCommandPrefix() + "";
+            commandPrefix = SettingsParser.getCommandPrefix() + "";
         }
 
         if (CLIENT.getOurUser().getStringID().equalsIgnoreCase("356981380338679810") ||

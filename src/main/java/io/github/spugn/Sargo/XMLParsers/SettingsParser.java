@@ -49,8 +49,8 @@ public class SettingsParser
     private static double platinumRates;
     private static List<Double> recordCrystalRates;
     private static List<Double> circulatingRecordCrystalRates;
-    private static List<Integer> goldBanners;
-    private static List<Integer> goldBannersv2;
+    //private static List<Integer> goldBanners;
+    //private static List<Integer> goldBannersv2;
 
     /* SHOP SETTINGS */
     private static int maxShopLimit;
@@ -117,8 +117,8 @@ public class SettingsParser
         ignoredChannelNames = new ArrayList<>();
         recordCrystalRates = new ArrayList<>();
         circulatingRecordCrystalRates = new ArrayList<>();
-        goldBanners = new ArrayList<>();
-        goldBannersv2 = new ArrayList<>();
+        //goldBanners = new ArrayList<>();
+        //goldBannersv2 = new ArrayList<>();
         shopItems = new TreeMap<>();
 
         /* READ XML FILE */

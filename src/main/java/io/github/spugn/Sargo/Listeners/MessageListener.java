@@ -36,8 +36,9 @@ public class MessageListener
     {
         try
         {
-            SettingsParser settings = new SettingsParser();
-            if (!(settings.getIgnoredChannelNames().contains(event.getChannel().getName())))
+            //SettingsParser settings = new SettingsParser();
+            //if (!(settings.getIgnoredChannelNames().contains(event.getChannel().getName())))
+            if (!(SettingsParser.getIgnoredChannelNames().contains(event.getChannel().getName())))
             {
                 new CommandManager(client, event);
             }

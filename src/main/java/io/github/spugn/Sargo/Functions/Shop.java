@@ -81,7 +81,7 @@ public class Shop
     {
         try
         {
-            SettingsParser settings = new SettingsParser();
+            //SettingsParser settings = new SettingsParser();
             UserParser user = new UserParser(discordID);
             IUser iUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
 
@@ -92,7 +92,8 @@ public class Shop
             int counter = 0;
             boolean itemFound = false;
 
-            for (Map.Entry<String, SortedMap<Double, Integer>> entry : settings.getShopItems().entrySet())
+            //for (Map.Entry<String, SortedMap<Double, Integer>> entry : settings.getShopItems().entrySet())
+            for (Map.Entry<String, SortedMap<Double, Integer>> entry : SettingsParser.getShopItems().entrySet())
             {
                 counter++;
                 if (counter == Integer.parseInt(item))

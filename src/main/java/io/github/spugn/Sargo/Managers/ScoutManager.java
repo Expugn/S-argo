@@ -27,7 +27,7 @@ class ScoutManager
     private static final Logger LOGGER = LoggerFactory.getLogger(ScoutManager.class);
     ScoutManager(IChannel channel, int bannerID, String choice, String discordID)
     {
-        List<Banner> banners = new BannerParser().getBanners();
+        List<Banner> banners = BannerParser.getBanners();
         if (!(bannerID - 1 < banners.size() && bannerID - 1 >= 0))
         {
             channel.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());

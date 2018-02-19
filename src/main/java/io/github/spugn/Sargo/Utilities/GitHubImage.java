@@ -9,7 +9,8 @@ public class GitHubImage
 
     public GitHubImage(String filePath)
     {
-        GITHUB_IMAGE = new SettingsParser().getGitHubRepoURL();
+        //GITHUB_IMAGE = new SettingsParser().getGitHubRepoURL();
+        GITHUB_IMAGE = SettingsParser.getGitHubRepoURL();
         this.filePath = filePath;
     }
 

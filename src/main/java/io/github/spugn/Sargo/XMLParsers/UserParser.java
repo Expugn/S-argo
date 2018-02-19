@@ -25,47 +25,47 @@ public class UserParser
     private String USER_DIR_FILE_PATH;
 
     /* DATA TAGS */
-    static final String MEMORY_DIAMONDS = "memoryDiamonds";
-    static final String MONEY_SPENT = "moneySpent";
-    static final String HACKING_CRYSTALS = "hackingCrystals";
-    static final String COL_BALANCE = "colBalance";
-    static final String TOTAL_TICKET_SCOUT = "totalTicketScout";
-    static final String R2_EXCHANGE_SWORDS = "r2ExchangeSwords";
-    static final String R3_EXCHANGE_SWORDS = "r3ExchangeSwords";
-    static final String R4_EXCHANGE_SWORDS = "r4ExchangeSwords";
-    static final String RAINBOW_ESSENCE = "rainbowEssence";
+    private static final String MEMORY_DIAMONDS = "memoryDiamonds";
+    private static final String MONEY_SPENT = "moneySpent";
+    private static final String HACKING_CRYSTALS = "hackingCrystals";
+    private static final String COL_BALANCE = "colBalance";
+    private static final String TOTAL_TICKET_SCOUT = "totalTicketScout";
+    private static final String R2_EXCHANGE_SWORDS = "r2ExchangeSwords";
+    private static final String R3_EXCHANGE_SWORDS = "r3ExchangeSwords";
+    private static final String R4_EXCHANGE_SWORDS = "r4ExchangeSwords";
+    private static final String RAINBOW_ESSENCE = "rainbowEssence";
 
-    static final String BANNER = "Banner";
-    static final String CHARACTER = "Character";
-    static final String WEAPON = "Weapon";
+    private static final String BANNER = "Banner";
+    private static final String CHARACTER = "Character";
+    private static final String WEAPON = "Weapon";
 
-    static final String CHARACTER_BOX = "characterBox";
-    static final String WEAPON_BOX = "weaponBox";
-    static final String BANNER_DATA = "bannerData";
+    private static final String CHARACTER_BOX = "characterBox";
+    private static final String WEAPON_BOX = "weaponBox";
+    private static final String BANNER_DATA = "bannerData";
 
-    static final String USER = "user";
+    private static final String USER = "user";
 
-    static final String CHARACTER_PREFIX = "prefix";
-    static final String CHARACTER_NAME = "name";
-    static final String CHARACTER_RARITY = "rarity";
+    private static final String CHARACTER_PREFIX = "prefix";
+    private static final String CHARACTER_NAME = "name";
+    private static final String CHARACTER_RARITY = "rarity";
 
-    static final String WEAPON_NAME = "name";
-    static final String WEAPON_RARITY = "rarity";
-    static final String WEAPON_COUNT = "count";
+    private static final String WEAPON_NAME = "name";
+    private static final String WEAPON_RARITY = "rarity";
+    private static final String WEAPON_COUNT = "count";
 
-    static final String B_NAME = "name";
-    static final String B_DATA = "data";
+    private static final String B_NAME = "name";
+    private static final String B_DATA = "data";
 
-    static final String DEFAULT_MEMORY_DIAMONDS = "0";
-    static final String DEFAULT_MONEY_SPENT = "0";
-    static final String DEFAULT_HACKING_CRYSTALS = "0";
-    static final String DEFAULT_COL_BALANCE = "0";
-    static final String DEFAULT_STEP = "1";
-    static final String DEFAULT_RECORD_CRYSTAL = "0";
-    static final String DEFAULT_RECORD_CRYSTAL_V2 = "-1";
-    static final String DEFAULT_TICKET_SCOUT = "0";
-    static final String DEFAULT_EXCHANGE_SWORD = "0";
-    static final String DEFAULT_RAINBOW_ESSENCE = "0";
+    private static final String DEFAULT_MEMORY_DIAMONDS = "0";
+    private static final String DEFAULT_MONEY_SPENT = "0";
+    private static final String DEFAULT_HACKING_CRYSTALS = "0";
+    private static final String DEFAULT_COL_BALANCE = "0";
+    private static final String DEFAULT_STEP = "1";
+    private static final String DEFAULT_RECORD_CRYSTAL = "0";
+    private static final String DEFAULT_RECORD_CRYSTAL_V2 = "-1";
+    private static final String DEFAULT_TICKET_SCOUT = "0";
+    private static final String DEFAULT_EXCHANGE_SWORD = "0";
+    private static final String DEFAULT_RAINBOW_ESSENCE = "0";
 
     /* USER DATA */
     private int memoryDiamonds;

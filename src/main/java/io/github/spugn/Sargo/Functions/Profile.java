@@ -237,8 +237,9 @@ public class Profile
         int bannerID = Integer.parseInt(bannerIDString) - 1;
 
         /* OPEN BANNERS FILE */
-        BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.getBanners();
+        //BannerParser bannersXML = new BannerParser();
+        //List<Banner> banners = bannersXML.getBanners();
+        List<Banner> banners = BannerParser.getBanners();
 
         if (bannerID < banners.size() && bannerID >= 0)
         {
@@ -440,8 +441,9 @@ public class Profile
     private void initBannerInfo()
     {
         /* OPEN BANNERS FILE */
-        BannerParser bannersXML = new BannerParser();
-        List<Banner> banners = bannersXML.getBanners();
+        //BannerParser bannersXML = new BannerParser();
+        //List<Banner> banners = bannersXML.getBanners();
+        List<Banner> banners = BannerParser.getBanners();
 
         List<String> allGoldCharacters = new ArrayList<>();
         List<String> allPlatinumCharacters = new ArrayList<>();
