@@ -98,7 +98,7 @@ public class RecordCrystalv3 extends CharacterScout
                     break;
                 case "rc":
                 case "rci":
-                    scoutMenu.withTitle("**[Guaranteed Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")**" + "\n");
+                    scoutMenu.withTitle("[Guaranteed Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")" + "\n");
                     break;
                 default:
                     scoutMenu.withTitle("[Record Crystal v3] - Unknown");
