@@ -22,7 +22,7 @@ import java.util.SortedMap;
  * </p>
  *
  * @author S'pugn
- * @version 2.0
+ * @version 2.1
  * @since v1.0
  */
 public class Shop
@@ -77,7 +77,7 @@ public class Shop
      * @param item  Item that the user is requesting to purchase.
      * @param quantity  Amount of bundles the user wants to purchase.
      */
-    public Shop(IChannel channel, String discordID, String item, int quantity)
+    public Shop(IChannel channel, String discordID, String item, int quantity, boolean providedQuantity)
     {
         try
         {
@@ -143,7 +143,15 @@ public class Shop
             {
                 builder.withColor(209, 204, 210);
                 builder.withAuthorName("You're all set.");
-                builder.withDescription("Your purchase was successful.");
+                if (providedQuantity)
+                {
+                    builder.withDescription("Your purchase was successful.");
+                }
+                else
+                {
+                    builder.withDescription("Your purchase was successful.\n\n" +
+                            "**TIP**: You can use '" + CommandManager.getCommandPrefix() + "**shop** " + item + " " + SettingsParser.getMaxShopLimit() + "' to get more than one pack of Memory Diamonds.");
+                }
                 builder.withFooterText(userName + " | Balance: " + userMemoryDiamonds + " Memory Diamonds");
 
                 user.setMemoryDiamonds((int) userMemoryDiamonds);
@@ -152,7 +160,14 @@ public class Shop
             }
             IMessage message = channel.sendMessage(builder.build());
 
-            Thread.sleep(3000);
+            if (providedQuantity)
+            {
+                Thread.sleep(3000);
+            }
+            else
+            {
+                Thread.sleep(5000);
+            }
             message.delete();
         }
         catch (InterruptedException e)

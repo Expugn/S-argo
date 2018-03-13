@@ -56,7 +56,7 @@ public class Help
         builder.appendField("PROFILE", profileHelp, false);
 
         String userHelp = "";
-        userHelp += "'**user** [name/@name]' - View a user's basic profile." + "\n";
+        userHelp += "'**user** [@name]' - View a user's basic profile." + "\n";
         builder.appendField("USER SEARCH", userHelp, false);
 
         String resetHelp = "";

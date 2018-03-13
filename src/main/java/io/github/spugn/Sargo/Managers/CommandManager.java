@@ -261,16 +261,16 @@ public class CommandManager
                         quantity = SettingsParser.getMaxShopLimit();
                     }
 
-                    new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), quantity);
+                    new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), quantity, true);
                 }
                 catch (NumberFormatException e)
                 {
-                    new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1);
+                    new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1, false);
                 }
             }
             else
             {
-                new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1);
+                new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1, false);
             }
         }
         else
