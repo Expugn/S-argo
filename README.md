@@ -1,6 +1,16 @@
 # S'argo
+
+> **Table of Contents**  
+[1. Information](https://github.com/Expugn/S-argo#information "Information")  
+[2. Features](https://github.com/Expugn/S-argo#features "Features")  
+[3. Demo](https://github.com/Expugn/S-argo#demo "Demo")  
+[4. Commands](https://github.com/Expugn/S-argo#commands "Commands")  
+[5. Related Links](https://github.com/Expugn/S-argo#related-links "Related Links")  
+[6. Special Thanks](https://github.com/Expugn/S-argo#special-thanks "Special Thanks")  
+[7. Other Stuff](https://github.com/Expugn/S-argo#other-stuff "Other Stuff")    
+
 ## Information
-S'argo is a Discord bot using the Discord4J API wrapper.  
+S'argo is a Discord bot made using the [Discord4J](https://github.com/austinv11/Discord4J "Discord4J on GitHub") API wrapper.  
 This Discord bot's main use is to be a "summon simulator" for the mobile game *Sword Art Online: Memory Defrag*.
 
 ## Features
