@@ -47,13 +47,13 @@ Example commands are assuming you have your command preferences in your `Setting
 <CommandPrefix>$</CommandPrefix>
 ``` 
 
-######HELP MENU
+###### HELP MENU
 
 | Command | Description | Example |
 | :---: | :--- | :---: |
 | `help` | Get the command list. | `$help` |
 
-######SCOUTING
+###### SCOUTING
 ```
 ABBREVIATION MEANINGS:
 s = "single"
@@ -79,7 +79,7 @@ i = "image"
 | `scout [nts(i) / ntm(i)]` | Scout using normal tickets. | `$scout ntsi` |
 | `scout [pts(i) / ptm(i)]` | Scout using plus tickets. | `$scout ptm` |  
 
-######USER PROFILE
+###### USER PROFILE
 
 | Command | Description | Example |
 | :---: | :--- | :---: |
@@ -88,14 +88,14 @@ i = "image"
 | `profile info [Banner ID]` | View your obtained/missing characters or weapons in a banner. | `$profile info 1` |
 | `profile search [Character Name]` | Search through your collection for that character. | `$profile search Kirito` |
 
-######SHOP
+###### SHOP
 
 | Command | Description | Example |
 | :---: | :--- | :---: |
 | `shop` | View the available Memory Diamond bundles. | `$shop` |
 | `shop [Item ID] [Quantity]` | "Buy" a Memory Diamond bundle. | `$shop 7 10` |
 
-######USER SEARCH
+###### USER SEARCH
 
 | Command | Description | Example |
 | :---: | :--- | :---: |
@@ -110,7 +110,7 @@ i = "image"
 | `reset [Banner ID] w` | Reset your weapon data for a banner. | `$reset 1 w` |
 | `reset [Banner ID] a` | Reset all data (characters/weapons/step/record crystal) for a banner. | `$reset 1 a` |
 
-######BOT OWNERS
+###### BOT OWNERS
 
 | Command | Description | Example |
 | :---: | :--- | :---: |
