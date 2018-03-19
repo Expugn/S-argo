@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.ReadyEvent;
+import sx.blah.discord.handle.obj.ActivityType;
+import sx.blah.discord.handle.obj.StatusType;
 
 /**
  * READY LISTENER
@@ -70,7 +72,8 @@ public class ReadyListener
         {
             playingText = botName + " | " + commandPrefix + "help";
         }
-        CLIENT.changePlayingText(playingText);
+        //CLIENT.changePlayingText(playingText);
+        CLIENT.changePresence(StatusType.ONLINE, ActivityType.PLAYING, playingText);
 
         System.out.println();
         LOGGER.info("Starting up S'argo v" + SystemData.getVERSION() + " - SAO:MD Summon Simulator Discord Bot by S'pugn#2612");

@@ -8,10 +8,7 @@ import io.github.spugn.Sargo.XMLParsers.ScoutMasterParser;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.handle.obj.IUser;
+import sx.blah.discord.handle.obj.*;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
@@ -77,7 +74,8 @@ public class CommandManager
         {
             playingText = botName + " | " + commandPrefix + "help";
         }
-        client.changePlayingText(playingText);
+        client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, playingText);
+        //client.changePlayingText(playingText);
 
         COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
 
