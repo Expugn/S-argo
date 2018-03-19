@@ -7,40 +7,29 @@ This Discord bot's main use is to be a "summon simulator" for the mobile game *S
 S'argo simulates the scouting system from *Sword Art Online: Memory Defrag*.
 
 This includes:  
+| Character Scout Type | Description |  
+| :---: | :---: |  
+| Normal | Static pull rates every time. Nothing special. |  
+| Step Up | +1.5x gold character chance on Step 3, +2.0x gold character chance on Step 5. |
+| Record Crystal | Record Crystals are given every multi scout which can be used in a record crystal scout. |  
+| Step Up v2 | Guaranteed platinum character on Step 5, +2.0x platinum character chance on Step 6 which repeats. |  
+| Birthday Step Up | 50% off multi scout on Step 1, Increased 2.0x gold and platinum character chance on Step 3. |  
+| Record Crystal v2 | First multi scout is 50% off, otherwise same as Record Crystal. |  
+| Memorial | Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond. |  
+| Step Up v3 | 50% off multi scout on Step 1, +2.0x platinum character chance on Step 3. |  
+| Record Crystal v3 | First multi scout is 50% off and every record crystal scout returns 1-5 Record Crystals. |  
+| Event | Single pulls only and free. Guaranteed gold+ rarity characters give no hacking crystals from duplicates. |  
 
-[Characters]
-* **Normal Scouts**  
-Static pull rates every time, nothing special.
-* **Step Up Scouts**  
-Increased 1.5x gold character chance on Step 3, Increased 2.0x gold character chance on Step 5.
-* **Record Crystal Scouts**  
-Record Crystals given every multi scout that can be used in a guaranteed scout.
-* **Step Up v2 Scouts**  
-Same thing as Step Up, but features one guaranteed platinum character on Step 5 and 2.0x platinum character rates on Step 6 which repeats.
-* **Birthday Step Up Scouts**  
-50% off multi scout on Step 1, Increased 2.0x gold and platinum character chance on Step 3.
-* **Record Crystal v2 Scouts**  
-Same thing as Record Crystal, but the first scout is 50% off.
-* **Memorial Scouts**  
-Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond.
-* **Step Up v3 Scouts**  
-50% off multi scout on Step 1, Increased 2.0x platinum character chance on Step 3.
-* **Record Crystal v3 Scouts**  
-Same thing as Record Crystal with Record Crystal v2's first scout discount, but every Record Crystal scout returns 1-5 Record Crystals.
-* **Event Scouts**  
-Single pulls only and free. Guaranteed 4*+ character but gives no hacking crystals from duplicates.
+| Weapon Scout Type | Description |  
+| :---: | :---: |  
+| Normal | Static pull rates every time. Nothing special. |  
+| Step Up | 100 MD scout on Step 1, +2.0x gold weapon chance on Step 3. |
+| GGO Step Up | 100 MD scout and guaranteed copper+ rarity Automatic Rifle on Step 1, +1.5x gold weapon chance on Step 3, guaranteed gold weapon on Step 5, and +2.0x gold weapon chance on Step 6 which repeats. |  
 
-[Weapons]
-* **Normal Weapon Scouts**  
-Same as normal scouts. Static pull rates every time.
-* **Step Up Weapon Scouts**  
-100 MD scout on Step 1, Increased 2.0x gold weapon chance on Step 3.
-* **GGO Step Up Weapon Scouts**  
-100 MD scout and guaranteed Copper+ rarity Automatic Rifle on Step 1, Increased 1.5x gold weapon chance on Step 3, guaranteed gold weapon on Step 5, and 2.0x gold weapon rates on Step 6 which repeats.
-
-[Miscellaneous]
-* **Normal/Plus Ticket Scouts**  
-A special type of scout that doesn't use Memory Diamonds.
+| Miscellaneous Scout Type | Description |  
+| :---: | :---: |  
+| Normal Ticket | Scout that typically has crystals, medallions, rainbow essence, and copper exchange swords. |  
+| Plus Ticket | Scout that typically has medallions, rainbow essence, silver+ exchange swords, and col. |
 
 Unlike the other *Sword Art Online: Memory Defrag* summon simulators, S'argo features user data 
 saving so users can see their character collection and get Hacking Crystals for duplicate characters
