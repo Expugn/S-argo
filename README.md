@@ -7,9 +7,10 @@ This Discord bot's main use is to be a "summon simulator" for the mobile game *S
 S'argo simulates the scouting system from *Sword Art Online: Memory Defrag*.
 
 This includes:  
-| Character Scout Type | Description |  
-| :---: | :---: |  
-| Normal | Static pull rates every time. Nothing special. |  
+
+| Character Scout Type | Description |
+| -------------------- | ------------ |
+| Normal | Static pull rates every time. Nothing special. |
 | Step Up | +1.5x gold character chance on Step 3, +2.0x gold character chance on Step 5. |
 | Record Crystal | Record Crystals are given every multi scout which can be used in a record crystal scout. |  
 | Step Up v2 | Guaranteed platinum character on Step 5, +2.0x platinum character chance on Step 6 which repeats. |  
