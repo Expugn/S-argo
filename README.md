@@ -1,3 +1,4 @@
+![S'argo Logo](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo%20Banner.png)
 # S'argo
 
 > **Table of Contents**  
