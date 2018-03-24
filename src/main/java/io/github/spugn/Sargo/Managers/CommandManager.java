@@ -380,7 +380,15 @@ public class CommandManager
         {
             String arg3 = COMMAND_LINE.getArgument(3);
             String arg2 = COMMAND_LINE.getArgument(2);
-            int bannerID = Integer.parseInt(COMMAND_LINE.getArgument(1));
+            int bannerID;
+            try
+            {
+                bannerID = Integer.parseInt(COMMAND_LINE.getArgument(1));
+            }
+            catch (NumberFormatException e)
+            {
+                return;
+            }
             boolean yes = (arg3.equalsIgnoreCase("y") || arg3.equalsIgnoreCase("yes"));
 
             if (arg2.equalsIgnoreCase("c") ||
@@ -397,7 +405,15 @@ public class CommandManager
         else if (COMMAND_LINE.getArgumentCount() >= 2)
         {
             String arg2 = COMMAND_LINE.getArgument(2);
-            int bannerID = Integer.parseInt(COMMAND_LINE.getArgument(1));
+            int bannerID;
+            try
+            {
+                bannerID = Integer.parseInt(COMMAND_LINE.getArgument(1));
+            }
+            catch (NumberFormatException e)
+            {
+                return;
+            }
 
             if (arg2.equalsIgnoreCase("c") ||
                     arg2.equalsIgnoreCase("w") ||

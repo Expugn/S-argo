@@ -3,6 +3,7 @@
 [![Downloads](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Downloads_Button.png)](https://github.com/Expugn/S-argo/releases)
 [![Wiki](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Wiki_Button.png)](https://github.com/Expugn/S-argo/wiki)
 [![Issues Tracker](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Issues_Tracker_Button.png)](https://github.com/Expugn/S-argo/issues)
+[![Data Repository](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Data_Repository_Button.png)](https://github.com/Expugn/S-argo_Data_v2)
 [![/r/MemoryDefrag Discord](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Discord_Button.png)](http://discord.gg/MemoryDefrag)
 
 > **Table of Contents**  
