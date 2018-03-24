@@ -150,7 +150,7 @@ public class Shop
                 else
                 {
                     builder.withDescription("Your purchase was successful.\n\n" +
-                            "**TIP**: You can use '" + CommandManager.getCommandPrefix() + "**shop** " + item + " " + SettingsParser.getMaxShopLimit() + "' to get more than one pack of Memory Diamonds.");
+                            "**TIP**: You can use '" + CommandManager.getCommandPrefix() + "**shop** " + item + " " + SettingsParser.getMaxShopLimit() + "' to get " + SettingsParser.getMaxShopLimit() + " pack(s) of Memory Diamonds.");
                 }
                 builder.withFooterText(userName + " | Balance: " + userMemoryDiamonds + " Memory Diamonds");
 

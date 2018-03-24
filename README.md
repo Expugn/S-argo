@@ -1,6 +1,9 @@
 ![S'argo Logo](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo_Banner.png)
 # S'argo
-[![Downloads](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Downloads_Button.png)](https://github.com/Expugn/S-argo/releases)   [![Wiki](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Wiki_Button.png)](https://github.com/Expugn/S-argo/wiki)   [![Issues Tracker](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Issues_Tracker_Button.png)](https://github.com/Expugn/S-argo/issues)   [![/r/MemoryDefrag Discord](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Discord_Button.png)](http://discord.gg/MemoryDefrag)
+[![Downloads](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Downloads_Button.png)](https://github.com/Expugn/S-argo/releases)
+[![Wiki](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Wiki_Button.png)](https://github.com/Expugn/S-argo/wiki)
+[![Issues Tracker](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Issues_Tracker_Button.png)](https://github.com/Expugn/S-argo/issues)
+[![/r/MemoryDefrag Discord](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Discord_Button.png)](http://discord.gg/MemoryDefrag)
 
 > **Table of Contents**  
 [1. Information](https://github.com/Expugn/S-argo#information "Information")  
@@ -25,13 +28,14 @@ This includes:
 | Normal | Static pull rates every time. Nothing special. |  
 | Step Up | `+1.5x` gold character chance on Step 3, `+2.0x` gold character chance on Step 5. |  
 | Record Crystal | Record Crystals are given every multi scout which can be used in a record crystal scout. |  
-| Step Up v2 | Guaranteed platinum character on Step 5, `+2.0x` platinum character chance on Step 6 which repeats. |  
+| Step Up v2 | `+1.5x` platinum character chance on Step 3, Guaranteed platinum character on Step 5, `+2.0x` platinum character chance on Step 6 which repeats. |  
 | Birthday Step Up | 50% off multi scout on Step 1, `+2.0x` gold and platinum character chance on Step 3. |  
 | Record Crystal v2 | First multi scout is 50% off, otherwise same as Record Crystal. |  
 | Memorial | Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond. |  
 | Step Up v3 | 50% off multi scout on Step 1, `+2.0x` platinum character chance on Step 3. |  
 | Record Crystal v3 | First multi scout is 50% off and every record crystal scout returns 1-5 Record Crystals. |  
 | Event | Single pulls only and free. Guaranteed gold+ rarity characters give no hacking crystals from duplicates. |  
+| SAO Game 5th Anniversary Step Up | Same rates as `Step Up v2`, but different Memory Diamond costs. |  
 
 | Weapon Scout Type | Description |  
 | :---: | :--- |  
@@ -59,11 +63,12 @@ Example commands are assuming you have your command preferences in your `Setting
 <CommandPrefix>$</CommandPrefix>
 ``` 
 
-###### HELP MENU
+###### GENERAL
 
 | Command | Description | Example |
 | :---: | :--- | :---: |
 | `help` | Get the command list. | `$help` |
+| `info` | Get some bot information. | `$info` |
 
 ###### SCOUTING
 ```

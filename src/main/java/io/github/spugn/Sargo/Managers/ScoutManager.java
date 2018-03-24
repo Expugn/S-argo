@@ -78,6 +78,10 @@ class ScoutManager
                 LOGGER.debug("[EVENT] " + banners.get(bannerID - 1).getBannerName() + " " + choice + " in Channel \"" + channel.getName() + "\"");
                 new Event(channel, bannerID, choice, discordID);
                 break;
+            case 10:
+                LOGGER.debug("[SAO GAME 5TH ANNIVERSARY STEP UP] " + banners.get(bannerID - 1).getBannerName() + " " + choice + " in Channel \"" + channel.getName() + "\"");
+                new SAOGameFifthAnniversaryStepUp(channel, bannerID, choice, discordID);
+                break;
             default:
                 channel.sendMessage(new WarningMessage("UNKNOWN BANNER TYPE", "Please correct the issue or update the bot.").get().build());
                 break;

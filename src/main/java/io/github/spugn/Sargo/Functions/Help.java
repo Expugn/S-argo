@@ -11,7 +11,7 @@ import sx.blah.discord.util.EmbedBuilder;
  * </p>
  *
  * @author S'pugn
- * @version 1.0
+ * @version 1.1
  * @since v1.0
  */
 public class Help
@@ -26,6 +26,11 @@ public class Help
 
         builder.withAuthorName("Help Menu");
         builder.withAuthorIcon(new GitHubImage("images/System/Help_Icon.png").getURL());
+
+        String generalHelp = "";
+        generalHelp += "'**help**' - Display the command list." + "\n";
+        generalHelp += "'**info**' - Display bot information." + "\n";
+        builder.appendField("GENERAL", generalHelp, false);
 
         String scoutingHelp = "";
         scoutingHelp += "'**scout**' - View a list of available banners." + "\n";

@@ -682,8 +682,12 @@ public class UserParser
                 writer.writeEmptyElement(BANNER);
                 writer.writeAttribute(B_NAME, b.getBannerName());
 
-                /* IS STEP UP UP OR STEP UP V2 */
-                if (b.getBannerType() == 1 || b.getBannerType() == 3 || b.getBannerType() == 4 || b.getBannerType() == 7)
+                /* IS STEP UP */
+                if (b.getBannerType() == 1 ||
+                        b.getBannerType() == 3 ||
+                        b.getBannerType() == 4 ||
+                        b.getBannerType() == 7 ||
+                        b.getBannerType() == 10)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_STEP);
                 }

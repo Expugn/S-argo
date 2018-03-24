@@ -247,7 +247,8 @@ public class BannerInfo
                 menu.setStepFiveRatesList(stepFiveRates);
             }
             /* BANNER IS STEP UP V2 */
-            else if (banner.getBannerType() == 3)
+            else if (banner.getBannerType() == 3 ||
+                    banner.getBannerType() == 10)
             {
                 double tC = copper - ((platinum * 1.5) - platinum);
                 double tS = silver;

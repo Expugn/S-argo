@@ -103,6 +103,10 @@ public class CommandManager
                 {
                     new Help(CHANNEL);
                 }
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("info"))
+                {
+                    new Info(CHANNEL);
+                }
                 else if (COMMAND_LINE.getCommand().equalsIgnoreCase("shop"))
                 {
                     shopCommand();

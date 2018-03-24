@@ -185,7 +185,11 @@ public class Reset
                 if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType() == 0))
                 {
                     int bannerType = banners.get(bannerID).getBannerType();
-                    if (bannerType == 1 || bannerType == 3 || bannerType == 4 || bannerType == 7)
+                    if (bannerType == 1 ||
+                            bannerType == 3 ||
+                            bannerType == 4 ||
+                            bannerType == 7 ||
+                            bannerType == 10)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 1);
                     }
@@ -193,7 +197,8 @@ public class Reset
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 0);
                     }
-                    else if (bannerType == 5 || bannerType == 8)
+                    else if (bannerType == 5 ||
+                                bannerType == 8)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), -1);
                     }
@@ -254,7 +259,11 @@ public class Reset
                     int bannerType = banners.get(bannerID).getBannerType();
                     int bannerWepType = banners.get(bannerID).getBannerWepType();
 
-                    if (bannerType == 1 || bannerType == 3 || bannerType == 4 || bannerType == 7)
+                    if (bannerType == 1 ||
+                            bannerType == 3 ||
+                            bannerType == 4 ||
+                            bannerType == 7 ||
+                            bannerType == 10)
                     {
                         dataString = "Step " + bannerData + " -> Step 1";
                     }
