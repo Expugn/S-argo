@@ -1,4 +1,4 @@
-![S'argo Logo](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo_Banner.png)
+![S'argo Logo](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo_Banner_Animated.gif)
 # S'argo
 [![Downloads](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Downloads_Button.png)](https://github.com/Expugn/S-argo/releases)
 [![Wiki](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Wiki_Button.png)](https://github.com/Expugn/S-argo/wiki)
