@@ -264,7 +264,7 @@ public class ImageEditor
                         g.drawImage(rStar, starX - 85, starY, null);
                         break;
                     case 4:
-                        g.drawImage(erStar, starX + 51, starY, null);
+                        //g.drawImage(erStar, starX + 51, starY, null);
                         g.drawImage(rStar, starX + 17, starY, null);
                         g.drawImage(rStar, starX - 17, starY, null);
                         g.drawImage(rStar, starX - 51, starY, null);
