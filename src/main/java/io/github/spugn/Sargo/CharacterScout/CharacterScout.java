@@ -343,7 +343,8 @@ abstract class CharacterScout
         if (guaranteedScout)
         {
             if (bannerType == 5 ||
-                    bannerType == 8)
+                    bannerType == 8 ||
+                    bannerType == 11)
             {
                 return 5;
             }
