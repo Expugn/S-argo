@@ -48,7 +48,7 @@ public class BannerInfoMenu
         {
             builder.withAuthorName("[" + bannerType + " / Weapon Step Up] " + bannerName);
         }
-        if (bannerWepType == 2)
+        else if (bannerWepType == 2)
         {
             builder.withAuthorName("[" + bannerType + " / GGO Step Up] " + bannerName);
         }
@@ -135,7 +135,8 @@ public class BannerInfoMenu
         }
         else if (bannerType.equalsIgnoreCase("Record Crystal") ||
                 bannerType.equalsIgnoreCase("Record Crystal v2") ||
-                bannerType.equalsIgnoreCase("Record Crystal v3"))
+                bannerType.equalsIgnoreCase("Record Crystal v3") ||
+                bannerType.equalsIgnoreCase("Record Crystal v4"))
         {
             if (weaponAmount > 0)
             {

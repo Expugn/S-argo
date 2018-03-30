@@ -37,6 +37,8 @@ public class Shop
         SettingsParser settings = new SettingsParser();
         EmbedBuilder builder = new EmbedBuilder();
         int counter = 1;
+        int largestPackID = -1;
+        int largestPackAmount = 0;
 
         builder.withAuthorName("Shop");
         builder.withDesc("***No actual currency is required to get Memory Diamonds.***");
@@ -53,6 +55,12 @@ public class Shop
             {
                 price = entry2.getKey();
                 amount = entry2.getValue();
+
+                if (largestPackID == -1 || amount > largestPackAmount)
+                {
+                    largestPackID = counter;
+                    largestPackAmount = amount;
+                }
             }
 
             builder.appendField(counter + ") " + itemName + " [$" + price + "]", "Get " + amount + " Memory Diamonds", false);
@@ -64,7 +72,7 @@ public class Shop
             }
         }
 
-        builder.withFooterText("To get Memory Diamonds use '" + CommandManager.getCommandPrefix() + "shop [Item ID] [Quantity]'");
+        builder.withFooterText("To get Memory Diamonds use '" + CommandManager.getCommandPrefix() + "shop [Item ID] [Quantity]' OR use '" + CommandManager.getCommandPrefix() + "shop " + largestPackID + " " + SettingsParser.getMaxShopLimit() + "' to get " + (largestPackAmount * SettingsParser.getMaxShopLimit()) + " Memory Diamonds.");
 
         channel.sendMessage(builder.build());
     }

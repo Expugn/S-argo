@@ -37,6 +37,7 @@ This includes:
 | Record Crystal v3 | First multi scout is 50% off and every record crystal scout returns 1-5 Record Crystals. |  
 | Event | Single pulls only and free. Guaranteed gold+ rarity characters give no hacking crystals from duplicates. |  
 | SAO Game 5th Anniversary Step Up | Same rates as `Step Up v2`, but different Memory Diamond costs. |  
+| Record Crystal v4 | Same thing as `Record Crystal v3`, but base platinum character rates are `1.5x` higher. |  
 
 | Weapon Scout Type | Description |  
 | :---: | :--- |  

@@ -206,6 +206,13 @@ public class BannerInfo
                 }
             }
 
+            /* IF RECORD CRYSTAL V4, INCREASE PLATINUM RATES BY 1.5 */
+            if (banner.getBannerType() == 11)
+            {
+                copper = copper - ((platinum * 1.5) - platinum);
+                platinum = platinum * 1.5;
+            }
+
             String ratesList = "";
             if (platinum != 0)
                 ratesList += "[5 ★] " + platinum + "%\n";
@@ -311,7 +318,8 @@ public class BannerInfo
             /* BANNER IS RECORD CRYSTAL */
             else if (banner.getBannerType() == 2 ||
                     banner.getBannerType() == 5 ||
-                    banner.getBannerType() == 8)
+                    banner.getBannerType() == 8 ||
+                    banner.getBannerType() == 11)
             {
                 int counter = 0;
                 String recordCrystalRates = "";
@@ -327,7 +335,8 @@ public class BannerInfo
 
                 menu.setRecordCrystalRatesList(recordCrystalRates);
 
-                if (banner.getBannerType() == 8)
+                if (banner.getBannerType() == 8 ||
+                        banner.getBannerType() == 11)
                 {
                     int counter2 = 0;
                     String circluatingRecordCrystalRates = "";

@@ -9,37 +9,25 @@ import sx.blah.discord.handle.obj.IChannel;
 import java.util.List;
 
 /**
- * SAO GAME 5TH ANNIVERSARY CHARACTER SCOUT
+ * RECORD CRYSTAL V4 CHARACTER SCOUT
  * <p>
- *     View {@link StepUp}'s JavaDoc for more information
- *     about Step Up scouts in general.<br>
+ *     It's literally the same thing as RecordCrystalv3.
  *
- *     Same deal as StepUpv2, but with some changes to what
- *     happens in each step. This scout type is used for
- *     the banners that include characters with voted skills.
- * </p>
- * <p>
- *     STEP CHANGES:<br>
- *     Step 1)<br>
- *          - Multi Scout price is 55 Memory Diamonds.<br>
- *     Step 3)<br>
- *          - Platinum rarity character rates increase by 1.5x.<br>
- *     Step 5)<br>
- *          - One platinum rarity character is guaranteed.<br>
- *     Step 6)<br>
- *          - Platinum rarity character rates increase by 2.0x<br>
- *          - Step 6 repeats.
+ *     Only difference is that platinum rates have increased
+ *     by 1.5x.
  * </p>
  *
  * @author S'pugn
  * @version 1.0
- * @since v2.0
- * @see StepUp
+ * @since v2.7
+ * @see RecordCrystal
  * @see CharacterScout
  */
-public class SAOGameFifthAnniversaryStepUp extends CharacterScout
+public class RecordCrystalv4 extends CharacterScout
 {
-    public SAOGameFifthAnniversaryStepUp(IChannel channel, int bannerID, String choice, String discordID)
+    private int circluatedRecordCrystals;
+
+    public RecordCrystalv4(IChannel channel, int bannerID, String choice, String discordID)
     {
         super(channel, bannerID, choice, discordID);
         run();
@@ -48,28 +36,23 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
     @Override
     protected void initBannerInfo()
     {
-        USER.addBannerInfo(SELECTED_BANNER.getBannerName(), 1);
-        bannerTypeData = 1;
+        USER.addBannerInfo(SELECTED_BANNER.getBannerName(), -1);
+        bannerTypeData = -1;
     }
 
     @Override
     protected void modifyScoutData()
     {
+        COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
+        PLATINUM = PLATINUM * 1.5;
+
         switch (bannerTypeData)
         {
-            case 1:
-                multiScoutPrice = 55;
+            case -1:
+                multiScoutPrice = 125;
+                bannerTypeData = 0;
+                USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
                 break;
-            case 3:
-                COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
-                PLATINUM = PLATINUM * 1.5;
-                break;
-            case 5:
-                guaranteeOnePlatinum = true;
-                break;
-            case 6:
-                COPPER = COPPER - ((PLATINUM * 2.0) - PLATINUM);
-                PLATINUM = PLATINUM * 2.0;
             default:
                 break;
         }
@@ -78,22 +61,15 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
     @Override
     protected void updateBannerData()
     {
-        int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
-        currentStep++;
-        if (currentStep > 6)
-        {
-            USER.changeValue(SELECTED_BANNER.getBannerName(), 6);
-        }
-        else
-        {
-            USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
-        }
+        rcGet = getRecordCrystals();
+        bannerTypeData += rcGet;
+        USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
     }
 
     @Override
     protected Character randGoldCharacter()
     {
-        int randIndex = GOLD_BANNERS.get(RNG.nextInt(GOLD_BANNERS.size()));
+        int randIndex = GOLD_BANNERS_V2.get(RNG.nextInt(GOLD_BANNERS_V2.size()));
         Banner randBanner = BANNERS.get(randIndex - 1);
         List<Character> randCharacters = randBanner.getCharacters();
         return randCharacters.get(RNG.nextInt(randCharacters.size()));
@@ -112,10 +88,14 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[SAO Game 5th Anniversary Step Up] - Step " + bannerTypeData);
+                    scoutMenu.withTitle("[Record Crystal v4] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")");
+                    break;
+                case "rc":
+                case "rci":
+                    scoutMenu.withTitle("[Record Crystal Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")" + "\n");
                     break;
                 default:
-                    scoutMenu.withTitle("[SAO Game 5th Anniversary Step Up] - Unknown");
+                    scoutMenu.withTitle("[Record Crystal v4] - Unknown");
                     break;
             }
         }
@@ -129,10 +109,14 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    simpleMessage += "**[SAO Game 5th Anniversary Step Up] - Step " + bannerTypeData + "**" + "\n";
+                    simpleMessage += "**[Record Crystal v4] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")**" + "\n";
+                    break;
+                case "rc":
+                case "rci":
+                    simpleMessage += "**[Record Crystal Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")**" + "\n";
                     break;
                 default:
-                    simpleMessage += "**[SAO Game 5th Anniversary Step Up] - Unknown**" + "\n";
+                    simpleMessage += "**[Record Crystal v4] - Unknown**" + "\n";
                     break;
             }
         }
@@ -180,8 +164,29 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
                 doMultiPull();
                 updateBannerData();
                 break;
+            case "rc":
+            case "rci":
+                if (CHOICE.equalsIgnoreCase("rci") && !IMAGE_DISABLED)
+                {
+                    generateImage = true;
+                }
+
+                userRecordCrystals = USER.getBannerData(SELECTED_BANNER.getBannerName());
+                if (userRecordCrystals < 10)
+                {
+                    CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need 10 record crystals to do a record crystal scout.").get().build());
+                    return;
+                }
+
+                circluatedRecordCrystals = getCirculatedRecordCrystals();
+                userRecordCrystals -= 10;
+                userRecordCrystals += circluatedRecordCrystals;
+                USER.changeValue(SELECTED_BANNER.getBannerName(), userRecordCrystals);
+                guaranteedScout = true;
+                doSinglePull();
+                break;
             default:
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Only `single` and `multi` scouts are available.").get().build());
+                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Only `single`, `multi`, and `record crystal` scouts are available.").get().build());
                 return;
         }
 

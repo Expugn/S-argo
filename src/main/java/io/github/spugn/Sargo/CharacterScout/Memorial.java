@@ -114,7 +114,7 @@ public class Memorial extends CharacterScout
                 doSinglePull();
                 break;
             default:
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Use '" + CommandManager.getCommandPrefix() + "**scout** " + (BANNER_ID + 1) + "' and read the footer text for available scout types.").get().build());
+                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Only `single` scouts are available.").get().build());
                 return;
         }
 

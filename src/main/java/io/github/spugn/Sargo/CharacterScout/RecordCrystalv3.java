@@ -98,7 +98,7 @@ public class RecordCrystalv3 extends CharacterScout
                     break;
                 case "rc":
                 case "rci":
-                    scoutMenu.withTitle("[Guaranteed Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")" + "\n");
+                    scoutMenu.withTitle("[Record Crystal Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")" + "\n");
                     break;
                 default:
                     scoutMenu.withTitle("[Record Crystal v3] - Unknown");
@@ -119,7 +119,7 @@ public class RecordCrystalv3 extends CharacterScout
                     break;
                 case "rc":
                 case "rci":
-                    simpleMessage += "**[Guaranteed Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")**" + "\n";
+                    simpleMessage += "**[Record Crystal Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")**" + "\n";
                     break;
                 default:
                     simpleMessage += "**[Record Crystal v3] - Unknown**" + "\n";
@@ -192,7 +192,7 @@ public class RecordCrystalv3 extends CharacterScout
                 doSinglePull();
                 break;
             default:
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Use '" + CommandManager.getCommandPrefix() + "**scout** " + (BANNER_ID + 1) + "' and read the footer text for available scout types.").get().build());
+                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Only `single`, `multi`, and `record crystal` scouts are available.").get().build());
                 return;
         }
 
