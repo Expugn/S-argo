@@ -44,6 +44,7 @@ public class BannerInfoMenu
 
     private void build()
     {
+        boolean unknownScoutType = false;
         if (bannerWepType == 1)
         {
             builder.withAuthorName("[" + bannerType + " / Weapon Step Up] " + bannerName);
@@ -154,10 +155,19 @@ public class BannerInfoMenu
         }
         else
         {
-            footer += "]' to scout.";
+            footer = "Unknown Scout Type!";
+            unknownScoutType = true;
         }
 
-        builder.withFooterText("Use '" + CommandManager.getCommandPrefix() + "scout " + (bannerID + 1) + " " + footer);
+        if (unknownScoutType)
+        {
+            builder.withFooterText(footer);
+        }
+        else
+        {
+            builder.withFooterText("Use '" + CommandManager.getCommandPrefix() + "scout " + (bannerID + 1) + " " + footer);
+        }
+
     }
 
     public EmbedBuilder get()
