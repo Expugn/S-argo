@@ -48,7 +48,9 @@ This includes:
 | Miscellaneous Scout Type | Description |  
 | :---: | :--- |  
 | Normal Ticket | Scout that typically has misc. items, rainbow essence, and copper exchange swords. |  
-| Plus Ticket | Scout that typically has medallions, rainbow essence, silver+ exchange swords, and col. |
+| Plus Ticket | Scout that typically has medallions, rainbow essence, and silver+ exchange swords. |
+| Normal v2 Ticket | Scout that typically has misc. items, rainbow essence, upgrade crystals, memory fragments, and copper exchange swords. |  
+| Plus v2 Ticket | Scout that typically has medallions, rainbow essence, upgrade crystals, memory fragments and silver+ exchange swords. |
 
 Unlike the other *Sword Art Online: Memory Defrag* summon simulators, S'argo features user data 
 saving so users can see their character collection and get Hacking Crystals for duplicate characters
@@ -97,6 +99,8 @@ i = "image"
 | `scout [Banner ID] [ws(i) / wm(i)]` | Scout a weapon banner. | `$scout 1 ws` |
 | `scout [nts(i) / ntm(i)]` | Scout using normal tickets. | `$scout ntsi` |
 | `scout [pts(i) / ptm(i)]` | Scout using plus tickets. | `$scout ptm` |  
+| `scout [nt2s(i) / nt2m(i)]` | Scout using normal v2 tickets. | `$scout nt2si` |  
+| `scout [pt2s(i) / pt2m(i)]` | Scout using plus v2 tickets. | `$scout pt2m` |  
 
 ###### USER PROFILE
 
