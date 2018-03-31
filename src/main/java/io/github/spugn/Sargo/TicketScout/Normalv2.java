@@ -161,12 +161,12 @@ public class Normalv2 extends TicketScout
             scoutMenu.withThumbnail(new GitHubImage("images/System/Normal_Ticket_2.png").getURL());
             switch (CHOICE.toLowerCase())
             {
-                case "nts":
-                case "ntsi":
+                case "nt2s":
+                case "nt2si":
                     scoutMenu.withTitle("[Ticket Scout] - Single Pull");
                     break;
-                case "ntm":
-                case "ntmi":
+                case "nt2m":
+                case "nt2mi":
                     scoutMenu.withTitle("[Ticket Scout] - Multi Pull");
                     break;
                 default:
@@ -179,12 +179,12 @@ public class Normalv2 extends TicketScout
             simpleMessage += "**Normal Ticket v2 Scout**" + "\n";
             switch (CHOICE.toLowerCase())
             {
-                case "nts":
-                case "ntsi":
+                case "nt2s":
+                case "nt2si":
                     simpleMessage += "**[Ticket Scout] - Single Pull**" + "\n";
                     break;
-                case "ntm":
-                case "ntmi":
+                case "nt2m":
+                case "nt2mi":
                     simpleMessage += "**[Ticket Scout] - Multi Pull**" + "\n";
                     break;
                 default:
