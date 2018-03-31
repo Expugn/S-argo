@@ -35,18 +35,27 @@ public class Help
         String scoutingHelp = "";
         scoutingHelp += "'**scout**' - View a list of available banners." + "\n";
         scoutingHelp += "'**scout** p[Page Number]' - View a page in the list of available banners." + "\n";
-        scoutingHelp += "'**scout** [Banner ID]' - View a banner's information." + "\n";
+        scoutingHelp += "'**scout** [Banner ID]' - View a banner's information." + "\n\n";
+        scoutingHelp += "**Adding an 'i' after your scout type will generate an image result.**";
+        builder.appendField("SCOUT - GENERAL", scoutingHelp, false);
+
+        scoutingHelp = "";
         scoutingHelp += "'**scout** [Banner ID] [s/si]' - Perform a single scout." + "\n";
-        scoutingHelp += "'**scout** [Banner ID] [ws/wsi]' - Perform a weapon single scout." + "\n";
         scoutingHelp += "'**scout** [Banner ID] [m/mi]' - Perform a multi scout." + "\n";
-        scoutingHelp += "'**scout** [Banner ID] [wm/wmi]' - Perform a weapon multi scout." + "\n";
-        scoutingHelp += "'**scout** [Banner ID] [rc/rci]' - Perform a record crystal scout." + "\n";
-        scoutingHelp += "'**scout** [nts/ntsi]' - Perform a normal ticket single scout." + "\n";
-        scoutingHelp += "'**scout** [ntm/ntmi]' - Perform a normal ticket multi scout." + "\n";
-        scoutingHelp += "'**scout** [pts/ptsi]' - Perform a plus ticket single scout." + "\n";
-        scoutingHelp += "'**scout** [ptm/ptmi]' - Perform a plus ticket multi scout." + "\n\n";
-        scoutingHelp += "**Adding an 'i' after your scout type will generate an image result.**" + "\n";
-        builder.appendField("SCOUT", scoutingHelp, false);
+        scoutingHelp += "'**scout** [Banner ID] [rc/rci]' - Perform a record crystal scout.";
+        builder.appendField("SCOUT - CHARACTER", scoutingHelp, false);
+
+        scoutingHelp = "";
+        scoutingHelp += "'**scout** [Banner ID] [ws/wsi]' - Perform a weapon single scout." + "\n";
+        scoutingHelp += "'**scout** [Banner ID] [wm/wmi]' - Perform a weapon multi scout.";
+        builder.appendField("SCOUT - WEAPON", scoutingHelp, false);
+
+        scoutingHelp = "";
+        scoutingHelp += "'**scout** [nts/ntsi/ntm/ntmi]' - Perform a normal ticket scout." + "\n";
+        scoutingHelp += "'**scout** [pts/ptsi/ptm/ptmi]' - Perform a plus ticket scout." + "\n";
+        scoutingHelp += "'**scout** [nt2s/nt2si/nt2m/nt2mi]' - Perform a normal ticket v2 scout." + "\n";
+        scoutingHelp += "'**scout** [pt2s/pt2si/pt2m/pt2mi]' - Perform a plus ticket v2 scout." + "\n";
+        builder.appendField("SCOUT - TICKET", scoutingHelp, false);
 
         String shopHelp = "";
         shopHelp += "'**shop**' - View the shop." + "\n";
