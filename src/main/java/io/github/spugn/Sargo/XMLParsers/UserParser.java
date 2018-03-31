@@ -34,6 +34,8 @@ public class UserParser
     private static final String R3_EXCHANGE_SWORDS = "r3ExchangeSwords";
     private static final String R4_EXCHANGE_SWORDS = "r4ExchangeSwords";
     private static final String RAINBOW_ESSENCE = "rainbowEssence";
+    private static final String UPGRADE_CRYSTAL = "upgradeCrystal";
+    private static final String MEMORY_FRAGMENT = "memoryFragment";
 
     private static final String BANNER = "Banner";
     private static final String CHARACTER = "Character";
@@ -66,6 +68,8 @@ public class UserParser
     private static final String DEFAULT_TICKET_SCOUT = "0";
     private static final String DEFAULT_EXCHANGE_SWORD = "0";
     private static final String DEFAULT_RAINBOW_ESSENCE = "0";
+    private static final String DEFAULT_UPGRADE_CRYSTAL = "0";
+    private static final String DEFAULT_MEMORY_FRAGMENT = "0";
 
     /* USER DATA */
     private int memoryDiamonds;
@@ -77,6 +81,8 @@ public class UserParser
     private int r3ExchangeSwords;
     private int r4ExchangeSwords;
     private int rainbowEssence;
+    private int upgradeCrystal;
+    private int memoryFragment;
     private SortedMap<String, Integer> bannerInfo;
     private List<Character> characterBox;
     private List<Weapon> weaponBox;
@@ -209,6 +215,10 @@ public class UserParser
         return rainbowEssence;
     }
 
+    public int getUpgradeCrystal() { return upgradeCrystal; }
+
+    public int getMemoryFragment() { return memoryFragment; }
+
     public void setCharacterBox(List<Character> characterBox)
     {
         this.characterBox = characterBox;
@@ -280,6 +290,10 @@ public class UserParser
     {
         this.rainbowEssence = rainbowEssence;
     }
+
+    public void setUpgradeCrystal(int upgradeCrystal) { this.upgradeCrystal = upgradeCrystal; }
+
+    public void setMemoryFragment(int memoryFragment) { this.memoryFragment = memoryFragment; }
 
     public void changeValue(String bannerName, int newValue)
     {
@@ -434,6 +448,22 @@ public class UserParser
                     {
                         event = eventReader.nextEvent();
                         rainbowEssence = Integer.parseInt(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE UPGRADE CRYSTALS */
+                    if (event.asStartElement().getName().getLocalPart().equals(UPGRADE_CRYSTAL))
+                    {
+                        event = eventReader.nextEvent();
+                        upgradeCrystal = Integer.parseInt(event.asCharacters().getData());
+                        continue;
+                    }
+
+                    /* GET AND SAVE MEMORY FRAGMENTS */
+                    if (event.asStartElement().getName().getLocalPart().equals(MEMORY_FRAGMENT))
+                    {
+                        event = eventReader.nextEvent();
+                        memoryFragment = Integer.parseInt(event.asCharacters().getData());
                         continue;
                     }
 
@@ -592,7 +622,7 @@ public class UserParser
                 eventWriter.add(configStartElement);
                 eventWriter.add(end);
 
-                /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, COL BALANCE, TOTAL TICKET SCOUTS, EXCHANGE SWORDS, AND RAINBOW ESSENCE */
+                /* WRITE DEFAULT DATA FOR MEMORY DIAMONDS, MONEY SPENT, HACKING CRYSTALS, COL BALANCE, TOTAL TICKET SCOUTS, EXCHANGE SWORDS, RAINBOW ESSENCE, UPGRADE CRYSTAL, AND MEMORY FRAGMENT */
                 writeNode(eventWriter, MEMORY_DIAMONDS, DEFAULT_MEMORY_DIAMONDS);
                 writeNode(eventWriter, MONEY_SPENT, DEFAULT_MONEY_SPENT);
                 writeNode(eventWriter, HACKING_CRYSTALS, DEFAULT_HACKING_CRYSTALS);
@@ -602,6 +632,8 @@ public class UserParser
                 writeNode(eventWriter, R3_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
                 writeNode(eventWriter, R4_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
                 writeNode(eventWriter, RAINBOW_ESSENCE, DEFAULT_RAINBOW_ESSENCE);
+                writeNode(eventWriter, UPGRADE_CRYSTAL, DEFAULT_UPGRADE_CRYSTAL);
+                writeNode(eventWriter, MEMORY_FRAGMENT, DEFAULT_MEMORY_FRAGMENT);
 
                 /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
                 writeDefaultBannerData(eventWriter);
@@ -760,6 +792,8 @@ public class UserParser
             writeNode(eventWriter, R3_EXCHANGE_SWORDS, String.valueOf(r3ExchangeSwords));
             writeNode(eventWriter, R4_EXCHANGE_SWORDS, String.valueOf(r4ExchangeSwords));
             writeNode(eventWriter, RAINBOW_ESSENCE, String.valueOf(rainbowEssence));
+            writeNode(eventWriter, UPGRADE_CRYSTAL, String.valueOf(upgradeCrystal));
+            writeNode(eventWriter, MEMORY_FRAGMENT, String.valueOf(memoryFragment));
 
             /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
             writeBannerData(eventWriter);
@@ -1032,6 +1066,9 @@ public class UserParser
             writeNode(eventWriter, R3_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
             writeNode(eventWriter, R4_EXCHANGE_SWORDS, DEFAULT_EXCHANGE_SWORD);
             writeNode(eventWriter, RAINBOW_ESSENCE, DEFAULT_RAINBOW_ESSENCE);
+            writeNode(eventWriter, UPGRADE_CRYSTAL, DEFAULT_UPGRADE_CRYSTAL);
+            writeNode(eventWriter, MEMORY_FRAGMENT, DEFAULT_MEMORY_FRAGMENT);
+
 
             /* WRITE bannerData ELEMENT AND FILL WITH BANNER DATA */
             writeDefaultBannerData(eventWriter);

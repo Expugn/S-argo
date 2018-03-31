@@ -200,7 +200,15 @@ public class CommandManager
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("pts") ||
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptsi") ||
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptm") ||
-                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptmi"))
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("ptmi") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("nt2s") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("nt2si") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("nt2m") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("nt2mi") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("pt2s") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("pt2si") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("pt2m") ||
+                        COMMAND_LINE.getArgument(1).equalsIgnoreCase("pt2mi"))
                 {
                     new TicketScoutManager(CHANNEL, COMMAND_LINE.getArgument(1), DISCORD_ID);
                 }

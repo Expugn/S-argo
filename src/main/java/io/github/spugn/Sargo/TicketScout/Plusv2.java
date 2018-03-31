@@ -4,10 +4,10 @@ import io.github.spugn.Sargo.Objects.Item;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import sx.blah.discord.handle.obj.IChannel;
 
-public class Plus extends TicketScout
+public class Plusv2 extends TicketScout
 {
 
-    public Plus(IChannel channel, String choice, String discordID)
+    public Plusv2(IChannel channel, String choice, String discordID)
     {
         super(channel, choice, discordID);
         run();
@@ -33,8 +33,10 @@ public class Plus extends TicketScout
 
         double exchangeSwordR3 = 8;
         double exchangeSwordR4 = 1;
-        double medallions = 63;
-        double stardust = 24;
+        double medallions = 47.796;
+        double stardust = 18.207;
+        double upgradeCrystal = 15;
+        double memoryFragment = 6;
 
         /* EXCHANGE SWORD R3 */
         if (d < exchangeSwordR3)
@@ -56,10 +58,20 @@ public class Plus extends TicketScout
         {
             return 4;
         }
+        /* UPGRADE CRYSTAL */
+        else if (d < exchangeSwordR3 + exchangeSwordR4 + medallions + stardust + upgradeCrystal)
+        {
+            return 5;
+        }
+        /* MEMORY FRAGMENT */
+        else if (d < exchangeSwordR3 + exchangeSwordR4 + medallions + stardust + upgradeCrystal + memoryFragment)
+        {
+            return 6;
+        }
         /* RAINBOW ESSENCE */
         else
         {
-            return 5;
+            return 7;
         }
     }
 
@@ -88,6 +100,16 @@ public class Plus extends TicketScout
         {
             item = new Item("Stardust (Medium)", 20, 1000);
         }
+        /* UPGRADE CRYSTAL */
+        else if (value == 5)
+        {
+            item = new Item("Upgrade Crystal", 1, -1);
+        }
+        /* MEMORY FRAGMENT */
+        else if (value == 6)
+        {
+            item = new Item("Memory Fragment", 1, -1);
+        }
         /* RAINBOW ESSENCE */
         else
         {
@@ -103,16 +125,16 @@ public class Plus extends TicketScout
     {
         if (!SIMPLE_MESSAGE)
         {
-            scoutMenu.withAuthorName("Plus Ticket Scout");
-            scoutMenu.withThumbnail(new GitHubImage("images/System/Plus_Ticket.png").getURL());
+            scoutMenu.withAuthorName("Plus Ticket v2 Scout");
+            scoutMenu.withThumbnail(new GitHubImage("images/System/Plus_Ticket_2.png").getURL());
             switch (CHOICE.toLowerCase())
             {
-                case "pts":
-                case "ptsi":
+                case "pt2s":
+                case "pt2si":
                     scoutMenu.withTitle("[Ticket Scout] - Single Pull");
                     break;
-                case "ptm":
-                case "ptmi":
+                case "pt2m":
+                case "pt2mi":
                     scoutMenu.withTitle("[Ticket Scout] - Multi Pull");
                     break;
                 default:
@@ -122,15 +144,15 @@ public class Plus extends TicketScout
         }
         else
         {
-            simpleMessage += "**Plus Ticket Scout**" + "\n";
+            simpleMessage += "**Plus Ticket v2 Scout**" + "\n";
             switch (CHOICE.toLowerCase())
             {
-                case "pts":
-                case "ptsi":
+                case "pt2s":
+                case "pt2si":
                     simpleMessage += "**[Ticket Scout] - Single Pull**" + "\n";
                     break;
-                case "ptm":
-                case "ptmi":
+                case "pt2m":
+                case "pt2mi":
                     simpleMessage += "**[Ticket Scout] - Multi Pull**" + "\n";
                     break;
                 default:
@@ -145,18 +167,18 @@ public class Plus extends TicketScout
     {
         switch (CHOICE.toLowerCase())
         {
-            case "pts":
-            case "ptsi":
-                if (CHOICE.equalsIgnoreCase("ptsi") && !IMAGE_DISABLED)
+            case "pt2s":
+            case "pt2si":
+                if (CHOICE.equalsIgnoreCase("pt2si") && !IMAGE_DISABLED)
                 {
                     generateImage = true;
                 }
 
                 doSinglePull();
                 break;
-            case "ptm":
-            case "ptmi":
-                if (CHOICE.equalsIgnoreCase("ptmi") && !IMAGE_DISABLED)
+            case "pt2m":
+            case "pt2mi":
+                if (CHOICE.equalsIgnoreCase("pt2mi") && !IMAGE_DISABLED)
                 {
                     generateImage = true;
                 }

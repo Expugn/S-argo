@@ -957,6 +957,8 @@ public class Update
         fileNames.add("Void_Medallion.png");
         fileNames.add("Water_Medallion.png");
         fileNames.add("Wind_Medallion.png");
+        fileNames.add("Memory_Fragment.png");
+        fileNames.add("Upgrade_Crystal.png");
 
         try
         {

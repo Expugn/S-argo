@@ -79,13 +79,16 @@ abstract class TicketScout
     private void init()
     {
         /* FILES */
-        SettingsParser SETTINGS = new SettingsParser();
+        //SettingsParser SETTINGS = new SettingsParser();
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */
-        IMAGE_DISABLED = SETTINGS.isDisableImages();
-        SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
-        IS_RARITY_STARS = SETTINGS.isRarityStars();
+        //IMAGE_DISABLED = SETTINGS.isDisableImages();
+        //SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
+        //IS_RARITY_STARS = SETTINGS.isRarityStars();
+        IMAGE_DISABLED = SettingsParser.isDisableImages();
+        SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
+        IS_RARITY_STARS = SettingsParser.isRarityStars();
 
         /* USER */
         userColBalance = USER.getColBalance();
@@ -175,6 +178,14 @@ abstract class TicketScout
 
             if (items.get(0).getName().equals("Rainbow Essence"))
                 USER.setRainbowEssence(USER.getRainbowEssence() + items.get(0).getQuantity());
+
+            if (items.get(0).getName().equals("Upgrade Crystal"))
+                USER.setUpgradeCrystal(USER.getUpgradeCrystal() + items.get(0).getQuantity());
+
+            if (items.get(0).getName().equals("Memory Fragment"))
+                USER.setMemoryFragment(USER.getMemoryFragment() + items.get(0).getQuantity());
+
+            System.out.println("quantity: " + items.get(0).getQuantity());
         }
         itemString += items.get(0).toString() + "\n";
         if (generateImage && !IMAGE_DISABLED)
@@ -214,6 +225,10 @@ abstract class TicketScout
                 }
                 if (items.get(i).getName().equals("Rainbow Essence"))
                     USER.setRainbowEssence(USER.getRainbowEssence() + items.get(i).getQuantity());
+                if (items.get(i).getName().equals("Upgrade Crystal"))
+                    USER.setUpgradeCrystal(USER.getUpgradeCrystal() + items.get(i).getQuantity());
+                if (items.get(i).getName().equals("Memory Fragment"))
+                    USER.setMemoryFragment(USER.getMemoryFragment() + items.get(i).getQuantity());
             }
             itemString += items.get(i).toString() + "\n";
             if (generateImage && !IMAGE_DISABLED)

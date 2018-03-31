@@ -77,7 +77,9 @@ public class Profile
 
         basicInfo += "**4★ Weapons**: " + user.getTotalWeaponCount() + "\n";
         basicInfo += "**4★ Exchange Swords**: " + user.getR4ExchangeSwords() + "\n";
-        basicInfo += "**Rainbow Essences**: " + user.getRainbowEssence() + "\n\n";
+        basicInfo += "**Rainbow Essences**: " + user.getRainbowEssence() + "\n";
+        basicInfo += "**Upgrade Crystals**: " + user.getUpgradeCrystal() + "\n";
+        basicInfo += "**Memory Fragments**: " + user.getMemoryFragment() + "\n\n";
 
         basicInfo += "**Money Spent**: $" + df.format(user.getMoneySpent()) + "\n";
         basicInfo += "**Total Ticket Scouts**: " + user.getTotalTicketScout() + "\n";
