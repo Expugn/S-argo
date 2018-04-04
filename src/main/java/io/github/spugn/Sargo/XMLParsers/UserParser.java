@@ -669,11 +669,7 @@ public class UserParser
                 eventWriter.add(eventFactory.createEndDocument());
                 eventWriter.close();
             }
-            catch (FileNotFoundException e)
-            {
-                e.printStackTrace();
-            }
-            catch (XMLStreamException e)
+            catch (FileNotFoundException | XMLStreamException e)
             {
                 e.printStackTrace();
             }

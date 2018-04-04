@@ -4,7 +4,7 @@ import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Objects.Weapon;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.LoginSettingsParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sx.blah.discord.handle.obj.IChannel;
@@ -65,7 +65,8 @@ public class Update
     public Update()
     {
         //gitHubDataRepository = new SettingsParser().getGitHubRepoURL();
-        gitHubDataRepository = SettingsParser.getGitHubRepoURL();
+        //gitHubDataRepository = SettingsParser.getGitHubRepoURL();
+        gitHubDataRepository = LoginSettingsParser.getGitHubRepoURL();
         try
         {
             int fileCounter, itemCounter;
@@ -96,7 +97,8 @@ public class Update
     {
         CHANNEL = channel;
         builder = new EmbedBuilder();
-        gitHubDataRepository = SettingsParser.getGitHubRepoURL();
+        //gitHubDataRepository = SettingsParser.getGitHubRepoURL();
+        gitHubDataRepository = LoginSettingsParser.getGitHubRepoURL();
         allCharacters = new ArrayList<>();
         allWeapons = new ArrayList<>();
 

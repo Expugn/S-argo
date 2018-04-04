@@ -24,6 +24,8 @@ import java.util.*;
  * @version 1.1
  * @since v1.0
  */
+
+@Deprecated
 public class SettingsParser
 {
     /* BOT SETTINGS */

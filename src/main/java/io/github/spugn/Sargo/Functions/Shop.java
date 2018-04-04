@@ -4,6 +4,7 @@ import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.ShopSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
@@ -11,7 +12,6 @@ import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 
 import java.util.Map;
-import java.util.SortedMap;
 
 /**
  * SHOP
@@ -45,7 +45,7 @@ public class Shop
         builder.withColor(233, 228, 232);
         builder.withThumbnail(new GitHubImage("images/System/Shop_Icon.png").getURL());
 
-        for (Map.Entry<String, SortedMap<Double, Integer>> entry : settings.getShopItems().entrySet())
+        for (Map.Entry<String, Map<Double, Integer>> entry : ShopSettingsParser.getShopItems().entrySet())
         {
             String itemName = entry.getKey();
             double price = 0.0;
@@ -72,7 +72,7 @@ public class Shop
             }
         }
 
-        builder.withFooterText("To get Memory Diamonds use '" + CommandManager.getCommandPrefix() + "shop [Item ID] [Quantity]' OR use '" + CommandManager.getCommandPrefix() + "shop " + largestPackID + " " + SettingsParser.getMaxShopLimit() + "' to get " + (largestPackAmount * SettingsParser.getMaxShopLimit()) + " Memory Diamonds.");
+        builder.withFooterText("To get Memory Diamonds use '" + CommandManager.getCommandPrefix() + "shop [Item ID] [Quantity]' OR use '" + CommandManager.getCommandPrefix() + "shop " + largestPackID + " " + ShopSettingsParser.getMaxShopLimit() + "' to get " + (largestPackAmount * ShopSettingsParser.getMaxShopLimit()) + " Memory Diamonds.");
 
         channel.sendMessage(builder.build());
     }
@@ -101,7 +101,7 @@ public class Shop
             boolean itemFound = false;
 
             //for (Map.Entry<String, SortedMap<Double, Integer>> entry : settings.getShopItems().entrySet())
-            for (Map.Entry<String, SortedMap<Double, Integer>> entry : SettingsParser.getShopItems().entrySet())
+            for (Map.Entry<String, Map<Double, Integer>> entry : ShopSettingsParser.getShopItems().entrySet())
             {
                 counter++;
                 if (counter == Integer.parseInt(item))
@@ -158,7 +158,7 @@ public class Shop
                 else
                 {
                     builder.withDescription("Your purchase was successful.\n\n" +
-                            "**TIP**: You can use '" + CommandManager.getCommandPrefix() + "**shop** " + item + " " + SettingsParser.getMaxShopLimit() + "' to get " + SettingsParser.getMaxShopLimit() + " pack(s) of Memory Diamonds.");
+                            "**TIP**: You can use '" + CommandManager.getCommandPrefix() + "**shop** " + item + " " + ShopSettingsParser.getMaxShopLimit() + "' to get " + ShopSettingsParser.getMaxShopLimit() + " pack(s) of Memory Diamonds.");
                 }
                 builder.withFooterText(userName + " | Balance: " + userMemoryDiamonds + " Memory Diamonds");
 

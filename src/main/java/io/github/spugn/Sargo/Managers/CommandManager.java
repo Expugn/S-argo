@@ -4,8 +4,7 @@ import io.github.spugn.Sargo.Functions.*;
 import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.Utilities.CommandLine;
 import io.github.spugn.Sargo.Utilities.DiscordCommand;
-import io.github.spugn.Sargo.XMLParsers.ScoutMasterParser;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.*;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.*;
@@ -32,6 +31,7 @@ public class CommandManager
     private final String BOT_OWNER_DISCORD_ID;
     //private final SettingsParser SETTINGS;
     private final DiscordCommand DISCORD_COMMAND;
+    private final DiscordCommand DISCORD_COMMAND_MENTION;
     private final CommandLine COMMAND_LINE;
     private static String commandPrefix;
 
@@ -44,15 +44,24 @@ public class CommandManager
         //SETTINGS = new SettingsParser();
 
         //BOT_OWNER_DISCORD_ID = SETTINGS.getBotOwnerDiscordID();
-        BOT_OWNER_DISCORD_ID = SettingsParser.getBotOwnerDiscordID();
+        //BOT_OWNER_DISCORD_ID = SettingsParser.getBotOwnerDiscordID();
+        BOT_OWNER_DISCORD_ID = LoginSettingsParser.getBotOwnerDiscordID();
 
         DISCORD_COMMAND = new DiscordCommand(client);
         //DISCORD_COMMAND.setUseMention(SETTINGS.isUseMention());
         //DISCORD_COMMAND.setCommandPrefix(SETTINGS.getCommandPrefix());
         //DISCORD_COMMAND.setDeleteUserMessage(SETTINGS.isDeleteUserMessage());
-        DISCORD_COMMAND.setUseMention(SettingsParser.isUseMention());
-        DISCORD_COMMAND.setCommandPrefix(SettingsParser.getCommandPrefix());
-        DISCORD_COMMAND.setDeleteUserMessage(SettingsParser.isDeleteUserMessage());
+        //DISCORD_COMMAND.setUseMention(SettingsParser.isUseMention());
+        //DISCORD_COMMAND.setCommandPrefix(SettingsParser.getCommandPrefix());
+        //DISCORD_COMMAND.setDeleteUserMessage(SettingsParser.isDeleteUserMessage());
+        DISCORD_COMMAND.setUseMention(false);
+        DISCORD_COMMAND.setCommandPrefix(CommandSettingsParser.getCommandPrefix());
+        DISCORD_COMMAND.setDeleteUserMessage(CommandSettingsParser.isDeleteUserMessage());
+
+        DISCORD_COMMAND_MENTION = new DiscordCommand(client);
+        DISCORD_COMMAND_MENTION.setUseMention(true);
+        DISCORD_COMMAND_MENTION.setCommandPrefix(CommandSettingsParser.getCommandPrefix());
+        DISCORD_COMMAND_MENTION.setDeleteUserMessage(CommandSettingsParser.isDeleteUserMessage());
 
         String playingText;
         String botName = new ScoutMasterParser().getBotName();
@@ -77,7 +86,18 @@ public class CommandManager
         client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, playingText);
         //client.changePlayingText(playingText);
 
-        COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
+        if (DISCORD_COMMAND.meetsConditions(MESSAGE) != null)
+        {
+            COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
+        }
+        else if (DISCORD_COMMAND_MENTION.meetsConditions(MESSAGE) != null)
+        {
+            COMMAND_LINE = DISCORD_COMMAND_MENTION.meetsConditions(MESSAGE);
+        }
+        else
+        {
+            COMMAND_LINE = null;
+        }
 
         try
         {
@@ -135,6 +155,10 @@ public class CommandManager
                 else if (COMMAND_LINE.getCommand().equalsIgnoreCase("reload") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
                 {
                     reloadCommand();
+                }
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("settings") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
+                {
+                    new SettingsManager(CHANNEL, COMMAND_LINE);
                 }
             }
         }
@@ -265,10 +289,10 @@ public class CommandManager
                         quantity = 1;
                     }
                     //else if (quantity > SETTINGS.getMaxShopLimit())
-                    else if (quantity > SettingsParser.getMaxShopLimit())
+                    else if (quantity > ShopSettingsParser.getMaxShopLimit())
                     {
                         //quantity = SETTINGS.getMaxShopLimit();
-                        quantity = SettingsParser.getMaxShopLimit();
+                        quantity = ShopSettingsParser.getMaxShopLimit();
                     }
 
                     new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), quantity, true);

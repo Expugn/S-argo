@@ -4,7 +4,7 @@ import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.Utilities.ImageEditor;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,12 +103,19 @@ abstract class WeaponScout
         //IMAGE_DISABLED = SETTINGS.isDisableImages();
         //SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
 
-        IS_RARITY_STARS = SettingsParser.isRarityStars();
-        COPPER = (int) ((SettingsParser.getCopperRates() * 100) + (SettingsParser.getPlatinumRates() * 100));
-        SILVER = (int) (SettingsParser.getSilverRates() * 100);
-        GOLD = (int) (SettingsParser.getGoldRates() * 100);
-        IMAGE_DISABLED = SettingsParser.isDisableImages();
-        SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
+        //IS_RARITY_STARS = SettingsParser.isRarityStars();
+        //COPPER = (int) ((SettingsParser.getCopperRates() * 100) + (SettingsParser.getPlatinumRates() * 100));
+        //SILVER = (int) (SettingsParser.getSilverRates() * 100);
+        //GOLD = (int) (SettingsParser.getGoldRates() * 100);
+        //IMAGE_DISABLED = SettingsParser.isDisableImages();
+        //SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
+
+        IS_RARITY_STARS = ScoutSettingsParser.isRarityStars();
+        COPPER = (int) ((ScoutSettingsParser.getCopperRate() * 100) + (ScoutSettingsParser.getPlatinumRate() * 100));
+        SILVER = (int) (ScoutSettingsParser.getSilverRate() * 100);
+        GOLD = (int) (ScoutSettingsParser.getGoldRate() * 100);
+        IMAGE_DISABLED = ScoutSettingsParser.isDisableImages();
+        SIMPLE_MESSAGE = ScoutSettingsParser.isSimpleMessage();
 
         /* USER */
         userMemoryDiamonds = USER.getMemoryDiamonds();

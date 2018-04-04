@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
  * @version 1.0
  * @since v1.0
  */
+@Deprecated
 public class GUI extends JFrame
 {
     private static final int WIDTH = 550;

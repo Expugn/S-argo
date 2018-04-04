@@ -46,7 +46,8 @@ public class ScoutMasterParser
         useDefaults = false;
         quotes = new ArrayList<>();
         //scoutMasterName = new SettingsParser().getScoutMaster();
-        scoutMasterName = SettingsParser.getScoutMaster();
+        //scoutMasterName = SettingsParser.getScoutMaster();
+        scoutMasterName = ScoutSettingsParser.getScoutMaster();
 
         if (!(new File("data/mods/" + scoutMasterName + ".xml").exists()))
             useDefaults = true;
@@ -258,14 +259,8 @@ public class ScoutMasterParser
                 }
             }
         }
-        catch (FileNotFoundException e)
+        catch (FileNotFoundException | XMLStreamException e)
         {
-            System.out.println("[ScoutMasterParser] - File Not Found Exception");
-            useDefaults = true;
-        }
-        catch (XMLStreamException e)
-        {
-            System.out.println("[ScoutMasterParser] - XML Stream Exception");
             useDefaults = true;
         }
         finally

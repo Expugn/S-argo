@@ -1,6 +1,6 @@
 package io.github.spugn.Sargo.Utilities;
 
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.LoginSettingsParser;
 
 public class GitHubImage
 {
@@ -10,7 +10,7 @@ public class GitHubImage
     public GitHubImage(String filePath)
     {
         //GITHUB_IMAGE = new SettingsParser().getGitHubRepoURL();
-        GITHUB_IMAGE = SettingsParser.getGitHubRepoURL();
+        GITHUB_IMAGE = LoginSettingsParser.getGitHubRepoURL();
         this.filePath = filePath;
     }
 

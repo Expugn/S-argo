@@ -5,7 +5,7 @@ import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
 import sx.blah.discord.handle.obj.IChannel;
 
 import java.text.DecimalFormat;
@@ -79,12 +79,19 @@ public class BannerInfo
         //recordCrystal = settings.getRecordCrystalRates();
         //circulatingRecordCrystal = settings.getCirculatingRecordCrystalRates();
 
-        copper = (int) (SettingsParser.getCopperRates() * 100);
-        silver = (int) (SettingsParser.getSilverRates() * 100);
-        gold = (int) (SettingsParser.getGoldRates() * 100);
-        platinum = (int) (SettingsParser.getPlatinumRates() * 100);
-        recordCrystal = SettingsParser.getRecordCrystalRates();
-        circulatingRecordCrystal = SettingsParser.getCirculatingRecordCrystalRates();
+        //copper = (int) (SettingsParser.getCopperRates() * 100);
+        //silver = (int) (SettingsParser.getSilverRates() * 100);
+        //gold = (int) (SettingsParser.getGoldRates() * 100);
+        //platinum = (int) (SettingsParser.getPlatinumRates() * 100);
+        //recordCrystal = SettingsParser.getRecordCrystalRates();
+        //circulatingRecordCrystal = SettingsParser.getCirculatingRecordCrystalRates();
+
+        copper = (int) (ScoutSettingsParser.getCopperRate() * 100);
+        silver = (int) (ScoutSettingsParser.getSilverRate() * 100);
+        gold = (int) (ScoutSettingsParser.getGoldRate() * 100);
+        platinum = (int) (ScoutSettingsParser.getPlatinumRate() * 100);
+        recordCrystal = ScoutSettingsParser.getRecordCrystalRates();
+        circulatingRecordCrystal = ScoutSettingsParser.getCirculatingRecordCrystalRates();
 
         getBannerInfo();
     }

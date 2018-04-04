@@ -2,10 +2,9 @@ package io.github.spugn.Sargo.Listeners;
 
 import io.github.spugn.Sargo.Functions.Reload;
 import io.github.spugn.Sargo.Functions.Update;
-import io.github.spugn.Sargo.GUI.GUI;
 import io.github.spugn.Sargo.System.SystemData;
+import io.github.spugn.Sargo.XMLParsers.CommandSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.ScoutMasterParser;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sx.blah.discord.api.IDiscordClient;
@@ -45,22 +44,24 @@ public class ReadyListener
         botName = new ScoutMasterParser().getBotName();
 
         //if (!settings.isNoGUI())
-        if (!SettingsParser.isNoGUI())
-        {
-            new GUI(CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
-        }
+        //if (!SettingsParser.isNoGUI())
+        //{
+        //    new GUI(CLIENT.getOurUser().getName() + "#" + CLIENT.getOurUser().getDiscriminator());
+        //}
 
         String playingText;
         String commandPrefix;
         //if (settings.isUseMention())
-        if (SettingsParser.isUseMention())
+        //if (SettingsParser.isUseMention())
+        if (false)
         {
             commandPrefix = "@" + CLIENT.getOurUser().getName() + " ";
         }
         else
         {
             //commandPrefix = settings.getCommandPrefix() + "";
-            commandPrefix = SettingsParser.getCommandPrefix() + "";
+            //commandPrefix = SettingsParser.getCommandPrefix() + "";
+            commandPrefix = CommandSettingsParser.getCommandPrefix() + "";
         }
 
         if (CLIENT.getOurUser().getStringID().equalsIgnoreCase("356981380338679810") ||

@@ -4,10 +4,7 @@ import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.Utilities.ImageEditor;
-import io.github.spugn.Sargo.XMLParsers.BannerParser;
-import io.github.spugn.Sargo.XMLParsers.ScoutMasterParser;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
-import io.github.spugn.Sargo.XMLParsers.UserParser;
+import io.github.spugn.Sargo.XMLParsers.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sx.blah.discord.handle.obj.IChannel;
@@ -112,17 +109,27 @@ abstract class CharacterScout
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */
-        IS_RARITY_STARS = SettingsParser.isRarityStars();
-        COPPER = (int) (SettingsParser.getCopperRates() * 100);
-        SILVER = (int) (SettingsParser.getSilverRates() * 100);
-        GOLD = (int) (SettingsParser.getGoldRates() * 100);
-        PLATINUM = (int) (SettingsParser.getPlatinumRates() * 100);
-        RECORD_CRYSTAL_RATES = SettingsParser.getRecordCrystalRates();
-        CIRCULATING_RECORD_CRYSTAL_RATES = SettingsParser.getCirculatingRecordCrystalRates();
-        GOLD_BANNERS = SettingsParser.getGoldBanners();
-        GOLD_BANNERS_V2 = SettingsParser.getGoldBannersv2();
-        IMAGE_DISABLED = SettingsParser.isDisableImages();
-        SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
+        //IS_RARITY_STARS = SettingsParser.isRarityStars();
+        //COPPER = (int) (SettingsParser.getCopperRates() * 100);
+        //SILVER = (int) (SettingsParser.getSilverRates() * 100);
+        //GOLD = (int) (SettingsParser.getGoldRates() * 100);
+        //PLATINUM = (int) (SettingsParser.getPlatinumRates() * 100);
+        //RECORD_CRYSTAL_RATES = SettingsParser.getRecordCrystalRates();
+        //CIRCULATING_RECORD_CRYSTAL_RATES = SettingsParser.getCirculatingRecordCrystalRates();
+        //GOLD_BANNERS = SettingsParser.getGoldBanners();
+        //GOLD_BANNERS_V2 = SettingsParser.getGoldBannersv2();
+        //IMAGE_DISABLED = SettingsParser.isDisableImages();
+        //SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
+
+        IS_RARITY_STARS = ScoutSettingsParser.isRarityStars();
+        COPPER = (int) (ScoutSettingsParser.getCopperRate() * 100);
+        SILVER = (int) (ScoutSettingsParser.getSilverRate() * 100);
+        GOLD = (int) (ScoutSettingsParser.getGoldRate() * 100);
+        PLATINUM = (int) (ScoutSettingsParser.getPlatinumRate() * 100);
+        RECORD_CRYSTAL_RATES = ScoutSettingsParser.getRecordCrystalRates();
+        CIRCULATING_RECORD_CRYSTAL_RATES = ScoutSettingsParser.getCirculatingRecordCrystalRates();
+        IMAGE_DISABLED = ScoutSettingsParser.isDisableImages();
+        SIMPLE_MESSAGE = ScoutSettingsParser.isSimpleMessage();
 
         /* USER */
         userMemoryDiamonds = USER.getMemoryDiamonds();

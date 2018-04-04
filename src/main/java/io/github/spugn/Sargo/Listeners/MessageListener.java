@@ -2,7 +2,7 @@ package io.github.spugn.Sargo.Listeners;
 
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.WarningMessage;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.CommandSettingsParser;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
@@ -38,9 +38,37 @@ public class MessageListener
         {
             //SettingsParser settings = new SettingsParser();
             //if (!(settings.getIgnoredChannelNames().contains(event.getChannel().getName())))
-            if (!(SettingsParser.getIgnoredChannelNames().contains(event.getChannel().getName())))
+            //if (!(SettingsParser.getIgnoredChannelNames().contains(event.getChannel().getName())))
+            if (CommandSettingsParser.getMainChannel().isEmpty())
             {
-                new CommandManager(client, event);
+                boolean isInBlacklistedChannel = CommandSettingsParser.getBlacklistedChannels().contains(event.getChannel().getName()) ||
+                                            CommandSettingsParser.getBlacklistedChannels().contains(event.getChannel().getStringID());
+
+                if (!isInBlacklistedChannel)
+                {
+                    new CommandManager(client, event);
+                }
+            }
+            else
+            {
+                boolean isInMainChannel;
+
+                try
+                {
+                    isInMainChannel = (event.getChannel().getLongID() == Long.parseLong(CommandSettingsParser.getMainChannel()));
+                }
+                catch (NumberFormatException e)
+                {
+                    isInMainChannel = (event.getChannel().getName().equalsIgnoreCase(CommandSettingsParser.getMainChannel()));
+                }
+
+                boolean isInWhitelistedChannel = CommandSettingsParser.getWhitelistedChannels().contains(event.getChannel().getName()) ||
+                                            CommandSettingsParser.getWhitelistedChannels().contains(event.getChannel().getStringID());
+
+                if (isInMainChannel || isInWhitelistedChannel)
+                {
+                    new CommandManager(client, event);
+                }
             }
 
         }

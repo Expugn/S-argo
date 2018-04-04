@@ -4,7 +4,7 @@ import io.github.spugn.Sargo.Objects.Item;
 import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.Utilities.ImageEditor;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
@@ -86,9 +86,12 @@ abstract class TicketScout
         //IMAGE_DISABLED = SETTINGS.isDisableImages();
         //SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
         //IS_RARITY_STARS = SETTINGS.isRarityStars();
-        IMAGE_DISABLED = SettingsParser.isDisableImages();
-        SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
-        IS_RARITY_STARS = SettingsParser.isRarityStars();
+        //IMAGE_DISABLED = SettingsParser.isDisableImages();
+        //SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
+        //IS_RARITY_STARS = SettingsParser.isRarityStars();
+        IMAGE_DISABLED = ScoutSettingsParser.isDisableImages();
+        SIMPLE_MESSAGE = ScoutSettingsParser.isSimpleMessage();
+        IS_RARITY_STARS = ScoutSettingsParser.isRarityStars();
 
         /* USER */
         userColBalance = USER.getColBalance();

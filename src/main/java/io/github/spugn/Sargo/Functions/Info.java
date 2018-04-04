@@ -1,7 +1,7 @@
 package io.github.spugn.Sargo.Functions;
 
 import io.github.spugn.Sargo.System.SystemData;
-import io.github.spugn.Sargo.XMLParsers.SettingsParser;
+import io.github.spugn.Sargo.XMLParsers.LoginSettingsParser;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
@@ -30,7 +30,8 @@ public class Info
 
         try
         {
-            IUser botOwner = channel.getGuild().getUserByID(Long.parseLong(SettingsParser.getBotOwnerDiscordID()));
+            //IUser botOwner = channel.getGuild().getUserByID(Long.parseLong(SettingsParser.getBotOwnerDiscordID()));
+            IUser botOwner = channel.getGuild().getUserByID(Long.parseLong(LoginSettingsParser.getBotOwnerDiscordID()));
             String botOwnerName = botOwner.getName() + "#" + botOwner.getDiscriminator();
             builder.appendField("Bot Owner", botOwnerName, true);
         }

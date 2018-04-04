@@ -6,12 +6,12 @@ import sx.blah.discord.handle.obj.IUser;
 
 public class DiscordCommand
 {
-    private static IDiscordClient CLIENT;
-    private static IUser USER;
+    private IDiscordClient CLIENT;
+    private IUser USER;
 
-    private static boolean USE_MENTION = false;
-    private static boolean DELETE_USER_MESSAGE = false;
-    private static char COMMAND_PREFIX = '/';
+    private boolean USE_MENTION = false;
+    private boolean DELETE_USER_MESSAGE = false;
+    private char COMMAND_PREFIX = '/';
 
     public DiscordCommand(IDiscordClient botClient)
     {
