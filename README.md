@@ -140,7 +140,8 @@ i = "image"
 | `update` | Download any missing character/weapon images from the data repository. | `$update` |
 | `update r` | Delete all files in the character/weapon folders and re-download them. | `$update r` |
 | `update o` | Replace all character/weapon files with a new copy. | `$update o` |
-| `reload` | Reload the `Banners.xml` and `Settings.xml` files to use any new changes that were made. | `$reload` |
+| `reload` | Reload the `Banners.xml` and setting files to use any new changes that were made. | `$reload` |
+| `settings` | Used to modify the setting files. | `$reload` |
 | `stop` | Shutdown the bot. | `$stop` |
 
 ## Related Links

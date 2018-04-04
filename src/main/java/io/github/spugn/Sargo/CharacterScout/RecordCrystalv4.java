@@ -174,7 +174,8 @@ public class RecordCrystalv4 extends CharacterScout
                 userRecordCrystals = USER.getBannerData(SELECTED_BANNER.getBannerName());
                 if (userRecordCrystals < 10)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need 10 record crystals to do a record crystal scout.").get().build());
+                    CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need `10` record crystals to do a record crystal scout.\n\n" +
+                            "You currently have `" + userRecordCrystals + "` `" + SELECTED_BANNER.getBannerName() + "` Record Crystals.").get().build());
                     return;
                 }
 
