@@ -347,7 +347,8 @@ public class BannerInfo
                 {
                     int counter2 = 0;
                     String circluatingRecordCrystalRates = "";
-                    if (banner.getBannerType() == 8)
+                    if (banner.getBannerType() == 8 ||
+                            banner.getBannerType() == 11)
                     {
                         for (double d : circulatingRecordCrystal)
                         {
