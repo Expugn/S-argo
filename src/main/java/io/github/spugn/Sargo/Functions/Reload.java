@@ -42,6 +42,12 @@ public class Reload
 
     public static void silentReloadSettings()
     {
+        boolean dataFolderExists = new File("data").exists();
+        if (!dataFolderExists)
+        {
+            new File("data").mkdir();
+        }
+
         boolean settingsFolderExists = new File("data/settings").exists();
         if (!settingsFolderExists)
         {
