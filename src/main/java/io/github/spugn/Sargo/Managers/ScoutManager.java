@@ -86,6 +86,10 @@ class ScoutManager
                 LOGGER.debug("[RECORD CRYSTAL V4] " + banners.get(bannerID - 1).getBannerName() + " " + choice + " in Channel \"" + channel.getName() + "\"");
                 new RecordCrystalv4(channel, bannerID, choice, discordID);
                 break;
+            case 12:
+                LOGGER.debug("[STEP UP V4] " + banners.get(bannerID - 1).getBannerName() + " " + choice + " in Channel \"" + channel.getName() + "\"");
+                new StepUpv4(channel, bannerID, choice, discordID);
+                break;
             default:
                 channel.sendMessage(new WarningMessage("UNKNOWN BANNER TYPE", "Please correct the issue or update the bot.").get().build());
                 break;

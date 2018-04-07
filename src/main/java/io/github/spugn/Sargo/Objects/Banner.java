@@ -99,6 +99,8 @@ public class Banner
                 return "SAO Game 5th Anniversary Step Up";
             case 11:
                 return "Record Crystal v4";
+            case 12:
+                return "Step Up v4";
             default:
                 return "Unknown";
         }

@@ -574,11 +574,7 @@ public class UserParser
                 }
             }
         }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLStreamException e)
+        catch (FileNotFoundException | XMLStreamException e)
         {
             e.printStackTrace();
         }
@@ -715,7 +711,8 @@ public class UserParser
                         b.getBannerType() == 3 ||
                         b.getBannerType() == 4 ||
                         b.getBannerType() == 7 ||
-                        b.getBannerType() == 10)
+                        b.getBannerType() == 10 ||
+                        b.getBannerType() == 12)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_STEP);
                 }
@@ -806,11 +803,7 @@ public class UserParser
             eventWriter.add(eventFactory.createEndDocument());
             eventWriter.close();
         }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLStreamException e)
+        catch (FileNotFoundException | XMLStreamException e)
         {
             e.printStackTrace();
         }
@@ -1099,11 +1092,7 @@ public class UserParser
             eventWriter.add(eventFactory.createEndDocument());
             eventWriter.close();
         }
-        catch (FileNotFoundException e)
-        {
-            e.printStackTrace();
-        }
-        catch (XMLStreamException e)
+        catch (FileNotFoundException | XMLStreamException e)
         {
             e.printStackTrace();
         }

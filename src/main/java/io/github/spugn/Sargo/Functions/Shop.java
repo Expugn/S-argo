@@ -41,7 +41,6 @@ public class Shop
         int largestPackAmount = 0;
 
         builder.withAuthorName("Shop");
-        builder.withDesc("***No actual currency is required to get Memory Diamonds.***");
         builder.withColor(233, 228, 232);
         builder.withThumbnail(new GitHubImage("images/System/Shop_Icon.png").getURL());
 
@@ -72,7 +71,8 @@ public class Shop
             }
         }
 
-        builder.withFooterText("To get Memory Diamonds use '" + CommandManager.getCommandPrefix() + "shop [Item ID] [Quantity]' OR use '" + CommandManager.getCommandPrefix() + "shop " + largestPackID + " " + ShopSettingsParser.getMaxShopLimit() + "' to get " + (largestPackAmount * ShopSettingsParser.getMaxShopLimit()) + " Memory Diamonds.");
+        builder.withDesc("***No actual currency is required to get Memory Diamonds.***\n\n**Use `" + CommandManager.getCommandPrefix() + "shop " + largestPackID + " " + ShopSettingsParser.getMaxShopLimit() + "` to get `" + (largestPackAmount * ShopSettingsParser.getMaxShopLimit()) + "` Memory Diamonds.**");
+        builder.withFooterText("To get Memory Diamonds use '" + CommandManager.getCommandPrefix() + "shop [Item ID] [Quantity]'");
 
         channel.sendMessage(builder.build());
     }

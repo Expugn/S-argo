@@ -8,38 +8,9 @@ import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
-/**
- * SAO GAME 5TH ANNIVERSARY CHARACTER SCOUT
- * <p>
- *     View {@link StepUp}'s JavaDoc for more information
- *     about Step Up scouts in general.<br>
- *
- *     Same deal as StepUpv2, but with some changes to what
- *     happens in each step. This scout type is used for
- *     the banners that include characters with voted skills.
- * </p>
- * <p>
- *     STEP CHANGES:<br>
- *     Step 1)<br>
- *          - Multi Scout price is 55 Memory Diamonds.<br>
- *     Step 3)<br>
- *          - Platinum rarity character rates increase by 1.5x.<br>
- *     Step 5)<br>
- *          - One platinum rarity character is guaranteed.<br>
- *     Step 6)<br>
- *          - Platinum rarity character rates increase by 2.0x<br>
- *          - Step 6 repeats.
- * </p>
- *
- * @author S'pugn
- * @version 1.0
- * @since v2.0
- * @see StepUp
- * @see CharacterScout
- */
-public class SAOGameFifthAnniversaryStepUp extends CharacterScout
+public class StepUpv4 extends CharacterScout
 {
-    public SAOGameFifthAnniversaryStepUp(IChannel channel, int bannerID, String choice, String discordID)
+    public StepUpv4(IChannel channel, int bannerID, String choice, String discordID)
     {
         super(channel, bannerID, choice, discordID);
         run();
@@ -55,12 +26,16 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
+        COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
+        PLATINUM = PLATINUM * 1.5;
+
         switch (bannerTypeData)
         {
             case 1:
-                multiScoutPrice = 55;
+                multiScoutPrice = 125;
                 break;
             case 3:
+                multiScoutPrice = 125;
                 COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
                 PLATINUM = PLATINUM * 1.5;
                 break;
@@ -143,10 +118,10 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[SAO Game 5th Anniversary Step Up] - Step " + bannerTypeData);
+                    scoutMenu.withTitle("[Step Up v4] - Step " + bannerTypeData);
                     break;
                 default:
-                    scoutMenu.withTitle("[SAO Game 5th Anniversary Step Up] - Unknown");
+                    scoutMenu.withTitle("[Step Up v4] - Unknown");
                     break;
             }
         }
@@ -160,10 +135,10 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    simpleMessage += "**[SAO Game 5th Anniversary Step Up] - Step " + bannerTypeData + "**" + "\n";
+                    simpleMessage += "**[Step Up v4] - Step " + bannerTypeData + "**" + "\n";
                     break;
                 default:
-                    simpleMessage += "**[SAO Game 5th Anniversary Step Up] - Unknown**" + "\n";
+                    simpleMessage += "**[Step Up v4] - Unknown**" + "\n";
                     break;
             }
         }
