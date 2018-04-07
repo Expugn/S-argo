@@ -31,6 +31,10 @@ public class LoginSettingsParser extends XMLEditor
     public static String getBotOwnerDiscordID() { return botOwnerDiscordID; }
     public static String getGitHubRepoURL() { return gitHubRepoURL; }
 
+    public static void setBotToken(String bT) { botToken = bT; }
+    public static void setBotOwnerDiscordID(String bODI) { botOwnerDiscordID = bODI; }
+    public static void setGithubDataRepository(String ghDR) { gitHubRepoURL = ghDR; }
+
     public void reload()
     {
         try
@@ -154,6 +158,42 @@ public class LoginSettingsParser extends XMLEditor
             {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void saveFile()
+    {
+        try
+        {
+            /* INITIALIZE VARIABLES */
+            XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
+            XMLEventWriter eventWriter = outputFactory.createXMLEventWriter(new FileOutputStream(FILE_PATH));
+            XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+            XMLEvent end = eventFactory.createDTD("\n");
+
+            /* WRITE START DOCUMENT ELEMENT */
+            StartDocument startDocument = eventFactory.createStartDocument();
+            eventWriter.add(startDocument);
+            eventWriter.add(end);
+
+            /* BEGIN WRITING USER CONFIG, WRITE CommandSettings START ELEMENT */
+            StartElement configStartElement = eventFactory.createStartElement("", "", LOGIN_SETTINGS);
+            eventWriter.add(configStartElement);
+            eventWriter.add(end);
+
+            writeNode(eventWriter, BOT_TOKEN, botToken);
+            writeNode(eventWriter, BOT_OWNER_ID, botOwnerDiscordID);
+            writeNode(eventWriter, GITHUB_DATA_REPOSITORY, gitHubRepoURL);
+
+            /* WRITE CommandSettings END ELEMENT AND CLOSE WRITER */
+            eventWriter.add(eventFactory.createEndElement("", "", LOGIN_SETTINGS));
+            eventWriter.add(end);
+            eventWriter.add(eventFactory.createEndDocument());
+            eventWriter.close();
+        }
+        catch (FileNotFoundException | XMLStreamException e)
+        {
+            e.printStackTrace();
         }
     }
 }

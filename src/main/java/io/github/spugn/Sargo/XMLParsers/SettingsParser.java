@@ -56,7 +56,7 @@ public class SettingsParser
 
     /* SHOP SETTINGS */
     private static int maxShopLimit;
-    private static SortedMap<String, SortedMap<Double, Integer>> shopItems;
+    private static Map<String, Map<Double, Integer>> shopItems;
 
     public static String getBotToken() { return botToken; }
     public static boolean isNoGUI() { return isNoGUI; }
@@ -82,7 +82,7 @@ public class SettingsParser
     public static List<Integer> getGoldBannersv2() { return BannerParser.getGoldBannersv2(); }
 
     public static int getMaxShopLimit() { return maxShopLimit; }
-    public static SortedMap<String, SortedMap<Double, Integer>> getShopItems() { return shopItems; }
+    public static Map<String, Map<Double, Integer>> getShopItems() { return shopItems; }
 
     /**
      * Reads the data in the Settings.xml file and saves the data in variables.
@@ -419,7 +419,7 @@ public class SettingsParser
                 }
                 if (event.asStartElement().getName().getLocalPart().equals("shopItem"))
                 {
-                    SortedMap<Double, Integer> priceAndAmount = new TreeMap<>();
+                    HashMap<Double, Integer> priceAndAmount = new HashMap<>();
                     String itemName = "";
                     Double price = 0.0;
                     int amount = 0;

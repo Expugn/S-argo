@@ -128,6 +128,8 @@ abstract class CharacterScout
         PLATINUM = (int) (ScoutSettingsParser.getPlatinumRate() * 100);
         RECORD_CRYSTAL_RATES = ScoutSettingsParser.getRecordCrystalRates();
         CIRCULATING_RECORD_CRYSTAL_RATES = ScoutSettingsParser.getCirculatingRecordCrystalRates();
+        GOLD_BANNERS = BannerParser.getGoldBanners();
+        GOLD_BANNERS_V2 = BannerParser.getGoldBannersv2();
         IMAGE_DISABLED = ScoutSettingsParser.isDisableImages();
         SIMPLE_MESSAGE = ScoutSettingsParser.isSimpleMessage();
 
