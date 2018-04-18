@@ -82,10 +82,6 @@ public class CommandManager
             {
                 if (COMMAND_LINE.getCommand().equalsIgnoreCase("scout"))
                 {
-                    if (!CHANNEL.getTypingStatus())
-                    {
-                        CHANNEL.setTypingStatus(true);
-                    }
                     scoutCommand();
                 }
                 else if (COMMAND_LINE.getCommand().equalsIgnoreCase("help"))
@@ -143,13 +139,6 @@ public class CommandManager
         {
             System.out.println("[CommandManager] - Not Enough Permissions.");
         }
-        finally
-        {
-            if (CHANNEL.getTypingStatus())
-            {
-                CHANNEL.setTypingStatus(false);
-            }
-        }
     }
 
     private void scoutCommand()
@@ -158,6 +147,10 @@ public class CommandManager
         {
             if (COMMAND_LINE.getArgumentCount() >= 2)
             {
+                if (!CHANNEL.getTypingStatus())
+                {
+                    CHANNEL.setTypingStatus(true);
+                }
                 if (COMMAND_LINE.getArgument(2).equalsIgnoreCase("ws") ||
                         COMMAND_LINE.getArgument(2).equalsIgnoreCase("wsi") ||
                         COMMAND_LINE.getArgument(2).equalsIgnoreCase("wm") ||
@@ -201,6 +194,10 @@ public class CommandManager
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("pt2m") ||
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("pt2mi"))
                 {
+                    if (!CHANNEL.getTypingStatus())
+                    {
+                        CHANNEL.setTypingStatus(true);
+                    }
                     new TicketScoutManager(CHANNEL, COMMAND_LINE.getArgument(1), DISCORD_ID);
                 }
                 else
@@ -230,6 +227,10 @@ public class CommandManager
             {
                 CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
             }
+        }
+        if (CHANNEL.getTypingStatus())
+        {
+            CHANNEL.setTypingStatus(false);
         }
     }
 
