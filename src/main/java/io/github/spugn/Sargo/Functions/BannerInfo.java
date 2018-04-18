@@ -215,7 +215,8 @@ public class BannerInfo
 
             /* IF RECORD CRYSTAL V4 AND ABOVE, INCREASE PLATINUM RATES BY 1.5 */
             if (banner.getBannerType() == 11 ||
-                    banner.getBannerType() == 12)
+                    banner.getBannerType() == 12 ||
+                    banner.getBannerType() == 13)
             {
                 copper = copper - ((platinum * 1.5) - platinum);
                 platinum = platinum * 1.5;
@@ -264,7 +265,8 @@ public class BannerInfo
             /* BANNER IS STEP UP V2 */
             else if (banner.getBannerType() == 3 ||
                     banner.getBannerType() == 10 ||
-                    banner.getBannerType() == 12)
+                    banner.getBannerType() == 12 ||
+                    banner.getBannerType() == 13)
             {
                 double tC = copper - ((platinum * 1.5) - platinum);
                 double tS = silver;

@@ -1,29 +1,3 @@
-# Frequently Asked Questions
-> I can't use bot owner commands! (update, stop, etc)
-
-Make sure you've put your Discord ID in the appropriate location in Settings.xml.  
-Your Discord ID is not your username and discriminator (i.e.: S'pugn#2612). 
- 
-To get your Discord ID, go to "User Settings" > "Appearance" and turn on 
-"Developer Mode" which is located under "Advanced". Once Developer Mode is enabled,
-you can now right click your name/profile picture and click "Copy ID". Paste the ID
-under the appropriate location in Settings.xml.
-
-If you don't wish to keep developer mode, feel free to turn it back off.
-
-> The bot doesn't recognize anything but '@botname <command>'!
-
-Set "UseMention" in the Settings.xml file to false.
-
-> I'm just getting text results for scouts! Where are the images?
-
-Make sure to include an 'i' after the scout type you want.  
-For example: using 'scout 1 mi' will produce an image for the multi pull
-you just did for the *Start Dash* banner.
-
-If that isn't the case, make sure "DisableImages" in the Settings.xml file
-is set to false.
-
 # Contributing to S'argo
 
 ## Bug Reports
@@ -41,7 +15,6 @@ I will try to then correct your issue to the best of my ability.
 - Use a personal GitHubDataRepository
 - Use a non-official/self-modified version of the bot
 - Use a custom Banners.xml file
-- Use a custom Settings.xml file
 - Use custom character images
 - Haven't followed the proper update instructions
 - Haven't followed the proper setup instructions

@@ -90,6 +90,10 @@ class ScoutManager
                 LOGGER.debug("[STEP UP V4] " + banners.get(bannerID - 1).getBannerName() + " " + choice + " in Channel \"" + channel.getName() + "\"");
                 new StepUpv4(channel, bannerID, choice, discordID);
                 break;
+            case 13:
+                LOGGER.debug("[STEP UP V5] " + banners.get(bannerID - 1).getBannerName() + " " + choice + " in Channel \"" + channel.getName() + "\"");
+                new StepUpv5(channel, bannerID, choice, discordID);
+                break;
             default:
                 channel.sendMessage(new WarningMessage("UNKNOWN BANNER TYPE", "Please correct the issue or update the bot.").get().build());
                 break;

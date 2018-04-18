@@ -20,60 +20,38 @@ import sx.blah.discord.util.RateLimitException;
  * </p>
  *
  * @author S'pugn
- * @version 1.1
+ * @version 1.2
  * @since v1.0
  */
 public class CommandManager
 {
     private final IChannel CHANNEL;
-    private final IMessage MESSAGE;
     private final String DISCORD_ID;
-    private final String BOT_OWNER_DISCORD_ID;
-    //private final SettingsParser SETTINGS;
-    private final DiscordCommand DISCORD_COMMAND;
-    private final DiscordCommand DISCORD_COMMAND_MENTION;
     private final CommandLine COMMAND_LINE;
     private static String commandPrefix;
 
     public CommandManager(IDiscordClient client, MessageReceivedEvent event)
     {
         CHANNEL = event.getChannel();
-        MESSAGE = event.getMessage();
-        DISCORD_ID = MESSAGE.getAuthor().getStringID();
+        IMessage message = event.getMessage();
+        DISCORD_ID = message.getAuthor().getStringID();
 
-        //SETTINGS = new SettingsParser();
+        String botOwnerDiscordID = LoginSettingsParser.getBotOwnerDiscordID();
 
-        //BOT_OWNER_DISCORD_ID = SETTINGS.getBotOwnerDiscordID();
-        //BOT_OWNER_DISCORD_ID = SettingsParser.getBotOwnerDiscordID();
-        BOT_OWNER_DISCORD_ID = LoginSettingsParser.getBotOwnerDiscordID();
+        DiscordCommand discordCommand = new DiscordCommand(client);
+        discordCommand.setUseMention(false);
+        discordCommand.setCommandPrefix(CommandSettingsParser.getCommandPrefix());
+        discordCommand.setDeleteUserMessage(CommandSettingsParser.isDeleteUserMessage());
 
-        DISCORD_COMMAND = new DiscordCommand(client);
-        //DISCORD_COMMAND.setUseMention(SETTINGS.isUseMention());
-        //DISCORD_COMMAND.setCommandPrefix(SETTINGS.getCommandPrefix());
-        //DISCORD_COMMAND.setDeleteUserMessage(SETTINGS.isDeleteUserMessage());
-        //DISCORD_COMMAND.setUseMention(SettingsParser.isUseMention());
-        //DISCORD_COMMAND.setCommandPrefix(SettingsParser.getCommandPrefix());
-        //DISCORD_COMMAND.setDeleteUserMessage(SettingsParser.isDeleteUserMessage());
-        DISCORD_COMMAND.setUseMention(false);
-        DISCORD_COMMAND.setCommandPrefix(CommandSettingsParser.getCommandPrefix());
-        DISCORD_COMMAND.setDeleteUserMessage(CommandSettingsParser.isDeleteUserMessage());
-
-        DISCORD_COMMAND_MENTION = new DiscordCommand(client);
-        DISCORD_COMMAND_MENTION.setUseMention(true);
-        DISCORD_COMMAND_MENTION.setCommandPrefix(CommandSettingsParser.getCommandPrefix());
-        DISCORD_COMMAND_MENTION.setDeleteUserMessage(CommandSettingsParser.isDeleteUserMessage());
+        DiscordCommand discordCommandMention = new DiscordCommand(client);
+        discordCommandMention.setUseMention(true);
+        discordCommandMention.setCommandPrefix(CommandSettingsParser.getCommandPrefix());
+        discordCommandMention.setDeleteUserMessage(CommandSettingsParser.isDeleteUserMessage());
 
         String playingText;
         String botName = new ScoutMasterParser().getBotName();
-        if (DISCORD_COMMAND.getUseMention())
-        {
-            commandPrefix = "@" + client.getOurUser().getName() + " ";
-        }
-        else
-        {
-            commandPrefix = DISCORD_COMMAND.getCommandPrefix() + "";
-        }
 
+        commandPrefix = discordCommand.getCommandPrefix() + "";
         if (client.getOurUser().getStringID().equalsIgnoreCase("356981380338679810") ||
                 client.getOurUser().getStringID().equalsIgnoreCase("309620271621341185"))
         {
@@ -84,15 +62,14 @@ public class CommandManager
             playingText = botName + " | " + commandPrefix + "help";
         }
         client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, playingText);
-        //client.changePlayingText(playingText);
 
-        if (DISCORD_COMMAND.meetsConditions(MESSAGE) != null)
+        if (discordCommand.meetsConditions(message) != null)
         {
-            COMMAND_LINE = DISCORD_COMMAND.meetsConditions(MESSAGE);
+            COMMAND_LINE = discordCommand.meetsConditions(message);
         }
-        else if (DISCORD_COMMAND_MENTION.meetsConditions(MESSAGE) != null)
+        else if (discordCommandMention.meetsConditions(message) != null)
         {
-            COMMAND_LINE = DISCORD_COMMAND_MENTION.meetsConditions(MESSAGE);
+            COMMAND_LINE = discordCommandMention.meetsConditions(message);
         }
         else
         {
@@ -105,19 +82,11 @@ public class CommandManager
             {
                 if (COMMAND_LINE.getCommand().equalsIgnoreCase("scout"))
                 {
-                    /*
                     if (!CHANNEL.getTypingStatus())
                     {
                         CHANNEL.setTypingStatus(true);
                     }
-                    */
                     scoutCommand();
-                    /*
-                    if (CHANNEL.getTypingStatus())
-                    {
-                        CHANNEL.setTypingStatus(false);
-                    }
-                    */
                 }
                 else if (COMMAND_LINE.getCommand().equalsIgnoreCase("help"))
                 {
@@ -143,20 +112,20 @@ public class CommandManager
                 {
                     resetCommand();
                 }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("update") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("update") && DISCORD_ID.equals(botOwnerDiscordID))
                 {
                     updateCommand();
                 }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("stop") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("stop") && DISCORD_ID.equals(botOwnerDiscordID))
                 {
                     CHANNEL.sendMessage(new WarningMessage("SHUTTING DOWN", "Goodbye!").get().build());
                     System.exit(0);
                 }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("reload") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("reload") && DISCORD_ID.equals(botOwnerDiscordID))
                 {
                     reloadCommand();
                 }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("settings") && DISCORD_ID.equals(BOT_OWNER_DISCORD_ID))
+                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("settings") && DISCORD_ID.equals(botOwnerDiscordID))
                 {
                     new SettingsManager(CHANNEL, COMMAND_LINE);
                 }
@@ -176,12 +145,10 @@ public class CommandManager
         }
         finally
         {
-            /*
             if (CHANNEL.getTypingStatus())
             {
                 CHANNEL.setTypingStatus(false);
             }
-            */
         }
     }
 
@@ -253,15 +220,7 @@ public class CommandManager
                             CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
                         }
                     }
-                    catch (NumberFormatException f)
-                    {
-                        CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
-                    }
-                    catch (NullPointerException f)
-                    {
-                        CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
-                    }
-                    catch (StringIndexOutOfBoundsException f)
+                    catch (NumberFormatException | NullPointerException | StringIndexOutOfBoundsException f)
                     {
                         CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
                     }

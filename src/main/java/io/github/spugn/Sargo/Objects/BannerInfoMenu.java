@@ -78,7 +78,8 @@ public class BannerInfoMenu
         }
         else if (bannerType.equalsIgnoreCase("Step Up v2") ||
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up") ||
-                bannerType.equalsIgnoreCase("Step Up v4"))
+                bannerType.equalsIgnoreCase("Step Up v4") ||
+                bannerType.equalsIgnoreCase("Step Up v5"))
         {
             builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
             builder.appendField("- Step 5 Pull Rates -", stepFiveRatesList, true);
@@ -125,7 +126,8 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("Birthday Step Up") ||
                 bannerType.equalsIgnoreCase("Step Up v3") ||
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up") ||
-                bannerType.equalsIgnoreCase("Step Up v4"))
+                bannerType.equalsIgnoreCase("Step Up v4") ||
+                bannerType.equalsIgnoreCase("Step Up v5"))
         {
             if (weaponAmount > 0)
             {
