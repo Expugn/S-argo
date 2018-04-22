@@ -29,24 +29,28 @@ public class StepUpv4 extends CharacterScout
         COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
         PLATINUM = PLATINUM * 1.5;
 
-        switch (bannerTypeData)
+        if (CHOICE.equalsIgnoreCase("m") ||
+                CHOICE.equalsIgnoreCase("mi"))
         {
-            case 1:
-                multiScoutPrice = 125;
-                break;
-            case 3:
-                multiScoutPrice = 125;
-                COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
-                PLATINUM = PLATINUM * 1.5;
-                break;
-            case 5:
-                guaranteeOnePlatinum = true;
-                break;
-            case 6:
-                COPPER = COPPER - ((PLATINUM * 2.0) - PLATINUM);
-                PLATINUM = PLATINUM * 2.0;
-            default:
-                break;
+            switch (bannerTypeData)
+            {
+                case 1:
+                    multiScoutPrice = 125;
+                    break;
+                case 3:
+                    multiScoutPrice = 125;
+                    COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
+                    PLATINUM = PLATINUM * 1.5;
+                    break;
+                case 5:
+                    guaranteeOnePlatinum = true;
+                    break;
+                case 6:
+                    COPPER = COPPER - ((PLATINUM * 2.0) - PLATINUM);
+                    PLATINUM = PLATINUM * 2.0;
+                default:
+                    break;
+            }
         }
     }
 

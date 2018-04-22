@@ -59,24 +59,28 @@ public class StepUpv2 extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
-        switch (bannerTypeData)
+        if (CHOICE.equalsIgnoreCase("m") ||
+                CHOICE.equalsIgnoreCase("mi"))
         {
-            case 1:
-                multiScoutPrice = 200;
-                break;
-            case 3:
-                multiScoutPrice = 200;
-                COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
-                PLATINUM = PLATINUM * 1.5;
-                break;
-            case 5:
-                guaranteeOnePlatinum = true;
-                break;
-            case 6:
-                COPPER = COPPER - ((PLATINUM * 2.0) - PLATINUM);
-                PLATINUM = PLATINUM * 2.0;
-            default:
-                break;
+            switch (bannerTypeData)
+            {
+                case 1:
+                    multiScoutPrice = 200;
+                    break;
+                case 3:
+                    multiScoutPrice = 200;
+                    COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
+                    PLATINUM = PLATINUM * 1.5;
+                    break;
+                case 5:
+                    guaranteeOnePlatinum = true;
+                    break;
+                case 6:
+                    COPPER = COPPER - ((PLATINUM * 2.0) - PLATINUM);
+                    PLATINUM = PLATINUM * 2.0;
+                default:
+                    break;
+            }
         }
     }
 

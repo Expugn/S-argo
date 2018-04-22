@@ -52,15 +52,19 @@ public class RecordCrystalv3 extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
-        switch (bannerTypeData)
+        if (CHOICE.equalsIgnoreCase("m") ||
+                CHOICE.equalsIgnoreCase("mi"))
         {
-            case -1:
-                multiScoutPrice = 125;
-                bannerTypeData = 0;
-                USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
-                break;
-            default:
-                break;
+            switch (bannerTypeData)
+            {
+                case -1:
+                    multiScoutPrice = 125;
+                    bannerTypeData = 0;
+                    USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

@@ -46,15 +46,19 @@ public class RecordCrystalv4 extends CharacterScout
         COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
         PLATINUM = PLATINUM * 1.5;
 
-        switch (bannerTypeData)
+        if (CHOICE.equalsIgnoreCase("m") ||
+                CHOICE.equalsIgnoreCase("mi"))
         {
-            case -1:
-                multiScoutPrice = 125;
-                bannerTypeData = 0;
-                USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
-                break;
-            default:
-                break;
+            switch (bannerTypeData)
+            {
+                case -1:
+                    multiScoutPrice = 125;
+                    bannerTypeData = 0;
+                    USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

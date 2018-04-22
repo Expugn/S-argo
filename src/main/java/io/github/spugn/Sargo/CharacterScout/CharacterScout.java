@@ -187,6 +187,7 @@ abstract class CharacterScout
             }
 
             modifyScoutData();
+
             LOGGER.debug("\n- Scout Data -\n" +
                     "Single Price " + singleScoutPrice + "\n" +
                     "Multi Price: " + multiScoutPrice + "\n" +

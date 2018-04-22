@@ -55,17 +55,21 @@ public class BirthdayStepUp extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
-        switch (bannerTypeData)
+        if (CHOICE.equalsIgnoreCase("m") ||
+                CHOICE.equalsIgnoreCase("mi"))
         {
-            case 1:
-                multiScoutPrice = 125;
-                break;
-            case 3:
-                COPPER = COPPER - (((PLATINUM * 2.0) - PLATINUM) + ((GOLD * 2.0) - GOLD));
-                GOLD = GOLD * 2.0;
-                PLATINUM = PLATINUM * 2.0;
-            default:
-                break;
+            switch (bannerTypeData)
+            {
+                case 1:
+                    multiScoutPrice = 125;
+                    break;
+                case 3:
+                    COPPER = COPPER - (((PLATINUM * 2.0) - PLATINUM) + ((GOLD * 2.0) - GOLD));
+                    GOLD = GOLD * 2.0;
+                    PLATINUM = PLATINUM * 2.0;
+                default:
+                    break;
+            }
         }
     }
 
