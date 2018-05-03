@@ -178,7 +178,7 @@ public class RecordCrystalv2 extends CharacterScout
                 if (userRecordCrystals < 10)
                 {
                     CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need `10` record crystals to do a record crystal scout.\n\n" +
-                            "You currently have `" + userRecordCrystals + "` `" + SELECTED_BANNER.getBannerName() + "` Record Crystals.").get().build());
+                            "You currently have `" + (userRecordCrystals >= 0 ? userRecordCrystals : "0") + "` `" + SELECTED_BANNER.getBannerName() + "` Record Crystals.").get().build());
                     return;
                 }
 
