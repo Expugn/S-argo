@@ -190,6 +190,26 @@ public class UserParser
         return count;
     }
 
+    public int getTotalR4WeaponCount()
+    {
+        int count = 0;
+        for (Weapon w : weaponBox)
+        {
+            count += (w.getCount() % 5);
+        }
+        return count;
+    }
+
+    public int getTotalR5WeaponCount()
+    {
+        int count = 0;
+        for (Weapon w : weaponBox)
+        {
+            count += (w.getCount() / 5);
+        }
+        return count;
+    }
+
     public int getTotalTicketScout()
     {
         return totalTicketScout;

@@ -75,7 +75,9 @@ public class Profile
         basicInfo += "**Hacking Crystals**: " + user.getHackingCrystals() + "\n";
         basicInfo += "**Col Balance**: " + user.getColBalance() + "\n\n";
 
-        basicInfo += "**4★ Weapons**: " + user.getTotalWeaponCount() + "\n";
+        basicInfo += "**Total Weapons Pulled**: " + user.getTotalWeaponCount() + "\n";
+        basicInfo += "    **4★ Weapons**: " + user.getTotalR4WeaponCount() + "\n";
+        basicInfo += "    **5★ Weapons**: " + user.getTotalR5WeaponCount() + "\n";
         basicInfo += "**4★ Exchange Swords**: " + user.getR4ExchangeSwords() + "\n";
         basicInfo += "**Rainbow Essences**: " + user.getRainbowEssence() + "\n";
         basicInfo += "**Upgrade Crystals**: " + user.getUpgradeCrystal() + "\n";
