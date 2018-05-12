@@ -103,7 +103,8 @@ public class BannerInfoMenu
                 builder.appendField("- Circulating Record Crystal Rates -", circulatingRecordCrystalRatesList, true);
             }
         }
-        else if (bannerType.equalsIgnoreCase("Step Up v3"))
+        else if (bannerType.equalsIgnoreCase("Step Up v3") ||
+                 bannerType.equalsIgnoreCase("Step Up v6"))
         {
             builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
         }

@@ -217,7 +217,8 @@ public class BannerInfo
             if (banner.getBannerType() == 11 ||
                     banner.getBannerType() == 12 ||
                     banner.getBannerType() == 13 ||
-                    banner.getBannerType() == 14)
+                    banner.getBannerType() == 14 ||
+                    banner.getBannerType() == 15)
             {
                 copper = copper - ((platinum * 1.5) - platinum);
                 platinum = platinum * 1.5;
@@ -378,7 +379,8 @@ public class BannerInfo
                 }
             }
             /* BANNER IS STEP UP V3 */
-            else if (banner.getBannerType() == 7)
+            else if (banner.getBannerType() == 7 ||
+                     banner.getBannerType() == 15)
             {
                 double tC = copper - ((platinum * 2.0) - platinum);
                 double tS = silver;
