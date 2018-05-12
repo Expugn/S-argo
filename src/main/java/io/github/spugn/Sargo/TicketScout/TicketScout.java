@@ -247,7 +247,7 @@ abstract class TicketScout
      */
     void giveCol(Item i)
     {
-        final int COL_MAX = 99999999;
+        final int COL_MAX = 999999999;
         if (i.getValue() >= 0)
         {
             userColBalance += i.getValue();

@@ -327,7 +327,7 @@ abstract class WeaponScout
      */
     private void giveCol(Weapon w)
     {
-        final int COL_MAX = 99999999;
+        final int COL_MAX = 999999999;
         switch(w.getRarity())
         {
             case 2:
