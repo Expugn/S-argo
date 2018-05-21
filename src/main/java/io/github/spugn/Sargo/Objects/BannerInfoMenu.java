@@ -26,6 +26,7 @@ public class BannerInfoMenu
     private int weaponAmount;
     private String weaponList;
     private String ratesList;
+    private String stepOneRatesList;
     private String stepThreeRatesList;
     private String stepFiveRatesList;
     private String stepSixRatesList;
@@ -80,8 +81,13 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up") ||
                 bannerType.equalsIgnoreCase("Step Up v4") ||
                 bannerType.equalsIgnoreCase("Step Up v5") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2"))
+                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
+                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
         {
+            if (bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
+            {
+                builder.appendField("- Step 1 Pull Rates -", stepOneRatesList, true);
+            }
             builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
             builder.appendField("- Step 5 Pull Rates -", stepFiveRatesList, true);
             builder.appendField("- Step 6 Pull Rates -", stepSixRatesList, true);
@@ -233,6 +239,11 @@ public class BannerInfoMenu
     public void setImageURL(String imageURL)
     {
         this.imageURL = imageURL;
+    }
+
+    public void setStepOneRatesList(String stepOneRatesList)
+    {
+        this.stepOneRatesList = stepOneRatesList;
     }
 
     public void setStepThreeRatesList(String stepThreeRatesList)

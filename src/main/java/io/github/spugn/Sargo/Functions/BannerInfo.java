@@ -278,6 +278,17 @@ public class BannerInfo
                 double tG = gold;
                 double tP = platinum * 1.5;
 
+                if (banner.getBannerType() == 16)
+                {
+                    String stepOneRates = "";
+                    stepOneRates += "[5 ★] 3.0%\n";
+                    stepOneRates += "[4 ★] 97.0%\n";
+                    stepOneRates += "[3 ★] 0.0%\n";
+                    stepOneRates += "[2 ★] 0.0%\n";
+                    stepOneRates += "**(For One Character)**";
+                    menu.setStepOneRatesList(stepOneRates);
+                }
+
                 String stepThreeRates = "";
                 if (tP != 0)
                     stepThreeRates += "[5 ★] " + tP + "%\n";
