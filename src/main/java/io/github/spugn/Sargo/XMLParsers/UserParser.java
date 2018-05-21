@@ -735,7 +735,8 @@ public class UserParser
                         b.getBannerType() == 12 ||
                         b.getBannerType() == 13 ||
                         b.getBannerType() == 14 ||
-                        b.getBannerType() == 15)
+                        b.getBannerType() == 15 ||
+                        b.getBannerType() == 16)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_STEP);
                 }

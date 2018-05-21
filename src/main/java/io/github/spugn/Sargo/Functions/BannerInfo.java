@@ -218,7 +218,8 @@ public class BannerInfo
                     banner.getBannerType() == 12 ||
                     banner.getBannerType() == 13 ||
                     banner.getBannerType() == 14 ||
-                    banner.getBannerType() == 15)
+                    banner.getBannerType() == 15 ||
+                    banner.getBannerType() == 16)
             {
                 copper = copper - ((platinum * 1.5) - platinum);
                 platinum = platinum * 1.5;
@@ -269,7 +270,8 @@ public class BannerInfo
                     banner.getBannerType() == 10 ||
                     banner.getBannerType() == 12 ||
                     banner.getBannerType() == 13 ||
-                    banner.getBannerType() == 14)
+                    banner.getBannerType() == 14 ||
+                    banner.getBannerType() == 16)
             {
                 double tC = copper - ((platinum * 1.5) - platinum);
                 double tS = silver;

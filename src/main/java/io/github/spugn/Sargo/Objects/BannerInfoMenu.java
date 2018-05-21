@@ -131,7 +131,8 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("Step Up v4") ||
                 bannerType.equalsIgnoreCase("Step Up v5") ||
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
-                bannerType.equalsIgnoreCase("Step Up v6"))
+                bannerType.equalsIgnoreCase("Step Up v6") ||
+                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
         {
             if (weaponAmount > 0)
             {

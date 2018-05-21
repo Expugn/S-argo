@@ -42,6 +42,7 @@ This includes:
 | Step Up v5 | Same rates as `Step Up v2`, but there's a 50% discount on Step 1 and base platinum character rates are `1.5x` higher. |
 | SAO Game 5th Anniversary Step Up v2 | Same as `SAO Game 5th Anniversary Step Up` but base platinum character rates are `1.5x` higher. |  
 | Step Up v6 | Same rates as `Step Up v3`, but base platinum character rates are `1.5x` higher. |
+| SAO Game 5th Anniversary Step Up v3 | Same as `SAO Game 5th Anniversary Step Up v2` but a gold+ rarity character is guaranteed. |  
 
 | Weapon Scout Type | Description |  
 | :---: | :--- |  

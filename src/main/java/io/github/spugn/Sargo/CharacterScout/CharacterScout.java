@@ -58,6 +58,7 @@ abstract class CharacterScout
     int rcGet;
     boolean guaranteedScout;
     boolean guaranteeOnePlatinum;
+    boolean guaranteeGoldPlus;
     int userMemoryDiamonds;
     int userRecordCrystals;
     int singleScoutPrice;
@@ -143,6 +144,7 @@ abstract class CharacterScout
         imageStrings = new String[11];
         characters = new ArrayList<>();
         guaranteeOnePlatinum = false;
+        guaranteeGoldPlus = false;
         guaranteedScout = false;
         characterString = "";
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
@@ -348,6 +350,20 @@ abstract class CharacterScout
         {
             guaranteeOnePlatinum = false;
             return 5;
+        }
+
+        if (guaranteeGoldPlus)
+        {
+            guaranteeGoldPlus = false;
+            double x = RNG.nextDouble();
+            if (x < 0.03)
+            {
+                return 5;
+            }
+            else
+            {
+                return 4;
+            }
         }
 
         if (guaranteedScout)
