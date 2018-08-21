@@ -2,7 +2,7 @@ package io.github.spugn.Sargo.System;
 
 public final class SystemData
 {
-    private static String VERSION = "2.12";
+    private static String VERSION = "2.13";
 
     public static String getVERSION()
     {

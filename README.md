@@ -49,6 +49,7 @@ This includes:
 | Normal | Static pull rates every time. Nothing special. |  
 | Step Up | `100` MD scout on Step 1, `+2.0x` gold weapon chance on Step 3. |
 | GGO Step Up | `100` MD scout and guaranteed copper+ rarity Automatic Rifle on Step 1, `+1.5x` gold weapon chance on Step 3, guaranteed gold weapon on Step 5, and `+2.0x` gold weapon chance on Step 6 which repeats. |  
+| Step Up v2 | `100` MD scout on Step 1, `100` MD scout and `+1.5x` gold weapon chance on Step 3, guaranteed gold weapon on Step 5, and `+2.0x` gold weapon chance on Step 6 which repeats. |  
 
 | Miscellaneous Scout Type | Description |  
 | :---: | :--- |  

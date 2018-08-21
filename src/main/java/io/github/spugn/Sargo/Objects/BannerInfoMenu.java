@@ -54,6 +54,10 @@ public class BannerInfoMenu
         {
             builder.withAuthorName("[" + bannerType + " / GGO Step Up] " + bannerName);
         }
+        else if (bannerWepType == 3)
+        {
+            builder.withAuthorName("[" + bannerType + " / Weapon Step Up v2] " + bannerName);
+        }
         else
         {
             builder.withAuthorName("[" + bannerType + "] " + bannerName);
@@ -119,7 +123,8 @@ public class BannerInfoMenu
         {
             builder.appendField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
         }
-        else if (bannerWepType == 2)
+        else if (bannerWepType == 2 ||
+                bannerWepType == 3)
         {
             builder.appendField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
             builder.appendField("- Step 5 Weapon Pull Rates -", stepFiveWeaponRatesList, true);

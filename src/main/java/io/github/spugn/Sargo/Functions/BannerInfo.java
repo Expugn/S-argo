@@ -426,8 +426,9 @@ public class BannerInfo
                 stepThreeRates += "**(4 ★ Weapon Rates 2.0x)**";
                 menu.setStepThreeWeaponRatesList(stepThreeRates);
             }
-            /* WEAPON BANNER IS STEP UP V2 */
-            else if (banner.getBannerWepType() == 2)
+            /* WEAPON BANNER IS GGO STEP UP OR STEP UP V2 */
+            else if (banner.getBannerWepType() == 2 ||
+                    banner.getBannerWepType() == 3)
             {
                 double tC = (copper + platinum) - ((gold * 1.5) - gold);
                 double tS = silver;

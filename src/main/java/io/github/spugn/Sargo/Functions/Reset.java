@@ -211,7 +211,8 @@ public class Reset
 
                     int wepBannerType = banners.get(bannerID).getBannerWepType();
                     if (wepBannerType == 1 ||
-                            wepBannerType == 2)
+                            wepBannerType == 2 ||
+                            wepBannerType == 3)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName() + " Weapons", 1);
                     }
@@ -294,7 +295,8 @@ public class Reset
                     }
 
                     if (bannerWepType == 1 ||
-                            bannerWepType == 2)
+                            bannerWepType == 2 ||
+                            bannerWepType == 3)
                     {
                         dataString += "\nWeapon Step " + bannerWepData + " -> Weapon Step 1";
                     }
