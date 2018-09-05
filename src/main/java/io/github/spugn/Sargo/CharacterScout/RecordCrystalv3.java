@@ -52,6 +52,10 @@ public class RecordCrystalv3 extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
+        // REMOVE 1.5% FROM PLATINUM (IT'S ORIGINAL VALUE)
+        COPPER = COPPER + (PLATINUM - (PLATINUM / 1.5));
+        PLATINUM = PLATINUM / 1.5;
+
         if (CHOICE.equalsIgnoreCase("m") ||
                 CHOICE.equalsIgnoreCase("mi"))
         {

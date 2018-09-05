@@ -78,7 +78,6 @@ public class BannerParser
     {
         // SPLIT ECS
         String[] splitECS = excludedCharacterString.split(";");
-        System.out.println("splitECS size " + splitECS.length);
 
         // CONVERT ANY UNDERSCORES TO SPACES FROM CHARACTER NAME/PREFIX
         splitECS[1] = splitECS[1].replaceAll("_", " ");

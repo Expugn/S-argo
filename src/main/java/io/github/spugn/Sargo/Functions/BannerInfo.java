@@ -20,7 +20,7 @@ import java.util.*;
  * </p>
  *
  * @author S'pugn
- * @version 1.0
+ * @version 2.0
  * @since v1.0
  * @see BannerListMenu
  * @see BannerInfoMenu
@@ -34,6 +34,7 @@ public class BannerInfo
     private double silver;
     private double gold;
     private double platinum;
+    private double platinum6;
 
     private List<Double> recordCrystal;
     private List<Double> circulatingRecordCrystal;
@@ -47,8 +48,6 @@ public class BannerInfo
         CHANNEL = channel;
 
         /* READ Banners.xml */
-        //BannerParser bannersXML = new BannerParser();
-        //BANNERS = bannersXML.getBanners();
         BANNERS = BannerParser.getBanners();
 
         this.page = Integer.parseInt(page);
@@ -66,30 +65,13 @@ public class BannerInfo
         this.bannerID = bannerID - 1;
 
         /* READ Banners.xml */
-        //BannerParser bannersXML = new BannerParser();
-        //BANNERS = bannersXML.getBanners();
         BANNERS = BannerParser.getBanners();
-
-        //SettingsParser settings = new SettingsParser();
-
-        //copper = (int) (settings.getCopperRates() * 100);
-        //silver = (int) (settings.getSilverRates() * 100);
-        //gold = (int) (settings.getGoldRates() * 100);
-        //platinum = (int) (settings.getPlatinumRates() * 100);
-        //recordCrystal = settings.getRecordCrystalRates();
-        //circulatingRecordCrystal = settings.getCirculatingRecordCrystalRates();
-
-        //copper = (int) (SettingsParser.getCopperRates() * 100);
-        //silver = (int) (SettingsParser.getSilverRates() * 100);
-        //gold = (int) (SettingsParser.getGoldRates() * 100);
-        //platinum = (int) (SettingsParser.getPlatinumRates() * 100);
-        //recordCrystal = SettingsParser.getRecordCrystalRates();
-        //circulatingRecordCrystal = SettingsParser.getCirculatingRecordCrystalRates();
 
         copper = (int) (ScoutSettingsParser.getCopperRate() * 100);
         silver = (int) (ScoutSettingsParser.getSilverRate() * 100);
         gold = (int) (ScoutSettingsParser.getGoldRate() * 100);
         platinum = (int) (ScoutSettingsParser.getPlatinumRate() * 100);
+        platinum6 = (int) (ScoutSettingsParser.getPlatinum6Rate() * 100);
         recordCrystal = ScoutSettingsParser.getRecordCrystalRates();
         circulatingRecordCrystal = ScoutSettingsParser.getCirculatingRecordCrystalRates();
 
@@ -173,8 +155,9 @@ public class BannerInfo
             /* CREATE RATE LIST */
             List<Character> goldCharacters = new ArrayList<>();
             List<Character> platinumCharacters = new ArrayList<>();
+            List<Character> platinum6Characters = new ArrayList<>();
 
-            /* SORT GOLD AND PLATINUM CHARACTERS AND STORE THEM IN THEIR OWN ARRAYS */
+            /* SORT GOLD/PLATINUM/PLATINUM6 CHARACTERS AND STORE THEM IN THEIR OWN ARRAYS */
             for (Character character : banner.getCharacters())
             {
                 if (character.getRarity() == 4)
@@ -185,35 +168,50 @@ public class BannerInfo
                 {
                     platinumCharacters.add(character);
                 }
+                else if (character.getRarity() == 6)
+                {
+                    platinum6Characters.add(character);
+                }
             }
 
-            /* NO PLATINUM CHARACTER, ADJUST RATES */
-            if (platinumCharacters.size() <= 0)
+            /* NO PLATINUM/PLATINUM6 CHARACTER, ADJUST RATES */
+            if (platinumCharacters.size() <= 0 && platinum6Characters.size() <= 0)
             {
                 copper += platinum;
                 platinum = 0;
+
+                copper += platinum6;
+                platinum6 = 0;
+            }
+            /* PLATINUM CHARACTERS EXIST BUT NOT PLATINUM6, ADJUST RATES */
+            else if (platinumCharacters.size() > 0 && platinum6Characters.size() <= 0)
+            {
+                copper += platinum6;
+                platinum6 = 0;
             }
 
             /* IF EVENT SCOUT, SET EVERYTHING BUT GOLD TO 0 */
             if (banner.getBannerType() == 9)
             {
+                copper = 0.0;
+                silver = 0.0;
+
                 if (goldCharacters.size() > 0)
                 {
-                    copper = 0.0;
-                    silver = 0.0;
                     gold = 100.0;
-                    platinum = 0.0;
                 }
-                else
+                if (platinumCharacters.size() > 0)
                 {
-                    copper = 0.0;
-                    silver = 0.0;
-                    gold = 0.0;
                     platinum = 100.0;
+                }
+                if (platinum6Characters.size() > 0)
+                {
+                    platinum6 = 100.0;
                 }
             }
 
             /* IF RECORD CRYSTAL V4 AND ABOVE, INCREASE PLATINUM RATES BY 1.5 */
+            /*
             if (banner.getBannerType() == 11 ||
                     banner.getBannerType() == 12 ||
                     banner.getBannerType() == 13 ||
@@ -224,8 +222,27 @@ public class BannerInfo
                 copper = copper - ((platinum * 1.5) - platinum);
                 platinum = platinum * 1.5;
             }
+            */
+
+            // IF OLDER THAN RECORD CRYSTAL V4 (EXCEPT EVENT), DECREASE PLATINUM RATES BY 1.5
+            if (banner.getBannerType() == 10 ||
+                    banner.getBannerType() == 8 ||
+                    banner.getBannerType() == 7 ||
+                    banner.getBannerType() == 6 ||
+                    banner.getBannerType() == 5 ||
+                    banner.getBannerType() == 4 ||
+                    banner.getBannerType() == 3 ||
+                    banner.getBannerType() == 2 ||
+                    banner.getBannerType() == 1 ||
+                    banner.getBannerType() == 0)
+            {
+                copper = copper + (platinum - (platinum / 1.5));
+                platinum = platinum / 1.5;
+            }
 
             String ratesList = "";
+            if (platinum6 != 0)
+                ratesList += "[6 ★] " + platinum6 + "%\n";
             if (platinum != 0)
                 ratesList += "[5 ★] " + platinum + "%\n";
             ratesList += "[4 ★] " + gold + "%\n";
@@ -241,8 +258,11 @@ public class BannerInfo
                 double tS = silver;
                 double tG = gold * 1.5;
                 double tP = platinum;
+                double tP6 = platinum6;
 
                 String stepThreeRates = "";
+                if (tP6 != 0)
+                    stepThreeRates += "[6 ★] " + tP6 + "%\n";
                 if (tP != 0)
                     stepThreeRates += "[5 ★] " + tP + "%\n";
                 stepThreeRates += "[4 ★] " + tG + "%\n";
@@ -255,8 +275,11 @@ public class BannerInfo
                 tS = silver;
                 tG = gold * 2.0;
                 tP = platinum;
+                tP6 = platinum6;
 
                 String stepFiveRates = "";
+                if (tP6 != 0)
+                    stepFiveRates += "[6 ★] " + tP6 + "%\n";
                 if (tP != 0)
                     stepFiveRates += "[5 ★] " + tP + "%\n";
                 stepFiveRates += "[4 ★] " + tG + "%\n";
@@ -277,10 +300,13 @@ public class BannerInfo
                 double tS = silver;
                 double tG = gold;
                 double tP = platinum * 1.5;
+                double tP6 = platinum6;
 
                 if (banner.getBannerType() == 16)
                 {
                     String stepOneRates = "";
+                    if (tP6 != 0)
+                        stepOneRates += "[6 ★] 0.0%\n";
                     stepOneRates += "[5 ★] 3.0%\n";
                     stepOneRates += "[4 ★] 97.0%\n";
                     stepOneRates += "[3 ★] 0.0%\n";
@@ -290,6 +316,8 @@ public class BannerInfo
                 }
 
                 String stepThreeRates = "";
+                if (tP6 != 0)
+                    stepThreeRates += "[6 ★] " + tP6 + "%\n";
                 if (tP != 0)
                     stepThreeRates += "[5 ★] " + tP + "%\n";
                 stepThreeRates += "[4 ★] " + tG + "%\n";
@@ -302,8 +330,11 @@ public class BannerInfo
                 tS = 0.0;
                 tG = 0.0;
                 tP = 100.0;
+                tP6 = 0.0;
 
                 String stepFiveRates = "";
+                if (tP6 != 0)
+                    stepFiveRates += "[6 ★] " + tP6 + "%\n";
                 stepFiveRates += "[5 ★] " + tP + "%\n";
                 stepFiveRates += "[4 ★] " + tG + "%\n";
                 stepFiveRates += "[3 ★] " + tS + "%\n";
@@ -315,14 +346,67 @@ public class BannerInfo
                 tS = silver;
                 tG = gold;
                 tP = platinum * 2.0;
+                tP6 = platinum6;
 
                 String stepSixRates = "";
+                if (tP6 != 0)
+                    stepSixRates += "[6 ★] " + tP6 + "%\n";
                 if (tP != 0)
                     stepSixRates += "[5 ★] " + tP + "%\n";
                 stepSixRates += "[4 ★] " + tG + "%\n";
                 stepSixRates += "[3 ★] " + tS + "%\n";
                 stepSixRates += "[2 ★] " + tC + "%\n";
                 stepSixRates += "**(5 ★ Scout Rates 2.0x)**";
+                menu.setStepSixRatesList(stepSixRates);
+            }
+            /* BANNER IS STEP UP V7 */
+            else if (banner.getBannerType() == 17)
+            {
+                double tC = copper - ((platinum6 * 1.5) - platinum6);
+                double tS = silver;
+                double tG = gold;
+                double tP = platinum;
+                double tP6 = platinum6 * 1.5;
+
+                String stepThreeRates = "";
+                if (tP6 != 0)
+                    stepThreeRates += "[6 ★] " + tP6 + "%\n";
+                stepThreeRates += "[5 ★] " + tP + "%\n";
+                stepThreeRates += "[4 ★] " + tG + "%\n";
+                stepThreeRates += "[3 ★] " + tS + "%\n";
+                stepThreeRates += "[2 ★] " + tC + "%\n";
+                stepThreeRates += "**(6 ★ Scout Rates 1.5x)**";
+                menu.setStepThreeRatesList(stepThreeRates);
+
+                tC = 0.0;
+                tS = 0.0;
+                tG = 0.0;
+                tP = 0.0;
+                tP6 = 100.0;
+
+                String stepFiveRates = "";
+                stepFiveRates += "[6 ★] " + tP6 + "%\n";
+                stepFiveRates += "[5 ★] " + tP + "%\n";
+                stepFiveRates += "[4 ★] " + tG + "%\n";
+                stepFiveRates += "[3 ★] " + tS + "%\n";
+                stepFiveRates += "[2 ★] " + tC + "%\n";
+                stepFiveRates += "**(For One Character)**";
+                menu.setStepFiveRatesList(stepFiveRates);
+
+                tC = copper - ((platinum6 * 2.0) - platinum6);
+                tS = silver;
+                tG = gold;
+                tP = platinum;
+                tP6 = platinum6 * 2.0;
+
+                String stepSixRates = "";
+                if (tP6 != 0)
+                    stepSixRates += "[6 ★] " + tP6 + "%\n";
+                stepSixRates += "[5 ★] " + tP + "%\n";
+                stepSixRates += "[4 ★] " + tG + "%\n";
+                stepSixRates += "[3 ★] " + tS + "%\n";
+                stepSixRates += "[2 ★] " + tC + "%\n";
+                stepSixRates += "**(6 ★ Scout Rates 2.0x)**";
                 menu.setStepSixRatesList(stepSixRates);
             }
             /* BANNER IS BIRTHDAY STEP UP */
@@ -332,8 +416,11 @@ public class BannerInfo
                 double tS = silver;
                 double tG = gold * 2.0;
                 double tP = platinum * 2.0;
+                double tP6 = platinum6;
 
                 String stepThreeRates = "";
+                if (tP6 != 0)
+                    stepThreeRates += "[6 ★] " + tP6 + "%\n";
                 if (tP != 0)
                     stepThreeRates += "[5 ★] " + tP + "%\n";
                 stepThreeRates += "[4 ★] " + tG + "%\n";
@@ -399,8 +486,11 @@ public class BannerInfo
                 double tS = silver;
                 double tG = gold;
                 double tP = platinum * 2.0;
+                double tP6 = platinum6;
 
                 String stepThreeRates = "";
+                if (tP6 != 0)
+                    stepThreeRates += "[6 ★] " + tP6 + "%\n";
                 if (tP != 0)
                     stepThreeRates += "[5 ★] " + tP + "%\n";
                 stepThreeRates += "[4 ★] " + tG + "%\n";

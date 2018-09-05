@@ -41,6 +41,10 @@ public class RecordCrystal extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
+        // REMOVE 1.5% FROM PLATINUM (IT'S ORIGINAL VALUE)
+        COPPER = COPPER + (PLATINUM - (PLATINUM / 1.5));
+        PLATINUM = PLATINUM / 1.5;
+
         /* RECORD CRYSTAL SCOUTS DO NOT MODIFY ANY SCOUT DATA. */
     }
 

@@ -58,6 +58,10 @@ public class SAOGameFifthAnniversaryStepUp extends CharacterScout
         if (CHOICE.equalsIgnoreCase("m") ||
                 CHOICE.equalsIgnoreCase("mi"))
         {
+            // REMOVE 1.5% FROM PLATINUM (IT'S ORIGINAL VALUE)
+            COPPER = COPPER + (PLATINUM - (PLATINUM / 1.5));
+            PLATINUM = PLATINUM / 1.5;
+
             switch (bannerTypeData)
             {
                 case 1:

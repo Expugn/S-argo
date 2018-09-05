@@ -37,6 +37,10 @@ public class Normal extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
+        // REMOVE 1.5% FROM PLATINUM (IT'S ORIGINAL VALUE)
+        COPPER = COPPER + (PLATINUM - (PLATINUM / 1.5));
+        PLATINUM = PLATINUM / 1.5;
+
         /* NORMAL SCOUTS DO NOT MODIFY ANY SCOUT DATA. */
     }
 

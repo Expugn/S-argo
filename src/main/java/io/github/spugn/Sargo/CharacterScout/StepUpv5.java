@@ -26,9 +26,6 @@ public class StepUpv5 extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
-        COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
-        PLATINUM = PLATINUM * 1.5;
-
         if (CHOICE.equalsIgnoreCase("m") ||
                 CHOICE.equalsIgnoreCase("mi"))
         {

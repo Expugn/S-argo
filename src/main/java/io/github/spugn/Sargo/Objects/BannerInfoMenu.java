@@ -86,7 +86,8 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("Step Up v4") ||
                 bannerType.equalsIgnoreCase("Step Up v5") ||
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
+                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3") ||
+                bannerType.equalsIgnoreCase("Step Up v7"))
         {
             if (bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
             {
@@ -143,15 +144,16 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("Step Up v5") ||
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
                 bannerType.equalsIgnoreCase("Step Up v6") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
+                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3") ||
+                bannerType.equalsIgnoreCase("Step Up v7"))
         {
             if (weaponAmount > 0)
             {
-                footer += " | ws/wsi | m/mi | wm/wmi]' to scout.";
+                footer += " | ws/wsi | m/mi | wm/wmi]` to scout.";
             }
             else
             {
-                footer += " | m/mi]' to scout.";
+                footer += " | m/mi]` to scout.";
             }
         }
         else if (bannerType.equalsIgnoreCase("Record Crystal") ||
@@ -161,17 +163,17 @@ public class BannerInfoMenu
         {
             if (weaponAmount > 0)
             {
-                footer += " | ws/wsi | m/mi | wm/wmi | rc/rci]' to scout.";
+                footer += " | ws/wsi | m/mi | wm/wmi | rc/rci]` to scout.";
             }
             else
             {
-                footer += " | m/mi | rc/rci]' to scout.";
+                footer += " | m/mi | rc/rci]` to scout.";
             }
         }
         else if (bannerType.equalsIgnoreCase("Memorial Scout") ||
                 bannerType.equalsIgnoreCase("Event"))
         {
-            footer += "]' to scout.";
+            footer += "]` to scout.";
         }
         else
         {
@@ -185,7 +187,7 @@ public class BannerInfoMenu
         }
         else
         {
-            builder.withFooterText("Use '" + CommandManager.getCommandPrefix() + "scout " + (bannerID + 1) + " " + footer);
+            builder.withFooterText("Use `" + CommandManager.getCommandPrefix() + "scout " + (bannerID + 1) + " " + footer);
         }
 
     }
