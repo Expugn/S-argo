@@ -49,6 +49,7 @@ abstract class CharacterScout
     double PLATINUM6;
     List<Integer> GOLD_BANNERS;
     List<Integer> GOLD_BANNERS_V2;
+    List<Integer> PLATINUM_BANNERS;
     boolean IMAGE_DISABLED;
     boolean SIMPLE_MESSAGE;
     Random RNG;
@@ -60,6 +61,7 @@ abstract class CharacterScout
     boolean guaranteedScout;
     boolean guaranteeOnePlatinum;
     boolean guaranteeGoldPlus;
+    boolean guaranteeOnePlatinum6;
     int userMemoryDiamonds;
     int userRecordCrystals;
     int singleScoutPrice;
@@ -120,6 +122,7 @@ abstract class CharacterScout
         CIRCULATING_RECORD_CRYSTAL_RATES = ScoutSettingsParser.getCirculatingRecordCrystalRates();
         GOLD_BANNERS = BannerParser.getGoldBanners();
         GOLD_BANNERS_V2 = BannerParser.getGoldBannersv2();
+        PLATINUM_BANNERS = BannerParser.getPlatinumBanners();
         IMAGE_DISABLED = ScoutSettingsParser.isDisableImages();
         SIMPLE_MESSAGE = ScoutSettingsParser.isSimpleMessage();
 
@@ -132,6 +135,7 @@ abstract class CharacterScout
         RNG = new Random(System.currentTimeMillis());
         imageStrings = new String[11];
         characters = new ArrayList<>();
+        guaranteeOnePlatinum6 = false;
         guaranteeOnePlatinum = false;
         guaranteeGoldPlus = false;
         guaranteedScout = false;
@@ -360,6 +364,12 @@ abstract class CharacterScout
             {
                 return 6;
             }
+        }
+
+        if (guaranteeOnePlatinum6)
+        {
+            guaranteeOnePlatinum6 = false;
+            return 6;
         }
 
         if (guaranteeOnePlatinum)
@@ -755,6 +765,14 @@ abstract class CharacterScout
      * @see RecordCrystal#randGoldCharacter()
      */
     protected abstract Character randGoldCharacter();
+
+    /**
+     * Gives a random platinum rarity character if there are no
+     * available platinum characters in the banner.
+     *
+     * @return  The {@link Character} given to the user.
+     */
+    protected abstract Character randPlatinumCharacter();
 
     /**
      * Sets up the title portion of the scout result UI.

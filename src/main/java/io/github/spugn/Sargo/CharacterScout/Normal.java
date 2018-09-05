@@ -56,6 +56,13 @@ public class Normal extends CharacterScout
     }
 
     @Override
+    protected Character randPlatinumCharacter()
+    {
+        /* THIS SCOUT TYPE DOES NOT USE THIS FUNCTIONALITY */
+        return null;
+    }
+
+    @Override
     protected void setupScoutMenu()
     {
         if (!SIMPLE_MESSAGE)

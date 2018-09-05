@@ -54,32 +54,59 @@ public class ImageEditor
                 int starX = result.getWidth() / 2;
                 int starY = 175;
                 BufferedImage rStar = ImageIO.read(new File("images/System/Rarity_Star.png"));
+                BufferedImage r6Star = ImageIO.read(new File("images/System/Rarity_6_Star.png"));
+                rStar = resize(rStar, 32, 32);
+                r6Star = resize(r6Star, 32, 32);
                 switch (rarity)
                 {
+                    case 6:
+                        g.drawImage(r6Star, starX - 79, starY, null);
+                        g.drawImage(r6Star, starX - 52, starY, null);
+                        g.drawImage(r6Star, starX - 25, starY, null);
+                        g.drawImage(r6Star, starX + 2, starY, null);
+                        g.drawImage(r6Star, starX + 29, starY, null);
+                        g.drawImage(r6Star, starX + 56, starY, null);
+                        break;
                     case 5:
-                        g.drawImage(rStar, starX + 51, starY, null);
-                        g.drawImage(rStar, starX + 17, starY, null);
-                        g.drawImage(rStar, starX - 17, starY, null);
-                        g.drawImage(rStar, starX - 51, starY, null);
-                        g.drawImage(rStar, starX - 85, starY, null);
+                        //g.drawImage(rStar, starX + 51, starY, null);
+                        //g.drawImage(rStar, starX + 17, starY, null);
+                        //g.drawImage(rStar, starX - 17, starY, null);
+                        //g.drawImage(rStar, starX - 51, starY, null);
+                        //g.drawImage(rStar, starX - 85, starY, null);
+                        g.drawImage(rStar, starX - 69, starY, null);
+                        g.drawImage(rStar, starX - 42, starY, null);
+                        g.drawImage(rStar, starX - 15, starY, null);
+                        g.drawImage(rStar, starX + 12, starY, null);
+                        g.drawImage(rStar, starX + 29, starY, null);
                         break;
                     case 4:
-                        g.drawImage(rStar, starX + 34, starY, null);
-                        g.drawImage(rStar, starX, starY, null);
-                        g.drawImage(rStar, starX - 34, starY, null);
-                        g.drawImage(rStar, starX - 68, starY, null);
+                        //g.drawImage(rStar, starX + 34, starY, null);
+                        //g.drawImage(rStar, starX, starY, null);
+                        //g.drawImage(rStar, starX - 34, starY, null);
+                        //g.drawImage(rStar, starX - 68, starY, null);
+                        g.drawImage(rStar, starX + 29, starY, null);
+                        g.drawImage(rStar, starX + 2, starY, null);
+                        g.drawImage(rStar, starX - 25, starY, null);
+                        g.drawImage(rStar, starX - 52, starY, null);
                         break;
                     case 3:
-                        g.drawImage(rStar, starX + 17, starY, null);
-                        g.drawImage(rStar, starX - 17, starY, null);
-                        g.drawImage(rStar, starX - 51, starY, null);
+                        //g.drawImage(rStar, starX + 17, starY, null);
+                        //g.drawImage(rStar, starX - 17, starY, null);
+                        //g.drawImage(rStar, starX - 51, starY, null);
+                        g.drawImage(rStar, starX + 12, starY, null);
+                        g.drawImage(rStar, starX - 15, starY, null);
+                        g.drawImage(rStar, starX - 42, starY, null);
+
                         break;
                     case 2:
-                        g.drawImage(rStar, starX, starY, null);
-                        g.drawImage(rStar, starX - 34, starY, null);
+                        //g.drawImage(rStar, starX, starY, null);
+                        //g.drawImage(rStar, starX - 34, starY, null);
+                        g.drawImage(rStar, starX + 2, starY, null);
+                        g.drawImage(rStar, starX - 25, starY, null);
                         break;
                     default:
-                        g.drawImage(rStar, starX - 17, starY, null);
+                        //g.drawImage(rStar, starX - 17, starY, null);
+                        g.drawImage(rStar, starX - 15, starY, null);
                         break;
                 }
             }
@@ -87,6 +114,10 @@ public class ImageEditor
             /* RARITY BORDER */
             switch (rarity)
             {
+                case 6:
+                    BufferedImage biPlatinum6 = ImageIO.read(new File("images/System/Platinum6_Border.png"));
+                    g.drawImage(biPlatinum6, 0, 0, null);
+                    break;
                 case 5:
                     BufferedImage biPlatinum = ImageIO.read(new File("images/System/Platinum_Border.png"));
                     g.drawImage(biPlatinum, 0, 0, null);
@@ -194,6 +225,10 @@ public class ImageEditor
             /* RARITY BORDER */
             switch (rarity)
             {
+                case 6:
+                    BufferedImage biPlatinum6 = ImageIO.read(new File("images/System/Platinum6_Border.png"));
+                    g.drawImage(biPlatinum6, 0, 0, null);
+                    break;
                 case 5:
                     BufferedImage biPlatinum = ImageIO.read(new File("images/System/Platinum_Border.png"));
                     g.drawImage(biPlatinum, 0, 0, null);
@@ -398,5 +433,15 @@ public class ImageEditor
         {
             LOGGER.error("IO Exception (drawMultiScout)");
         }
+    }
+
+    private static BufferedImage resize(BufferedImage image, int height, int width)
+    {
+        Image temp = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(temp, 0, 0, null);
+        g2d.dispose();
+        return resized;
     }
 }

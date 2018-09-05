@@ -4,46 +4,15 @@ import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Objects.WarningMessage;
+import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
-/**
- * SAO GAME 5TH ANNIVERSARY CHARACTER SCOUT V2
- * <p>
- *     View {@link StepUp}'s JavaDoc for more information
- *     about Step Up scouts in general.<br>
- *
- *     Same deal as StepUpv2, but with some changes to what
- *     happens in each step. This scout type is used for
- *     the banners that include characters with voted skills.
- *
- *     This differs from {@link SAOGameFifthAnniversaryStepUp} by
- *     the 1.5x platinum character scout rate increase that was implemented
- *     with the AlternateGGO anime release.
- * </p>
- * <p>
- *     STEP CHANGES:<br>
- *     Step 1)<br>
- *          - Multi Scout price is 55 Memory Diamonds.<br>
- *     Step 3)<br>
- *          - Platinum rarity character rates increase by 1.5x.<br>
- *     Step 5)<br>
- *          - One platinum rarity character is guaranteed.<br>
- *     Step 6)<br>
- *          - Platinum rarity character rates increase by 2.0x<br>
- *          - Step 6 repeats.
- * </p>
- *
- * @author S'pugn
- * @version 1.0
- * @since v2.0
- * @see StepUp
- * @see CharacterScout
- */
-public class SAOGameFifthAnniversaryStepUpv2 extends CharacterScout
+public class StepUpv7 extends CharacterScout
 {
-    public SAOGameFifthAnniversaryStepUpv2(IChannel channel, int bannerID, String choice, String discordID)
+
+    public StepUpv7(IChannel channel, int bannerID, String choice, String discordID)
     {
         super(channel, bannerID, choice, discordID);
         run();
@@ -59,27 +28,23 @@ public class SAOGameFifthAnniversaryStepUpv2 extends CharacterScout
     @Override
     protected void modifyScoutData()
     {
-        COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
-        PLATINUM = PLATINUM * 1.5;
-
         if (CHOICE.equalsIgnoreCase("m") ||
                 CHOICE.equalsIgnoreCase("mi"))
         {
             switch (bannerTypeData)
             {
                 case 1:
-                    multiScoutPrice = 55;
+                    multiScoutPrice = 125;
                     break;
                 case 3:
-                    COPPER = COPPER - ((PLATINUM * 1.5) - PLATINUM);
-                    PLATINUM = PLATINUM * 1.5;
-                    break;
+                    multiScoutPrice = 200;
+                    COPPER = COPPER - ((PLATINUM6 * 1.5) - PLATINUM6);
+                    PLATINUM6 = PLATINUM6 * 1.5;
                 case 5:
-                    guaranteeOnePlatinum = true;
-                    break;
+                    guaranteeOnePlatinum6 = true;
                 case 6:
-                    COPPER = COPPER - ((PLATINUM * 2.0) - PLATINUM);
-                    PLATINUM = PLATINUM * 2.0;
+                    COPPER = COPPER - ((PLATINUM6 * 2.0) - PLATINUM6);
+                    PLATINUM6 = PLATINUM6 * 2.0;
                 default:
                     break;
             }
@@ -144,8 +109,72 @@ public class SAOGameFifthAnniversaryStepUpv2 extends CharacterScout
     @Override
     protected Character randPlatinumCharacter()
     {
-        /* THIS SCOUT TYPE DOES NOT USE THIS FUNCTIONALITY */
-        return null;
+        /* GET A RANDOM PLATINUM VARIANT CHARACTER, IF THERE IS A PLATINUM
+           VARIANT OF THAT CHARACTER IN THE BANNER THEN GET A NEW CHARACTER. */
+        Character c = null;
+        boolean charInBanner = true;
+        boolean characterExcluded = true;
+        int randIndex;
+        Banner randBanner;
+        List<Character> randCharacters;
+        boolean sameName;
+        boolean samePrefix;
+
+        while(charInBanner)
+        {
+            while (characterExcluded)
+            {
+                randIndex = PLATINUM_BANNERS.get(RNG.nextInt(PLATINUM_BANNERS.size()));
+                randBanner = BANNERS.get(randIndex - 1);
+                randCharacters = randBanner.getCharacters();
+                c = randCharacters.get(RNG.nextInt(randCharacters.size()));
+
+                for (String excludedCharacter : BannerParser.getExcludedCharacters())
+                {
+                    String[] parsedECS = BannerParser.parseExcludeCharacterString(excludedCharacter);
+
+                    // COMPARE BANNER ID, PREFIX, NAME, AND RARITY
+
+                    System.out.println("DEBUG-----------------------------------------------------------------\n" +
+                            parsedECS[0] + " vs. " + Integer.toString(randIndex) + "\n" +
+                            parsedECS[1] + " vs. " + c.getPrefix() + "\n" +
+                            parsedECS[2] + " vs. " + c.getName() + "\n" +
+                            parsedECS[3] + " vs. " + Integer.toString(c.getRarity()) + "\n");
+
+                    if (parsedECS[0].equals(Integer.toString(randIndex)) &&
+                            parsedECS[1].equals(c.getPrefix()) &&
+                            parsedECS[2].equals(c.getName()) &&
+                            parsedECS[3].equals(Integer.toString(c.getRarity())))
+                    {
+                        characterExcluded = true;
+                        break;
+                    }
+                    else
+                    {
+                        characterExcluded = false;
+                    }
+                }
+            }
+
+
+            for (Character bc : SELECTED_BANNER.getCharacters())
+            {
+                sameName = c.getName().equalsIgnoreCase(bc.getName());
+                samePrefix = c.getPrefix().equalsIgnoreCase(bc.getPrefix());
+
+                if (!(sameName && samePrefix))
+                {
+                    charInBanner = false;
+                }
+                else
+                {
+                    charInBanner = true;
+                    break;
+                }
+            }
+        }
+
+        return c;
     }
 
     @Override
@@ -161,10 +190,10 @@ public class SAOGameFifthAnniversaryStepUpv2 extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[SAO Game 5th Anniversary Step Up v2] - Step " + bannerTypeData);
+                    scoutMenu.withTitle("[Step Up v7] - Step " + bannerTypeData);
                     break;
                 default:
-                    scoutMenu.withTitle("[SAO Game 5th Anniversary Step Up v2] - Unknown");
+                    scoutMenu.withTitle("[Step Up v7] - Unknown");
                     break;
             }
         }
@@ -178,10 +207,10 @@ public class SAOGameFifthAnniversaryStepUpv2 extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    simpleMessage += "**[SAO Game 5th Anniversary Step Up v2] - Step " + bannerTypeData + "**" + "\n";
+                    simpleMessage += "**[Step Up v7] - Step " + bannerTypeData + "**" + "\n";
                     break;
                 default:
-                    simpleMessage += "**[SAO Game 5th Anniversary Step Up v2] - Unknown**" + "\n";
+                    simpleMessage += "**[Step Up v7] - Unknown**" + "\n";
                     break;
             }
         }

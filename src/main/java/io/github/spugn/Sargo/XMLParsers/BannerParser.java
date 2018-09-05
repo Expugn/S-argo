@@ -33,6 +33,10 @@ public class BannerParser
     private static List<Banner> bannerFile;
     private static List<Integer> goldBanners;
     private static List<Integer> goldBannersv2;
+    private static List<Integer> platinumBanners;
+
+    // Character Blacklist String: <BANNER ID>;<PREFIX>;<NAME>;<RARITY>
+    private static List<String> excludedCharacters;
 
     /**
      * Returns a List of Banner objects.
@@ -52,6 +56,34 @@ public class BannerParser
     public static List<Integer> getGoldBannersv2()
     {
         return goldBannersv2;
+    }
+
+    public static List<Integer> getPlatinumBanners()
+    {
+        return platinumBanners;
+    }
+
+    public static List<String> getExcludedCharacters()
+    {
+        return excludedCharacters;
+    }
+
+    /**
+     * index 0 = banner id
+     * index 1 = character prefix
+     * index 2 = character name
+     * index 3 = character rarity
+     */
+    public static String[] parseExcludeCharacterString(String excludedCharacterString)
+    {
+        // SPLIT ECS
+        String[] splitECS = excludedCharacterString.split(";");
+
+        // CONVERT ANY UNDERSCORES TO SPACES FROM CHARACTER NAME/PREFIX
+        splitECS[1].replaceAll("_", " ");
+        splitECS[2].replaceAll("_", " ");
+
+        return splitECS;
     }
 
     /**
@@ -80,6 +112,8 @@ public class BannerParser
         List<Banner> banners = new ArrayList();
         goldBanners = new ArrayList();
         goldBannersv2 = new ArrayList();
+        platinumBanners = new ArrayList();
+        excludedCharacters = new ArrayList();
         InputStream in;
         XMLEventReader eventReader;
 
@@ -181,7 +215,7 @@ public class BannerParser
                     continue;
                 }
 
-                /* GET AND SAVE IF BANNER IS INCLUDED WITH GOLD BANNERS/GOLD BANNERS V2 */
+                /* GET AND SAVE IF BANNER IS INCLUDED WITH GOLD BANNERS/GOLD BANNERS V2/ETC */
                 if (event.asStartElement().getName().getLocalPart().equals("include"))
                 {
                     try { event = eventReader.nextEvent(); }
@@ -202,6 +236,30 @@ public class BannerParser
                         try { goldBannersv2.add(banner.getBannerID()); }
                         catch (NullPointerException e) { /* IGNORED */ }
                     }
+                    else if (includeType.equals("PlatinumBanners"))
+                    {
+                        try { platinumBanners.add(banner.getBannerID()); }
+                        catch (NullPointerException e) { /* IGNORED */ }
+                    }
+                    continue;
+                }
+
+                /* GET AND SAVE ANY EXCLUDED CHARACTERS */
+                if (event.asStartElement().getName().getLocalPart().equals("exclude"))
+                {
+                    try { event = eventReader.nextEvent(); }
+                    catch (XMLStreamException e)
+                    {
+                        try { in.close(); } catch (IOException ex) { /* IGNORED */ }
+                        try { eventReader.close(); } catch (XMLStreamException ex) { /* IGNORED */ }
+                        throw new FailedToReadBannerFileException();
+                    }
+                    String excludedCharacter = event.asCharacters().getData();
+
+                    // BANNERID_PREFIX_NAME_RARITY
+                    try { excludedCharacters.add(banner.getBannerID() + "_" + excludedCharacter); }
+                    catch (NullPointerException e) { /* IGNORED */ }
+
                     continue;
                 }
 

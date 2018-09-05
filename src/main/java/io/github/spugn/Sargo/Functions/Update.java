@@ -64,8 +64,6 @@ public class Update
      */
     public Update()
     {
-        //gitHubDataRepository = new SettingsParser().getGitHubRepoURL();
-        //gitHubDataRepository = SettingsParser.getGitHubRepoURL();
         gitHubDataRepository = LoginSettingsParser.getGitHubRepoURL();
         try
         {
@@ -546,6 +544,8 @@ public class Update
         fileNames.add("Multi_Character.png");
         fileNames.add("Multi_Weapon.png");
         fileNames.add("Platinum_Border.png");
+        fileNames.add("Platinum6_Border.png");
+        fileNames.add("Rarity_6_Star.png");
         fileNames.add("Rarity_Star.png");
         fileNames.add("Silver_Border.png");
         fileNames.add("Single_Character.png");

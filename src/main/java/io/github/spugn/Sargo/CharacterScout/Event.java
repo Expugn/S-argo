@@ -1,12 +1,9 @@
 package io.github.spugn.Sargo.CharacterScout;
 
 import io.github.spugn.Sargo.Managers.CommandManager;
-import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Objects.WarningMessage;
 import sx.blah.discord.handle.obj.IChannel;
-
-import java.util.List;
 
 public class Event extends CharacterScout
 {
@@ -31,16 +28,21 @@ public class Event extends CharacterScout
     @Override
     protected void updateBannerData()
     {
-        /* NORMAL SCOUTS DO NOT HAVE ANY BANNER DATA UPDATES. */
+        /* EVENT SCOUTS DO NOT HAVE ANY BANNER DATA UPDATES. */
     }
 
     @Override
     protected Character randGoldCharacter()
     {
-        int randIndex = GOLD_BANNERS.get(RNG.nextInt(GOLD_BANNERS.size()));
-        Banner randBanner = BANNERS.get(randIndex - 1);
-        List<Character> randCharacters = randBanner.getCharacters();
-        return randCharacters.get(RNG.nextInt(randCharacters.size()));
+        /* THIS SCOUT TYPE DOES NOT USE THIS FUNCTIONALITY */
+        return null;
+    }
+
+    @Override
+    protected Character randPlatinumCharacter()
+    {
+        /* THIS SCOUT TYPE DOES NOT USE THIS FUNCTIONALITY */
+        return null;
     }
 
     @Override
