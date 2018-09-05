@@ -134,29 +134,24 @@ public class StepUpv7 extends CharacterScout
                     String[] parsedECS = BannerParser.parseExcludeCharacterString(excludedCharacter);
 
                     // COMPARE BANNER ID, PREFIX, NAME, AND RARITY
-
-                    System.out.println("DEBUG-----------------------------------------------------------------\n" +
-                            parsedECS[0] + " vs. " + Integer.toString(randIndex) + "\n" +
-                            parsedECS[1] + " vs. " + c.getPrefix() + "\n" +
-                            parsedECS[2] + " vs. " + c.getName() + "\n" +
-                            parsedECS[3] + " vs. " + Integer.toString(c.getRarity()) + "\n");
-
                     if (parsedECS[0].equals(Integer.toString(randIndex)) &&
                             parsedECS[1].equals(c.getPrefix()) &&
                             parsedECS[2].equals(c.getName()) &&
                             parsedECS[3].equals(Integer.toString(c.getRarity())))
                     {
+                        // CHARACTER IS IN THE EXCLUDED LIST, CHOOSE ANOTHER CHARACTER
                         characterExcluded = true;
                         break;
                     }
                     else
                     {
+                        // CHARACTER IS NOT IN THE EXCLUDED LIST. PROCEED.
                         characterExcluded = false;
                     }
                 }
             }
 
-
+            // CHECK IF THE CHARACTER DRAWN IS A CHARACTER THAT HAS THE SAME NAME/PREFIX OF A CHARACTER IN THE BANNER.
             for (Character bc : SELECTED_BANNER.getCharacters())
             {
                 sameName = c.getName().equalsIgnoreCase(bc.getName());

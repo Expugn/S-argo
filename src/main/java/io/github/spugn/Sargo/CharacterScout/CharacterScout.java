@@ -181,18 +181,20 @@ abstract class CharacterScout
                 }
             }
 
-            // IF NO PLATINUM6 CHARACTERS EXIST, ADD % BACK TO COPPER.
-            if (platinum6Characters.size() <= 0)
+            // IF THERE ARE NO PLATINUM AND PLATINUM6 CHARACTERS... ADD BOTH %S BACK INTO COPPER
+            if (platinumCharacters.size() <= 0 && platinum6Characters.size() <= 0)
             {
                 COPPER += PLATINUM6;
                 PLATINUM6 = 0;
-            }
 
-            // IF NO PLATINUM CHARACTERS EXIST, ADD % BACK TO COPPER.
-            if (platinumCharacters.size() <= 0)
-            {
                 COPPER += PLATINUM;
                 PLATINUM = 0;
+            }
+            // IF THERE ARE PLATINUM CHARACTERS BUT NO PLATINUM6, ADD PLATINUM6 % BACK INTO COPPER
+            else if (platinumCharacters.size() > 0 && platinum6Characters.size() <= 0)
+            {
+                COPPER += PLATINUM6;
+                PLATINUM6 = 0;
             }
 
             // PERFORM ANY SCOUT RATE CHANGES THAT ARE REQUIRED FROM THE BANNER TYPE.
@@ -497,7 +499,14 @@ abstract class CharacterScout
             }
             else
             {
-                character = platinumCharacters.get(RNG.nextInt(platinumCharacters.size()));
+                if (platinumCharacters.size() > 0)
+                {
+                    character = platinumCharacters.get(RNG.nextInt(platinumCharacters.size()));
+                }
+                else
+                {
+                    character = randPlatinumCharacter();
+                }
             }
         }
         else

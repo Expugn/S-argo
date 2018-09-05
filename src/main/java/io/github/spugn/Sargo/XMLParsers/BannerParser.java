@@ -78,10 +78,11 @@ public class BannerParser
     {
         // SPLIT ECS
         String[] splitECS = excludedCharacterString.split(";");
+        System.out.println("splitECS size " + splitECS.length);
 
         // CONVERT ANY UNDERSCORES TO SPACES FROM CHARACTER NAME/PREFIX
-        splitECS[1].replaceAll("_", " ");
-        splitECS[2].replaceAll("_", " ");
+        splitECS[1] = splitECS[1].replaceAll("_", " ");
+        splitECS[2] = splitECS[2].replaceAll("_", " ");
 
         return splitECS;
     }
@@ -257,7 +258,7 @@ public class BannerParser
                     String excludedCharacter = event.asCharacters().getData();
 
                     // BANNERID_PREFIX_NAME_RARITY
-                    try { excludedCharacters.add(banner.getBannerID() + "_" + excludedCharacter); }
+                    try { excludedCharacters.add(banner.getBannerID() + ";" + excludedCharacter); }
                     catch (NullPointerException e) { /* IGNORED */ }
 
                     continue;
