@@ -29,12 +29,20 @@ public class ScoutMasterParser
 {
     private String scoutMasterName;
     private boolean useDefaults;
+    private boolean saoArgoOnly = false;
 
     private String botName;
-    private String image1URL;
-    private String image2URL;
-    private String image3URL;
-    private String image4URL;
+    private String image_sao_smile_URL;   //sao-smile
+    private String image_sao_grin_URL;   //sao-grin
+    private String image_sao_smug_URL;   //sao-smug
+    private String image_sao_flowers_URL;   //sao-flowers
+    private String image_sao_stars_URL;   //sao-stars
+
+    private String image_alo_smile_URL;   //alo-smile
+    private String image_alo_grin_URL;   //alo-grin
+    private String image_alo_smug_URL;   //alo-smug
+    private String image_alo_flowers_URL;   //alo-flowers
+    private String image_alo_stars_URL;   //alo-stars
     private List<String> quotes;
 
     /**
@@ -45,8 +53,6 @@ public class ScoutMasterParser
     {
         useDefaults = false;
         quotes = new ArrayList<>();
-        //scoutMasterName = new SettingsParser().getScoutMaster();
-        //scoutMasterName = SettingsParser.getScoutMaster();
         scoutMasterName = ScoutSettingsParser.getScoutMaster();
 
         if (!(new File("data/mods/" + scoutMasterName + ".xml").exists()))
@@ -74,58 +80,84 @@ public class ScoutMasterParser
      * @param highestRarity  Rarity of the image that should be provided.
      * @return  Image URL
      */
+    public String getImage(int highestRarity, boolean saoArgoOnly)
+    {
+        this.saoArgoOnly = saoArgoOnly;
+        return getImage(highestRarity);
+    }
     public String getImage(int highestRarity)
     {
         double randNum = new Random().nextDouble();
+        boolean sao_or_alo = (saoArgoOnly) || (new Random().nextBoolean());    // true = sao, false = alo
         switch (highestRarity)
         {
             case 2:
-                return image1URL;
+                return (sao_or_alo) ? image_sao_smile_URL : image_alo_smile_URL;
 
             case 3:
                 if (randNum < 0.5)
                 {
-                    return image1URL;
+                    return (sao_or_alo) ? image_sao_smile_URL : image_alo_smile_URL;
                 }
                 else
                 {
-                    return image2URL;
+                    return (sao_or_alo) ? image_sao_grin_URL : image_alo_grin_URL;
                 }
 
             case 4:
-                if (randNum < 0.1)
+                if (randNum < (0.25))
                 {
-                    return image1URL;
+                    return (sao_or_alo) ? image_sao_smile_URL : image_alo_smile_URL;
                 }
-                else if (randNum < 0.35)
+                else if (randNum < (0.25 * 2))
                 {
-                    return image2URL;
+                    return (sao_or_alo) ? image_sao_grin_URL : image_alo_grin_URL;
                 }
                 else
                 {
-                    return image3URL;
+                    return (sao_or_alo) ? image_sao_smug_URL : image_alo_smug_URL;
                 }
 
             case 5:
-                if (randNum < 0.1)
+                if (randNum < (0.1666))
                 {
-                    return image1URL;
+                    return (sao_or_alo) ? image_sao_smile_URL : image_alo_smile_URL;
                 }
-                else if (randNum < 0.2)
+                else if (randNum < (0.1666 * 2))
                 {
-                    return image2URL;
+                    return (sao_or_alo) ? image_sao_grin_URL : image_alo_grin_URL;
                 }
-                else if (randNum < 0.4)
+                else if (randNum < (0.1666 * 3))
                 {
-                    return image3URL;
+                    return (sao_or_alo) ? image_sao_smug_URL : image_alo_smug_URL;
                 }
                 else
                 {
-                    return image4URL;
+                    return (sao_or_alo) ? image_sao_flowers_URL : image_alo_flowers_URL;
                 }
-
+            case 6:
+                if (randNum < (0.125))
+                {
+                    return (sao_or_alo) ? image_sao_smile_URL : image_alo_smile_URL;
+                }
+                else if (randNum < (0.125 * 2))
+                {
+                    return (sao_or_alo) ? image_sao_grin_URL : image_alo_grin_URL;
+                }
+                else if (randNum < (0.125 * 3))
+                {
+                    return (sao_or_alo) ? image_sao_smug_URL : image_alo_smug_URL;
+                }
+                else if (randNum < (0.125 * 4))
+                {
+                    return (sao_or_alo) ? image_sao_flowers_URL : image_alo_flowers_URL;
+                }
+                else
+                {
+                    return (sao_or_alo) ? image_sao_stars_URL : image_alo_stars_URL;
+                }
             default:
-                return image1URL;
+                return (sao_or_alo) ? image_sao_smile_URL : image_alo_smile_URL;
         }
     }
 
@@ -146,10 +178,22 @@ public class ScoutMasterParser
     {
         botName = "S'argo";
 
-        image1URL = new GitHubImage("images/System/Argo_Smile.png").getURL();
-        image2URL = new GitHubImage("images/System/Argo_Grin.png").getURL();
-        image3URL = new GitHubImage("images/System/Argo_Smug.png").getURL();
-        image4URL = new GitHubImage("images/System/Argo_Flowers.png").getURL();
+        //image_sao_smile_URL = new GitHubImage("images/System/Argo_Smile.png").getURL();
+        //image_sao_grin_URL = new GitHubImage("images/System/Argo_Grin.png").getURL();
+        //image_sao_smug_URL = new GitHubImage("images/System/Argo_Smug.png").getURL();
+        //image_sao_flowers_URL = new GitHubImage("images/System/Argo_Flowers.png").getURL();
+
+        image_sao_smile_URL = new GitHubImage("images/System/Argo_SAO_Smile.png").getURL();
+        image_sao_grin_URL = new GitHubImage("images/System/Argo_SAO_Grin.png").getURL();
+        image_sao_smug_URL = new GitHubImage("images/System/Argo_SAO_Smug.png").getURL();
+        image_sao_flowers_URL = new GitHubImage("images/System/Argo_SAO_Flowers.png").getURL();
+        image_sao_stars_URL = new GitHubImage("images/System/Argo_SAO_Stars.png").getURL();
+
+        image_alo_smile_URL = new GitHubImage("images/System/Argo_ALO_Smile.png").getURL();
+        image_alo_grin_URL = new GitHubImage("images/System/Argo_ALO_Grin.png").getURL();
+        image_alo_smug_URL = new GitHubImage("images/System/Argo_ALO_Smug.png").getURL();
+        image_alo_flowers_URL = new GitHubImage("images/System/Argo_ALO_Flowers.png").getURL();
+        image_alo_stars_URL = new GitHubImage("images/System/Argo_ALO_Stars.png").getURL();
 
         quotes.add("*\"Lookin' for good allies, huh?\nTry the Teleport Plaza.\"*");
         quotes.add("*\"So you wanna make friends, eh?\nTry the Teleport Plaza.*\"");
@@ -192,7 +236,7 @@ public class ScoutMasterParser
                         }
                         continue;
                     }
-                    if (event.asStartElement().getName().getLocalPart().equals("Smile"))
+                    if (event.asStartElement().getName().getLocalPart().equals("SAOSmile"))
                     {
                         Iterator<Attribute> attributes = event.asStartElement().getAttributes();
                         while (attributes.hasNext())
@@ -200,12 +244,12 @@ public class ScoutMasterParser
                             Attribute attribute = attributes.next();
                             if (attribute.getName().toString().equals("imageURL"))
                             {
-                                image1URL = attribute.getValue();
+                                image_sao_smile_URL = attribute.getValue();
                             }
                         }
                         continue;
                     }
-                    if (event.asStartElement().getName().getLocalPart().equals("Grin"))
+                    if (event.asStartElement().getName().getLocalPart().equals("SAOGrin"))
                     {
                         Iterator<Attribute> attributes = event.asStartElement().getAttributes();
                         while (attributes.hasNext())
@@ -213,12 +257,12 @@ public class ScoutMasterParser
                             Attribute attribute = attributes.next();
                             if (attribute.getName().toString().equals("imageURL"))
                             {
-                                image2URL = attribute.getValue();
+                                image_sao_grin_URL = attribute.getValue();
                             }
                         }
                         continue;
                     }
-                    if (event.asStartElement().getName().getLocalPart().equals("Smug"))
+                    if (event.asStartElement().getName().getLocalPart().equals("SAOSmug"))
                     {
                         Iterator<Attribute> attributes = event.asStartElement().getAttributes();
                         while (attributes.hasNext())
@@ -226,12 +270,12 @@ public class ScoutMasterParser
                             Attribute attribute = attributes.next();
                             if (attribute.getName().toString().equals("imageURL"))
                             {
-                                image3URL = attribute.getValue();
+                                image_sao_smug_URL = attribute.getValue();
                             }
                         }
                         continue;
                     }
-                    if (event.asStartElement().getName().getLocalPart().equals("Flowers"))
+                    if (event.asStartElement().getName().getLocalPart().equals("SAOFlowers"))
                     {
                         Iterator<Attribute> attributes = event.asStartElement().getAttributes();
                         while (attributes.hasNext())
@@ -239,7 +283,85 @@ public class ScoutMasterParser
                             Attribute attribute = attributes.next();
                             if (attribute.getName().toString().equals("imageURL"))
                             {
-                                image4URL = attribute.getValue();
+                                image_sao_flowers_URL = attribute.getValue();
+                            }
+                        }
+                        continue;
+                    }
+                    if (event.asStartElement().getName().getLocalPart().equals("SAOStars"))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals("imageURL"))
+                            {
+                                image_sao_stars_URL = attribute.getValue();
+                            }
+                        }
+                        continue;
+                    }
+                    if (event.asStartElement().getName().getLocalPart().equals("ALOSmile"))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals("imageURL"))
+                            {
+                                image_alo_smile_URL = attribute.getValue();
+                            }
+                        }
+                        continue;
+                    }
+                    if (event.asStartElement().getName().getLocalPart().equals("ALOGrin"))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals("imageURL"))
+                            {
+                                image_alo_grin_URL = attribute.getValue();
+                            }
+                        }
+                        continue;
+                    }
+                    if (event.asStartElement().getName().getLocalPart().equals("ALOSmug"))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals("imageURL"))
+                            {
+                                image_alo_smug_URL = attribute.getValue();
+                            }
+                        }
+                        continue;
+                    }
+                    if (event.asStartElement().getName().getLocalPart().equals("ALOFlowers"))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals("imageURL"))
+                            {
+                                image_alo_flowers_URL = attribute.getValue();
+                            }
+                        }
+                        continue;
+                    }
+                    if (event.asStartElement().getName().getLocalPart().equals("ALOStars"))
+                    {
+                        Iterator<Attribute> attributes = event.asStartElement().getAttributes();
+                        while (attributes.hasNext())
+                        {
+                            Attribute attribute = attributes.next();
+                            if (attribute.getName().toString().equals("imageURL"))
+                            {
+                                image_alo_stars_URL = attribute.getValue();
                             }
                         }
                         continue;

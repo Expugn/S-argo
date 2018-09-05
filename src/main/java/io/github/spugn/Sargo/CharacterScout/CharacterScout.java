@@ -647,7 +647,16 @@ abstract class CharacterScout
             scoutMenu.withDesc(smp.getQuote());
             scoutMenu.withAuthorIcon(new GitHubImage("images/System/Scout_Icon.png").getURL());
             scoutMenu.withColor(244, 233, 167);
-            scoutMenu.withThumbnail(smp.getImage(highestRarity));
+            // IF SELECTED BANNER IS OLDER THAN STEP UP V7 AND NOT EVENT...
+            // DISPLAY SAO ARGO ONLY, OTHERWISE USE BOTH SAO AND ALO ARGOS
+            if (SELECTED_BANNER.getBannerID() < 17 && SELECTED_BANNER.getBannerID() != 9)
+            {
+                scoutMenu.withThumbnail(smp.getImage(highestRarity, true));
+            }
+            else
+            {
+                scoutMenu.withThumbnail(smp.getImage(highestRarity));
+            }
             scoutMenu.withFooterIcon(new GitHubImage("images/System/Memory_Diamond_Icon.png").getURL());
             scoutMenu.withFooterText((CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator()) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left");
 

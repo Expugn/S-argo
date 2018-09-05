@@ -31,6 +31,8 @@ public class StepUpv7 extends CharacterScout
         if (CHOICE.equalsIgnoreCase("m") ||
                 CHOICE.equalsIgnoreCase("mi"))
         {
+            randomizeResults = true;
+
             switch (bannerTypeData)
             {
                 case 1:
