@@ -90,6 +90,7 @@ public class UserParser
     private int sC;
     private int gC;
     private int pC;
+    private int p6C;
 
     /**
      * Initializes variables, makes a directory/user file if needed, then reads the
@@ -110,6 +111,7 @@ public class UserParser
         sC = 0;
         gC = 0;
         pC = 0;
+        p6C = 0;
 
         makeDirectory();
         createNewUser();
@@ -178,6 +180,11 @@ public class UserParser
     public int getPlatinumCount()
     {
         return pC;
+    }
+
+    public int getPlatinum6Count()
+    {
+        return p6C;
     }
 
     public int getTotalWeaponCount()
@@ -575,7 +582,11 @@ public class UserParser
             {
                 for (Character c : characterBox)
                 {
-                    if (c.getRarity() == 5)
+                    if (c.getRarity() == 6)
+                    {
+                        p6C++;
+                    }
+                    else if (c.getRarity() == 5)
                     {
                         pC++;
                     }
@@ -727,6 +738,7 @@ public class UserParser
                 writer.writeAttribute(B_NAME, b.getBannerName());
 
                 /* IS STEP UP */
+                // TODO UPDATE WHENEVER A NEW BANNER TYPE IS ADDED
                 if (b.getBannerType() == 1 ||
                         b.getBannerType() == 3 ||
                         b.getBannerType() == 4 ||
@@ -736,7 +748,8 @@ public class UserParser
                         b.getBannerType() == 13 ||
                         b.getBannerType() == 14 ||
                         b.getBannerType() == 15 ||
-                        b.getBannerType() == 16)
+                        b.getBannerType() == 16 ||
+                        b.getBannerType() == 17)
                 {
                     writer.writeAttribute(B_DATA, DEFAULT_STEP);
                 }

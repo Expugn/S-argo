@@ -36,6 +36,7 @@ public class Profile
 
     private int goldCount;
     private int platinumCount;
+    private int platinum6Count;
 
     private SortedMap<String, Integer> bannerType;
 
@@ -76,8 +77,8 @@ public class Profile
         basicInfo += "**Col Balance**: " + user.getColBalance() + "\n\n";
 
         basicInfo += "**Total Weapons Pulled**: " + user.getTotalWeaponCount() + "\n";
-        basicInfo += "    **4★ Weapons**: " + user.getTotalR4WeaponCount() + "\n";
-        basicInfo += "    **5★ Weapons**: " + user.getTotalR5WeaponCount() + "\n";
+        basicInfo += "**4★ Weapons**: " + user.getTotalR4WeaponCount() + "\n";
+        basicInfo += "**5★ Weapons**: " + user.getTotalR5WeaponCount() + "\n\n";
         basicInfo += "**4★ Exchange Swords**: " + user.getR4ExchangeSwords() + "\n";
         basicInfo += "**Rainbow Essences**: " + user.getRainbowEssence() + "\n";
         basicInfo += "**Upgrade Crystals**: " + user.getUpgradeCrystal() + "\n";
@@ -98,20 +99,22 @@ public class Profile
         int userSilver = user.getSilverCount();
         int userGold = user.getGoldCount();
         int userPlatinum = user.getPlatinumCount();
+        int userPlatinum6 = user.getPlatinum6Count();
 
         characterInfo += "**[2 ★]** - " + userCopper + "/" + cCTotal + "\n";
         characterInfo += "**[3 ★]** - " + userSilver + "/" + sCTotal + "\n";
         characterInfo += "**[4 ★]** - " + userGold + "/" + goldCount + "\n";
-        characterInfo += "**[5 ★]** - " + userPlatinum + "/" + platinumCount;
+        characterInfo += "**[5 ★]** - " + userPlatinum + "/" + platinumCount + "\n";
+        characterInfo += "**[6 ★]** - " + userPlatinum6 + "/" + platinum6Count;
 
         builder.appendField("Characters", characterInfo, false);
 
         String completionProgress;
-        int totalOwned = userCopper + userSilver + userGold + userPlatinum;
-        int totalCharacters = cCTotal + sCTotal + goldCount + platinumCount;
+        int totalOwned = userCopper + userSilver + userGold + userPlatinum + userPlatinum6;
+        int totalCharacters = cCTotal + sCTotal + goldCount + platinumCount + platinum6Count;
 
         double dTotalOwned = userCopper + userSilver + userGold + userPlatinum;
-        double dTotalCharacters = cCTotal + sCTotal + goldCount + platinumCount;
+        double dTotalCharacters = cCTotal + sCTotal + goldCount + platinumCount + platinum6Count;
 
         if (totalOwned == totalCharacters)
         {
@@ -241,8 +244,6 @@ public class Profile
         int bannerID = Integer.parseInt(bannerIDString) - 1;
 
         /* OPEN BANNERS FILE */
-        //BannerParser bannersXML = new BannerParser();
-        //List<Banner> banners = bannersXML.getBanners();
         List<Banner> banners = BannerParser.getBanners();
 
         if (bannerID < banners.size() && bannerID >= 0)
@@ -427,6 +428,7 @@ public class Profile
         userName = iUser.getName() + "#" + iUser.getDiscriminator();
         goldCount = 0;
         platinumCount = 0;
+        platinum6Count = 0;
         bannerType = new TreeMap<>();
 
         builder.withAuthorName(userName + "'s Profile");
@@ -445,12 +447,11 @@ public class Profile
     private void initBannerInfo()
     {
         /* OPEN BANNERS FILE */
-        //BannerParser bannersXML = new BannerParser();
-        //List<Banner> banners = bannersXML.getBanners();
         List<Banner> banners = BannerParser.getBanners();
 
         List<String> allGoldCharacters = new ArrayList<>();
         List<String> allPlatinumCharacters = new ArrayList<>();
+        List<String> allPlatinum6Characters = new ArrayList<>();
 
         for (Banner b : banners)
         {
@@ -469,6 +470,12 @@ public class Profile
                     platinumCount++;
                     allPlatinumCharacters.add(c.getPrefix() + c.getName());
                 }
+                else if (c.getRarity() == 6 &&
+                        !(allPlatinum6Characters.contains(c.getPrefix() + c.getName())))
+                {
+                    platinum6Count++;
+                    allPlatinum6Characters.add(c.getPrefix() + c.getName());
+                }
             }
 
             /* CHECK IF BANNER IS NOT NORMAL */
@@ -478,7 +485,9 @@ public class Profile
             }
         }
 
-        purgeDeletedCharacters(allGoldCharacters, allPlatinumCharacters);
+        purgeDeletedCharacters(allGoldCharacters,
+                                allPlatinumCharacters,
+                                allPlatinum6Characters);
     }
 
     /**
@@ -488,7 +497,7 @@ public class Profile
      * @param gold  List of all gold characters in the banners file
      * @param plat  List of all platinum characters in the banners file
      */
-    private void purgeDeletedCharacters(List<String> gold, List<String> plat)
+    private void purgeDeletedCharacters(List<String> gold, List<String> plat, List<String> plat6)
     {
         boolean unsavedChanges = false;
         List<Character> newUserCharacterBox = new ArrayList<>();
@@ -506,6 +515,14 @@ public class Profile
             else if (c.getRarity() == 5)
             {
                 if (plat.contains(c.getPrefix() + c.getName()))
+                    newUserCharacterBox.add(c);
+                else
+                    if (!unsavedChanges)
+                        unsavedChanges = true;
+            }
+            else if (c.getRarity() == 6)
+            {
+                if (plat6.contains(c.getPrefix() + c.getName()))
                     newUserCharacterBox.add(c);
                 else
                     if (!unsavedChanges)
