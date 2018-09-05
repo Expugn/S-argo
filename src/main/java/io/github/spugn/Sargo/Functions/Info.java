@@ -30,7 +30,6 @@ public class Info
 
         try
         {
-            //IUser botOwner = channel.getGuild().getUserByID(Long.parseLong(SettingsParser.getBotOwnerDiscordID()));
             IUser botOwner = channel.getGuild().getUserByID(Long.parseLong(LoginSettingsParser.getBotOwnerDiscordID()));
             String botOwnerName = botOwner.getName() + "#" + botOwner.getDiscriminator();
             builder.appendField("Bot Owner", botOwnerName, true);
@@ -41,7 +40,7 @@ public class Info
         }
 
         builder.appendField("Source", "[Github](https://github.com/Expugn/S-argo)", false);
-        builder.withImage("https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo_Banner.png");
+        builder.withImage("https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo_Banner_Animated.gif");
         builder.withColor(204, 102, 153);
 
         channel.sendMessage(builder.build());

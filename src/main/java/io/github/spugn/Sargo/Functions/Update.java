@@ -95,7 +95,6 @@ public class Update
     {
         CHANNEL = channel;
         builder = new EmbedBuilder();
-        //gitHubDataRepository = SettingsParser.getGitHubRepoURL();
         gitHubDataRepository = LoginSettingsParser.getGitHubRepoURL();
         allCharacters = new ArrayList<>();
         allWeapons = new ArrayList<>();
@@ -350,8 +349,6 @@ public class Update
      */
     private void buildCharacterAndWeaponList()
     {
-        //BannerParser bannersXML = new BannerParser();
-        //List<Banner> banners = bannersXML.getBanners();
         List<Banner> banners = BannerParser.getBanners();
 
         for (Banner b : banners)

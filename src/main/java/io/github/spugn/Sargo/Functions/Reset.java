@@ -88,8 +88,6 @@ public class Reset
         }
 
         /* OPEN BANNERS FILE */
-        //BannerParser bannersXML = new BannerParser();
-        //List<Banner> banners = bannersXML.getBanners();
         List<Banner> banners = BannerParser.getBanners();
 
         if (bannerID < banners.size() && bannerID >= 0)
@@ -185,6 +183,7 @@ public class Reset
                 if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType() == 0))
                 {
                     int bannerType = banners.get(bannerID).getBannerType();
+                    // BANNER TYPE IS STEP UP
                     if (bannerType == 1 ||
                             bannerType == 3 ||
                             bannerType == 4 ||
@@ -194,14 +193,17 @@ public class Reset
                             bannerType == 13 ||
                             bannerType == 14 ||
                             bannerType == 15 ||
-                            bannerType == 16)
+                            bannerType == 16 ||
+                            bannerType == 17)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 1);
                     }
+                    // BANNER TYPE IS RECORD CRYSTAL
                     else if (bannerType == 2)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 0);
                     }
+                    // BANNER TYPE IS RECORD CRYSTAL V2+
                     else if (bannerType == 5 ||
                                 bannerType == 8 ||
                                 bannerType == 11)
@@ -210,6 +212,7 @@ public class Reset
                     }
 
                     int wepBannerType = banners.get(bannerID).getBannerWepType();
+                    // WEP BANNER STEP UP
                     if (wepBannerType == 1 ||
                             wepBannerType == 2 ||
                             wepBannerType == 3)
@@ -266,6 +269,7 @@ public class Reset
                     int bannerType = banners.get(bannerID).getBannerType();
                     int bannerWepType = banners.get(bannerID).getBannerWepType();
 
+                    // BANNER TYPE IS STEP UP
                     if (bannerType == 1 ||
                             bannerType == 3 ||
                             bannerType == 4 ||
@@ -275,10 +279,12 @@ public class Reset
                             bannerType == 13 ||
                             bannerType == 14 ||
                             bannerType == 15 ||
-                            bannerType == 16)
+                            bannerType == 16 ||
+                            bannerType == 17)
                     {
                         dataString = "Step " + bannerData + " -> Step 1";
                     }
+                    // BANNER TYPE IS RECORD CRYSTAL
                     else if (bannerType == 2 ||
                             bannerType == 5 ||
                             bannerType == 8 ||
@@ -294,6 +300,7 @@ public class Reset
                         }
                     }
 
+                    // WEAPON BANNER STEP UP
                     if (bannerWepType == 1 ||
                             bannerWepType == 2 ||
                             bannerWepType == 3)

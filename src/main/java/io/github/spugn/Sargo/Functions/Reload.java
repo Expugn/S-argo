@@ -15,7 +15,6 @@ public class Reload
     public Reload()
     {
         new BannerParser().reloadBanners(BANNERS_FILE_PATH);
-        //new SettingsParser().reloadSettings(SETTINGS_FILE_PATH);
         new LoginSettingsParser().reload();
         new CommandSettingsParser().reload();
         new ScoutSettingsParser().reload();
@@ -32,7 +31,6 @@ public class Reload
     public static void reloadSettings()
     {
         LOGGER.debug("Reloading Settings...");
-        //new SettingsParser().reloadSettings(SETTINGS_FILE_PATH);
         new LoginSettingsParser().reload();
         new CommandSettingsParser().reload();
         new ScoutSettingsParser().reload();
@@ -76,7 +74,6 @@ public class Reload
             new CommandSettingsParser().reload();
             new ScoutSettingsParser().reload();
             new ShopSettingsParser().reload();
-            //new SettingsParser().reloadSettings(SETTINGS_FILE_PATH);
         }
     }
 
