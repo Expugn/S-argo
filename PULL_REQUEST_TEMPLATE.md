@@ -1,0 +1,1 @@
+**S'argo is currently not accepting pull requests. Thank you for understanding.**
