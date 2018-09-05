@@ -39,7 +39,7 @@ class WeaponScoutManager
             channel.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
             return;
         }
-        LOGGER.debug("Starting WEAPON Scout...");
+        LOGGER.debug("Starting WEAPON Scout for " + (channel.getGuild().getUserByID(Long.parseLong(discordID)).getName() + "#" + channel.getGuild().getUserByID(Long.parseLong(discordID)).getDiscriminator()) + "...");
         Banner selectedBanner = banners.get(bannerID - 1);
 
         if (selectedBanner.getWeapons().size() <= 0)

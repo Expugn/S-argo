@@ -26,7 +26,7 @@ class TicketScoutManager
     {
         choice = choice.toLowerCase();
 
-        LOGGER.debug("Starting TICKET Scout...");
+        LOGGER.debug("Starting TICKET Scout for " + (channel.getGuild().getUserByID(Long.parseLong(discordID)).getName() + "#" + channel.getGuild().getUserByID(Long.parseLong(discordID)).getDiscriminator()) + "...");
         switch (choice)
         {
             case "nts":

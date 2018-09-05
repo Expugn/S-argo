@@ -29,7 +29,7 @@ import java.util.Random;
  * </p>
  *
  * @author S'pugn
- * @version 1.0
+ * @version 2.0
  * @since v2.0
  * @see Normal
  * @see StepUp
@@ -46,6 +46,7 @@ abstract class CharacterScout
     double COPPER;
     double GOLD;
     double PLATINUM;
+    double PLATINUM6;
     List<Integer> GOLD_BANNERS;
     List<Integer> GOLD_BANNERS_V2;
     boolean IMAGE_DISABLED;
@@ -65,10 +66,10 @@ abstract class CharacterScout
     int multiScoutPrice;
     boolean generateImage;
     boolean stopScout;
+    boolean randomizeResults;
 
     /* PRIVATE VARIABLES */
     private String DISCORD_ID;
-    ///private SettingsParser SETTINGS;
     private boolean IS_RARITY_STARS;
     private double SILVER;
     private List<Double> RECORD_CRYSTAL_RATES;
@@ -77,6 +78,7 @@ abstract class CharacterScout
     private int bannerType;
     private List<Character> goldCharacters;
     private List<Character> platinumCharacters;
+    private List<Character> platinum6Characters;
     private String imageString;
     private String imageStrings[];
     private int highestRarity;
@@ -105,28 +107,15 @@ abstract class CharacterScout
     private void init()
     {
         /* FILES */
-        //SETTINGS = new SettingsParser();
         BANNERS = BannerParser.getBanners();
         USER = new UserParser(DISCORD_ID);
-
-        /* SETTINGS */
-        //IS_RARITY_STARS = SettingsParser.isRarityStars();
-        //COPPER = (int) (SettingsParser.getCopperRates() * 100);
-        //SILVER = (int) (SettingsParser.getSilverRates() * 100);
-        //GOLD = (int) (SettingsParser.getGoldRates() * 100);
-        //PLATINUM = (int) (SettingsParser.getPlatinumRates() * 100);
-        //RECORD_CRYSTAL_RATES = SettingsParser.getRecordCrystalRates();
-        //CIRCULATING_RECORD_CRYSTAL_RATES = SettingsParser.getCirculatingRecordCrystalRates();
-        //GOLD_BANNERS = SettingsParser.getGoldBanners();
-        //GOLD_BANNERS_V2 = SettingsParser.getGoldBannersv2();
-        //IMAGE_DISABLED = SettingsParser.isDisableImages();
-        //SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
 
         IS_RARITY_STARS = ScoutSettingsParser.isRarityStars();
         COPPER = (int) (ScoutSettingsParser.getCopperRate() * 100);
         SILVER = (int) (ScoutSettingsParser.getSilverRate() * 100);
         GOLD = (int) (ScoutSettingsParser.getGoldRate() * 100);
         PLATINUM = (int) (ScoutSettingsParser.getPlatinumRate() * 100);
+        PLATINUM6 = (int) (ScoutSettingsParser.getPlatinum6Rate() * 100);
         RECORD_CRYSTAL_RATES = ScoutSettingsParser.getRecordCrystalRates();
         CIRCULATING_RECORD_CRYSTAL_RATES = ScoutSettingsParser.getCirculatingRecordCrystalRates();
         GOLD_BANNERS = BannerParser.getGoldBanners();
@@ -146,6 +135,7 @@ abstract class CharacterScout
         guaranteeOnePlatinum = false;
         guaranteeGoldPlus = false;
         guaranteedScout = false;
+        randomizeResults = false;
         characterString = "";
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
         scoutMenu = new EmbedBuilder();
@@ -164,6 +154,7 @@ abstract class CharacterScout
             bannerTypeData = USER.getBannerData(SELECTED_BANNER.getBannerName());
             goldCharacters = new ArrayList<>();
             platinumCharacters = new ArrayList<>();
+            platinum6Characters = new ArrayList<>();
 
             if (USER.isBannerInfoExists(SELECTED_BANNER.getBannerName()) == -1)
             {
@@ -180,23 +171,38 @@ abstract class CharacterScout
                 {
                     platinumCharacters.add(character);
                 }
+                else if (character.getRarity() == 6)
+                {
+                    platinum6Characters.add(character);
+                }
             }
 
+            // IF NO PLATINUM6 CHARACTERS EXIST, ADD % BACK TO COPPER.
+            if (platinum6Characters.size() <= 0)
+            {
+                COPPER += PLATINUM6;
+                PLATINUM6 = 0;
+            }
+
+            // IF NO PLATINUM CHARACTERS EXIST, ADD % BACK TO COPPER.
             if (platinumCharacters.size() <= 0)
             {
                 COPPER += PLATINUM;
                 PLATINUM = 0;
             }
 
+            // PERFORM ANY SCOUT RATE CHANGES THAT ARE REQUIRED FROM THE BANNER TYPE.
             modifyScoutData();
 
+            // DISPLAY FINAL SCOUT PRICES AND RATES ONTO LOGGER.
             LOGGER.debug("\n- Scout Data -\n" +
                     "Single Price " + singleScoutPrice + "\n" +
                     "Multi Price: " + multiScoutPrice + "\n" +
                     "COPPER: " + COPPER + "%\n" +
                     "SILVER: " + SILVER + "%\n" +
                     "GOLD: " + GOLD + "%\n" +
-                    "PLATINUM: " + PLATINUM + "%");
+                    "PLATINUM: " + PLATINUM + "%\n" +
+                    "PLATINUM6: " + PLATINUM6 + "%");
         }
     }
 
@@ -230,21 +236,26 @@ abstract class CharacterScout
         for (int i = 0 ; i < 11 ; i++)
         {
             characters.add(getCharacter(scout()));
+            // REPLACE HIGHEST RARITY IF CHARACTER RARITY IS HIGHER.
+            highestRarity = (characters.get(i).getRarity() > highestRarity) ? characters.get(i).getRarity() : highestRarity;
         }
-        Character tempCharacter;
-        for (int a = 0 ; a < 12 ; a++)
+
+        if (!randomizeResults)
         {
-            for (int b = 1 ; b < 11 ; b++)
+            Character tempCharacter;
+            for (int a = 0 ; a < 12 ; a++)
             {
-                if (characters.get(b-1).getRarity() <= characters.get(b).getRarity())
+                for (int b = 1 ; b < 11 ; b++)
                 {
-                    tempCharacter = characters.get(b-1);
-                    characters.set(b-1, characters.get(b));
-                    characters.set(b, tempCharacter);
+                    if (characters.get(b-1).getRarity() <= characters.get(b).getRarity())
+                    {
+                        tempCharacter = characters.get(b-1);
+                        characters.set(b-1, characters.get(b));
+                        characters.set(b, tempCharacter);
+                    }
                 }
             }
         }
-        highestRarity = characters.get(0).getRarity();
 
         generateImageStrings();
         if (generateImage && !IMAGE_DISABLED)
@@ -334,15 +345,20 @@ abstract class CharacterScout
      */
     private int scout()
     {
+        // IF BANNER TYPE IS EVENT, RETURN EITHER A GOLD, PLATINUM, OR PLATINUM6 CHARACTER.
         if (bannerType == 9)
         {
             if (goldCharacters.size() > 0)
             {
                 return 4;
             }
-            else
+            else if (platinumCharacters.size() > 0)
             {
                 return 5;
+            }
+            else
+            {
+                return 6;
             }
         }
 
@@ -368,6 +384,7 @@ abstract class CharacterScout
 
         if (guaranteedScout)
         {
+            // RECORD CRYSTAL BANNERS V2+
             if (bannerType == 5 ||
                     bannerType == 8 ||
                     bannerType == 11)
@@ -392,9 +409,18 @@ abstract class CharacterScout
         {
             return 4;
         }
-        else
+        else if (d < COPPER + SILVER + GOLD + PLATINUM)
         {
             return 5;
+        }
+        else if (d < COPPER + SILVER + GOLD + PLATINUM + PLATINUM6)
+        {
+            return 6;
+        }
+        else
+        {
+            LOGGER.debug("Unaccounted for scenario has occurred. `d > COPPER + SILVER + GOLD + PLATINUM + PLATINUM6`. Returning `6`.");
+            return 6;
         }
     }
 
@@ -445,7 +471,7 @@ abstract class CharacterScout
                 }
             }
         }
-        else
+        else if (rarity == 5)
         {
             if (guaranteedScout)
             {
@@ -463,8 +489,26 @@ abstract class CharacterScout
             {
                 character = platinumCharacters.get(RNG.nextInt(platinumCharacters.size()));
             }
-
-
+        }
+        else
+        {
+            if (guaranteedScout)
+            {
+                double d = RNG.nextDouble();
+                // TODO WIP - DETAILS ARE NOT CONFIRMED YET
+                if (d < 0.6)
+                {
+                    character = platinum6Characters.get(RNG.nextInt(platinum6Characters.size()));
+                }
+                else
+                {
+                    character = randGoldCharacter();
+                }
+            }
+            else
+            {
+                character = platinum6Characters.get(RNG.nextInt(platinum6Characters.size()));
+            }
         }
         return character;
     }
@@ -477,6 +521,7 @@ abstract class CharacterScout
      */
     private void giveHackingCrystals(Character c)
     {
+        // IF THE BANNER TYPE IS NOT EVENT
         if (bannerType != 9)
         {
             switch(c.getRarity())
@@ -491,6 +536,7 @@ abstract class CharacterScout
                     userHackingCrystals += 50;
                     break;
                 case 5:
+                case 6:
                     userHackingCrystals += 100;
                     break;
                 default:

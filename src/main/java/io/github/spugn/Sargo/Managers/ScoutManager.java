@@ -34,7 +34,7 @@ class ScoutManager
             return;
         }
 
-        LOGGER.debug("Starting CHARACTER Scout...");
+        LOGGER.debug("Starting CHARACTER Scout for " + (channel.getGuild().getUserByID(Long.parseLong(discordID)).getName() + "#" + channel.getGuild().getUserByID(Long.parseLong(discordID)).getDiscriminator()) + "...");
         Banner selectedBanner = banners.get(bannerID - 1);
         switch (selectedBanner.getBannerType())
         {

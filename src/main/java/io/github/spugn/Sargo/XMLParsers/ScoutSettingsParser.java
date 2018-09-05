@@ -23,6 +23,7 @@ public class ScoutSettingsParser extends XMLEditor
     private static final String SILVER = "Silver";
     private static final String GOLD = "Gold";
     private static final String PLATINUM = "Platinum";
+    private static final String PLATINUM6 = "Platinum6";
     private static final String RECORD_CRYSTAL = "RecordCrystal";
     private static final String CIRCULATING_RECORD_CRYSTAL = "CirculatingRecordCrystal";
 
@@ -32,10 +33,11 @@ public class ScoutSettingsParser extends XMLEditor
     private static final boolean DEFAULT_DISABLE_IMAGES = false;
     private static final boolean DEFAULT_SIMPLE_MESSAGE = false;
     private static final boolean DEFAULT_RARITY_STARS = true;
-    private static final double DEFAULT_COPPER_RATE = 0.69;
+    private static final double DEFAULT_COPPER_RATE = 0.65;
     private static final double DEFAULT_SILVER_RATE = 0.25;
     private static final double DEFAULT_GOLD_RATE = 0.04;
-    private static final double DEFAULT_PLATINUM_RATE = 0.02;
+    private static final double DEFAULT_PLATINUM_RATE = 0.03;
+    private static final double DEFAULT_PLATINUM6_RATE = 0.03;
     private static final List<Double> DEFAULT_RECORD_CRYSTAL = Arrays.asList(0.03, 0.37, 0.4, 0.1, 0.035, 0.035, 0.01, 0.01, 0.005, 0.005);
     private static final List<Double> DEFAULT_CIRCULATING_RECORD_CRYSTAL = Arrays.asList(0.36, 0.6, 0.025, 0.01, 0.005);
 
@@ -47,6 +49,7 @@ public class ScoutSettingsParser extends XMLEditor
     private static double silverRate;
     private static double goldRate;
     private static double platinumRate;
+    private static double platinum6Rate;
     private static List<Double> recordCrystalRates;
     private static List<Double> circulatingRecordCrystalRates;
 
@@ -58,6 +61,7 @@ public class ScoutSettingsParser extends XMLEditor
     public static double getSilverRate() { return silverRate; }
     public static double getGoldRate() { return goldRate; }
     public static double getPlatinumRate() { return platinumRate; }
+    public static double getPlatinum6Rate() { return platinum6Rate; }
     public static List<Double> getRecordCrystalRates() { return recordCrystalRates; }
     public static List<Double> getCirculatingRecordCrystalRates() { return circulatingRecordCrystalRates; }
 
@@ -229,6 +233,19 @@ public class ScoutSettingsParser extends XMLEditor
                     continue;
                 }
 
+                if (event.asStartElement().getName().getLocalPart().equals(PLATINUM6))
+                {
+                    try { event = eventReader.nextEvent(); }
+                    catch (XMLStreamException e)
+                    {
+                        try { in.close(); } catch (IOException ex) { /* IGNORED */ }
+                        try { eventReader.close(); } catch (XMLStreamException ex) { /* IGNORED */ }
+                        throw new FailedToReadSettingFileException();
+                    }
+                    platinum6Rate = Double.parseDouble(event.asCharacters().getData());
+                    continue;
+                }
+
                 if (event.asStartElement().getName().getLocalPart().equals(RECORD_CRYSTAL))
                 {
                     double rate = 0.0;
@@ -300,6 +317,7 @@ public class ScoutSettingsParser extends XMLEditor
                 writeNode(eventWriter, SILVER, String.valueOf(DEFAULT_SILVER_RATE));
                 writeNode(eventWriter, GOLD, String.valueOf(DEFAULT_GOLD_RATE));
                 writeNode(eventWriter, PLATINUM, String.valueOf(DEFAULT_PLATINUM_RATE));
+                writeNode(eventWriter, PLATINUM6, String.valueOf(DEFAULT_PLATINUM6_RATE));
                 writeChild_Double(eventWriter, RECORD_CRYSTAL, RECORD_CRYSTAL, RATE, DEFAULT_RECORD_CRYSTAL);
                 writeChild_Double(eventWriter, CIRCULATING_RECORD_CRYSTAL, CIRCULATING_RECORD_CRYSTAL, RATE, DEFAULT_CIRCULATING_RECORD_CRYSTAL);
 
@@ -346,6 +364,7 @@ public class ScoutSettingsParser extends XMLEditor
             writeNode(eventWriter, SILVER, String.valueOf(silverRate));
             writeNode(eventWriter, GOLD, String.valueOf(goldRate));
             writeNode(eventWriter, PLATINUM, String.valueOf(platinumRate));
+            writeNode(eventWriter, PLATINUM6, String.valueOf(platinum6Rate));
             recordCrystalRates.remove(0);
             writeChild_Double(eventWriter, RECORD_CRYSTAL, RECORD_CRYSTAL, RATE, recordCrystalRates);
             circulatingRecordCrystalRates.remove(0);
