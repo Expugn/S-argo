@@ -649,7 +649,7 @@ abstract class CharacterScout
             scoutMenu.withColor(244, 233, 167);
             // IF SELECTED BANNER IS OLDER THAN STEP UP V7 AND NOT EVENT...
             // DISPLAY SAO ARGO ONLY, OTHERWISE USE BOTH SAO AND ALO ARGOS
-            if (SELECTED_BANNER.getBannerID() < 17 && SELECTED_BANNER.getBannerID() != 9)
+            if (SELECTED_BANNER.getBannerType() < 17 && SELECTED_BANNER.getBannerType() != 9)
             {
                 scoutMenu.withThumbnail(smp.getImage(highestRarity, true));
             }
