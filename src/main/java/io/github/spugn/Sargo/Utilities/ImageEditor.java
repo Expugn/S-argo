@@ -20,7 +20,7 @@ import java.io.IOException;
  * </p>
  *
  * @author S'pugn
- * @version 1.1
+ * @version 2.0
  * @since v2.0
  */
 public class ImageEditor
@@ -51,9 +51,7 @@ public class ImageEditor
             /* RARITY STARS */
             if (useRarityStars)
             {
-                //int starX = (result.getWidth() / 2) + 2 - 5;
                 int starX = (result.getWidth() / 2) - 3;
-                //int starY = 166 - 3 + 6;
                 int starY = 171;
                 BufferedImage rStar = ImageIO.read(new File("images/System/Rarity_Star.png"));
                 BufferedImage r6Star = ImageIO.read(new File("images/System/Rarity_6_Star.png"));
@@ -62,12 +60,6 @@ public class ImageEditor
                 switch (rarity)
                 {
                     case 6:
-                        //g.drawImage(r6Star, starX - 79 - 5, starY, null);
-                        //g.drawImage(r6Star, starX - 52 - 5 + 2 - 1, starY, null);
-                        //g.drawImage(r6Star, starX - 25 - 5 + 4 - 1, starY, null);
-                        //g.drawImage(r6Star, starX + 2 - 5 + 5 - 1, starY, null);
-                        //g.drawImage(r6Star, starX + 29 - 5 + 6 - 1, starY, null);
-                        //g.drawImage(r6Star, starX + 56 - 5 + 7 - 1, starY, null);
                         g.drawImage(r6Star, starX - 84, starY, null);
                         g.drawImage(r6Star, starX - 56, starY, null);
                         g.drawImage(r6Star, starX - 27, starY, null);
@@ -76,18 +68,6 @@ public class ImageEditor
                         g.drawImage(r6Star, starX + 57, starY, null);
                         break;
                     case 5:
-                        //g.drawImage(rStar, starX + 51, starY, null);
-                        //g.drawImage(rStar, starX + 17, starY, null);
-                        //g.drawImage(rStar, starX - 17, starY, null);
-                        //g.drawImage(rStar, starX - 51, starY, null);
-                        //g.drawImage(rStar, starX - 85, starY, null);
-
-                        //g.drawImage(rStar, starX - 69 + 2, starY, null);
-                        //g.drawImage(rStar, starX - 42 + 3, starY, null);
-                        //g.drawImage(rStar, starX - 15 + 4, starY, null);
-                        //g.drawImage(rStar, starX + 12 + 6, starY, null);
-                        //g.drawImage(rStar, starX + 29 + 18, starY, null);
-
                         g.drawImage(rStar, starX - 67, starY, null);
                         g.drawImage(rStar, starX - 39, starY, null);
                         g.drawImage(rStar, starX - 11, starY, null);
@@ -95,21 +75,6 @@ public class ImageEditor
                         g.drawImage(rStar, starX + 47, starY, null);
                         break;
                     case 4:
-                        //g.drawImage(rStar, starX + 34, starY, null);
-                        //g.drawImage(rStar, starX, starY, null);
-                        //g.drawImage(rStar, starX - 34, starY, null);
-                        //g.drawImage(rStar, starX - 68, starY, null);
-
-                        //g.drawImage(rStar, starX - 52, starY, null);
-                        //g.drawImage(rStar, starX - 25, starY, null);
-                        //g.drawImage(rStar, starX + 2, starY, null);
-                        //g.drawImage(rStar, starX + 29, starY, null);
-
-                        //g.drawImage(rStar, starX - 52 - 5 + 2 - 1 + 1, starY, null);
-                        //g.drawImage(rStar, starX - 25 - 5 + 4 - 1 + 1, starY, null);
-                        //g.drawImage(rStar, starX + 2 - 5 + 5 - 1 + 1, starY, null);
-                        //g.drawImage(rStar, starX + 29 - 5 + 6 - 1 + 1, starY, null);
-
                         g.drawImage(rStar, starX - 55, starY, null);
                         g.drawImage(rStar, starX - 24, starY, null);
                         g.drawImage(rStar, starX + 2, starY, null);
@@ -117,43 +82,16 @@ public class ImageEditor
 
                         break;
                     case 3:
-                        //g.drawImage(rStar, starX + 17, starY, null);
-                        //g.drawImage(rStar, starX - 17, starY, null);
-                        //g.drawImage(rStar, starX - 51, starY, null);
-
-                        //g.drawImage(rStar, starX - 42, starY, null);
-                        //g.drawImage(rStar, starX - 15, starY, null);
-                        //g.drawImage(rStar, starX + 12, starY, null);
-
-                        //g.drawImage(rStar, starX - 42 + 3, starY, null);
-                        //g.drawImage(rStar, starX - 15 + 4, starY, null);
-                        //g.drawImage(rStar, starX + 12 + 6, starY, null);
-
                         g.drawImage(rStar, starX - 39, starY, null);
                         g.drawImage(rStar, starX - 11, starY, null);
                         g.drawImage(rStar, starX + 18, starY, null);
 
                         break;
                     case 2:
-                        //g.drawImage(rStar, starX, starY, null);
-                        //g.drawImage(rStar, starX - 34, starY, null);
-
-                        //g.drawImage(rStar, starX - 25, starY, null);
-                        //g.drawImage(rStar, starX + 2, starY, null);
-
-                        //g.drawImage(rStar, starX - 25 - 5 + 4 - 1 + 1, starY, null);
-                        //g.drawImage(rStar, starX + 2 - 5 + 5 - 1 + 1, starY, null);
-
                         g.drawImage(rStar, starX - 26, starY, null);
                         g.drawImage(rStar, starX + 2, starY, null);
                         break;
                     default:
-                        //g.drawImage(rStar, starX - 17, starY, null);
-
-                        //g.drawImage(rStar, starX - 15, starY, null);
-
-                        //g.drawImage(rStar, starX - 15 + 4, starY, null);
-
                         g.drawImage(rStar, starX - 11, starY, null);
                         break;
                 }

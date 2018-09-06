@@ -1,4 +1,6 @@
 ![S'argo Logo](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo_Banner_Animated.gif)
+_[The .GIF version of the banner doesn't do it justice. Higher quality version here.](https://giant.gfycat.com/GoldenInnocentAustralianfreshwatercrocodile.webm)_
+
 # S'argo
 [![Downloads](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Downloads_Button.png)](https://github.com/Expugn/S-argo/releases)
 [![Wiki](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/Wiki_Button.png)](https://github.com/Expugn/S-argo/wiki)
@@ -26,30 +28,31 @@ This includes:
 
 | Character Scout Type | Description |  
 | :---: | :--- |  
-| Normal | Static pull rates every time. Nothing special. |  
-| Step Up | `+1.5x` gold character chance on Step 3, `+2.0x` gold character chance on Step 5. |  
-| Record Crystal | Record Crystals are given every multi scout which can be used in a record crystal scout. |  
-| Step Up v2 | `+1.5x` platinum character chance on Step 3, Guaranteed platinum character on Step 5, `+2.0x` platinum character chance on Step 6 which repeats. |  
-| Birthday Step Up | 50% off multi scout on Step 1, `+2.0x` gold and platinum character chance on Step 3. |  
-| Record Crystal v2 | First multi scout is 50% off, otherwise same as Record Crystal. |  
-| Memorial | Static pull rates, but multi pulls are disabled and single pulls only cost 1 Memory Diamond. |  
-| Step Up v3 | 50% off multi scout on Step 1, `+2.0x` platinum character chance on Step 3. |  
-| Record Crystal v3 | First multi scout is 50% off and every record crystal scout returns 1-5 Record Crystals. |  
-| Event | Single pulls only and free. Guaranteed gold+ rarity characters give no hacking crystals from duplicates. |  
-| SAO Game 5th Anniversary Step Up | Same rates as `Step Up v2`, but different Memory Diamond costs. |  
-| Record Crystal v4 | Same thing as `Record Crystal v3`, but base platinum character rates are `1.5x` higher. |  
-| Step Up v4 | Same rates as `Step Up v2`, but there's a 50% discount on Step 1 and 3 and base platinum character rates are `1.5x` higher. |
-| Step Up v5 | Same rates as `Step Up v2`, but there's a 50% discount on Step 1 and base platinum character rates are `1.5x` higher. |
-| SAO Game 5th Anniversary Step Up v2 | Same as `SAO Game 5th Anniversary Step Up` but base platinum character rates are `1.5x` higher. |  
-| Step Up v6 | Same rates as `Step Up v3`, but base platinum character rates are `1.5x` higher. |
-| SAO Game 5th Anniversary Step Up v3 | Same as `SAO Game 5th Anniversary Step Up v2` but a gold+ rarity character is guaranteed. |  
+| Normal | Static pull rates every time. Nothing special.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul></details> |  
+| Step Up | Performing more multi pulls modifies the character rates and pricing.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`200` Memory Diamonds</ul><h2>Step 3</h2>**Multi** <ul>`200` Memory Diamonds</ul>**★4 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★4 Rate** <ul>`+2.0x`</ul>**Resets back to `Step 1`**</details> |  
+| Record Crystal | Record Crystals are given every multi scout which can be used in a record crystal scout.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul></details> |  
+| Step Up v2 | Modified version of `Step Up` that features a repeating `Step 6`.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`200` Memory Diamonds</ul><h2>Step 3</h2>**Multi** <ul>`200` Memory Diamonds</ul>**★5 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★5 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★5 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
+| Birthday Step Up | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`125` Memory Diamonds</ul><h2>Step 3</h2>**★4 Rate** <ul>`+2.0x`</ul>**★5 Rate** <ul>`+2.0x`</ul>**Resets back to `Step 1`.**</details> |  
+| Record Crystal v2 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>First Scout</h2>**Multi** <ul>`125` Memory Diamonds</ul></details> |  
+| Memorial | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`1` Memory Diamond</ul>**Multi** <ul>`Disabled`</ul></details> |  
+| Step Up v3 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`125` Memory Diamonds</ul><h2>Step 3</h2>**★5 Rate** <ul>`+2.0x`</ul></details> |  
+| Record Crystal v3 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>First Scout</h2>**Multi** <ul>`125` Memory Diamonds</ul></details> |  
+| Event | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`0` Memory Diamond</ul>**Multi** <ul>`Disabled`</ul></details> |  
+| SAO Game 5th Anniversary Step Up | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`55` Memory Diamonds</ul><h2>Step 3</h2>**★5 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★5 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★5 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
+| Record Crystal v4 | Introduced the increased `+1.5` rates for ★5 characters (`2%` -> `3%`). This change carries through future banners.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>First Scout</h2>**Multi** <ul>`125` Memory Diamonds</ul></details> |  
+| Step Up v4 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`125` Memory Diamonds</ul><h2>Step 3</h2>**Multi** <ul>`125` Memory Diamonds</ul>**★5 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★5 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★5 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |
+| Step Up v5 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`125` Memory Diamonds</ul><h2>Step 3</h2>**Multi** <ul>`200` Memory Diamonds</ul>**★5 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★5 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★5 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |
+| SAO Game 5th Anniversary Step Up v2 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`55` Memory Diamonds</ul><h2>Step 3</h2>**★5 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★5 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★5 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
+| Step Up v6 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`125` Memory Diamonds</ul><h2>Step 3</h2>**★5 Rate** <ul>`+2.0x`</ul></details> |
+| SAO Game 5th Anniversary Step Up v3 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`55` Memory Diamonds</ul>**★4+ Rate** <ul>`100%` (for one character)</ul><h2>Step 3</h2>**★5 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★5 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★5 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details |  
+| Step Up v7 | Introduces ★6 characters.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`125` Memory Diamonds</ul><h2>Step 3</h2>**Multi** <ul>`200` Memory Diamonds</ul>**★6 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★6 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★6 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
 
 | Weapon Scout Type | Description |  
 | :---: | :--- |  
-| Normal | Static pull rates every time. Nothing special. |  
-| Step Up | `100` MD scout on Step 1, `+2.0x` gold weapon chance on Step 3. |
-| GGO Step Up | `100` MD scout and guaranteed copper+ rarity Automatic Rifle on Step 1, `+1.5x` gold weapon chance on Step 3, guaranteed gold weapon on Step 5, and `+2.0x` gold weapon chance on Step 6 which repeats. |  
-| Step Up v2 | `100` MD scout on Step 1, `100` MD scout and `+1.5x` gold weapon chance on Step 3, guaranteed gold weapon on Step 5, and `+2.0x` gold weapon chance on Step 6 which repeats. |  
+| Normal | Static pull rates every time. Nothing special.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`15` Memory Diamonds</ul>**Multi** <ul>`150` Memory Diamonds</ul></details> |  
+| Step Up | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`15` Memory Diamonds</ul>**Multi** <ul>`150` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`100` Memory Diamonds</ul><h2>Step 3</h2>**★4 Rate** <ul>`+2.0x`</ul></details> |
+| GGO Step Up | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`15` Memory Diamonds</ul>**Multi** <ul>`150` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`100` Memory Diamonds</ul>**Guarantees `1` ★2 Automatic Rifle weapon.**<h2>Step 3</h2>**★4 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★4 Rate** <ul>`100%` (for one weapon)</ul><h2>Step 6</h2>**★4 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
+| Step Up v2 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`15` Memory Diamonds</ul>**Multi** <ul>`150` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`100` Memory Diamonds</ul><h2>Step 3</h2>**★4 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★4 Rate** <ul>`100%` (for one weapon)</ul><h2>Step 6</h2>**★4 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
 
 | Miscellaneous Scout Type | Description |  
 | :---: | :--- |  
