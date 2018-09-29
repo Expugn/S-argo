@@ -6,6 +6,9 @@ import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 
+import java.io.File;
+import java.util.Objects;
+
 /**
  * INFO
  * <p>
@@ -39,7 +42,19 @@ public class Info
             builder.appendField("Bot Owner", "???", true);
         }
 
-        builder.appendField("Source", "[Github](https://github.com/Expugn/S-argo)", false);
+        builder.appendField("Source", "[Github](https://github.com/Expugn/S-argo)", true);
+
+        int userFiles = 0;
+        try
+        {
+            File userDirectory = new File("data/Users");
+            userFiles = Objects.requireNonNull(userDirectory.list()).length;
+        }
+        catch (NullPointerException e)
+        {
+            // IGNORED
+        }
+        builder.appendField("Registered Users",  userFiles + " User(s)", true);
         builder.withImage("https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo_Banner_Animated.gif");
         builder.withColor(204, 102, 153);
 
