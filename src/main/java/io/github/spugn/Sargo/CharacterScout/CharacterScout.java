@@ -396,6 +396,11 @@ abstract class CharacterScout
 
         if (guaranteedScout)
         {
+            // RECORD CRYSTAL BANNERS V5+
+            if (bannerType == 18)
+            {
+                return 6;
+            }
             // RECORD CRYSTAL BANNERS V2+
             if (bannerType == 5 ||
                     bannerType == 8 ||
@@ -514,14 +519,21 @@ abstract class CharacterScout
             if (guaranteedScout)
             {
                 double d = RNG.nextDouble();
-                // TODO WIP - DETAILS ARE NOT CONFIRMED YET
                 if (d < 0.6)
                 {
                     character = platinum6Characters.get(RNG.nextInt(platinum6Characters.size()));
                 }
                 else
                 {
-                    character = randGoldCharacter();
+                    if (new Random().nextBoolean())
+                    {
+                        character = randPlatinumCharacter();
+                    }
+                    else
+                    {
+                        character = randGoldCharacter();
+                    }
+
                 }
             }
             else

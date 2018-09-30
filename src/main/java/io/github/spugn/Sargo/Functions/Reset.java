@@ -206,7 +206,8 @@ public class Reset
                     // BANNER TYPE IS RECORD CRYSTAL V2+
                     else if (bannerType == 5 ||
                                 bannerType == 8 ||
-                                bannerType == 11)
+                                bannerType == 11 ||
+                                bannerType == 18)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), -1);
                     }
@@ -288,7 +289,8 @@ public class Reset
                     else if (bannerType == 2 ||
                             bannerType == 5 ||
                             bannerType == 8 ||
-                            bannerType == 11)
+                            bannerType == 11 ||
+                            bannerType == 18)
                     {
                         if (bannerData < 0)
                         {
