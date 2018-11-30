@@ -200,13 +200,27 @@ public class BannerInfo
                 {
                     gold = 100.0;
                 }
+                else
+                {
+                    gold = 0.0;
+                }
+
                 if (platinumCharacters.size() > 0)
                 {
                     platinum = 100.0;
                 }
+                else
+                {
+                    platinum = 0.0;
+                }
+
                 if (platinum6Characters.size() > 0)
                 {
                     platinum6 = 100.0;
+                }
+                else
+                {
+                    platinum6 = 0.0;
                 }
             }
 
