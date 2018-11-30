@@ -115,7 +115,6 @@ public class BannerParser
 
     private List<Banner> tryRead(String configFile) throws FailedToReadBannerFileException
     {
-        System.out.println("try read");
         List<Banner> banners = new ArrayList();
         goldBanners = new ArrayList();
         goldBannersv2 = new ArrayList();
