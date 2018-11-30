@@ -47,6 +47,7 @@ This includes:
 | SAO Game 5th Anniversary Step Up v3 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`55` Memory Diamonds</ul>**★4+ Rate** <ul>`100%` (for one character)</ul><h2>Step 3</h2>**★5 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★5 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★5 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details |  
 | Step Up v7 | Introduces ★6 characters.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`125` Memory Diamonds</ul><h2>Step 3</h2>**Multi** <ul>`200` Memory Diamonds</ul>**★6 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★6 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★6 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
 | Record Crystal v5 | The first use of Record Crystals with ★6 characters. Circulating Record Crystals are unobtainable here. <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>First Scout</h2>**Multi** <ul>`125` Memory Diamonds</ul></details> |  
+| Step Up v8 | Same as `Step Up v7`, but includes the rest of the ★5 characters into the general pool.<details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`25` Memory Diamonds</ul>**Multi** <ul>`250` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`125` Memory Diamonds</ul><h2>Step 3</h2>**Multi** <ul>`200` Memory Diamonds</ul>**★6 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★6 Rate** <ul>`100%` (for one character)</ul><h2>Step 6</h2>**★6 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
 
 | Weapon Scout Type | Description |  
 | :---: | :--- |  
@@ -180,7 +181,7 @@ This is a non-profit fan project with the purpose of practice and entertainment.
 *Sword Art Online* is owned by **A-1 Pictures**, **Aniplex USA**, and **Reki Kawahara**.  
 All characters and assets belong to their respective owners.  
 
-If you enjoy using this bot, please support the francise by trying out the actual game.  
+If you enjoy using this bot, please support the franchise by trying out the actual game.  
 *Sword Art Online: Memory Defrag* is available in the Apple iOS App Store and Google Play Store.
 
 Project began on September 6, 2017.

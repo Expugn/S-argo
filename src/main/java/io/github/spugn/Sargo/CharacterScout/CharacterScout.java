@@ -50,6 +50,7 @@ abstract class CharacterScout
     List<Integer> GOLD_BANNERS;
     List<Integer> GOLD_BANNERS_V2;
     List<Integer> PLATINUM_BANNERS;
+    List<Integer> PLATINUM_BANNERS_V2;
     boolean IMAGE_DISABLED;
     boolean SIMPLE_MESSAGE;
     Random RNG;
@@ -123,6 +124,7 @@ abstract class CharacterScout
         GOLD_BANNERS = BannerParser.getGoldBanners();
         GOLD_BANNERS_V2 = BannerParser.getGoldBannersv2();
         PLATINUM_BANNERS = BannerParser.getPlatinumBanners();
+        PLATINUM_BANNERS_V2 = BannerParser.getPlatinumBannersv2();
         IMAGE_DISABLED = ScoutSettingsParser.isDisableImages();
         SIMPLE_MESSAGE = ScoutSettingsParser.isSimpleMessage();
 

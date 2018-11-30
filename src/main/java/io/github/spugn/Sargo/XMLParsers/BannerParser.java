@@ -34,6 +34,7 @@ public class BannerParser
     private static List<Integer> goldBanners;
     private static List<Integer> goldBannersv2;
     private static List<Integer> platinumBanners;
+    private static List<Integer> platinumBannersv2;
 
     // Character Blacklist String: <BANNER ID>;<PREFIX>;<NAME>;<RARITY>
     private static List<String> excludedCharacters;
@@ -59,8 +60,13 @@ public class BannerParser
     }
 
     public static List<Integer> getPlatinumBanners()
+{
+    return platinumBanners;
+}
+
+    public static List<Integer> getPlatinumBannersv2()
     {
-        return platinumBanners;
+        return platinumBannersv2;
     }
 
     public static List<String> getExcludedCharacters()
@@ -109,10 +115,12 @@ public class BannerParser
 
     private List<Banner> tryRead(String configFile) throws FailedToReadBannerFileException
     {
+        System.out.println("try read");
         List<Banner> banners = new ArrayList();
         goldBanners = new ArrayList();
         goldBannersv2 = new ArrayList();
         platinumBanners = new ArrayList();
+        platinumBannersv2 = new ArrayList();
         excludedCharacters = new ArrayList();
         InputStream in;
         XMLEventReader eventReader;
@@ -239,6 +247,11 @@ public class BannerParser
                     else if (includeType.equals("PlatinumBanners"))
                     {
                         try { platinumBanners.add(banner.getBannerID()); }
+                        catch (NullPointerException e) { /* IGNORED */ }
+                    }
+                    else if (includeType.equals("PlatinumBannersv2"))
+                    {
+                        try { platinumBannersv2.add(banner.getBannerID()); }
                         catch (NullPointerException e) { /* IGNORED */ }
                     }
                     continue;

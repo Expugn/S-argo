@@ -224,20 +224,6 @@ public class BannerInfo
                 }
             }
 
-            /* IF RECORD CRYSTAL V4 AND ABOVE, INCREASE PLATINUM RATES BY 1.5 */
-            /*
-            if (banner.getBannerType() == 11 ||
-                    banner.getBannerType() == 12 ||
-                    banner.getBannerType() == 13 ||
-                    banner.getBannerType() == 14 ||
-                    banner.getBannerType() == 15 ||
-                    banner.getBannerType() == 16)
-            {
-                copper = copper - ((platinum * 1.5) - platinum);
-                platinum = platinum * 1.5;
-            }
-            */
-
             // IF OLDER THAN RECORD CRYSTAL V4 (EXCEPT EVENT), DECREASE PLATINUM RATES BY 1.5
             if (banner.getBannerType() == 10 ||
                     banner.getBannerType() == 8 ||
@@ -373,8 +359,9 @@ public class BannerInfo
                 stepSixRates += "**(5 ★ Scout Rates 2.0x)**";
                 menu.setStepSixRatesList(stepSixRates);
             }
-            /* BANNER IS STEP UP V7 */
-            else if (banner.getBannerType() == 17)
+            /* BANNER IS STEP UP V7/V8 */
+            else if (banner.getBannerType() == 17 ||
+                    banner.getBannerType() == 19)
             {
                 double tC = copper - ((platinum6 * 1.5) - platinum6);
                 double tS = silver;

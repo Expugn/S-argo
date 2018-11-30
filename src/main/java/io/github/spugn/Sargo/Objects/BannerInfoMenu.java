@@ -87,7 +87,8 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("Step Up v5") ||
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3") ||
-                bannerType.equalsIgnoreCase("Step Up v7"))
+                bannerType.equalsIgnoreCase("Step Up v7") ||
+                bannerType.equalsIgnoreCase("Step Up v8"))
         {
             if (bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
             {
@@ -146,7 +147,8 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
                 bannerType.equalsIgnoreCase("Step Up v6") ||
                 bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3") ||
-                bannerType.equalsIgnoreCase("Step Up v7"))
+                bannerType.equalsIgnoreCase("Step Up v7") ||
+                bannerType.equalsIgnoreCase("Step Up v8"))
         {
             if (weaponAmount > 0)
             {

@@ -103,10 +103,15 @@ public class Update
         File bannerFile = new File("data/Banners.xml");
         String lastModifiedString = "";
         String newFileLastModifiedString;
-        if (bannerFile.exists())
+        int lastBannerCount = 0;
+        int newBannerCount;
+        boolean bannerFileExists = bannerFile.exists();
+
+        if (bannerFileExists)
         {
             SimpleDateFormat sdf = new SimpleDateFormat("MM.dd.mmss");
             lastModifiedString = sdf.format(bannerFile.lastModified());
+            lastBannerCount = BannerParser.getBanners().size();
         }
 
         try
@@ -115,9 +120,11 @@ public class Update
             {
                 int deletedFiles, copperChars, silverChars, copperWeaps, silverWeaps, charImages, weapImages;
 
+                String bannerFileInfo = (bannerFileExists ? " (" + lastModifiedString + " [**" + lastBannerCount + " Banners**])" : "");
+
                 LOGGER.debug("Starting Update...");
                 builder.withTitle("Update - Reset Mode");
-                builder.withDesc("Updating Banners.xml" + (bannerFile.exists() ? " (" + lastModifiedString + ")" : ""));
+                builder.withDesc("Updating Banners.xml" + bannerFileInfo);
                 builder.appendField("Progress", ("**Banners.xml**\n") +
                         "Delete All Character/Weapon Images\n" +
                         "Copper Characters\n" +
@@ -134,8 +141,14 @@ public class Update
                 Reload.reloadBanners();
                 buildCharacterAndWeaponList();
 
+                newBannerCount = BannerParser.getBanners().size();
+
+                String bannerFileInfoWithChanges = (bannerFileExists ?
+                        " (" + lastModifiedString + " [**" + lastBannerCount + " Banners**] -> " + newFileLastModifiedString + " [**" + newBannerCount + " Banners**])" :
+                        " (" + newFileLastModifiedString + " [**" + newBannerCount + " Banners**])");
+
                 builder.withDesc("Erasing All Character/Weapon Files");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "**Delete All Character/Weapon Images**\n" +
                         "Copper Characters\n" +
                         "Silver Characters\n" +
@@ -151,7 +164,7 @@ public class Update
                 LOGGER.debug(deletedFiles + " files deleted.");
 
                 builder.withDesc("Downloading Copper Characters");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
                         "**Copper Characters**\n" +
                         "Silver Characters\n" +
@@ -167,7 +180,7 @@ public class Update
                 LOGGER.debug(copperChars + " files downloaded.");
 
                 builder.withDesc("Downloading Silver Characters");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
                         "~~Copper Characters~~ (" + copperChars + " Files)\n" +
                         "**Silver Characters**\n" +
@@ -183,7 +196,7 @@ public class Update
                 LOGGER.debug(silverChars + " files downloaded.");
 
                 builder.withDesc("Downloading Copper Weapons");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
                         "~~Copper Characters~~ (" + copperChars + " Files)\n" +
                         "~~Silver Characters~~ (" + silverChars + " Files)\n" +
@@ -199,7 +212,7 @@ public class Update
                 LOGGER.debug(copperWeaps + " files downloaded.");
 
                 builder.withDesc("Downloading Silver Weapons");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
                         "~~Copper Characters~~ (" + copperChars + " Files)\n" +
                         "~~Silver Characters~~ (" + silverChars + " Files)\n" +
@@ -215,7 +228,7 @@ public class Update
                 LOGGER.debug(silverWeaps + " files downloaded.");
 
                 builder.withDesc("Updating Character Images");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
                         "~~Copper Characters~~ (" + copperChars + " Files)\n" +
                         "~~Silver Characters~~ (" + silverChars + " Files)\n" +
@@ -231,7 +244,7 @@ public class Update
                 LOGGER.debug(charImages + " files downloaded.");
 
                 builder.withDesc("Updating Weapon Images");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
                         "~~Copper Characters~~ (" + copperChars + " Files)\n" +
                         "~~Silver Characters~~ (" + silverChars + " Files)\n" +
@@ -247,7 +260,7 @@ public class Update
                 LOGGER.debug(weapImages + " files downloaded.");
 
                 builder.withDesc("Update Complete! :tada:");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
                         "~~Copper Characters~~ (" + copperChars + " Files)\n" +
                         "~~Silver Characters~~ (" + silverChars + " Files)\n" +
@@ -260,12 +273,15 @@ public class Update
             else
             {
                 int charImages, weapImages;
+
+                String bannerFileInfo = (bannerFileExists ? " (" + lastModifiedString + " [**" + lastBannerCount + " Banners**])" : "");
+
                 LOGGER.debug("Starting Update...");
                 if (overwrite)
                     builder.withTitle("Update - Overwrite Mode");
                 else
                     builder.withTitle("Update");
-                builder.withDesc("Updating Banners.xml" + (bannerFile.exists() ? " (" + lastModifiedString + ")" : ""));
+                builder.withDesc("Updating Banners.xml" + bannerFileInfo);
                 builder.appendField("Progress", "**Banners.xml**\n" +
                         "Character Images\n" +
                         "Weapon Images\n", false);
@@ -279,8 +295,14 @@ public class Update
                 Reload.reloadBanners();
                 buildCharacterAndWeaponList();
 
+                newBannerCount = BannerParser.getBanners().size();
+
+                String bannerFileInfoWithChanges = (bannerFileExists ?
+                        " (" + lastModifiedString + " [**" + lastBannerCount + " Banners**] -> " + newFileLastModifiedString + " [**" + newBannerCount + " Banners**])" :
+                        " (" + newFileLastModifiedString + " [" + newBannerCount + " banners])");
+
                 builder.withDesc("Updating Character Images");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "**Character Images**\n" +
                         "Weapon Images\n", false);
                 updateMessage.edit(builder.build());
@@ -293,7 +315,7 @@ public class Update
                 LOGGER.debug(charImages + " files downloaded.");
 
                 builder.withDesc("Updating Weapon Images");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Character Images~~ (" + charImages + " Files)\n" +
                         "**Weapon Images**\n", false);
                 updateMessage.edit(builder.build());
@@ -306,7 +328,7 @@ public class Update
                 LOGGER.debug(weapImages + " files downloaded.");
 
                 builder.withDesc("Update Complete! :tada:");
-                builder.appendField("Progress", "~~Banners.xml~~ (" + lastModifiedString + " -> " + newFileLastModifiedString + ")\n" +
+                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
                         "~~Character Images~~ (" + charImages + " Files)\n" +
                         "~~Weapon Images~~ (" + weapImages + " Files)\n", false);
                 updateMessage.edit(builder.build());
