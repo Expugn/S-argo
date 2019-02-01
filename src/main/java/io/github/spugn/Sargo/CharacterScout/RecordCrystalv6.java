@@ -95,7 +95,7 @@ public class RecordCrystalv6 extends CharacterScout
         {
             while (characterExcluded)
             {
-                randIndex = PLATINUM_BANNERS.get(RNG.nextInt(PLATINUM_BANNERS.size()));
+                randIndex = PLATINUM_BANNERS_V2.get(RNG.nextInt(PLATINUM_BANNERS_V2.size()));
                 randBanner = BANNERS.get(randIndex - 1);
                 randCharacters = randBanner.getCharacters();
                 c = randCharacters.get(RNG.nextInt(randCharacters.size()));
