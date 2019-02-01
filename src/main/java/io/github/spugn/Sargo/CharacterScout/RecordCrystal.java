@@ -1,9 +1,7 @@
 package io.github.spugn.Sargo.CharacterScout;
 
-import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
-import io.github.spugn.Sargo.Objects.WarningMessage;
 import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
@@ -128,7 +126,7 @@ public class RecordCrystal extends CharacterScout
             case "si":
                 if (userMemoryDiamonds < singleScoutPrice)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.getCommandPrefix() + "**shop**' to get more Memory Diamonds.").get().build());
+                    print_NotEnoughMemoryDiamonds_Single_Message();
                     return;
                 }
 
@@ -146,7 +144,7 @@ public class RecordCrystal extends CharacterScout
             case "mi":
                 if (userMemoryDiamonds < multiScoutPrice)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.getCommandPrefix() + "**shop**' to get more Memory Diamonds.").get().build());
+                    print_NotEnoughMemoryDiamonds_Multi_Message();
                     return;
                 }
 
@@ -171,8 +169,7 @@ public class RecordCrystal extends CharacterScout
                 userRecordCrystals = USER.getBannerData(SELECTED_BANNER.getBannerName());
                 if (userRecordCrystals < 10)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS", "You need `10` record crystals to do a record crystal scout.\n\n" +
-                            "You currently have `" + (userRecordCrystals >= 0 ? userRecordCrystals : "0") + "` `" + SELECTED_BANNER.getBannerName() + "` Record Crystals.").get().build());
+                    print_NotEnoughRecordCrystals_Message();
                     return;
                 }
 
@@ -182,7 +179,7 @@ public class RecordCrystal extends CharacterScout
                 doSinglePull();
                 break;
             default:
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Only `single`, `multi`, and `record crystal` scouts are available.").get().build());
+                print_UnknownScoutType_smrc_Message();
                 return;
         }
 

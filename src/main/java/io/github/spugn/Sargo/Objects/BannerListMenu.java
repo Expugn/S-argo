@@ -33,7 +33,7 @@ public class BannerListMenu
         builder.withAuthorName("Banner List (Page " + currentPage + " of " + highestPage + ")");
         builder.withDesc(bannerCount + " banners available.");
         builder.withThumbnail(new GitHubImage("images/System/Scout_Icon.png").getURL());
-        builder.withColor(153, 0, 153);
+        builder.withColor(255, 0, 255);
 
         builder.appendField("- Banners -", bannerList, false);
 

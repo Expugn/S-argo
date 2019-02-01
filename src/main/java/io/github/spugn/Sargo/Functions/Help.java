@@ -24,8 +24,14 @@ public class Help
     {
         EmbedBuilder builder = new EmbedBuilder();
 
+        builder.withColor(91, 255, 105);
+
         builder.withAuthorName("Help Menu");
         builder.withAuthorIcon(new GitHubImage("images/System/Help_Icon.png").getURL());
+
+        String detailedListLink = "";
+        detailedListLink += "[Detailed Command List](https://github.com/Expugn/S-argo#commands)" + "\n";
+        builder.appendField("FOR A MORE DETAILED COMMAND LIST...", detailedListLink, false);
 
         String generalHelp = "";
         generalHelp += "'**help**' - Display the command list." + "\n";

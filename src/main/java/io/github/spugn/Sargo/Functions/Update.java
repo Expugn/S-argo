@@ -96,6 +96,7 @@ public class Update
     {
         CHANNEL = channel;
         builder = new EmbedBuilder();
+        builder.withColor(255, 185, 10);
         gitHubDataRepository = LoginSettingsParser.getGitHubRepoURL();
         allCharacters = new ArrayList<>();
         allWeapons = new ArrayList<>();

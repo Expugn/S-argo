@@ -1,10 +1,14 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.Utilities.ImageEditor;
-import io.github.spugn.Sargo.XMLParsers.*;
+import io.github.spugn.Sargo.XMLParsers.BannerParser;
+import io.github.spugn.Sargo.XMLParsers.ScoutMasterParser;
+import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
+import io.github.spugn.Sargo.XMLParsers.UserParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sx.blah.discord.handle.obj.IChannel;
@@ -63,6 +67,7 @@ abstract class CharacterScout
     boolean guaranteeOnePlatinum;
     boolean guaranteeGoldPlus;
     boolean guaranteeOnePlatinum6;
+    boolean guaranteedScoutNoGold;
     int userMemoryDiamonds;
     int userRecordCrystals;
     int singleScoutPrice;
@@ -141,6 +146,7 @@ abstract class CharacterScout
         guaranteeOnePlatinum = false;
         guaranteeGoldPlus = false;
         guaranteedScout = false;
+        guaranteedScoutNoGold = false;
         randomizeResults = false;
         characterString = "";
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
@@ -399,7 +405,8 @@ abstract class CharacterScout
         if (guaranteedScout)
         {
             // RECORD CRYSTAL BANNERS V5+
-            if (bannerType == 18)
+            if (bannerType == 18 ||
+                    bannerType == 20)
             {
                 return 6;
             }
@@ -527,14 +534,24 @@ abstract class CharacterScout
                 }
                 else
                 {
-                    if (new Random().nextBoolean())
+                    // RECORD CRYSTAL V6 - GOLD CHARACTERS ARE NOT OBTAINABLE
+                    if (guaranteedScoutNoGold)
                     {
                         character = randPlatinumCharacter();
                     }
                     else
                     {
-                        character = randGoldCharacter();
+                        if (new Random().nextBoolean())
+                        {
+                            character = randPlatinumCharacter();
+                        }
+                        else
+                        {
+                            character = randGoldCharacter();
+                        }
                     }
+
+
 
                 }
             }
@@ -757,6 +774,49 @@ abstract class CharacterScout
         LOGGER.debug("Saving User Data...");
         USER.saveData();
         deleteTempDirectory();
+    }
+
+    void print_NotEnoughMemoryDiamonds_Single_Message()
+    {
+        CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS",
+                "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse `" + CommandManager.getCommandPrefix() + "shop` to get more Memory Diamonds.",
+                SELECTED_BANNER.getBannerName()).get().build());
+    }
+
+    void print_NotEnoughMemoryDiamonds_Multi_Message()
+    {
+        CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS",
+                "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse `" + CommandManager.getCommandPrefix() + "shop` to get more Memory Diamonds.",
+                SELECTED_BANNER.getBannerName()).get().build());
+    }
+
+    void print_NotEnoughRecordCrystals_Message()
+    {
+        CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS",
+                "You need `10` record crystals to do a record crystal scout.\n\n" +
+                        "You currently have `" + (userRecordCrystals >= 0 ? userRecordCrystals : "0") + "` `" + SELECTED_BANNER.getBannerName() + "` Record Crystals.",
+                SELECTED_BANNER.getBannerName()).get().build());
+    }
+
+    void print_UnknownScoutType_s_Message()
+    {
+        CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
+                "Only `single` scouts are available.",
+                SELECTED_BANNER.getBannerName()).get().build());
+    }
+
+    void print_UnknownScoutType_sm_Message()
+    {
+        CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
+                "Only `single` and `multi` scouts are available.",
+                SELECTED_BANNER.getBannerName()).get().build());
+    }
+
+    void print_UnknownScoutType_smrc_Message()
+    {
+        CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
+                "Only `single`, `multi`, and `record crystal` scouts are available.",
+                SELECTED_BANNER.getBannerName()).get().build());
     }
 
     /**

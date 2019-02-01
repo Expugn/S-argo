@@ -115,6 +115,8 @@ public class Banner
                 return "Record Crystal v5";
             case 19:
                 return "Step Up v8";
+            case 20:
+                return "Record Crystal v6";
             default:
                 return "Unknown";
         }

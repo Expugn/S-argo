@@ -435,7 +435,8 @@ public class BannerInfo
                     banner.getBannerType() == 5 ||
                     banner.getBannerType() == 8 ||
                     banner.getBannerType() == 11 ||
-                    banner.getBannerType() == 18)
+                    banner.getBannerType() == 18 ||
+                    banner.getBannerType() == 20)
             {
                 int counter = 0;
                 String recordCrystalRates = "";

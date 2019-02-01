@@ -106,7 +106,8 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("Record Crystal v2") ||
                 bannerType.equalsIgnoreCase("Record Crystal v3") ||
                 bannerType.equalsIgnoreCase("Record Crystal v4") ||
-                bannerType.equalsIgnoreCase("Record Crystal v5"))
+                bannerType.equalsIgnoreCase("Record Crystal v5") ||
+                bannerType.equalsIgnoreCase("Record Crystal v6"))
         {
             builder.appendField("- Record Crystal Rates -", recordCrystalRatesList, true);
 
@@ -163,7 +164,8 @@ public class BannerInfoMenu
                 bannerType.equalsIgnoreCase("Record Crystal v2") ||
                 bannerType.equalsIgnoreCase("Record Crystal v3") ||
                 bannerType.equalsIgnoreCase("Record Crystal v4") ||
-                bannerType.equalsIgnoreCase("Record Crystal v5"))
+                bannerType.equalsIgnoreCase("Record Crystal v5") ||
+                bannerType.equalsIgnoreCase("Record Crystal v6"))
         {
             if (weaponAmount > 0)
             {

@@ -73,6 +73,7 @@ public class ScoutSettingsParser extends XMLEditor
     public static void setSilverRate(double sR) { silverRate = sR; }
     public static void setGoldRate(double gR) { goldRate = gR; }
     public static void setPlatinumRate(double pR) { platinumRate = pR; }
+    public static void setPlatinum6Rate(double p6R) { platinum6Rate = p6R; }
     public static void setRecordCrystalRates(List<Double> rCR) { recordCrystalRates = rCR; }
     public static void setCirculatingRecordCrystalRates(List<Double> cRCR) { circulatingRecordCrystalRates = cRCR; }
 

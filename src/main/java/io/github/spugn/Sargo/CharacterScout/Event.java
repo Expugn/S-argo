@@ -1,8 +1,6 @@
 package io.github.spugn.Sargo.CharacterScout;
 
-import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.Character;
-import io.github.spugn.Sargo.Objects.WarningMessage;
 import sx.blah.discord.handle.obj.IChannel;
 
 public class Event extends CharacterScout
@@ -85,7 +83,7 @@ public class Event extends CharacterScout
             case "si":
                 if (userMemoryDiamonds < singleScoutPrice)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.getCommandPrefix() + "**shop**' to get more Memory Diamonds.").get().build());
+                    print_NotEnoughMemoryDiamonds_Single_Message();
                     return;
                 }
 
@@ -100,7 +98,7 @@ public class Event extends CharacterScout
                 doSinglePull();
                 break;
             default:
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Only `single` scouts are available.").get().build());
+                print_UnknownScoutType_s_Message();
                 return;
         }
 

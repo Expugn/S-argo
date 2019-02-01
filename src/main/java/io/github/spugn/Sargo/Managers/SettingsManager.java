@@ -803,12 +803,41 @@ public class SettingsManager
                 builder.withDescription("Command Error:\n`settings scout rates platinum [percentage-in-decimal]`");
             }
         }
+        else if (requestedType.equals("platinum6"))
+        {
+            if (!newData.isEmpty())
+            {
+                try
+                {
+                    double newData_double = Double.parseDouble(newData);
+                    if (newData_double >= 0 && newData_double <= 1.0)
+                    {
+                        ScoutSettingsParser.setPlatinum6Rate(newData_double);
+                        scoutSaveAndReload();
+                        builder.withDescription("`Platinum6` set to: `" + ScoutSettingsParser.getPlatinum6Rate() + "`.");
+                    }
+                    else
+                    {
+                        builder.withDescription("Provided rate within `0` - `1.0`.");
+                    }
+                }
+                catch (NumberFormatException e)
+                {
+                    builder.withDescription("Provided rate is not a number.");
+                }
+            }
+            else
+            {
+                builder.withDescription("Command Error:\n`settings scout rates platinum6 [percentage-in-decimal]`");
+            }
+        }
         else
         {
             builder.withDescription("Command Error:\n`settings scout rates copper [percentage-in-decimal]`\n" +
                     "`settings scout rates silver [percentage-in-decimal]`\n" +
                     "`settings scout rates gold [percentage-in-decimal]`\n" +
-                    "`settings scout rates platinum [percentage-in-decimal]`");
+                    "`settings scout rates platinum [percentage-in-decimal]`\n" +
+                    "`settings scout rates platinum6 [percentage-in-decimal]`");
         }
     }
 
@@ -1250,7 +1279,8 @@ public class SettingsManager
                                 "\t- `Copper (2★)` : " + ScoutSettingsParser.getCopperRate() + "\n" +
                                 "\t- `Silver (3★)` : " + ScoutSettingsParser.getSilverRate() + "\n" +
                                 "\t- `Gold (4★)` : " + ScoutSettingsParser.getGoldRate() + "\n" +
-                                "\t- `Platinum (5★)` : " + ScoutSettingsParser.getPlatinumRate() + "\n";
+                                "\t- `Platinum (5★)` : " + ScoutSettingsParser.getPlatinumRate() + "\n" +
+                                "\t- `Platinum6 (6★)` : " + ScoutSettingsParser.getPlatinum6Rate() + "\n";
         }
         else if (requestedSetting.equals("recordcrystal"))
         {
@@ -1437,6 +1467,7 @@ public class SettingsManager
         double silverRate = ScoutSettingsParser.getSilverRate();
         double goldRate = ScoutSettingsParser.getGoldRate();
         double platinumRate = ScoutSettingsParser.getPlatinumRate();
+        double platinum6Rate = ScoutSettingsParser.getPlatinum6Rate();
 
         String ScS_CONTENT =    "`DisableImages` - " + ScoutSettingsParser.isDisableImages() + "\n" +
                                 "`SimpleMessage` - " + ScoutSettingsParser.isSimpleMessage() + "\n" +
@@ -1447,6 +1478,7 @@ public class SettingsManager
                                 "\t`Silver` - " + silverRate + "\n" +
                                 "\t`Gold` - " + goldRate + "\n" +
                                 "\t`Platinum` - " + platinumRate + "\n" +
+                                "\t`Platinum6` - " + platinum6Rate + "\n" +
                                 "`RecordCrystal:` \n";
 
         int rcCounter = 0;
@@ -1496,7 +1528,7 @@ public class SettingsManager
         }
 
         // CHECK RATES
-        double totalRates = copperRate + silverRate + goldRate + platinumRate;
+        double totalRates = copperRate + silverRate + goldRate + platinumRate + platinum6Rate;
         if (totalRates != 1.0)
         {
             ScS_WARNINGS += ":warning: `Rates` (`" + totalRates + "`) does not add up to `1.0`.\n";

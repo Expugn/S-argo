@@ -208,7 +208,8 @@ public class Reset
                     else if (bannerType == 5 ||
                                 bannerType == 8 ||
                                 bannerType == 11 ||
-                                bannerType == 18)
+                                bannerType == 18 ||
+                                bannerType == 20)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), -1);
                     }
@@ -292,7 +293,8 @@ public class Reset
                             bannerType == 5 ||
                             bannerType == 8 ||
                             bannerType == 11 ||
-                            bannerType == 18)
+                            bannerType == 18 ||
+                            bannerType == 20)
                     {
                         if (bannerData < 0)
                         {

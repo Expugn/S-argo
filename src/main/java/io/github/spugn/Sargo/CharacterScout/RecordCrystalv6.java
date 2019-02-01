@@ -7,9 +7,26 @@ import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
-public class StepUpv8 extends CharacterScout
+/**
+ * RECORD CRYSTAL V4 CHARACTER SCOUT
+ * <p>
+ *     It's literally the same thing as RecordCrystalv4.
+ *
+ *     Only difference is that you cannot get any gold
+ *     characters in the record crystal scout.
+ * </p>
+ *
+ * @author S'pugn
+ * @version 1.0
+ * @since v3.3
+ * @see RecordCrystal
+ * @see CharacterScout
+ */
+public class RecordCrystalv6 extends CharacterScout
 {
-    public StepUpv8(IChannel channel, int bannerID, String choice, String discordID)
+    private int circluatedRecordCrystals;
+
+    public RecordCrystalv6(IChannel channel, int bannerID, String choice, String discordID)
     {
         super(channel, bannerID, choice, discordID);
         run();
@@ -18,8 +35,8 @@ public class StepUpv8 extends CharacterScout
     @Override
     protected void initBannerInfo()
     {
-        USER.addBannerInfo(SELECTED_BANNER.getBannerName(), 1);
-        bannerTypeData = 1;
+        USER.addBannerInfo(SELECTED_BANNER.getBannerName(), -1);
+        bannerTypeData = -1;
     }
 
     @Override
@@ -32,18 +49,11 @@ public class StepUpv8 extends CharacterScout
 
             switch (bannerTypeData)
             {
-                case 1:
+                case -1:
                     multiScoutPrice = 125;
+                    bannerTypeData = 0;
+                    USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
                     break;
-                case 3:
-                    multiScoutPrice = 200;
-                    COPPER = COPPER - ((PLATINUM6 * 1.5) - PLATINUM6);
-                    PLATINUM6 = PLATINUM6 * 1.5;
-                case 5:
-                    guaranteeOnePlatinum6 = true;
-                case 6:
-                    COPPER = COPPER - ((PLATINUM6 * 2.0) - PLATINUM6);
-                    PLATINUM6 = PLATINUM6 * 2.0;
                 default:
                     break;
             }
@@ -53,56 +63,18 @@ public class StepUpv8 extends CharacterScout
     @Override
     protected void updateBannerData()
     {
-        int currentStep = USER.getBannerData(SELECTED_BANNER.getBannerName());
-        currentStep++;
-        if (currentStep > 6)
-        {
-            USER.changeValue(SELECTED_BANNER.getBannerName(), 6);
-        }
-        else
-        {
-            USER.changeValue(SELECTED_BANNER.getBannerName(), currentStep);
-        }
+        rcGet = getRecordCrystals();
+        bannerTypeData += rcGet;
+        USER.changeValue(SELECTED_BANNER.getBannerName(), bannerTypeData);
     }
 
     @Override
     protected Character randGoldCharacter()
     {
-        /* GET A RANDOM GOLD VARIANT CHARACTER, IF THERE IS A PLATINUM
-           VARIANT OF THAT CHARACTER IN THE BANNER THEN GET A NEW CHARACTER. */
-        Character c = null;
-        boolean charInBanner = true;
-        int randIndex;
-        Banner randBanner;
-        List<Character> randCharacters;
-        boolean sameName;
-        boolean samePrefix;
-
-        while(charInBanner)
-        {
-            randIndex = GOLD_BANNERS_V2.get(RNG.nextInt(GOLD_BANNERS_V2.size()));
-            randBanner = BANNERS.get(randIndex - 1);
-            randCharacters = randBanner.getCharacters();
-            c = randCharacters.get(RNG.nextInt(randCharacters.size()));
-
-            for (Character bc : SELECTED_BANNER.getCharacters())
-            {
-                sameName = c.getName().equalsIgnoreCase(bc.getName());
-                samePrefix = c.getPrefix().equalsIgnoreCase(bc.getPrefix());
-
-                if (!(sameName && samePrefix))
-                {
-                    charInBanner = false;
-                }
-                else
-                {
-                    charInBanner = true;
-                    break;
-                }
-            }
-        }
-
-        return c;
+        int randIndex = GOLD_BANNERS_V2.get(RNG.nextInt(GOLD_BANNERS_V2.size()));
+        Banner randBanner = BANNERS.get(randIndex - 1);
+        List<Character> randCharacters = randBanner.getCharacters();
+        return randCharacters.get(RNG.nextInt(randCharacters.size()));
     }
 
     @Override
@@ -123,7 +95,7 @@ public class StepUpv8 extends CharacterScout
         {
             while (characterExcluded)
             {
-                randIndex = PLATINUM_BANNERS_V2.get(RNG.nextInt(PLATINUM_BANNERS_V2.size()));
+                randIndex = PLATINUM_BANNERS.get(RNG.nextInt(PLATINUM_BANNERS.size()));
                 randBanner = BANNERS.get(randIndex - 1);
                 randCharacters = randBanner.getCharacters();
                 c = randCharacters.get(RNG.nextInt(randCharacters.size()));
@@ -184,10 +156,14 @@ public class StepUpv8 extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[Step Up v8] - Step " + bannerTypeData);
+                    scoutMenu.withTitle("[Record Crystal v6] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")");
+                    break;
+                case "rc":
+                case "rci":
+                    scoutMenu.withTitle("[Record Crystal Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")" + "\n");
                     break;
                 default:
-                    scoutMenu.withTitle("[Step Up v8] - Unknown");
+                    scoutMenu.withTitle("[Record Crystal v6] - Unknown");
                     break;
             }
         }
@@ -201,10 +177,14 @@ public class StepUpv8 extends CharacterScout
                     break;
                 case "m":
                 case "mi":
-                    simpleMessage += "**[Step Up v8] - Step " + bannerTypeData + "**" + "\n";
+                    simpleMessage += "**[Record Crystal v6] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")**" + "\n";
+                    break;
+                case "rc":
+                case "rci":
+                    simpleMessage += "**[Record Crystal Scout] - " + ((bannerTypeData - 10) + circluatedRecordCrystals) + " Record Crystals Left (+" + circluatedRecordCrystals + ")**" + "\n";
                     break;
                 default:
-                    simpleMessage += "**[Step Up v8] - Unknown**" + "\n";
+                    simpleMessage += "**[Record Crystal v6] - Unknown**" + "\n";
                     break;
             }
         }
@@ -252,8 +232,30 @@ public class StepUpv8 extends CharacterScout
                 doMultiPull();
                 updateBannerData();
                 break;
+            case "rc":
+            case "rci":
+                if (CHOICE.equalsIgnoreCase("rci") && !IMAGE_DISABLED)
+                {
+                    generateImage = true;
+                }
+
+                userRecordCrystals = USER.getBannerData(SELECTED_BANNER.getBannerName());
+                if (userRecordCrystals < 10)
+                {
+                    print_NotEnoughRecordCrystals_Message();
+                    return;
+                }
+
+                circluatedRecordCrystals = getCirculatedRecordCrystals();
+                userRecordCrystals -= 10;
+                userRecordCrystals += circluatedRecordCrystals;
+                USER.changeValue(SELECTED_BANNER.getBannerName(), userRecordCrystals);
+                guaranteedScout = true;
+                guaranteedScoutNoGold = true;
+                doSinglePull();
+                break;
             default:
-                print_UnknownScoutType_sm_Message();
+                print_UnknownScoutType_smrc_Message();
                 return;
         }
 
