@@ -112,7 +112,8 @@ public class BannerInfoMenu
             builder.appendField("- Record Crystal Rates -", recordCrystalRatesList, true);
 
             if (bannerType.equalsIgnoreCase("Record Crystal v3") ||
-                    bannerType.equalsIgnoreCase("Record Crystal v4"))
+                    bannerType.equalsIgnoreCase("Record Crystal v4") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v6"))
             {
                 builder.appendField("- Circulating Record Crystal Rates -", circulatingRecordCrystalRatesList, true);
             }
