@@ -453,12 +453,14 @@ public class BannerInfo
                 menu.setRecordCrystalRatesList(recordCrystalRates);
 
                 if (banner.getBannerType() == 8 ||
-                        banner.getBannerType() == 11)
+                        banner.getBannerType() == 11 ||
+                        banner.getBannerType() == 20)
                 {
                     int counter2 = 0;
                     String circluatingRecordCrystalRates = "";
                     if (banner.getBannerType() == 8 ||
-                            banner.getBannerType() == 11)
+                            banner.getBannerType() == 11 ||
+                            banner.getBannerType() == 20)
                     {
                         for (double d : circulatingRecordCrystal)
                         {
