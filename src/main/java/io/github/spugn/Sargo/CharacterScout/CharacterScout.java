@@ -779,14 +779,14 @@ abstract class CharacterScout
     void print_NotEnoughMemoryDiamonds_Single_Message()
     {
         CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS",
-                "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse `" + CommandManager.getCommandPrefix() + "shop` to get more Memory Diamonds.",
+                "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse `" + CommandManager.getCommandPrefix() + "shop` to get more Memory Diamonds (**it's free!**).",
                 SELECTED_BANNER.getBannerName()).get().build());
     }
 
     void print_NotEnoughMemoryDiamonds_Multi_Message()
     {
         CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS",
-                "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse `" + CommandManager.getCommandPrefix() + "shop` to get more Memory Diamonds.",
+                "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse `" + CommandManager.getCommandPrefix() + "shop` to get more Memory Diamonds (**it's free!**).",
                 SELECTED_BANNER.getBannerName()).get().build());
     }
 
@@ -801,21 +801,42 @@ abstract class CharacterScout
     void print_UnknownScoutType_s_Message()
     {
         CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
-                "Only `single` scouts are available.",
+                "Only `single` scouts are available.\n\n" +
+                        "**SINGLE SCOUTS**\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " s`\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " si`",
                 SELECTED_BANNER.getBannerName()).get().build());
     }
 
     void print_UnknownScoutType_sm_Message()
     {
         CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
-                "Only `single` and `multi` scouts are available.",
+                "Only `single` and `multi` scouts are available.\n\n" +
+                        "**SINGLE SCOUTS**\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " s`\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " si`\n\n" +
+
+                        "**MULTI SCOUTS**\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " m`\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " mi`",
                 SELECTED_BANNER.getBannerName()).get().build());
     }
 
     void print_UnknownScoutType_smrc_Message()
     {
         CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
-                "Only `single`, `multi`, and `record crystal` scouts are available.",
+                "Only `single`, `multi`, and `record crystal` scouts are available.\n\n" +
+                        "**SINGLE SCOUTS**\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " s`\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " si`\n\n" +
+
+                        "**MULTI SCOUTS**\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " m`\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " mi`\n\n" +
+
+                        "**RECORD CRYSTAL SCOUTS**\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " rc`\n" +
+                        "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " rci`",
                 SELECTED_BANNER.getBannerName()).get().build());
     }
 
