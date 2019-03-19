@@ -68,6 +68,7 @@ abstract class CharacterScout
     boolean guaranteeGoldPlus;
     boolean guaranteeOnePlatinum6;
     boolean guaranteedScoutNoGold;
+    boolean guaranteeSpecificCharacter;
     int userMemoryDiamonds;
     int userRecordCrystals;
     int singleScoutPrice;
@@ -147,6 +148,7 @@ abstract class CharacterScout
         guaranteeGoldPlus = false;
         guaranteedScout = false;
         guaranteedScoutNoGold = false;
+        guaranteeSpecificCharacter = false;
         randomizeResults = false;
         characterString = "";
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
@@ -550,14 +552,48 @@ abstract class CharacterScout
                             character = randGoldCharacter();
                         }
                     }
-
-
-
                 }
             }
             else
             {
-                character = platinum6Characters.get(RNG.nextInt(platinum6Characters.size()));
+                // STEP UP V9 - STEP 5: FIRST CHARACTER IN BANNER IS GUARANTEED.
+                if (bannerType == 21 && guaranteeSpecificCharacter)
+                {
+                    character = platinum6Characters.get(0);
+                    guaranteeSpecificCharacter = false;
+                }
+                else
+                {
+                    // STEP UP V9 - FIRST CHARACTER HAS 1/2 OF THE PLATINUM6 RATES, EVERYONE ELSE SHARES THE OTHER HALF.
+                    if (bannerType == 21)
+                    {
+                        double d = RNG.nextDouble();
+                        if (d < 0.5)
+                        {
+                            character = platinum6Characters.get(0);
+                        }
+                        else
+                        {
+                            // CHECK IF THERE IS MORE THAN ONE PLATINUM6 CHARACTER
+                            if (platinum6Characters.size() > 1)
+                            {
+                                // GET A CHARACTER FROM INDEX 1 -> WHATEVER AMOUNT OF PLATINUM6 CHARACTERS ARE IN THE BANNER
+                                character = platinum6Characters.get(RNG.nextInt(platinum6Characters.size() - 1) + 1);
+                            }
+                            else
+                            {
+                                // LESS THAN ONE PLATINUM 6 CHARACTER... JUST DO BUSINESS AS USUAL
+                                character = platinum6Characters.get(RNG.nextInt(platinum6Characters.size()));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // GET ANY PLATINUM6 CHARACTER FROM THE BANNER. (FAIR RATES)
+                        character = platinum6Characters.get(RNG.nextInt(platinum6Characters.size()));
+                    }
+
+                }
             }
         }
         return character;

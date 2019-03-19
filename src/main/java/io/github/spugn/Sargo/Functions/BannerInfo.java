@@ -359,9 +359,10 @@ public class BannerInfo
                 stepSixRates += "**(5 ★ Scout Rates 2.0x)**";
                 menu.setStepSixRatesList(stepSixRates);
             }
-            /* BANNER IS STEP UP V7/V8 */
+            /* BANNER IS STEP UP V7/V8/V9 */
             else if (banner.getBannerType() == 17 ||
-                    banner.getBannerType() == 19)
+                    banner.getBannerType() == 19 ||
+                    banner.getBannerType() == 21)
             {
                 double tC = copper - ((platinum6 * 1.5) - platinum6);
                 double tS = silver;
@@ -391,7 +392,14 @@ public class BannerInfo
                 stepFiveRates += "[4 ★] " + tG + "%\n";
                 stepFiveRates += "[3 ★] " + tS + "%\n";
                 stepFiveRates += "[2 ★] " + tC + "%\n";
-                stepFiveRates += "**(For One Character)**";
+                if (banner.getBannerType() == 21)
+                {
+                    stepFiveRates += "**(" + banner.getCharacters().get(0) + " Guaranteed)**";
+                }
+                else
+                {
+                    stepFiveRates += "**(For One Character)**";
+                }
                 menu.setStepFiveRatesList(stepFiveRates);
 
                 tC = copper - ((platinum6 * 2.0) - platinum6);

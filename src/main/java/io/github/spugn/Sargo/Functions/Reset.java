@@ -195,7 +195,8 @@ public class Reset
                             bannerType == 15 ||
                             bannerType == 16 ||
                             bannerType == 17 ||
-                            bannerType == 19)
+                            bannerType == 19 ||
+                            bannerType == 21)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName(), 1);
                     }
@@ -284,7 +285,8 @@ public class Reset
                             bannerType == 15 ||
                             bannerType == 16 ||
                             bannerType == 17 ||
-                            bannerType == 19)
+                            bannerType == 19 ||
+                            bannerType == 21)
                     {
                         dataString = "Step " + bannerData + " -> Step 1";
                     }
