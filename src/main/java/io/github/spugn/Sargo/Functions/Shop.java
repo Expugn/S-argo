@@ -193,5 +193,9 @@ public class Shop
         {
             Sargo.replyToMessage_Warning(message, "Whoops.", "Something went wrong with your purchase.");
         }
+        catch (NumberFormatException e2)
+        {
+            Sargo.replyToMessage_Warning(message, "UNKNOWN ITEM", "Use '" + CommandSettingsParser.getCommandPrefix() + "**shop**' to review available Memory Diamond bundles.");
+        }
     }
 }
