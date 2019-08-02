@@ -1,9 +1,9 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
-import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
@@ -22,9 +22,9 @@ import java.util.List;
  */
 public class RecordCrystalv5 extends CharacterScout
 {
-    public RecordCrystalv5(IChannel channel, int bannerID, String choice, String discordID)
+    public RecordCrystalv5(Message message, int bannerID, String choice, String discordID)
     {
-        super(channel, bannerID, choice, discordID);
+        super(message, bannerID, choice, discordID);
         run();
     }
 
@@ -148,18 +148,18 @@ public class RecordCrystalv5 extends CharacterScout
             {
                 case "s":
                 case "si":
-                    scoutMenu.withTitle("Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("Single Pull"));
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[Record Crystal v5] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Record Crystal v5] - +" + rcGet + " Record Crystals (" + bannerTypeData + ")"));
                     break;
                 case "rc":
                 case "rci":
-                    scoutMenu.withTitle("[Record Crystal Scout] - " + (bannerTypeData - 10) + " Record Crystals Left");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Record Crystal Scout] - " + (bannerTypeData - 10) + " Record Crystals Left"));
                     break;
                 default:
-                    scoutMenu.withTitle("[Record Crystal v5] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Record Crystal v5] - Unknown"));
                     break;
             }
         }

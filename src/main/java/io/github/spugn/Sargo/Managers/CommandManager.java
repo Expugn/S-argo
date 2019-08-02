@@ -1,16 +1,14 @@
 package io.github.spugn.Sargo.Managers;
 
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
 import io.github.spugn.Sargo.Functions.*;
-import io.github.spugn.Sargo.Objects.WarningMessage;
+import io.github.spugn.Sargo.Sargo;
 import io.github.spugn.Sargo.Utilities.CommandLine;
 import io.github.spugn.Sargo.Utilities.DiscordCommand;
-import io.github.spugn.Sargo.XMLParsers.*;
-import sx.blah.discord.api.IDiscordClient;
-import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
-import sx.blah.discord.handle.obj.*;
-import sx.blah.discord.util.DiscordException;
-import sx.blah.discord.util.MissingPermissionsException;
-import sx.blah.discord.util.RateLimitException;
+import io.github.spugn.Sargo.XMLParsers.CommandSettingsParser;
+import io.github.spugn.Sargo.XMLParsers.LoginSettingsParser;
+import io.github.spugn.Sargo.XMLParsers.ShopSettingsParser;
 
 /**
  * COMMAND MANAGER
@@ -25,43 +23,39 @@ import sx.blah.discord.util.RateLimitException;
  */
 public class CommandManager
 {
-    private final IChannel CHANNEL;
-    private final String DISCORD_ID;
     private final CommandLine COMMAND_LINE;
-    private static String commandPrefix;
+    private final Message MESSAGE;
+    private final String userDiscordID;
 
-    public CommandManager(IDiscordClient client, MessageReceivedEvent event)
+    public CommandManager(Message message)
     {
-        CHANNEL = event.getChannel();
-        IMessage message = event.getMessage();
-        DISCORD_ID = message.getAuthor().getStringID();
+        this.MESSAGE = message;
+
+        if (message.getAuthor().isPresent())
+        {
+            userDiscordID = message.getAuthor().get().getId().asString();
+        }
+        else
+        {
+            Sargo.replyToMessage_Warning(MESSAGE, "FAILED TO GET USER ID", "This wasn't supposed to happen.");
+            userDiscordID = "";
+            COMMAND_LINE = null;
+            return;
+        }
 
         String botOwnerDiscordID = LoginSettingsParser.getBotOwnerDiscordID();
 
-        DiscordCommand discordCommand = new DiscordCommand(client);
+        DiscordCommand discordCommand = new DiscordCommand();
         discordCommand.setUseMention(false);
         discordCommand.setCommandPrefix(CommandSettingsParser.getCommandPrefix());
         discordCommand.setDeleteUserMessage(CommandSettingsParser.isDeleteUserMessage());
 
-        DiscordCommand discordCommandMention = new DiscordCommand(client);
+        DiscordCommand discordCommandMention = new DiscordCommand();
         discordCommandMention.setUseMention(true);
         discordCommandMention.setCommandPrefix(CommandSettingsParser.getCommandPrefix());
         discordCommandMention.setDeleteUserMessage(CommandSettingsParser.isDeleteUserMessage());
 
-        String playingText;
-        String botName = new ScoutMasterParser().getBotName();
-
-        commandPrefix = discordCommand.getCommandPrefix() + "";
-        if (client.getOurUser().getStringID().equalsIgnoreCase("356981380338679810") ||
-                client.getOurUser().getStringID().equalsIgnoreCase("309620271621341185"))
-        {
-            playingText = botName + " devBot | " + commandPrefix + "help";
-        }
-        else
-        {
-            playingText = botName + " | " + commandPrefix + "help";
-        }
-        client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, playingText);
+        Sargo.refreshPresence();
 
         if (discordCommand.meetsConditions(message) != null)
         {
@@ -76,68 +70,53 @@ public class CommandManager
             COMMAND_LINE = null;
         }
 
-        try
+        if (COMMAND_LINE != null)
         {
-            if (COMMAND_LINE != null)
+            if (COMMAND_LINE.getCommand().equalsIgnoreCase("scout"))
             {
-                if (COMMAND_LINE.getCommand().equalsIgnoreCase("scout"))
-                {
-                    scoutCommand();
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("help"))
-                {
-                    new Help(CHANNEL);
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("info"))
-                {
-                    new Info(CHANNEL);
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("shop"))
-                {
-                    shopCommand();
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("profile"))
-                {
-                    profileCommand();
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("user"))
-                {
-                    userCommand();
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("reset"))
-                {
-                    resetCommand();
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("update") && DISCORD_ID.equals(botOwnerDiscordID))
-                {
-                    updateCommand();
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("stop") && DISCORD_ID.equals(botOwnerDiscordID))
-                {
-                    CHANNEL.sendMessage(new WarningMessage("SHUTTING DOWN", "Goodbye!").get().build());
-                    System.exit(0);
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("reload") && DISCORD_ID.equals(botOwnerDiscordID))
-                {
-                    reloadCommand();
-                }
-                else if (COMMAND_LINE.getCommand().equalsIgnoreCase("settings") && DISCORD_ID.equals(botOwnerDiscordID))
-                {
-                    new SettingsManager(CHANNEL, COMMAND_LINE);
-                }
+                scoutCommand();
             }
-        }
-        catch (RateLimitException e)
-        {
-            System.out.println("[CommandManager] - Rate Limit Exception.");
-        }
-        catch (DiscordException e)
-        {
-            event.getChannel().sendMessage(new WarningMessage("DISCORD EXCEPTION", "Something went wrong.").get().build());
-        }
-        catch (MissingPermissionsException e)
-        {
-            System.out.println("[CommandManager] - Not Enough Permissions.");
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("help"))
+            {
+                new Help(MESSAGE);
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("info"))
+            {
+                new Info(MESSAGE);
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("shop"))
+            {
+                shopCommand();
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("profile"))
+            {
+                profileCommand();
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("user"))
+            {
+                userCommand();
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("reset"))
+            {
+                resetCommand();
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("update") && userDiscordID.equals(botOwnerDiscordID))
+            {
+                updateCommand();
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("stop") && userDiscordID.equals(botOwnerDiscordID))
+            {
+                Sargo.replyToMessage_Warning(MESSAGE, "SHUTTING DOWN", "Goodbye!");
+                System.exit(0);
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("reload") && userDiscordID.equals(botOwnerDiscordID))
+            {
+                reloadCommand();
+            }
+            else if (COMMAND_LINE.getCommand().equalsIgnoreCase("settings") && userDiscordID.equals(botOwnerDiscordID))
+            {
+                new SettingsManager(MESSAGE, COMMAND_LINE);
+            }
         }
     }
 
@@ -147,30 +126,30 @@ public class CommandManager
         {
             if (COMMAND_LINE.getArgumentCount() >= 2)
             {
-                if (!CHANNEL.getTypingStatus())
-                {
-                    CHANNEL.setTypingStatus(true);
-                }
+                // START "TYPING"
+                MESSAGE.getChannel().cast(TextChannel.class).block().type().block();
+
+
                 if (COMMAND_LINE.getArgument(2).equalsIgnoreCase("ws") ||
                         COMMAND_LINE.getArgument(2).equalsIgnoreCase("wsi") ||
                         COMMAND_LINE.getArgument(2).equalsIgnoreCase("wm") ||
                         COMMAND_LINE.getArgument(2).equalsIgnoreCase("wmi"))
                 {
-                    new WeaponScoutManager(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
+                    new WeaponScoutManager(MESSAGE, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), userDiscordID);
                 }
                 else
                 {
-                    new ScoutManager(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), DISCORD_ID);
+                    new ScoutManager(MESSAGE, Integer.parseInt(COMMAND_LINE.getArgument(1)), COMMAND_LINE.getArgument(2), userDiscordID);
                 }
 
             }
             else if (COMMAND_LINE.getArgumentCount() >= 1)
             {
-                new BannerInfo(CHANNEL, Integer.parseInt(COMMAND_LINE.getArgument(1)));
+                new BannerInfo(MESSAGE, Integer.parseInt(COMMAND_LINE.getArgument(1)));
             }
             else
             {
-                new BannerInfo(CHANNEL, "1");
+                new BannerInfo(MESSAGE, "1");
             }
         }
         catch (NumberFormatException e)
@@ -194,11 +173,10 @@ public class CommandManager
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("pt2m") ||
                         COMMAND_LINE.getArgument(1).equalsIgnoreCase("pt2mi"))
                 {
-                    if (!CHANNEL.getTypingStatus())
-                    {
-                        CHANNEL.setTypingStatus(true);
-                    }
-                    new TicketScoutManager(CHANNEL, COMMAND_LINE.getArgument(1), DISCORD_ID);
+                    // START "TYPING"
+                    MESSAGE.getChannel().cast(TextChannel.class).block().type().block();
+
+                    new TicketScoutManager(MESSAGE, COMMAND_LINE.getArgument(1), userDiscordID);
                 }
                 else
                 {
@@ -209,28 +187,24 @@ public class CommandManager
 
                         if (pChar == 'p' || pChar == 'P')
                         {
-                            new BannerInfo(CHANNEL, String.valueOf(pageNumber));
+                            new BannerInfo(MESSAGE, String.valueOf(pageNumber));
                         }
                         else
                         {
                             /* FIRST CHARACTER IS NOT 'P' */
-                            CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
+                            Sargo.replyToMessage_Warning(MESSAGE, "COMMAND ERROR", "Make sure you're entering a number for the banner ID.");
                         }
                     }
                     catch (NumberFormatException | NullPointerException | StringIndexOutOfBoundsException f)
                     {
-                        CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Please review the help menu.").get().build());
+                        Sargo.replyToMessage_Warning(MESSAGE, "COMMAND ERROR", "Please review the help menu.");
                     }
                 }
             }
             else
             {
-                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
+                Sargo.replyToMessage_Warning(MESSAGE, "COMMAND ERROR", "Make sure you're entering a number for the banner ID.");
             }
-        }
-        if (CHANNEL.getTypingStatus())
-        {
-            CHANNEL.setTypingStatus(false);
         }
     }
 
@@ -248,28 +222,26 @@ public class CommandManager
                     {
                         quantity = 1;
                     }
-                    //else if (quantity > SETTINGS.getMaxShopLimit())
                     else if (quantity > ShopSettingsParser.getMaxShopLimit())
                     {
-                        //quantity = SETTINGS.getMaxShopLimit();
                         quantity = ShopSettingsParser.getMaxShopLimit();
                     }
 
-                    new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), quantity, true);
+                    new Shop(MESSAGE, COMMAND_LINE.getArgument(1), quantity, true);
                 }
                 catch (NumberFormatException e)
                 {
-                    new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1, false);
+                    new Shop(MESSAGE, COMMAND_LINE.getArgument(1), 1, false);
                 }
             }
             else
             {
-                new Shop(CHANNEL, DISCORD_ID, COMMAND_LINE.getArgument(1), 1, false);
+                new Shop(MESSAGE, COMMAND_LINE.getArgument(1), 1, false);
             }
         }
         else
         {
-            new Shop(CHANNEL);
+            new Shop(MESSAGE);
         }
     }
 
@@ -288,20 +260,20 @@ public class CommandManager
                     Integer.parseInt(arg2);
 
                     /* OPEN BANNER INFO PROFILE */
-                    new Profile(CHANNEL, DISCORD_ID, 2, arg2);
+                    new Profile(MESSAGE, userDiscordID, 2, arg2);
                 }
                 catch (NumberFormatException e)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Make sure you're entering a number for the banner ID.").get().build());
+                    Sargo.replyToMessage_Warning(MESSAGE, "COMMAND ERROR", "Make sure you're entering a number for the banner ID");
                 }
             }
             else if (arg1.equalsIgnoreCase("search") || arg1.equalsIgnoreCase("s"))
             {
-                new Profile(CHANNEL, DISCORD_ID, 3, arg2);
+                new Profile(MESSAGE, userDiscordID, 3, arg2);
             }
             else
             {
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN ARGUMENT", "Please review the help menu.").get().build());
+                Sargo.replyToMessage_Warning(MESSAGE, "UNKNOWN ARGUMENT", "Please review the help menu.");
             }
         }
         else if (COMMAND_LINE.getArgumentCount() >= 1)
@@ -309,21 +281,23 @@ public class CommandManager
             String arg1 = COMMAND_LINE.getArgument(1);
             if (arg1.equalsIgnoreCase("data") || arg1.equalsIgnoreCase("d"))
             {
-                new Profile(CHANNEL, DISCORD_ID, 1);
+                new Profile(MESSAGE, userDiscordID, 1);
             }
             else
             {
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN ARGUMENT", "Please review the help menu.").get().build());
+                Sargo.replyToMessage_Warning(MESSAGE, "UNKNOWN ARGUMENT", "Please review the help menu.");
             }
         }
         else
         {
-            new Profile(CHANNEL, DISCORD_ID);
+            new Profile(MESSAGE, userDiscordID);
         }
     }
 
     private void userCommand()
     {
+        Sargo.replyToMessage_Warning(MESSAGE, "DISCONTINUED COMMAND", "Command is no longer supported.");
+        /*
         if (COMMAND_LINE.getArgumentCount() >= 1)
         {
             IGuild guild = CHANNEL.getGuild();
@@ -351,19 +325,20 @@ public class CommandManager
                     }
                     else
                     {
-                        CHANNEL.sendMessage(new WarningMessage("UNKNOWN USER", "Could not find that user.").get().build());
+                        Sargo.replyToMessage_Warning(MESSAGE, "UNKNOWN USER", "Could not find that user.");
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("UNKNOWN USER", "Could not find that user. Does their name have a space? Try '" + commandPrefix + "**user** @[name]' instead.").get().build());
+                    Sargo.replyToMessage_Warning(MESSAGE, "UNKNOWN USER", "Could not find that user. Does their name have a space? Try `" + getCommandPrefix() + "user @[name]` instead.");
                 }
             }
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH ARGUMENTS", "Please review the help menu.").get().build());
+            Sargo.replyToMessage_Warning(MESSAGE, "NOT ENOUGH ARGUMENTS", "Please review the help menu.");
         }
+        */
     }
 
     private void resetCommand()
@@ -387,11 +362,11 @@ public class CommandManager
                     arg2.equalsIgnoreCase("w") ||
                     arg2.equalsIgnoreCase("a"))
             {
-                new Reset(CHANNEL, DISCORD_ID, bannerID, arg2, yes);
+                new Reset(MESSAGE, userDiscordID, bannerID, arg2, yes);
             }
             else
             {
-                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Use '" + commandPrefix + "**reset** [BannerID] [c/w/a]'").get().build());
+                Sargo.replyToMessage_Warning(MESSAGE, "COMMAND ERROR", "Use `" + CommandSettingsParser.getCommandPrefix() + "reset [Banner ID] [c/w/a]`.");
             }
         }
         else if (COMMAND_LINE.getArgumentCount() >= 2)
@@ -411,11 +386,11 @@ public class CommandManager
                     arg2.equalsIgnoreCase("w") ||
                     arg2.equalsIgnoreCase("a"))
             {
-                new Reset(CHANNEL, DISCORD_ID, bannerID, arg2, false);
+                new Reset(MESSAGE, userDiscordID, bannerID, arg2, false);
             }
             else
             {
-                CHANNEL.sendMessage(new WarningMessage("COMMAND ERROR", "Use '" + commandPrefix + "**reset** [BannerID] [c/w/a]'").get().build());
+                Sargo.replyToMessage_Warning(MESSAGE, "COMMAND ERROR", "Use `" + CommandSettingsParser.getCommandPrefix() + "reset [Banner ID] [c/w/a]`.");
             }
         }
         else if (COMMAND_LINE.getArgumentCount() >= 1)
@@ -423,12 +398,12 @@ public class CommandManager
             String arg1 = COMMAND_LINE.getArgument(1);
             if (arg1.equalsIgnoreCase("y") || arg1.equalsIgnoreCase("yes"))
             {
-                new Reset(CHANNEL, DISCORD_ID);
+                new Reset(MESSAGE, userDiscordID);
             }
         }
         else
         {
-            new Reset(CHANNEL);
+            new Reset(MESSAGE);
         }
     }
 
@@ -439,21 +414,21 @@ public class CommandManager
             /* RESET */
             if (COMMAND_LINE.getArgument(1).equalsIgnoreCase("r"))
             {
-                new Update(CHANNEL, true, true);
+                new Update(MESSAGE, true, true);
             }
             /* OVERWRITE */
             else if (COMMAND_LINE.getArgument(1).equalsIgnoreCase("o"))
             {
-                new Update(CHANNEL, false, true);
+                new Update(MESSAGE, false, true);
             }
             else
             {
-                new Update(CHANNEL, false, false);
+                new Update(MESSAGE, false, false);
             }
         }
         else
         {
-            new Update(CHANNEL, false, false);
+            new Update(MESSAGE, false, false);
         }
     }
 
@@ -461,11 +436,11 @@ public class CommandManager
     {
         Reload.reloadBanners();
         Reload.reloadSettings();
-        CHANNEL.sendMessage(new WarningMessage("FILES RELOADED", "The Banners.xml and Settings.xml file have been reloaded.").get().build());
+        Sargo.replyToMessage_Warning(MESSAGE, "FILES RELOADED", "The Banners and Settings xml files have been reloaded.");
     }
 
     public static String getCommandPrefix()
     {
-        return commandPrefix;
+        return CommandSettingsParser.getCommandPrefix() + "";
     }
 }

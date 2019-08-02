@@ -57,6 +57,7 @@ This includes:
 | Step Up | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`15` Memory Diamonds</ul>**Multi** <ul>`150` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`100` Memory Diamonds</ul><h2>Step 3</h2>**★4 Rate** <ul>`+2.0x`</ul></details> |
 | GGO Step Up | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`15` Memory Diamonds</ul>**Multi** <ul>`150` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`100` Memory Diamonds</ul>**Guarantees `1` ★2 Automatic Rifle weapon.**<h2>Step 3</h2>**★4 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★4 Rate** <ul>`100%` (for one weapon)</ul><h2>Step 6</h2>**★4 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
 | Step Up v2 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`15` Memory Diamonds</ul>**Multi** <ul>`150` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`100` Memory Diamonds</ul><h2>Step 3</h2>**★4 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★4 Rate** <ul>`100%` (for one weapon)</ul><h2>Step 6</h2>**★4 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
+| Step Up v3 | <details> <summary>**Rates/Pricing**</summary> <h2>Base Pricing</h2>**Single** <ul>`15` Memory Diamonds</ul>**Multi** <ul>`150` Memory Diamonds</ul><h2>Step 1</h2>**Multi** <ul>`100` Memory Diamonds</ul><h2>Step 3</h2>**★4 Rate** <ul>`+1.5x`</ul><h2>Step 5</h2>**★4 Rate** <ul>`100%` (for the first weapon)</ul><h2>Step 6</h2>**★4 Rate** <ul>`+2.0x`</ul>**`Step 6` repeats.**</details> |  
 
 | Miscellaneous Scout Type | Description |  
 | :---: | :--- |  
@@ -127,12 +128,6 @@ i = "image"
 | `shop` | View the available Memory Diamond bundles. | `$shop` |
 | `shop [Item ID] [Quantity]` | "Buy" a Memory Diamond bundle. | `$shop 7 10` |
 
-###### USER SEARCH
-
-| Command | Description | Example |
-| :---: | :--- | :---: |
-| `user [@name]` | Get a user's basic profile | `$user @S'pugn` |
-
 ###### USER RESET
 
 | Command | Description | Example |
@@ -173,7 +168,7 @@ i = "image"
 > **Legacy ∞**  
   For beta testing S'argo before it's official release :HAhaa:. Thanks guys!
   
-> **Discord Dataminers (Salieri#6041 and Ntogg#2809)**  
+> **Discord Dataminers (Salieri#6041 and Youmo#5582)**  
   For releasing game assets of new content (images/prefixes/etc) before they're announced so banners/images
   can be updated quicker.
 

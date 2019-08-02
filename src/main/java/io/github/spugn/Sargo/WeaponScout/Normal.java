@@ -1,8 +1,8 @@
 package io.github.spugn.Sargo.WeaponScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Managers.CommandManager;
-import io.github.spugn.Sargo.Objects.WarningMessage;
-import sx.blah.discord.handle.obj.IChannel;
+import io.github.spugn.Sargo.Sargo;
 
 /**
  * NORMAL WEAPON SCOUT
@@ -18,9 +18,9 @@ import sx.blah.discord.handle.obj.IChannel;
  */
 public class Normal extends WeaponScout
 {
-    public Normal(IChannel channel, int bannerID, String choice, String discordID)
+    public Normal(Message message, int bannerID, String choice, String discordID)
     {
-        super(channel, bannerID, choice, discordID);
+        super(message, bannerID, choice, discordID);
         run();
     }
 
@@ -51,14 +51,14 @@ public class Normal extends WeaponScout
             {
                 case "ws":
                 case "wsi":
-                    scoutMenu.withTitle("[Weapon Scout] - Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Weapon Scout] - Single Pull"));
                     break;
                 case "wm":
                 case "wmi":
-                    scoutMenu.withTitle("[Weapon Scout] - Multi Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Weapon Scout] - Multi Pull"));
                     break;
                 default:
-                    scoutMenu.withTitle("[Weapon Scout] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Weapon Scout] - Unknown"));
                     break;
             }
         }
@@ -90,7 +90,7 @@ public class Normal extends WeaponScout
             case "wsi":
                 if (userMemoryDiamonds < singleScoutPrice)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.getCommandPrefix() + "**shop**' to get more Memory Diamonds.").get().build());
+                    Sargo.replyToMessage_Warning(TEXT_CHANNEL, "NOT ENOUGH MEMORY DIAMONDS", "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.getCommandPrefix() + "**shop**' to get more Memory Diamonds.");
                     return;
                 }
 
@@ -108,7 +108,7 @@ public class Normal extends WeaponScout
             case "wmi":
                 if (userMemoryDiamonds < multiScoutPrice)
                 {
-                    CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.getCommandPrefix() + "**shop**' to get more Memory Diamonds.").get().build());
+                    Sargo.replyToMessage_Warning(TEXT_CHANNEL, "NOT ENOUGH MEMORY DIAMONDS", "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse '" + CommandManager.getCommandPrefix() + "**shop**' to get more Memory Diamonds.");
                     return;
                 }
 
@@ -123,7 +123,7 @@ public class Normal extends WeaponScout
                 doMultiPull();
                 break;
             default:
-                CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE", "Use '" + CommandManager.getCommandPrefix() + "**scout** " + BANNER_ID + "' and read the footer text for available scout types.").get().build());
+                Sargo.replyToMessage_Warning(TEXT_CHANNEL, "UNKNOWN/UNAVAILABLE SCOUT TYPE", "Use '" + CommandManager.getCommandPrefix() + "**scout** " + BANNER_ID + "' and read the footer text for available scout types.");
                 return;
         }
 

@@ -1,21 +1,23 @@
 package io.github.spugn.Sargo.TicketScout;
 
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
+import discord4j.core.object.util.Snowflake;
+import discord4j.core.spec.EmbedCreateSpec;
 import io.github.spugn.Sargo.Objects.Item;
-import io.github.spugn.Sargo.Objects.WarningMessage;
+import io.github.spugn.Sargo.Sargo;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.Utilities.ImageEditor;
 import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.util.EmbedBuilder;
-import sx.blah.discord.util.RateLimitException;
 
+import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 /**
  * TICKET SCOUT
@@ -35,9 +37,11 @@ import java.util.Random;
 abstract class TicketScout
 {
     /* PACKAGE-PRIVATE VARIABLES */
+    TextChannel TEXT_CHANNEL;
     List<Item> attributeItemsList;
     List<Item> medallionsAndKeyList;
     boolean SIMPLE_MESSAGE;
+    Consumer<EmbedCreateSpec> sMenu;
 
     /* PRIVATE VARIABLES */
     private String DISCORD_ID;
@@ -50,12 +54,10 @@ abstract class TicketScout
     private String itemString;
 
     /* PROTECTED VARIABLES */
-    protected IChannel CHANNEL;
     protected String CHOICE;
     protected UserParser USER;
     protected boolean IMAGE_DISABLED;
     protected Random RNG;
-    protected EmbedBuilder scoutMenu;
     protected String simpleMessage;
     protected boolean generateImage;
     protected boolean stopScout;
@@ -63,9 +65,9 @@ abstract class TicketScout
     /* PRIVATE VARIABLES */
     private boolean IS_RARITY_STARS;
 
-    TicketScout(IChannel channel, String choice, String discordID)
+    TicketScout(Message message, String choice, String discordID)
     {
-        CHANNEL = channel;
+        TEXT_CHANNEL = (TextChannel) message.getChannel().block();
         CHOICE = choice;
         DISCORD_ID = discordID;
         generateImage = false;
@@ -79,16 +81,9 @@ abstract class TicketScout
     private void init()
     {
         /* FILES */
-        //SettingsParser SETTINGS = new SettingsParser();
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */
-        //IMAGE_DISABLED = SETTINGS.isDisableImages();
-        //SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
-        //IS_RARITY_STARS = SETTINGS.isRarityStars();
-        //IMAGE_DISABLED = SettingsParser.isDisableImages();
-        //SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
-        //IS_RARITY_STARS = SettingsParser.isRarityStars();
         IMAGE_DISABLED = ScoutSettingsParser.isDisableImages();
         SIMPLE_MESSAGE = ScoutSettingsParser.isSimpleMessage();
         IS_RARITY_STARS = ScoutSettingsParser.isRarityStars();
@@ -99,7 +94,6 @@ abstract class TicketScout
 
         /* VARIABLES */
         RNG = new Random(System.currentTimeMillis());
-        scoutMenu = new EmbedBuilder();
         simpleMessage = "";
         imageStrings = new String[11];
         items = new ArrayList<>();
@@ -286,45 +280,23 @@ abstract class TicketScout
      */
     void displayAndSave()
     {
+        Member member = TEXT_CHANNEL.getGuild().block().getMemberById(Snowflake.of(Long.parseLong(DISCORD_ID))).block();
+        String username = member.getUsername() + "#" + member.getDiscriminator();
+
         if (!SIMPLE_MESSAGE)
         {
+            sMenu = s -> {
+                s.setColor(new Color(255, 255, 255));
+            };
             setupScoutMenu();
             if (!generateImage || IMAGE_DISABLED)
-                scoutMenu.appendField("- Weapon Result -", itemString, false);
-            scoutMenu.withAuthorIcon(new GitHubImage("images/System/Scout_Icon.png").getURL());
-            scoutMenu.withColor(255, 255, 255);
-            scoutMenu.withFooterIcon(new GitHubImage("images/System/Memory_Diamond_Icon.png").getURL());
-            scoutMenu.withFooterText((CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator()) + " | " + userTotalScouts + " Total Ticket Scouts");
+                sMenu = sMenu.andThen(s -> s.addField("- Weapon Result - ", itemString, false));
+            sMenu = sMenu.andThen(s -> s.setFooter(username + " | " + userTotalScouts + " Total Ticket Scouts", new GitHubImage("images/System/Memory_Diamond_Icon.png").getURL()));
 
-            IMessage display = null;
-            try
-            {
-                if (generateImage && !IMAGE_DISABLED)
-                    display = CHANNEL.sendFile(scoutMenu.build(), new File(tempUserDirectory + "/results.png"));
-                else
-                    display = CHANNEL.sendMessage(scoutMenu.build());
-            }
-            catch (FileNotFoundException e)
-            {
-                CHANNEL.sendMessage(new WarningMessage("FAILED TO GENERATE IMAGE", "Unable to display scout result.").get().build());
-                display.delete();
-                deleteTempDirectory();
-                return;
-            }
-            catch (RateLimitException e)
-            {
-                EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
-                try
-                {
-                    display.edit(rateLimited.build());
-                }
-                catch (NullPointerException a)
-                {
-                    // DO SOMETHING
-                }
-                deleteTempDirectory();
-                return;
-            }
+            if (generateImage && !IMAGE_DISABLED)
+                Sargo.sendEmbed(TEXT_CHANNEL, sMenu, new File(tempUserDirectory + "/results.png"));
+            else
+                Sargo.sendEmbed(TEXT_CHANNEL, sMenu);
         }
         else
         {
@@ -334,41 +306,15 @@ abstract class TicketScout
                 simpleMessage += "**- Weapon Result -**" + "\n";
                 simpleMessage += itemString;
             }
-            simpleMessage += (CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator()) + " | " + userTotalScouts + " Total Ticket Scouts";
+            simpleMessage += (username) + " | " + userTotalScouts + " Total Ticket Scouts";
 
-            IMessage display = null;
-            try
+            if (generateImage && !IMAGE_DISABLED)
             {
-                if (generateImage && !IMAGE_DISABLED)
-                {
-                    display = CHANNEL.sendFile(simpleMessage, new File(tempUserDirectory + "/results.png"));
-                }
-                else
-                {
-                    display = CHANNEL.sendMessage(simpleMessage);
-                }
-
+                Sargo.replyToMessage(TEXT_CHANNEL, simpleMessage, new File(tempUserDirectory + "/results.png"));
             }
-            catch (FileNotFoundException e)
+            else
             {
-                CHANNEL.sendMessage(new WarningMessage("FAILED TO GENERATE IMAGE", "Unable to display scout result.").get().build());
-                display.delete();
-                deleteTempDirectory();
-                return;
-            }
-            catch (RateLimitException e)
-            {
-                EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
-                try
-                {
-                    display.edit(rateLimited.build());
-                }
-                catch (NullPointerException a)
-                {
-                    // DO SOMETHING
-                }
-                deleteTempDirectory();
-                return;
+                Sargo.replyToMessage(TEXT_CHANNEL, simpleMessage);
             }
         }
 

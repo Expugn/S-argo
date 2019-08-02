@@ -1,8 +1,8 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
-import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
@@ -42,9 +42,9 @@ import java.util.List;
  */
 public class SAOGameFifthAnniversaryStepUpv3 extends CharacterScout
 {
-    public SAOGameFifthAnniversaryStepUpv3(IChannel channel, int bannerID, String choice, String discordID)
+    public SAOGameFifthAnniversaryStepUpv3(Message message, int bannerID, String choice, String discordID)
     {
-        super(channel, bannerID, choice, discordID);
+        super(message, bannerID, choice, discordID);
         run();
     }
 
@@ -154,14 +154,14 @@ public class SAOGameFifthAnniversaryStepUpv3 extends CharacterScout
             {
                 case "s":
                 case "si":
-                    scoutMenu.withTitle("Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("Single Pull"));
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[SAO Game 5th Anniversary Step Up v3] - Step " + bannerTypeData);
+                    sMenu = sMenu.andThen(s -> s.setTitle("[SAO Game 5th Anniversary Step Up v3] - Step " + bannerTypeData));
                     break;
                 default:
-                    scoutMenu.withTitle("[SAO Game 5th Anniversary Step Up v3] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[SAO Game 5th Anniversary Step Up v3] - Unknown"));
                     break;
             }
         }

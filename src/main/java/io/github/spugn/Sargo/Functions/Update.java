@@ -1,17 +1,19 @@
 package io.github.spugn.Sargo.Functions;
 
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
+import discord4j.core.spec.EmbedCreateSpec;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
 import io.github.spugn.Sargo.Objects.Weapon;
+import io.github.spugn.Sargo.Sargo;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.LoginSettingsParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.util.EmbedBuilder;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,6 +25,7 @@ import java.nio.channels.ReadableByteChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * UPDATE
@@ -52,9 +55,8 @@ import java.util.List;
 public class Update
 {
     private String gitHubDataRepository;
-    private IChannel CHANNEL;
-    private EmbedBuilder builder;
-    private IMessage updateMessage;
+    private TextChannel TEXT_CHANNEL;
+    private Message updateMsg;
     private static final Logger LOGGER = LoggerFactory.getLogger(Update.class);
     private List<String> allCharacters;
     private List<String> allWeapons;
@@ -83,24 +85,15 @@ public class Update
         }
     }
 
-    /**
-     * Updates files under the given parameters.
-     * Review {@link Update}'s JavaDoc for more information on
-     * these update types.
-     *
-     * @param channel  Channel where the update progress message should be sent.
-     * @param reset  If true, delete all files and redownload them.
-     * @param overwrite  If true, download files regardless if they already exist.
-     */
-    public Update(IChannel channel, boolean reset, boolean overwrite)
+    public Update(Message message, boolean reset, boolean overwrite)
     {
-        CHANNEL = channel;
-        builder = new EmbedBuilder();
-        builder.withColor(255, 185, 10);
+        TEXT_CHANNEL = (TextChannel) message.getChannel().block();
+        Consumer<EmbedCreateSpec> ecsTemplate;
         gitHubDataRepository = LoginSettingsParser.getGitHubRepoURL();
         allCharacters = new ArrayList<>();
         allWeapons = new ArrayList<>();
 
+        String embedTitle;
         File bannerFile = new File("data/Banners.xml");
         String lastModifiedString = "";
         String newFileLastModifiedString;
@@ -120,22 +113,26 @@ public class Update
             if (reset)
             {
                 int deletedFiles, copperChars, silverChars, copperWeaps, silverWeaps, charImages, weapImages;
+                embedTitle = "Update - Reset Mode";
 
                 String bannerFileInfo = (bannerFileExists ? " (" + lastModifiedString + " [**" + lastBannerCount + " Banners**])" : "");
 
                 LOGGER.debug("Starting Update...");
-                builder.withTitle("Update - Reset Mode");
-                builder.withDesc("Updating Banners.xml" + bannerFileInfo);
-                builder.appendField("Progress", ("**Banners.xml**\n") +
-                        "Delete All Character/Weapon Images\n" +
-                        "Copper Characters\n" +
-                        "Silver Characters\n" +
-                        "Copper Weapons\n" +
-                        "Silver Weapons\n" +
-                        "Character Images\n" +
-                        "Weapon Images\n", false);
-                updateMessage = CHANNEL.sendMessage(builder.build());
-                builder.clearFields();
+
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Updating Banners.xml" + bannerFileInfo);
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", ("**Banners.xml**\n") +
+                            "Delete All Character/Weapon Images\n" +
+                            "Copper Characters\n" +
+                            "Silver Characters\n" +
+                            "Copper Weapons\n" +
+                            "Silver Weapons\n" +
+                            "Character Images\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.sendEmbed(TEXT_CHANNEL, ecsTemplate);
 
                 LOGGER.debug("Updating Banners.xml File...");
                 newFileLastModifiedString = updateBanners();
@@ -148,128 +145,153 @@ public class Update
                         " (" + lastModifiedString + " [**" + lastBannerCount + " Banners**] -> " + newFileLastModifiedString + " [**" + newBannerCount + " Banners**])" :
                         " (" + newFileLastModifiedString + " [**" + newBannerCount + " Banners**])");
 
-                builder.withDesc("Erasing All Character/Weapon Files");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "**Delete All Character/Weapon Images**\n" +
-                        "Copper Characters\n" +
-                        "Silver Characters\n" +
-                        "Copper Weapons\n" +
-                        "Silver Weapons\n" +
-                        "Character Images\n" +
-                        "Weapon Images\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Erasing All Character/Weapon Files");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "**Delete All Character/Weapon Images**\n" +
+                            "Copper Characters\n" +
+                            "Silver Characters\n" +
+                            "Copper Weapons\n" +
+                            "Silver Weapons\n" +
+                            "Character Images\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
 
                 LOGGER.debug("Deleting All Character and Weapon Images...");
                 deletedFiles = resetImages();
                 LOGGER.debug(deletedFiles + " files deleted.");
 
-                builder.withDesc("Downloading Copper Characters");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
-                        "**Copper Characters**\n" +
-                        "Silver Characters\n" +
-                        "Copper Weapons\n" +
-                        "Silver Weapons\n" +
-                        "Character Images\n" +
-                        "Weapon Images\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Downloading Copper Characters");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
+                            "**Copper Characters**\n" +
+                            "Silver Characters\n" +
+                            "Copper Weapons\n" +
+                            "Silver Weapons\n" +
+                            "Character Images\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
 
                 LOGGER.debug("Downloading COPPER CHARACTER images - Overwrite Mode: " + overwrite);
                 copperChars = downloadCopperCharacters(overwrite);
                 LOGGER.debug(copperChars + " files downloaded.");
 
-                builder.withDesc("Downloading Silver Characters");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
-                        "~~Copper Characters~~ (" + copperChars + " Files)\n" +
-                        "**Silver Characters**\n" +
-                        "Copper Weapons\n" +
-                        "Silver Weapons\n" +
-                        "Character Images\n" +
-                        "Weapon Images\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Downloading Silver Characters");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
+                            "~~Copper Characters~~ (" + copperChars + " Files)\n" +
+                            "**Silver Characters**\n" +
+                            "Copper Weapons\n" +
+                            "Silver Weapons\n" +
+                            "Character Images\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
 
                 LOGGER.debug("Downloading SILVER CHARACTER images - Overwrite Mode: " + overwrite);
                 silverChars = downloadSilverCharacters(overwrite);
                 LOGGER.debug(silverChars + " files downloaded.");
 
-                builder.withDesc("Downloading Copper Weapons");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
-                        "~~Copper Characters~~ (" + copperChars + " Files)\n" +
-                        "~~Silver Characters~~ (" + silverChars + " Files)\n" +
-                        "**Copper Weapons**\n" +
-                        "Silver Weapons\n" +
-                        "Character Images\n" +
-                        "Weapon Images\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Downloading Copper Weapons");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
+                            "~~Copper Characters~~ (" + copperChars + " Files)\n" +
+                            "~~Silver Characters~~ (" + silverChars + " Files)\n" +
+                            "**Copper Weapons**\n" +
+                            "Silver Weapons\n" +
+                            "Character Images\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
 
                 LOGGER.debug("Downloading COPPER WEAPON images - Overwrite Mode: " + overwrite);
                 copperWeaps = downloadCopperWeapons(overwrite);
                 LOGGER.debug(copperWeaps + " files downloaded.");
 
-                builder.withDesc("Downloading Silver Weapons");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
-                        "~~Copper Characters~~ (" + copperChars + " Files)\n" +
-                        "~~Silver Characters~~ (" + silverChars + " Files)\n" +
-                        "~~Copper Weapons~~ (" + copperWeaps + " Files)\n" +
-                        "**Silver Weapons**\n" +
-                        "Character Images\n" +
-                        "Weapon Images\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Downloading Silver Weapons");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
+                            "~~Copper Characters~~ (" + copperChars + " Files)\n" +
+                            "~~Silver Characters~~ (" + silverChars + " Files)\n" +
+                            "~~Copper Weapons~~ (" + copperWeaps + " Files)\n" +
+                            "**Silver Weapons**\n" +
+                            "Character Images\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
 
                 LOGGER.debug("Downloading SILVER WEAPON images - Overwrite Mode: " + overwrite);
                 silverWeaps = downloadSilverWeapons(overwrite);
                 LOGGER.debug(silverWeaps + " files downloaded.");
 
-                builder.withDesc("Updating Character Images");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
-                        "~~Copper Characters~~ (" + copperChars + " Files)\n" +
-                        "~~Silver Characters~~ (" + silverChars + " Files)\n" +
-                        "~~Copper Weapons~~ (" + copperWeaps + " Files)\n" +
-                        "~~Silver Weapons~~ (" + silverWeaps + " Files)\n" +
-                        "**Character Images**\n" +
-                        "Weapon Images\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Updating Character Images");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
+                            "~~Copper Characters~~ (" + copperChars + " Files)\n" +
+                            "~~Silver Characters~~ (" + silverChars + " Files)\n" +
+                            "~~Copper Weapons~~ (" + copperWeaps + " Files)\n" +
+                            "~~Silver Weapons~~ (" + silverWeaps + " Files)\n" +
+                            "**Character Images**\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
 
                 LOGGER.debug("Downloading CHARACTER images - Overwrite Mode: " + overwrite);
                 charImages = downloadCharacterImages(overwrite);
                 LOGGER.debug(charImages + " files downloaded.");
 
-                builder.withDesc("Updating Weapon Images");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
-                        "~~Copper Characters~~ (" + copperChars + " Files)\n" +
-                        "~~Silver Characters~~ (" + silverChars + " Files)\n" +
-                        "~~Copper Weapons~~ (" + copperWeaps + " Files)\n" +
-                        "~~Silver Weapons~~ (" + silverWeaps + " Files)\n" +
-                        "~~Character Images~~ (" + charImages + " Files)\n" +
-                        "**Weapon Images**\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Updating Weapon Images");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
+                            "~~Copper Characters~~ (" + copperChars + " Files)\n" +
+                            "~~Silver Characters~~ (" + silverChars + " Files)\n" +
+                            "~~Copper Weapons~~ (" + copperWeaps + " Files)\n" +
+                            "~~Silver Weapons~~ (" + silverWeaps + " Files)\n" +
+                            "~~Character Images~~ (" + charImages + " Files)\n" +
+                            "**Weapon Images**\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
 
                 LOGGER.debug("Downloading WEAPON images - Overwrite Mode: " + overwrite);
                 weapImages = downloadWeaponImages(overwrite);
                 LOGGER.debug(weapImages + " files downloaded.");
 
-                builder.withDesc("Update Complete! :tada:");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
-                        "~~Copper Characters~~ (" + copperChars + " Files)\n" +
-                        "~~Silver Characters~~ (" + silverChars + " Files)\n" +
-                        "~~Copper Weapons~~ (" + copperWeaps + " Files)\n" +
-                        "~~Silver Weapons~~ (" + silverWeaps + " Files)\n" +
-                        "~~Character Images~~ (" + charImages + " Files)\n" +
-                        "~~Weapon Images~~ (" + weapImages + " Files)\n", false);
-                updateMessage.edit(builder.build());
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Update Complete! :tada:");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Delete All Character/Weapon Images~~ (" + deletedFiles + " Files)\n" +
+                            "~~Copper Characters~~ (" + copperChars + " Files)\n" +
+                            "~~Silver Characters~~ (" + silverChars + " Files)\n" +
+                            "~~Copper Weapons~~ (" + copperWeaps + " Files)\n" +
+                            "~~Silver Weapons~~ (" + silverWeaps + " Files)\n" +
+                            "~~Character Images~~ (" + charImages + " Files)\n" +
+                            "~~Weapon Images~~ (" + weapImages + " Files)\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
             }
             else
             {
@@ -277,17 +299,23 @@ public class Update
 
                 String bannerFileInfo = (bannerFileExists ? " (" + lastModifiedString + " [**" + lastBannerCount + " Banners**])" : "");
 
-                LOGGER.debug("Starting Update...");
                 if (overwrite)
-                    builder.withTitle("Update - Overwrite Mode");
+                    embedTitle = "Update - Overwrite Mode";
                 else
-                    builder.withTitle("Update");
-                builder.withDesc("Updating Banners.xml" + bannerFileInfo);
-                builder.appendField("Progress", "**Banners.xml**\n" +
-                        "Character Images\n" +
-                        "Weapon Images\n", false);
-                updateMessage = CHANNEL.sendMessage(builder.build());
-                builder.clearFields();
+                    embedTitle = "Update";
+
+                LOGGER.debug("Starting Update...");
+
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Updating Banners.xml" + bannerFileInfo);
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "**Banners.xml**\n" +
+                            "Character Images\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.sendEmbed(TEXT_CHANNEL, ecsTemplate);
+
                 if (!overwrite)
                     Thread.sleep(2000);
 
@@ -302,12 +330,16 @@ public class Update
                         " (" + lastModifiedString + " [**" + lastBannerCount + " Banners**] -> " + newFileLastModifiedString + " [**" + newBannerCount + " Banners**])" :
                         " (" + newFileLastModifiedString + " [" + newBannerCount + " banners])");
 
-                builder.withDesc("Updating Character Images");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "**Character Images**\n" +
-                        "Weapon Images\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Updating Character Images");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "**Character Images**\n" +
+                            "Weapon Images\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
+
                 if (!overwrite)
                     Thread.sleep(2000);
 
@@ -315,12 +347,16 @@ public class Update
                 charImages = downloadCharacterImages(overwrite);
                 LOGGER.debug(charImages + " files downloaded.");
 
-                builder.withDesc("Updating Weapon Images");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Character Images~~ (" + charImages + " Files)\n" +
-                        "**Weapon Images**\n", false);
-                updateMessage.edit(builder.build());
-                builder.clearFields();
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Updating Weapon Images");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Character Images~~ (" + charImages + " Files)\n" +
+                            "**Weapon Images**\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
+
                 if (!overwrite)
                     Thread.sleep(2000);
 
@@ -328,20 +364,27 @@ public class Update
                 weapImages = downloadWeaponImages(overwrite);
                 LOGGER.debug(weapImages + " files downloaded.");
 
-                builder.withDesc("Update Complete! :tada:");
-                builder.appendField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
-                        "~~Character Images~~ (" + charImages + " Files)\n" +
-                        "~~Weapon Images~~ (" + weapImages + " Files)\n", false);
-                updateMessage.edit(builder.build());
+                ecsTemplate = s -> {
+                    s.setTitle(embedTitle);
+                    s.setDescription("Update Complete! :tada:");
+                    s.setColor(new Color(255, 185, 10));
+                    s.addField("Progress", "~~Banners.xml~~" + bannerFileInfoWithChanges + "\n" +
+                            "~~Character Images~~ (" + charImages + " Files)\n" +
+                            "~~Weapon Images~~ (" + weapImages + " Files)\n", false);
+                };
+                updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
             }
         }
         catch (Exception e)
         {
             LOGGER.error("Update Failed!");
 
-            builder.withDesc("Update Failed!");
-            builder.withColor(255, 0, 0);
-            updateMessage.edit(builder.build());
+            ecsTemplate = s -> {
+                s.setTitle("Update - Failed");
+                s.setDescription("Update Failed!");
+                s.setColor(new Color(255, 0, 0));
+            };
+            updateMsg = Sargo.editEmbedMessage(updateMsg, ecsTemplate);
         }
         LOGGER.debug("Update Process Complete!");
     }

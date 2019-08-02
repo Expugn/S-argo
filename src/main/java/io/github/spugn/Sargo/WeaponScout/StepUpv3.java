@@ -4,30 +4,9 @@ import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Sargo;
 
-/**
- * STEP UP WEAPON V2 SCOUT
- * <p>
- *     STEP CHANGES:<br>
- *     Step 1)<br>
- *          - Multi Scout price is 100 Memory Diamonds.<br>
- *     Step 3)<br>
- *          - Multi Scout price is 100 Memory Diamonds.<br>
- *          - Gold rarity weapon rates increase by 1.5x.<br>
- *     Step 5)<br>
- *          - One Gold rarity weapon is guaranteed.<br>
- *     Step 6)<br>
- *          - Gold rarity weapon rates increase by 2.0x<br>
- *          - Step 6 repeats.<br>
- * </p>
- *
- * @author S'pugn
- * @version 1.0
- * @since v2.13
- * @see WeaponScout
- */
-public class StepUpv2 extends WeaponScout
+public class StepUpv3 extends WeaponScout
 {
-    public StepUpv2(Message message, int bannerID, String choice, String discordID)
+    public StepUpv3(Message message, int bannerID, String choice, String discordID)
     {
         super(message, bannerID, choice, discordID);
         run();
@@ -55,6 +34,7 @@ public class StepUpv2 extends WeaponScout
                 break;
             case 5:
                 guaranteeOneGold = true;
+                guaranteeSpecificWeapon = true;
                 break;
             case 6:
                 COPPER = COPPER - ((GOLD * 2.0) - GOLD);
@@ -92,10 +72,10 @@ public class StepUpv2 extends WeaponScout
                     break;
                 case "wm":
                 case "wmi":
-                    sMenu = sMenu.andThen(s -> s.setTitle("[Step Up v2 Weapons] - Step " + bannerTypeData));
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Step Up v3 Weapons] - Step " + bannerTypeData));
                     break;
                 default:
-                    sMenu = sMenu.andThen(s -> s.setTitle("[Step Up v2 Weapons] - Unknown"));
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Step Up v3 Weapons] - Unknown"));
                     break;
             }
         }
@@ -109,10 +89,10 @@ public class StepUpv2 extends WeaponScout
                     break;
                 case "wm":
                 case "wmi":
-                    simpleMessage += "**[Step Up v2 Weapons] - Step " + bannerTypeData + "**" + "\n";
+                    simpleMessage += "**[Step Up v3 Weapons] - Step " + bannerTypeData + "**" + "\n";
                     break;
                 default:
-                    simpleMessage += "**[Step Up v2 Weapons] - Unknown**" + "\n";
+                    simpleMessage += "**[Step Up v3 Weapons] - Unknown**" + "\n";
                     break;
             }
         }

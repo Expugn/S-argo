@@ -1,8 +1,8 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
-import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
@@ -20,9 +20,9 @@ import java.util.List;
  */
 public class Normal extends CharacterScout
 {
-    public Normal(IChannel channel, int bannerID, String choice, String discordID)
+    public Normal(Message message, int bannerID, String choice, String discordID)
     {
-        super(channel, bannerID, choice, discordID);
+        super(message, bannerID, choice, discordID);
         run();
     }
 
@@ -73,14 +73,14 @@ public class Normal extends CharacterScout
             {
                 case "s":
                 case "si":
-                    scoutMenu.withTitle("Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("Single Pull"));
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[Normal] - Multi Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Normal] - Multi Pull"));
                     break;
                 default:
-                    scoutMenu.withTitle("[Normal] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Normal] - Unknown"));
                     break;
             }
         }

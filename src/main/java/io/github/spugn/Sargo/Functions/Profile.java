@@ -1,18 +1,24 @@
 package io.github.spugn.Sargo.Functions;
 
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
+import discord4j.core.object.util.Snowflake;
+import discord4j.core.spec.EmbedCreateSpec;
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
+import io.github.spugn.Sargo.Sargo;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IUser;
-import sx.blah.discord.util.EmbedBuilder;
 
+import java.awt.*;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * PROFILE
@@ -21,18 +27,21 @@ import java.util.*;
  * </p>
  *
  * @author S'pugn
- * @version 1.1
+ * @version 2.0
  * @since v1.0
  */
 public class Profile
 {
-    private static IChannel CHANNEL;
-    private String DISCORD_ID;
+    //private static IChannel CHANNEL;
 
-    private EmbedBuilder builder;
-    private IUser iUser;
+    private String DISCORD_ID;
+    private TextChannel CHANNEL;
+
+    //private EmbedBuilder builder;
+    //private IUser iUser;
     private String userName;
     private UserParser user;
+    private Member member;
 
     private int goldCount;
     private int platinumCount;
@@ -43,26 +52,24 @@ public class Profile
     /**
      * Generates and displays a user's basic profile.
      *
-     * @param channel  Channel where the profile should be displayed
+     * @param message Message that was sent that triggered the bot
      * @param discordID  Discord ID of the user.
      */
-    public Profile(IChannel channel, String discordID)
+    public Profile(Message message, String discordID)
     {
-        CHANNEL = channel;
+        CHANNEL = (TextChannel) message.getChannel().block();
         DISCORD_ID = discordID;
 
         if (!(new File("data/Users/USER_" + discordID + ".xml").exists()))
         {
-            /* USER FILE DOES NOT EXIST. */
-            builder = new EmbedBuilder();
-            IUser foundUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
-            builder.withAuthorName(foundUser.getName() + "#" + foundUser.getDiscriminator() + "'s Profile");
-            builder.withAuthorIcon(foundUser.getAvatarURL());
-            builder.withColor(255, 86, 91);
-            builder.withThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
-            builder.appendField("USER FILE DOES NOT EXIST", "There is no data for this user.", false);
-
-            CHANNEL.sendMessage(builder.build());
+            // USER FILE DOES NOT EXIST.
+            Consumer<EmbedCreateSpec> ecsTemplate = s -> {
+                Member discordMember = CHANNEL.getGuild().block().getMemberById(Snowflake.of(discordID)).block();
+                s.setAuthor(discordMember.getUsername() + "#" + discordMember.getDiscriminator() + "'s Profile", "", discordMember.getAvatarUrl());
+                s.setColor(new Color(255, 86, 91));
+                s.addField("USER FILE DOES NOT EXIST", "There is no data for this user.", false);
+            };
+            Sargo.sendEmbed(CHANNEL, ecsTemplate);
             return;
         }
 
@@ -87,8 +94,6 @@ public class Profile
         basicInfo += "**Money Spent**: $" + df.format(user.getMoneySpent()) + "\n";
         basicInfo += "**Total Ticket Scouts**: " + user.getTotalTicketScout() + "\n";
 
-        builder.appendField("Information", basicInfo, false);
-
         /* CHARACTER BOX */
         String characterInfo = "";
 
@@ -107,8 +112,6 @@ public class Profile
         characterInfo += "**[5 ★]** - " + userPlatinum + "/" + platinumCount + "\n";
         characterInfo += "**[6 ★]** - " + userPlatinum6 + "/" + platinum6Count;
 
-        builder.appendField("Characters", characterInfo, false);
-
         String completionProgress;
         int totalOwned = userCopper + userSilver + userGold + userPlatinum + userPlatinum6;
         int totalCharacters = cCTotal + sCTotal + goldCount + platinumCount + platinum6Count;
@@ -126,21 +129,31 @@ public class Profile
         }
         completionProgress += " (" + totalOwned + "/" + totalCharacters + ")";
 
-        builder.appendField("Completion", completionProgress, false);
+        String basicInfo_final = basicInfo;
+        String characterInfo_final = characterInfo;
+        String completionProgress_final = completionProgress;
+        Consumer<EmbedCreateSpec> ecsTemplate = s -> {
+            s.setAuthor(userName + "'s Profile", "", member.getAvatarUrl());
+            s.setColor(new Color(255, 86, 91));
+            s.setThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
 
-        CHANNEL.sendMessage(builder.build());
+            s.addField("Information", basicInfo_final, false);
+            s.addField("Characters", characterInfo_final, false);
+            s.addField("Completion", completionProgress_final, false);
+        };
+        Sargo.sendEmbed(CHANNEL, ecsTemplate);
     }
 
     /**
      * Constructor that determines if a different profile type should be displayed.
      *
-     * @param channel  Channel where the data should be displayed.
+     * @param message Message that was sent that triggered the bot.
      * @param discordID  Discord ID of the user.
      * @param menuOption  Profile data type that should be displayed.
      */
-    public Profile(IChannel channel, String discordID, int menuOption)
+    public Profile(Message message, String discordID, int menuOption)
     {
-        CHANNEL = channel;
+        CHANNEL = (TextChannel) message.getChannel().block();
         DISCORD_ID = discordID;
 
         init();
@@ -153,21 +166,22 @@ public class Profile
         }
         else
         {
-            new WarningMessage("INVALID PROFILE OPTION", "Requested profile type not found.");
+            Sargo.replyToMessage_Warning(message, "INVALID PROFILE OPTION", "Requested profile type not found.");
         }
     }
 
     /**
      * Constructor that redirects to banner info or a character search.
      *
-     * @param channel  Channel where the data should be displayed
+     * @param message User message
      * @param discordID  Discord ID of the user.
      * @param menuOption  Menu type that should be looked up.
      * @param data  Banner ID or character name.
      */
-    public Profile(IChannel channel, String discordID, int menuOption, String data)
+    public Profile(Message message, String discordID, int menuOption, String data)
     {
-        CHANNEL = channel;
+
+        CHANNEL = (TextChannel) message.getChannel().block();
         DISCORD_ID = discordID;
 
         init();
@@ -185,7 +199,7 @@ public class Profile
         }
         else
         {
-            new WarningMessage("INVALID PROFILE OPTION", "Requested profile type not found.");
+            Sargo.replyToMessage_Warning(message, "INVALID PROFILE OPTION", "Requested profile type not found.");
         }
     }
 
@@ -220,16 +234,31 @@ public class Profile
             }
         }
 
+        Consumer<EmbedCreateSpec> ecsTemplate;
         if (!bannerInfo.isEmpty())
         {
-            builder.appendField("Banner Data", bannerInfo, false);
+            String bannerInfo_final = bannerInfo;
+
+            ecsTemplate = s -> {
+                s.setAuthor(userName + "'s Profile", "", member.getAvatarUrl());
+                s.setColor(new Color(255, 86, 91));
+                s.setThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
+
+                s.addField("Banner Data", bannerInfo_final, false);
+            };
         }
         else
         {
-            builder.appendField("Banner Data", "No available banner data.", false);
+            ecsTemplate = s -> {
+                s.setAuthor(userName + "'s Profile", "", member.getAvatarUrl());
+                s.setColor(new Color(255, 86, 91));
+                s.setThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
+
+                s.addField("Banner Data", "No available banner data.", false);
+            };
         }
 
-        CHANNEL.sendMessage(builder.build());
+        Sargo.sendEmbed(CHANNEL, ecsTemplate);
     }
 
     /**
@@ -242,8 +271,9 @@ public class Profile
     private void bannerInfoMenu(String bannerIDString)
     {
         int bannerID = Integer.parseInt(bannerIDString) - 1;
+        Consumer<EmbedCreateSpec> ecsTemplate;
 
-        /* OPEN BANNERS FILE */
+        // OPEN BANNERS FILE
         List<Banner> banners = BannerParser.getBanners();
 
         if (bannerID < banners.size() && bannerID >= 0)
@@ -258,18 +288,18 @@ public class Profile
             for (Character c : requestedBanner.getCharacters())
             {
                 characterCounter++;
-                /* TRY AND FIND CHARACTER IN USER BOX */
+                // TRY AND FIND CHARACTER IN USER BOX
                 for (Character oC : user.getCharacterBox())
                 {
                     if (c.getPrefix().equals(oC.getPrefix()) && c.getName().equals(oC.getName()) && (c.getRarity() == oC.getRarity()))
                     {
-                        /* CHARACTER IS SAME */
+                        // CHARACTER IS SAME
                         characterFound = true;
                         break;
                     }
                 }
 
-                /* ADD CHARACTER TO LIST */
+                // ADD CHARACTER TO LIST
                 if (!characterFound)
                 {
                     unobtainedCharacters.add(c);
@@ -282,42 +312,37 @@ public class Profile
                 characterFound = false;
             }
 
-            builder.appendField(requestedBanner.getBannerName(), characterCounter + " Characters Available", false);
 
+            String obtainedList = "";
+            int obtainedCounter = 0;
             if (obtainedCharacters.size() > 0)
             {
-                String obtainedList = "";
-                int obtainedCounter = 0;
                 for (Character c : obtainedCharacters)
                 {
                     obtainedList += c.toString() + "\n";
                     obtainedCounter++;
                 }
-                builder.appendField(obtainedCounter + " Characters Obtained", obtainedList, false);
             }
 
+            String noHaveList = "";
+            int noHaveCounter = 0;
             if (unobtainedCharacters.size() > 0)
             {
-                String noHaveList = "";
-                int noHaveCounter = 0;
                 for (Character c : unobtainedCharacters)
                 {
                     noHaveList += c.toString() + "\n";
                     noHaveCounter++;
                 }
-                builder.appendField(noHaveCounter + " Characters Missing", noHaveList, false);
             }
 
             /* WEAPON STATS */
             boolean weaponFound = false;
-            int weaponCounter = 0;
 
             List<Weapon> obtainedWeapons = new ArrayList<>();
             List<Weapon> unobtainedWeapons = new ArrayList<>();
 
             for (Weapon w : requestedBanner.getWeapons())
             {
-                weaponCounter++;
                 /* TRY AND FIND WEAPON IN USER BOX */
                 for (Weapon oW : user.getWeaponBox())
                 {
@@ -343,37 +368,61 @@ public class Profile
                 weaponFound = false;
             }
 
+            String obtainedList_wep = "";
+            int obtainedCounter_wep = 0;
             if (obtainedWeapons.size() > 0)
             {
-                String obtainedList = "";
-                int obtainedCounter = 0;
                 for (Weapon w : obtainedWeapons)
                 {
-                    obtainedList += w.toStringWithCount() + "\n";
-                    obtainedCounter++;
+                    obtainedList_wep += w.toStringWithCount() + "\n";
+                    obtainedCounter_wep++;
                 }
-                builder.appendField(obtainedCounter + " Weapons Obtained", obtainedList, false);
             }
 
+            String noHaveList_wep = "";
+            int noHaveCounter_wep = 0;
             if (unobtainedWeapons.size() > 0)
             {
-                String noHaveList = "";
-                int noHaveCounter = 0;
                 for (Weapon w : unobtainedWeapons)
                 {
-                    noHaveList += w.toString() + "\n";
-                    noHaveCounter++;
+                    noHaveList_wep += w.toString() + "\n";
+                    noHaveCounter_wep++;
                 }
-                builder.appendField(noHaveCounter + " Weapons Missing", noHaveList, false);
             }
+
+            int characterCounter_final = characterCounter;
+            int obtainedCounter_final = obtainedCounter;
+            String obtainedList_final = obtainedList;
+            int noHaveCounter_final = noHaveCounter;
+            String noHaveList_final = noHaveList;
+            int obtainedCounter_wep_final = obtainedCounter_wep;
+            String obtainedList_wep_final = obtainedList_wep;
+            int noHaveCounter_wep_final = noHaveCounter_wep;
+            String noHaveList_wep_final = noHaveList_wep;
+
+            ecsTemplate = s -> {
+                s.setAuthor(userName + "'s Profile", "", member.getAvatarUrl());
+                s.setColor(new Color(255, 86, 91));
+                s.setThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
+
+                s.addField(requestedBanner.getBannerName(), characterCounter_final + " Characters Available", false);
+                if (obtainedCharacters.size() > 0)
+                    s.addField(obtainedCounter_final + " Characters Obtained", obtainedList_final, false);
+                if (unobtainedCharacters.size() > 0)
+                    s.addField(noHaveCounter_final + " Characters Missing", noHaveList_final, false);
+                if (obtainedWeapons.size() > 0)
+                    s.addField(obtainedCounter_wep_final + " Weapons Obtained", obtainedList_wep_final, false);
+                if (unobtainedWeapons.size() > 0)
+                    s.addField(noHaveCounter_wep_final + " Weapons Missing", noHaveList_wep_final, false);
+            };
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
+            Sargo.replyToMessage_Warning(CHANNEL, "UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.");
             return;
         }
 
-        CHANNEL.sendMessage(builder.build());
+        Sargo.sendEmbed(CHANNEL, ecsTemplate);
     }
 
     /**
@@ -404,17 +453,34 @@ public class Profile
             }
         }
 
+        Consumer<EmbedCreateSpec> ecsTemplate;
         if (!characterList.isEmpty())
         {
-            builder.appendField("Character Search: " + correctName, characterList, false);
-            builder.withFooterText(characterCount + " " + correctName + " found.");
+            String correctName_final = correctName;
+            String characterList_final = characterList;
+            int characterCount_final = characterCount;
+
+            ecsTemplate = s -> {
+                s.setAuthor(userName + "'s Profile", "", member.getAvatarUrl());
+                s.setColor(new Color(255, 86, 91));
+                s.setThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
+
+                s.addField("Character Search: " + correctName_final, characterList_final, false);
+                s.setFooter(characterCount_final + " " + correctName_final + " found.", "");
+            };
         }
         else
         {
-            builder.appendField("Character Search", "Could not find data for \"" + characterName + "\"", false);
+            ecsTemplate = s -> {
+                s.setAuthor(userName + "'s Profile", "", member.getAvatarUrl());
+                s.setColor(new Color(255, 86, 91));
+                s.setThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
+
+                s.addField("Character Search", "Could not find data for \"" + characterName + "\"", false);
+            };
         }
 
-        CHANNEL.sendMessage(builder.build());
+        Sargo.sendEmbed(CHANNEL, ecsTemplate);
     }
 
     /**
@@ -422,19 +488,14 @@ public class Profile
      */
     private void init()
     {
-        builder = new EmbedBuilder();
-        iUser = CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID));
+        member = CHANNEL.getGuild().block().getMemberById(Snowflake.of(DISCORD_ID)).block();
         user = new UserParser(DISCORD_ID);
-        userName = iUser.getName() + "#" + iUser.getDiscriminator();
+        userName = member.getUsername() + "#" + member.getDiscriminator();
+
         goldCount = 0;
         platinumCount = 0;
         platinum6Count = 0;
         bannerType = new TreeMap<>();
-
-        builder.withAuthorName(userName + "'s Profile");
-        builder.withAuthorIcon(iUser.getAvatarURL());
-        builder.withColor(255, 86, 91);
-        builder.withThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
     }
 
     /**

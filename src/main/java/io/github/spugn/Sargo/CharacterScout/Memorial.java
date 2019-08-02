@@ -1,8 +1,8 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
-import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
@@ -24,9 +24,9 @@ import java.util.List;
 public class Memorial extends CharacterScout
 {
 
-    public Memorial(IChannel channel, int bannerID, String choice, String discordID)
+    public Memorial(Message message, int bannerID, String choice, String discordID)
     {
-        super(channel, bannerID, choice, discordID);
+        super(message, bannerID, choice, discordID);
         run();
     }
 
@@ -77,10 +77,10 @@ public class Memorial extends CharacterScout
             {
                 case "s":
                 case "si":
-                    scoutMenu.withTitle("[Memorial] - Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Memorial] - Single Pull"));
                     break;
                 default:
-                    scoutMenu.withTitle("[Memorial] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Memorial] - Unknown"));
                     break;
             }
         }

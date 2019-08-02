@@ -25,7 +25,6 @@ hs_err_pid*
 
 .gitignore
 modules/
-src/main/resources/
 src/test/
 target/generated-sources/
 
@@ -34,5 +33,6 @@ out/
 /.idea/workspace.xml
 /data/
 /images/
-/src/main/java/META-INF/
 /.idea/
+/src/main/resources/META-INF/
+/src/main/java/META-INF/

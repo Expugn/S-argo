@@ -1,8 +1,9 @@
 package io.github.spugn.Sargo.Functions;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.util.EmbedBuilder;
+
+import java.awt.*;
 
 /**
  * HELP
@@ -11,82 +12,78 @@ import sx.blah.discord.util.EmbedBuilder;
  * </p>
  *
  * @author S'pugn
- * @version 1.1
+ * @version 2.0
  * @since v1.0
  */
 public class Help
 {
-    /**
-     * Displays the help menu.
-     * @param channel  The channel where the help menu should be displayed.
-     */
-    public Help(IChannel channel)
+    public Help(Message message)
     {
-        EmbedBuilder builder = new EmbedBuilder();
+        // HELP MENU TEXT
+        final String detailedListLink =
+            "[Detailed Command List](https://github.com/Expugn/S-argo#commands)" + "\n";
 
-        builder.withColor(91, 255, 105);
+        final String generalHelp =
+            "`help` - Display the command list." + "\n" +
+            "`info` - Display bot information." + "\n";
 
-        builder.withAuthorName("Help Menu");
-        builder.withAuthorIcon(new GitHubImage("images/System/Help_Icon.png").getURL());
+        final String scoutingHelp_general =
+            "`scout` - View a list of available banners." + "\n" +
+            "`scout p[Page Number]` - View a page in the list of available banners." + "\n" +
+            "`scout [Banner ID]` - View a banner's information." + "\n\n" +
+            "**Adding an 'i' after your scout type will generate an image result.**";
 
-        String detailedListLink = "";
-        detailedListLink += "[Detailed Command List](https://github.com/Expugn/S-argo#commands)" + "\n";
-        builder.appendField("FOR A MORE DETAILED COMMAND LIST...", detailedListLink, false);
+        final String scoutingHelp_character =
+            "`scout [Banner ID] [s/si]` - Perform a single scout." + "\n" +
+            "`scout [Banner ID] [m/mi]` - Perform a multi scout." + "\n" +
+            "`scout [Banner ID] [rc/rci]` - Perform a record crystal scout.";
 
-        String generalHelp = "";
-        generalHelp += "'**help**' - Display the command list." + "\n";
-        generalHelp += "'**info**' - Display bot information." + "\n";
-        builder.appendField("GENERAL", generalHelp, false);
+        final String scoutingHelp_weapon =
+            "`scout [Banner ID] [ws/wsi]` - Perform a weapon single scout." + "\n" +
+            "`scout [Banner ID] [wm/wmi]` - Perform a weapon multi scout.";
 
-        String scoutingHelp = "";
-        scoutingHelp += "'**scout**' - View a list of available banners." + "\n";
-        scoutingHelp += "'**scout** p[Page Number]' - View a page in the list of available banners." + "\n";
-        scoutingHelp += "'**scout** [Banner ID]' - View a banner's information." + "\n\n";
-        scoutingHelp += "**Adding an 'i' after your scout type will generate an image result.**";
-        builder.appendField("SCOUT - GENERAL", scoutingHelp, false);
+        final String scoutingHelp_ticket =
+            "`scout [nts/ntsi/ntm/ntmi]` - Perform a normal ticket scout." + "\n" +
+            "`scout [pts/ptsi/ptm/ptmi]` - Perform a plus ticket scout." + "\n" +
+            "`scout [nt2s/nt2si/nt2m/nt2mi]` - Perform a normal ticket v2 scout." + "\n" +
+            "`scout [pt2s/pt2si/pt2m/pt2mi]` - Perform a plus ticket v2 scout." + "\n";
 
-        scoutingHelp = "";
-        scoutingHelp += "'**scout** [Banner ID] [s/si]' - Perform a single scout." + "\n";
-        scoutingHelp += "'**scout** [Banner ID] [m/mi]' - Perform a multi scout." + "\n";
-        scoutingHelp += "'**scout** [Banner ID] [rc/rci]' - Perform a record crystal scout.";
-        builder.appendField("SCOUT - CHARACTER", scoutingHelp, false);
+        final String shopHelp =
+            "`shop` - View the shop." + "\n" +
+            "`shop [Item ID] [Quantity]` - \"Buy\" a Memory Diamond bundle(s)." + "\n";
 
-        scoutingHelp = "";
-        scoutingHelp += "'**scout** [Banner ID] [ws/wsi]' - Perform a weapon single scout." + "\n";
-        scoutingHelp += "'**scout** [Banner ID] [wm/wmi]' - Perform a weapon multi scout.";
-        builder.appendField("SCOUT - WEAPON", scoutingHelp, false);
+        final String profileHelp =
+            "`profile` - View your basic profile." + "\n" +
+            "`profile [info/i] [Banner ID]` - View your collected/missing characters in a banner." + "\n" +
+            "`profile [data/d]` - View your Step/Record Crystal data." + "\n" +
+            "`profile [search/s] [Character Name]` - Search for that character in your collection." + "\n";
 
-        scoutingHelp = "";
-        scoutingHelp += "'**scout** [nts/ntsi/ntm/ntmi]' - Perform a normal ticket scout." + "\n";
-        scoutingHelp += "'**scout** [pts/ptsi/ptm/ptmi]' - Perform a plus ticket scout." + "\n";
-        scoutingHelp += "'**scout** [nt2s/nt2si/nt2m/nt2mi]' - Perform a normal ticket v2 scout." + "\n";
-        scoutingHelp += "'**scout** [pt2s/pt2si/pt2m/pt2mi]' - Perform a plus ticket v2 scout." + "\n";
-        builder.appendField("SCOUT - TICKET", scoutingHelp, false);
+        //final String userSearchHelp =
+        //    "`user [@name]` - View a user's basic profile." + "\n";
 
-        String shopHelp = "";
-        shopHelp += "'**shop**' - View the shop." + "\n";
-        shopHelp += "'**shop** [Item ID] [Quantity]' - \"Buy\" a Memory Diamond bundle(s)." + "\n";
-        builder.appendField("SHOP", shopHelp, false);
+        final String resetHelp =
+            "`reset` - Reset your data file." + "\n" +
+            "`reset [Banner ID] c` - Reset your character data for a banner." + "\n" +
+            "`reset [Banner ID] w` - Reset your weapon data for a banner." + "\n" +
+            "`reset [Banner ID] a` - Reset all data for a banner." + "\n\n" +
+            "**Resetting all data includes your Step or Record Crystal data as well.**" + "\n";
 
-        String profileHelp = "";
-        profileHelp += "'**profile**' - View your basic profile." + "\n";
-        profileHelp += "'**profile** [info/i] [Banner ID]' - View your collected/missing characters in a banner." + "\n";
-        profileHelp += "'**profile** [data/d]' - View your Step/Record Crystal data." + "\n";
-        profileHelp += "'**profile** [search/s] [Character Name]' - Search for that character in your collection." + "\n";
-        builder.appendField("PROFILE", profileHelp, false);
-
-        String userHelp = "";
-        userHelp += "'**user** [@name]' - View a user's basic profile." + "\n";
-        builder.appendField("USER SEARCH", userHelp, false);
-
-        String resetHelp = "";
-        resetHelp += "'**reset**' - Reset your data file." + "\n";
-        resetHelp += "'**reset** [Banner ID] c' - Reset your character data for a banner." + "\n";
-        resetHelp += "'**reset** [Banner ID] w' - Reset your weapon data for a banner." + "\n";
-        resetHelp += "'**reset** [Banner ID] a' - Reset all data for a banner." + "\n\n";
-        resetHelp += "**Resetting all data includes your Step or Record Crystal data as well.**" + "\n";
-        builder.appendField("DATA RESET", resetHelp, false);
-
-        channel.sendMessage(builder.build());
+        // CREATE AND PRINT HELP MENU
+        message.getChannel().block().createMessage(
+                s -> s.setEmbed(
+                        embed -> embed
+                            .setColor(new Color(91, 255, 105))
+                            .setAuthor("Help Menu", null, new GitHubImage("images/System/Help_Icon.png").getURL())
+                            .addField("FOR A MORE DETAILED COMMAND LIST...", detailedListLink, false)
+                            .addField("GENERAL", generalHelp, false)
+                            .addField("SCOUT - GENERAL", scoutingHelp_general, false)
+                            .addField("SCOUT - CHARACTER", scoutingHelp_character, false)
+                            .addField("SCOUT - WEAPON", scoutingHelp_weapon, false)
+                            .addField("SCOUT - TICKET", scoutingHelp_ticket, false)
+                            .addField("SHOP", shopHelp, false)
+                            .addField("PROFILE", profileHelp, false)
+                            //.addField("USER SEARCH", userSearchHelp, false)
+                            .addField("DATA RESET", resetHelp, false)
+                )).block();
     }
 }

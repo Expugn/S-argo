@@ -1,7 +1,10 @@
 package io.github.spugn.Sargo.Objects;
 
+import discord4j.core.spec.EmbedCreateSpec;
 import io.github.spugn.Sargo.Managers.CommandManager;
-import sx.blah.discord.util.EmbedBuilder;
+
+import java.awt.*;
+import java.util.function.Consumer;
 
 /**
  * BANNER INFO MENU
@@ -17,7 +20,7 @@ import sx.blah.discord.util.EmbedBuilder;
  */
 public class BannerInfoMenu
 {
-    private EmbedBuilder builder;
+    Consumer<EmbedCreateSpec> ecsTemplate;
     private String bannerType;
     private int bannerWepType;
     private String bannerName;
@@ -40,171 +43,177 @@ public class BannerInfoMenu
 
     public BannerInfoMenu()
     {
-        builder = new EmbedBuilder();
+        //builder = new EmbedBuilder();
     }
 
     private void build()
     {
-        boolean unknownScoutType = false;
-        if (bannerWepType == 1)
-        {
-            builder.withAuthorName("[" + bannerType + " / Weapon Step Up] " + bannerName);
-        }
-        else if (bannerWepType == 2)
-        {
-            builder.withAuthorName("[" + bannerType + " / GGO Step Up] " + bannerName);
-        }
-        else if (bannerWepType == 3)
-        {
-            builder.withAuthorName("[" + bannerType + " / Weapon Step Up v2] " + bannerName);
-        }
-        else
-        {
-            builder.withAuthorName("[" + bannerType + "] " + bannerName);
-        }
-
-        builder.withDesc(characterAmount + " characters available.");
-        builder.withColor(0, 153, 153);
-        builder.withThumbnail(imageURL);
-
-        builder.appendField("- Characters -", characterList, (weaponAmount > 0));
-
-        if (weaponAmount > 0)
-        {
-            builder.appendField("- Weapons -", weaponList, true);
-        }
-
-        builder.appendField("- Pull Rates -", ratesList, true);
-
-        if (bannerType.equalsIgnoreCase("Step Up"))
-        {
-            builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
-            builder.appendField("- Step 5 Pull Rates -", stepFiveRatesList, true);
-        }
-        else if (bannerType.equalsIgnoreCase("Step Up v2") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up") ||
-                bannerType.equalsIgnoreCase("Step Up v4") ||
-                bannerType.equalsIgnoreCase("Step Up v5") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3") ||
-                bannerType.equalsIgnoreCase("Step Up v7") ||
-                bannerType.equalsIgnoreCase("Step Up v8") ||
-                bannerType.equalsIgnoreCase("Step Up v9"))
-        {
-            if (bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
+        ecsTemplate = s -> {
+            boolean unknownScoutType = false;
+            if (bannerWepType == 1)
             {
-                builder.appendField("- Step 1 Pull Rates -", stepOneRatesList, true);
+                s.setAuthor("[" + bannerType + " / Weapon Step Up] " + bannerName, "", "");
             }
-            builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
-            builder.appendField("- Step 5 Pull Rates -", stepFiveRatesList, true);
-            builder.appendField("- Step 6 Pull Rates -", stepSixRatesList, true);
-        }
-        else if (bannerType.equalsIgnoreCase("Birthday Step Up"))
-        {
-            builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
-        }
-        else if (bannerType.equalsIgnoreCase("Record Crystal") ||
-                bannerType.equalsIgnoreCase("Record Crystal v2") ||
-                bannerType.equalsIgnoreCase("Record Crystal v3") ||
-                bannerType.equalsIgnoreCase("Record Crystal v4") ||
-                bannerType.equalsIgnoreCase("Record Crystal v5") ||
-                bannerType.equalsIgnoreCase("Record Crystal v6"))
-        {
-            builder.appendField("- Record Crystal Rates -", recordCrystalRatesList, true);
+            else if (bannerWepType == 2)
+            {
+                s.setAuthor("[" + bannerType + " / GGO Step Up] " + bannerName, "", "");
+            }
+            else if (bannerWepType == 3)
+            {
+                s.setAuthor("[" + bannerType + " / Weapon Step Up v2] " + bannerName, "", "");
+            }
+            else if (bannerWepType == 4)
+            {
+                s.setAuthor("[" + bannerType + " / Weapon Step Up v3] " + bannerName, "", "");
+            }
+            else
+            {
+                s.setAuthor("[" + bannerType + "] " + bannerName, "", "");
+            }
 
-            if (bannerType.equalsIgnoreCase("Record Crystal v3") ||
+            s.setDescription(characterAmount + " characters available.");
+            s.setColor(new Color(0, 153, 153));
+            s.setThumbnail(imageURL);
+
+            s.addField("- Characters -", characterList, (weaponAmount > 0));
+
+            if (weaponAmount > 0)
+            {
+                s.addField("- Weapons -", weaponList, true);
+            }
+
+            s.addField("- Pull Rates -", ratesList, true);
+
+            if (bannerType.equalsIgnoreCase("Step Up"))
+            {
+                s.addField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+                s.addField("- Step 5 Pull Rates -", stepFiveRatesList, true);
+            }
+            else if (bannerType.equalsIgnoreCase("Step Up v2") ||
+                    bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up") ||
+                    bannerType.equalsIgnoreCase("Step Up v4") ||
+                    bannerType.equalsIgnoreCase("Step Up v5") ||
+                    bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
+                    bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3") ||
+                    bannerType.equalsIgnoreCase("Step Up v7") ||
+                    bannerType.equalsIgnoreCase("Step Up v8") ||
+                    bannerType.equalsIgnoreCase("Step Up v9"))
+            {
+                if (bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3"))
+                {
+                    s.addField("- Step 1 Pull Rates -", stepOneRatesList, true);
+                }
+                s.addField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+                s.addField("- Step 5 Pull Rates -", stepFiveRatesList, true);
+                s.addField("- Step 6 Pull Rates -", stepSixRatesList, true);
+            }
+            else if (bannerType.equalsIgnoreCase("Birthday Step Up"))
+            {
+                s.addField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+            }
+            else if (bannerType.equalsIgnoreCase("Record Crystal") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v2") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v3") ||
                     bannerType.equalsIgnoreCase("Record Crystal v4") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v5") ||
                     bannerType.equalsIgnoreCase("Record Crystal v6"))
             {
-                builder.appendField("- Circulating Record Crystal Rates -", circulatingRecordCrystalRatesList, true);
+                s.addField("- Record Crystal Rates -", recordCrystalRatesList, true);
+
+                if (bannerType.equalsIgnoreCase("Record Crystal v3") ||
+                        bannerType.equalsIgnoreCase("Record Crystal v4") ||
+                        bannerType.equalsIgnoreCase("Record Crystal v6"))
+                {
+                    s.addField("- Circulating Record Crystal Rates -", circulatingRecordCrystalRatesList, true);
+                }
             }
-        }
-        else if (bannerType.equalsIgnoreCase("Step Up v3") ||
-                 bannerType.equalsIgnoreCase("Step Up v6"))
-        {
-            builder.appendField("- Step 3 Pull Rates -", stepThreeRatesList, true);
-        }
-
-        if (bannerWepType == 1)
-        {
-            builder.appendField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
-        }
-        else if (bannerWepType == 2 ||
-                bannerWepType == 3)
-        {
-            builder.appendField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
-            builder.appendField("- Step 5 Weapon Pull Rates -", stepFiveWeaponRatesList, true);
-            builder.appendField("- Step 6 Weapon Pull Rates -", stepSixWeaponRatesList, true);
-        }
-
-        String footer = "[s/si";
-
-        if (bannerType.equalsIgnoreCase("Normal") ||
-                bannerType.equalsIgnoreCase("Step Up") ||
-                bannerType.equalsIgnoreCase("Step Up v2") ||
-                bannerType.equalsIgnoreCase("Birthday Step Up") ||
-                bannerType.equalsIgnoreCase("Step Up v3") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up") ||
-                bannerType.equalsIgnoreCase("Step Up v4") ||
-                bannerType.equalsIgnoreCase("Step Up v5") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
-                bannerType.equalsIgnoreCase("Step Up v6") ||
-                bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3") ||
-                bannerType.equalsIgnoreCase("Step Up v7") ||
-                bannerType.equalsIgnoreCase("Step Up v8") ||
-                bannerType.equalsIgnoreCase("Step Up v9"))
-        {
-            if (weaponAmount > 0)
+            else if (bannerType.equalsIgnoreCase("Step Up v3") ||
+                    bannerType.equalsIgnoreCase("Step Up v6"))
             {
-                footer += " | ws/wsi | m/mi | wm/wmi]` to scout.";
+                s.addField("- Step 3 Pull Rates -", stepThreeRatesList, true);
+            }
+
+            if (bannerWepType == 1)
+            {
+                s.addField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
+            }
+            else if (bannerWepType == 2 ||
+                    bannerWepType == 3 ||
+                    bannerWepType == 4)
+            {
+                s.addField("- Step 3 Weapon Pull Rates -", stepThreeWeaponRatesList, true);
+                s.addField("- Step 5 Weapon Pull Rates -", stepFiveWeaponRatesList, true);
+                s.addField("- Step 6 Weapon Pull Rates -", stepSixWeaponRatesList, true);
+            }
+
+            String footer = "[s/si";
+
+            if (bannerType.equalsIgnoreCase("Normal") ||
+                    bannerType.equalsIgnoreCase("Step Up") ||
+                    bannerType.equalsIgnoreCase("Step Up v2") ||
+                    bannerType.equalsIgnoreCase("Birthday Step Up") ||
+                    bannerType.equalsIgnoreCase("Step Up v3") ||
+                    bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up") ||
+                    bannerType.equalsIgnoreCase("Step Up v4") ||
+                    bannerType.equalsIgnoreCase("Step Up v5") ||
+                    bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v2") ||
+                    bannerType.equalsIgnoreCase("Step Up v6") ||
+                    bannerType.equalsIgnoreCase("SAO Game 5th Anniversary Step Up v3") ||
+                    bannerType.equalsIgnoreCase("Step Up v7") ||
+                    bannerType.equalsIgnoreCase("Step Up v8") ||
+                    bannerType.equalsIgnoreCase("Step Up v9"))
+            {
+                if (weaponAmount > 0)
+                {
+                    footer += " | ws/wsi | m/mi | wm/wmi]` to scout.";
+                }
+                else
+                {
+                    footer += " | m/mi]` to scout.";
+                }
+            }
+            else if (bannerType.equalsIgnoreCase("Record Crystal") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v2") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v3") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v4") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v5") ||
+                    bannerType.equalsIgnoreCase("Record Crystal v6"))
+            {
+                if (weaponAmount > 0)
+                {
+                    footer += " | ws/wsi | m/mi | wm/wmi | rc/rci]` to scout.";
+                }
+                else
+                {
+                    footer += " | m/mi | rc/rci]` to scout.";
+                }
+            }
+            else if (bannerType.equalsIgnoreCase("Memorial Scout") ||
+                    bannerType.equalsIgnoreCase("Event"))
+            {
+                footer += "]` to scout.";
             }
             else
             {
-                footer += " | m/mi]` to scout.";
+                footer = "Unknown Scout Type!";
+                unknownScoutType = true;
             }
-        }
-        else if (bannerType.equalsIgnoreCase("Record Crystal") ||
-                bannerType.equalsIgnoreCase("Record Crystal v2") ||
-                bannerType.equalsIgnoreCase("Record Crystal v3") ||
-                bannerType.equalsIgnoreCase("Record Crystal v4") ||
-                bannerType.equalsIgnoreCase("Record Crystal v5") ||
-                bannerType.equalsIgnoreCase("Record Crystal v6"))
-        {
-            if (weaponAmount > 0)
+
+            if (unknownScoutType)
             {
-                footer += " | ws/wsi | m/mi | wm/wmi | rc/rci]` to scout.";
+                s.setFooter(footer, "");
             }
             else
             {
-                footer += " | m/mi | rc/rci]` to scout.";
+                s.setFooter("Use `" + CommandManager.getCommandPrefix() + "scout " + (bannerID + 1) + " " + footer, "");
             }
-        }
-        else if (bannerType.equalsIgnoreCase("Memorial Scout") ||
-                bannerType.equalsIgnoreCase("Event"))
-        {
-            footer += "]` to scout.";
-        }
-        else
-        {
-            footer = "Unknown Scout Type!";
-            unknownScoutType = true;
-        }
-
-        if (unknownScoutType)
-        {
-            builder.withFooterText(footer);
-        }
-        else
-        {
-            builder.withFooterText("Use `" + CommandManager.getCommandPrefix() + "scout " + (bannerID + 1) + " " + footer);
-        }
-
+        };
     }
 
-    public EmbedBuilder get()
+    public Consumer<EmbedCreateSpec> get()
     {
         build();
-        return builder;
+        return ecsTemplate;
     }
 
     public void setBannerType(String bannerType)

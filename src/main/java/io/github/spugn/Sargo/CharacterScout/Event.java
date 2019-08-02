@@ -1,13 +1,13 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Objects.Character;
-import sx.blah.discord.handle.obj.IChannel;
 
 public class Event extends CharacterScout
 {
-    public Event(IChannel channel, int bannerID, String choice, String discordID)
+    public Event(Message message, int bannerID, String choice, String discordID)
     {
-        super(channel, bannerID, choice, discordID);
+        super(message, bannerID, choice, discordID);
         run();
     }
 
@@ -52,10 +52,10 @@ public class Event extends CharacterScout
             {
                 case "s":
                 case "si":
-                    scoutMenu.withTitle("[Event] - Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Event] - Single Pull"));
                     break;
                 default:
-                    scoutMenu.withTitle("[Event] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Event] - Unknown"));
                     break;
             }
         }

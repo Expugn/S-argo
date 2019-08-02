@@ -1,14 +1,14 @@
 package io.github.spugn.Sargo.TicketScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Objects.Item;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
-import sx.blah.discord.handle.obj.IChannel;
 
 public class Normalv2 extends TicketScout
 {
-    public Normalv2(IChannel channel, String choice, String discordID)
+    public Normalv2(Message message, String choice, String discordID)
     {
-        super(channel, choice, discordID);
+        super(message, choice, discordID);
         run();
     }
 
@@ -157,20 +157,20 @@ public class Normalv2 extends TicketScout
     {
         if (!SIMPLE_MESSAGE)
         {
-            scoutMenu.withAuthorName("Normal Ticket v2 Scout");
-            scoutMenu.withThumbnail(new GitHubImage("images/System/Normal_Ticket_2.png").getURL());
+            sMenu = sMenu.andThen(s -> s.setAuthor("Normal Ticket v2 Scout", "", new GitHubImage("images/System/Scout_Icon.png").getURL())
+                    .setThumbnail(new GitHubImage("images/System/Normal_Ticket_2.png").getURL()));
             switch (CHOICE.toLowerCase())
             {
                 case "nt2s":
                 case "nt2si":
-                    scoutMenu.withTitle("[Ticket Scout] - Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Ticket Scout] - Single Pull"));
                     break;
                 case "nt2m":
                 case "nt2mi":
-                    scoutMenu.withTitle("[Ticket Scout] - Multi Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Ticket Scout] - Multi Pull"));
                     break;
                 default:
-                    scoutMenu.withTitle("[Ticket Scout] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Ticket Scout] - Unknown"));
                     break;
             }
         }
