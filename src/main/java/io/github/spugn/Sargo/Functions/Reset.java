@@ -1,19 +1,24 @@
 package io.github.spugn.Sargo.Functions;
 
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
+import discord4j.core.object.util.Snowflake;
+import discord4j.core.spec.EmbedCreateSpec;
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
-import io.github.spugn.Sargo.Objects.WarningMessage;
 import io.github.spugn.Sargo.Objects.Weapon;
+import io.github.spugn.Sargo.Sargo;
+import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IUser;
-import sx.blah.discord.util.EmbedBuilder;
 
+import java.awt.*;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * RESET
@@ -28,62 +33,44 @@ import java.util.List;
  */
 public class Reset
 {
-    private IChannel CHANNEL;
-
-    /**
-     * Warns the user that if they type the command in the warning message their entire
-     * user file will be deleted.
-     *
-     * @param channel  Channel where the message should be sent.
-     */
-    public Reset(IChannel channel)
+    public Reset(Message message)
     {
-        CHANNEL = channel;
-        CHANNEL.sendMessage(new WarningMessage("WARNING", "Continuing forward will erase all your data. Are you sure?\nType '" + CommandManager.getCommandPrefix() + "**reset** y' to proceed.").get().build());
+        Sargo.replyToMessage_Warning(message, "WARNING", "Continuing forward will erase all your data. Are you sure?\nType '" + CommandManager.getCommandPrefix() + "**reset** y' to proceed.");
     }
 
-    /**
-     * Removes everything in the user's file.
-     *
-     * @param channel  Channel where the message should be sent.
-     * @param discordID  Discord ID of the user.
-     */
-    public Reset(IChannel channel, String discordID)
+    public Reset(Message message, String discordID)
     {
-        CHANNEL = channel;
         File userFile = new File("data/Users/USER_" + discordID + ".xml");
 
         if (userFile.exists())
         {
             new UserParser(discordID).resetUser();
 
-            IUser discordUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
-            CHANNEL.sendMessage(new WarningMessage("USER FILE RESET", "**" + discordUser.getName() + "#" + discordUser.getDiscriminator() + "**'s file has been reset.").get().build());
+            Member member = message.getGuild().block().getMemberById(Snowflake.of(Long.parseLong(discordID))).block();
+            Sargo.replyToMessage_Warning(message, "USER FILE RESET", "**" + member.getUsername() + "#" + member.getDiscriminator() + "**'s file has been reset.");
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("USER FILE NOT FOUND", "Huh. Well that was anti-climatic.").get().build());
+            Sargo.replyToMessage_Warning(message, "USER FILE NOT FOUND", "Huh. Well that was anti-climatic.");
         }
     }
 
     /**
      * Removes either the characters, weapons, or all data of a specific banner.
      *
-     * @param channel  Channel where the data should be displayed.
      * @param discordID  Discord ID of the user.
      * @param bannerID  ID of the banner that should be deleted.
      * @param choice  Choice of the type of deletion that should be processed.
      * @param yes  If true, then delete data; if false, then warn the user and display data that will be deleted.
      */
-    public Reset(IChannel channel, String discordID, int bannerID, String choice, boolean yes)
+    public Reset(Message message, String discordID, int bannerID, String choice, boolean yes)
     {
-        CHANNEL = channel;
         bannerID--;
         File userFile = new File("data/Users/USER_" + discordID + ".xml");
 
         if (!userFile.exists())
         {
-            CHANNEL.sendMessage(new WarningMessage("USER FILE NOT FOUND", "Huh. Well that was anti-climatic.").get().build());
+            Sargo.replyToMessage_Warning(message, "USER FILE NOT FOUND", "Huh. Well that was anti-climatic.");
             return;
         }
 
@@ -219,7 +206,8 @@ public class Reset
                     // WEP BANNER STEP UP
                     if (wepBannerType == 1 ||
                             wepBannerType == 2 ||
-                            wepBannerType == 3)
+                            wepBannerType == 3 ||
+                            wepBannerType == 4)
                     {
                         user.changeValue(banners.get(bannerID).getBannerName() + " Weapons", 1);
                     }
@@ -241,94 +229,112 @@ public class Reset
                     dataType = "data";
                 }
 
-                IUser discordUser = channel.getGuild().getUserByID(Long.parseLong(discordID));
-                CHANNEL.sendMessage(new WarningMessage("USER BANNER DATA RESET", "**" + discordUser.getName() + "#" + discordUser.getDiscriminator() + "**'s " + dataType + " for **" + banners.get(bannerID).getBannerName() + "** has been reset.").get().build());
+                Member member = message.getGuild().block().getMemberById(Snowflake.of(Long.parseLong(discordID))).block();
+
+                Sargo.replyToMessage_Warning(message, "USER BANNER DATA RESET", "**" + member.getUsername() + "#" + member.getDiscriminator() + "**'s " + dataType + " for **" + banners.get(bannerID).getBannerName() + "** has been reset.");
             }
             else
             {
                 boolean hasData = false;
-                EmbedBuilder builder = new EmbedBuilder();
-                builder.withAuthorName("WARNING");
-                builder.withTitle("Continuing forward will erase the following data from your file:");
-                builder.withFooterText("Type '" + CommandManager.getCommandPrefix() + "reset " + (bannerID + 1) + " " + choice + " y' to proceed.");
-                builder.withColor(255, 0, 0);
+                int bannerID_final = bannerID;
+                String charString_final = charString;
+                String weapString_final = weapString;
+                int bannerData_final = bannerData;
+                int bannerWepData_final = bannerWepData;
 
-                builder.appendField("- Banner -", banners.get(bannerID).getBannerName(), false);
 
-                if (!charString.isEmpty() && (choice.equalsIgnoreCase("c") || choice.equalsIgnoreCase("a")))
+                if ((!charString_final.isEmpty() && (choice.equalsIgnoreCase("c") || choice.equalsIgnoreCase("a"))) ||
+                        !weapString_final.isEmpty() && (choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("a")) ||
+                        choice.equalsIgnoreCase("a") && !(banners.get(bannerID_final).getBannerType() == 0 || banners.get(bannerID_final).getBannerType() == 6))
                 {
-                    builder.appendField("- Characters -", charString, false);
                     hasData = true;
                 }
+                boolean hasData_final = hasData;
+                Consumer<EmbedCreateSpec> ecsTemplate;
+                ecsTemplate = s -> {
+                    s.setAuthor("WARNING", "", "");
+                    s.setTitle("Continuing forward will erase the following data from your file:");
+                    s.setColor(new Color(255, 0, 0));
+                    s.setFooter("Type '" + CommandManager.getCommandPrefix() + "reset " + (bannerID_final + 1) + " " + choice + " y' to proceed.", "");
+                    s.setThumbnail(new GitHubImage("images/System/Profile_Icon.png").getURL());
 
-                if (!weapString.isEmpty() && (choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("a")))
-                {
-                    builder.appendField("- Weapons -", weapString, false);
-                    hasData = true;
-                }
+                    s.addField("- Banner -", banners.get(bannerID_final).getBannerName(), false);
 
-                if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID).getBannerType() == 0 || banners.get(bannerID).getBannerType() == 6))
-                {
-                    String dataString = "";
-                    int bannerType = banners.get(bannerID).getBannerType();
-                    int bannerWepType = banners.get(bannerID).getBannerWepType();
-
-                    // BANNER TYPE IS STEP UP
-                    if (bannerType == 1 ||
-                            bannerType == 3 ||
-                            bannerType == 4 ||
-                            bannerType == 7 ||
-                            bannerType == 10 ||
-                            bannerType == 12 ||
-                            bannerType == 13 ||
-                            bannerType == 14 ||
-                            bannerType == 15 ||
-                            bannerType == 16 ||
-                            bannerType == 17 ||
-                            bannerType == 19 ||
-                            bannerType == 21)
+                    if (!charString_final.isEmpty() && (choice.equalsIgnoreCase("c") || choice.equalsIgnoreCase("a")))
                     {
-                        dataString = "Step " + bannerData + " -> Step 1";
+                        s.addField("- Characters -", charString_final, false);
                     }
-                    // BANNER TYPE IS RECORD CRYSTAL
-                    else if (bannerType == 2 ||
-                            bannerType == 5 ||
-                            bannerType == 8 ||
-                            bannerType == 11 ||
-                            bannerType == 18 ||
-                            bannerType == 20)
+
+                    if (!weapString_final.isEmpty() && (choice.equalsIgnoreCase("w") || choice.equalsIgnoreCase("a")))
                     {
-                        if (bannerData < 0)
+                        s.addField("- Weapons -", weapString_final, false);
+                    }
+
+                    if (choice.equalsIgnoreCase("a") && !(banners.get(bannerID_final).getBannerType() == 0 || banners.get(bannerID_final).getBannerType() == 6))
+                    {
+                        String dataString = "";
+                        int bannerType = banners.get(bannerID_final).getBannerType();
+                        int bannerWepType = banners.get(bannerID_final).getBannerWepType();
+
+                        // BANNER TYPE IS STEP UP
+                        if (bannerType == 1 ||
+                                bannerType == 3 ||
+                                bannerType == 4 ||
+                                bannerType == 7 ||
+                                bannerType == 10 ||
+                                bannerType == 12 ||
+                                bannerType == 13 ||
+                                bannerType == 14 ||
+                                bannerType == 15 ||
+                                bannerType == 16 ||
+                                bannerType == 17 ||
+                                bannerType == 19 ||
+                                bannerType == 21)
                         {
-                            dataString = "Record Crystals: 0 -> 0";
+                            dataString = "Step " + bannerData_final + " -> Step 1";
                         }
-                        else
+                        // BANNER TYPE IS RECORD CRYSTAL
+                        else if (bannerType == 2 ||
+                                bannerType == 5 ||
+                                bannerType == 8 ||
+                                bannerType == 11 ||
+                                bannerType == 18 ||
+                                bannerType == 20)
                         {
-                            dataString = "Record Crystals: " + bannerData + " -> 0";
+                            if (bannerData_final < 0)
+                            {
+                                dataString = "Record Crystals: 0 -> 0";
+                            }
+                            else
+                            {
+                                dataString = "Record Crystals: " + bannerData_final + " -> 0";
+                            }
                         }
+
+                        // WEAPON BANNER STEP UP
+                        if (bannerWepType == 1 ||
+                                bannerWepType == 2 ||
+                                bannerWepType == 3 ||
+                                bannerWepType == 4)
+                        {
+                            dataString += "\nWeapon Step " + bannerWepData_final + " -> Weapon Step 1";
+                        }
+                        s.addField("- Data -", dataString, false);
                     }
 
-                    // WEAPON BANNER STEP UP
-                    if (bannerWepType == 1 ||
-                            bannerWepType == 2 ||
-                            bannerWepType == 3)
+                    if (!hasData_final)
                     {
-                        dataString += "\nWeapon Step " + bannerWepData + " -> Weapon Step 1";
+                        s.addField("NO DATA FOUND", "No changes will be made if you reset.", false);
                     }
-                    builder.appendField("- Data -", dataString, false);
-                    hasData = true;
-                }
 
-                if (!hasData)
-                {
-                    builder.appendField("NO DATA FOUND", "No changes will be made if you reset.", false);
-                }
-                CHANNEL.sendMessage(builder.build());
+                };
+
+                Sargo.sendEmbed((TextChannel) message.getChannel().block(), ecsTemplate);
             }
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
+            Sargo.replyToMessage_Warning(message, "UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.");
         }
     }
 }

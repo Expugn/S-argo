@@ -1,12 +1,14 @@
 package io.github.spugn.Sargo.Functions;
 
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Objects.*;
 import io.github.spugn.Sargo.Objects.Character;
+import io.github.spugn.Sargo.Sargo;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
 import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
-import sx.blah.discord.handle.obj.IChannel;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -27,7 +29,8 @@ import java.util.*;
  */
 public class BannerInfo
 {
-    private static IChannel CHANNEL;
+    //private static IChannel CHANNEL;
+    private TextChannel TEXT_CHANNEL;
     private static List<Banner> BANNERS;
 
     private double copper;
@@ -43,9 +46,9 @@ public class BannerInfo
 
     private int page;
 
-    public BannerInfo(IChannel channel, String page)
+    public BannerInfo(Message message, String page)
     {
-        CHANNEL = channel;
+        TEXT_CHANNEL = (TextChannel) message.getChannel().block();
 
         /* READ Banners.xml */
         BANNERS = BannerParser.getBanners();
@@ -59,9 +62,9 @@ public class BannerInfo
         listBanners();
     }
 
-    public BannerInfo(IChannel channel, int bannerID)
+    public BannerInfo(Message message, int bannerID)
     {
-        CHANNEL = channel;
+        TEXT_CHANNEL = (TextChannel) message.getChannel().block();
         this.bannerID = bannerID - 1;
 
         /* READ Banners.xml */
@@ -113,7 +116,7 @@ public class BannerInfo
         }
 
         menu.setBannerList(message);
-        CHANNEL.sendMessage(menu.get().build());
+        Sargo.sendEmbed(TEXT_CHANNEL, menu.get());
     }
 
     private void getBannerInfo()
@@ -529,9 +532,10 @@ public class BannerInfo
                 stepThreeRates += "**(4 ★ Weapon Rates 2.0x)**";
                 menu.setStepThreeWeaponRatesList(stepThreeRates);
             }
-            /* WEAPON BANNER IS GGO STEP UP OR STEP UP V2 */
+            /* WEAPON BANNER IS GGO STEP UP OR STEP UP V2 OR STEP UP V3 */
             else if (banner.getBannerWepType() == 2 ||
-                    banner.getBannerWepType() == 3)
+                    banner.getBannerWepType() == 3 ||
+                    banner.getBannerWepType() == 4)
             {
                 double tC = (copper + platinum) - ((gold * 1.5) - gold);
                 double tS = silver;
@@ -552,7 +556,14 @@ public class BannerInfo
                 stepFiveRates += "[4 ★] " + tG + "%\n";
                 stepFiveRates += "[3 ★] " + tS + "%\n";
                 stepFiveRates += "[2 ★] " + tC + "%\n";
-                stepFiveRates += "**(For One Weapon)**";
+                if (banner.getBannerWepType() == 4)
+                {
+                    stepFiveRates += "**(" + banner.getWeapons().get(0) + " Guaranteed)**";
+                }
+                else
+                {
+                    stepFiveRates += "**(For One Weapon)**";
+                }
                 menu.setStepFiveWeaponRatesList(stepFiveRates);
 
                 tC = (copper + platinum) - ((gold * 2.0) - gold);
@@ -567,11 +578,11 @@ public class BannerInfo
                 menu.setStepSixWeaponRatesList(stepSixRates);
             }
 
-            CHANNEL.sendMessage(menu.get().build());
+            Sargo.sendEmbed(TEXT_CHANNEL, menu.get());
         }
         else
         {
-            CHANNEL.sendMessage(new WarningMessage("UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.").get().build());
+            Sargo.replyToMessage_Warning(TEXT_CHANNEL, "UNKNOWN BANNER ID", "Use '" + CommandManager.getCommandPrefix() + "**scout**' for a list of banners.");
         }
     }
 }

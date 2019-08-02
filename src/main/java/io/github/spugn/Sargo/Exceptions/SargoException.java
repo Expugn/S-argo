@@ -1,7 +1,9 @@
 package io.github.spugn.Sargo.Exceptions;
 
-import sx.blah.discord.api.internal.json.objects.EmbedObject;
-import sx.blah.discord.util.EmbedBuilder;
+import discord4j.core.spec.EmbedCreateSpec;
+
+import java.awt.*;
+import java.util.function.Consumer;
 
 /**
  * S'ARGO EXCEPTION
@@ -25,16 +27,16 @@ public abstract class SargoException extends Exception
         super();
     }
 
-    protected EmbedObject getEmbedObject(String title, String content, int errorCode)
+    protected Consumer<EmbedCreateSpec> getEmbedObject(String title, String content, int errorCode)
     {
-        EmbedBuilder builder = new EmbedBuilder();
+        Consumer<EmbedCreateSpec> ecsTemplate;
 
-        builder.withTitle(title);
-        builder.withDescription(content);
-        builder.withFooterText("Error Code: " + errorCode);
-        builder.withColor(255, 0, 0);
-
-        return builder.build();
+        ecsTemplate = s -> {
+            s.setTitle(title);
+            s.setDescription(content);
+            s.setColor(new Color(255, 0, 0));
+        };
+        return ecsTemplate;
     }
 
     public abstract void displayErrorMessage();

@@ -1,16 +1,16 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
-import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
 public class StepUpv5 extends CharacterScout
 {
-    public StepUpv5(IChannel channel, int bannerID, String choice, String discordID)
+    public StepUpv5(Message message, int bannerID, String choice, String discordID)
     {
-        super(channel, bannerID, choice, discordID);
+        super(message, bannerID, choice, discordID);
         run();
     }
 
@@ -120,14 +120,14 @@ public class StepUpv5 extends CharacterScout
             {
                 case "s":
                 case "si":
-                    scoutMenu.withTitle("Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("Single Pull"));
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[Step Up v5] - Step " + bannerTypeData);
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Step Up v5] - Step " + bannerTypeData));
                     break;
                 default:
-                    scoutMenu.withTitle("[Step Up v5] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Step Up v5] - Unknown"));
                     break;
             }
         }

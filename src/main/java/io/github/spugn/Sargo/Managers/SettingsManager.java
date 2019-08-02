@@ -1,22 +1,28 @@
 package io.github.spugn.Sargo.Managers;
 
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
+import discord4j.core.object.util.Snowflake;
+import discord4j.core.spec.EmbedCreateSpec;
+import io.github.spugn.Sargo.Sargo;
 import io.github.spugn.Sargo.Utilities.CommandLine;
 import io.github.spugn.Sargo.XMLParsers.CommandSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.LoginSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.ShopSettingsParser;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IUser;
-import sx.blah.discord.util.EmbedBuilder;
 
+import java.awt.*;
 import java.io.File;
 import java.util.*;
+import java.util.List;
+import java.util.function.Consumer;
 
 public class SettingsManager
 {
-    private IChannel channel;
+    private TextChannel textChannel;
     private CommandLine commandLine;
-    private EmbedBuilder builder;
+    Consumer<EmbedCreateSpec> ecsTemplate;
 
     private static final String AUTHOR_NAME = "Settings";
 
@@ -35,14 +41,16 @@ public class SettingsManager
     private static final String ScS_TITLE = "SCOUT SETTINGS";
     private static final String ShS_TITLE = "SHOP SETTINGS";
 
-    public SettingsManager(IChannel c, final CommandLine commandLine)
+    public SettingsManager(Message message, final CommandLine commandLine)
     {
-        channel = c;
+        textChannel = (TextChannel) message.getChannel().block();
         this.commandLine = commandLine;
 
-        builder = new EmbedBuilder();
-        builder.withAuthorName(AUTHOR_NAME);
-        builder.withColor(85, 0, 128);
+        ecsTemplate = s -> {
+            s.setAuthor(AUTHOR_NAME, "", "");
+            s.setColor(new Color(85, 0, 128));
+        };
+
 
         run();
     }
@@ -79,7 +87,7 @@ public class SettingsManager
                 }
                 else
                 {
-                    builder.withDescription(E_CATEGORY_DESCRIPTION);
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(E_CATEGORY_DESCRIPTION));
                 }
             }
             else if (commandLine.getArgumentCount() == 2)
@@ -104,7 +112,7 @@ public class SettingsManager
                 }
                 else
                 {
-                    builder.withDescription(E_CATEGORY_DESCRIPTION);
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(E_CATEGORY_DESCRIPTION));
                 }
             }
             else if (commandLine.getArgumentCount() >= 3)
@@ -112,7 +120,7 @@ public class SettingsManager
                 String requestedCategory = commandLine.getArgument(1).toLowerCase();
                 if (requestedCategory.equals("login"))
                 {
-                    builder.withDescription("Login Settings can only be modified by editing `/data/settings/Login.xml`.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Login Settings can only be modified by editing `/data/settings/Login.xml`."));
                 }
                 else if (requestedCategory.equals("command"))
                 {
@@ -128,7 +136,7 @@ public class SettingsManager
                 }
                 else
                 {
-                    builder.withDescription(E_CATEGORY_DESCRIPTION);
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(E_CATEGORY_DESCRIPTION));
                 }
             }
         }
@@ -162,7 +170,7 @@ public class SettingsManager
         }
         else
         {
-            builder.withDescription(E_SETTING_DESCRIPTION);
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(E_CATEGORY_DESCRIPTION));
         }
     }
 
@@ -186,16 +194,16 @@ public class SettingsManager
 
                 commandSaveAndReload();
 
-                builder.withDescription("`CommandPrefix` set to: `" + CommandSettingsParser.getCommandPrefix() + "`.");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`CommandPrefix` set to: `" + CommandSettingsParser.getCommandPrefix() + "`."));
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings command commandprefix set [value]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command commandprefix set [value]`"));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings command commandprefix set [value]`");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command commandprefix set [value]`"));
         }
     }
 
@@ -218,24 +226,24 @@ public class SettingsManager
                 }
                 else
                 {
-                    builder.withDescription("Command Error:\n`settings command deleteusermessage set [true/false]`");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command deleteusermessage set [true/false]`"));
                 }
 
                 if (newData.equalsIgnoreCase("true") || newData.equalsIgnoreCase("false"))
                 {
                     commandSaveAndReload();
-                    builder.withDescription("`DeleteUserMessage` set to: `" + CommandSettingsParser.isDeleteUserMessage() + "`.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`DeleteUserMessage` set to: `" + CommandSettingsParser.isDeleteUserMessage() + "`."));
                 }
 
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings command deleteusermessage set [true/false]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command deleteusermessage set [true/false]`"));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings command deleteusermessage set [true/false]`");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command deleteusermessage set [true/false]`"));
         }
     }
 
@@ -257,34 +265,35 @@ public class SettingsManager
                 commandSaveAndReload();
                 try
                 {
-                    builder.withDescription("`MainChannel` set to: `" + Long.parseLong(CommandSettingsParser.getMainChannel()) + "`.");
+                    Long.parseLong(CommandSettingsParser.getMainChannel());
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`MainChannel` set to: `" + Long.parseLong(CommandSettingsParser.getMainChannel()) + "`."));
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("`MainChannel` set to: `#" + CommandSettingsParser.getMainChannel() + "`.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`MainChannel` set to: `#" + CommandSettingsParser.getMainChannel() + "`."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings command mainchannel set [#channel/channel-name/channel-id]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command mainchannel set [#channel/channel-name/channel-id]`"));
             }
         }
         else if (requestedType.equals("remove"))
         {
             if (CommandSettingsParser.getMainChannel().isEmpty())
             {
-                builder.withDescription("`MainChannel` is already empty.");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`MainChannel` is already empty."));
             }
             else
             {
                 CommandSettingsParser.setMainChannel("");
                 commandSaveAndReload();
-                builder.withDescription("`MainChannel` removed.");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`MainChannel` removed."));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings command mainchannel set [#channel/channel-name/channel-id]`\n`settings command mainchannel remove`");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command mainchannel set [#channel/channel-name/channel-id]`\n`settings command mainchannel remove`"));
         }
     }
 
@@ -305,13 +314,15 @@ public class SettingsManager
                 List<String> blacklist = CommandSettingsParser.getBlacklistedChannels();
                 if (blacklist.contains(newData))
                 {
+                    String newData_final = newData;
                     try
                     {
-                        builder.withDescription("Channel `" + Long.parseLong(newData) + "` already exists in `BlacklistedChannels`.");
+                        Long.parseLong(newData_final);
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `" + Long.parseLong(newData_final) + "` already exists in `BlacklistedChannels`."));
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("Channel `#" + newData + "` already exists in `BlacklistedChannels`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `#" + newData_final + "` already exists in `BlacklistedChannels`."));
                     }
                 }
                 else
@@ -320,19 +331,21 @@ public class SettingsManager
                     CommandSettingsParser.setBlacklistedChannels(blacklist);
                     commandSaveAndReload();
 
+                    String newData_final = newData;
                     try
                     {
-                        builder.withDescription("`BlacklistedChannels` added: `" + Long.parseLong(newData) + "`.");
+                        Long.parseLong(newData_final);
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`BlacklistedChannels` added: `" + Long.parseLong(newData_final) + "`."));
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("`BlacklistedChannels` added: `#" + newData + "`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`BlacklistedChannels` added: `#" + newData_final + "`."));
                     }
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings command blacklistedchannels add [#channel/channel-name/channel-id]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command blacklistedchannels add [#channel/channel-name/channel-id]`"));
             }
         }
         else if (requestedType.equals("remove"))
@@ -349,24 +362,28 @@ public class SettingsManager
                 {
                     CommandSettingsParser.setBlacklistedChannels(blacklist);
                     commandSaveAndReload();
+                    String newData_final = newData;
                     try
                     {
-                        builder.withDescription("Channel `" + Long.parseLong(newData) + "` removed from `BlacklistedChannels`.");
+                        Long.parseLong(newData_final);
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `" + Long.parseLong(newData_final) + "` removed from `BlacklistedChannels`."));
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("Channel `#" + newData + "` removed from `BlacklistedChannels`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `#" + newData_final + "` removed from `BlacklistedChannels`."));
                     }
                 }
                 else
                 {
+                    String newData_final = newData;
                     try
                     {
-                        builder.withDescription("Channel `" + Long.parseLong(newData) + "` not found in `BlacklistedChannels`.");
+                        Long.parseLong(newData_final);
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `" + Long.parseLong(newData_final) + "` not found in `BlacklistedChannels`."));
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("Channel `#" + newData + "` not found in `BlacklistedChannels`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `#" + newData_final + "` not found in `BlacklistedChannels`."));
                     }
                 }
             }
@@ -374,15 +391,15 @@ public class SettingsManager
             {
                 CommandSettingsParser.setBlacklistedChannels(Collections.emptyList());
                 commandSaveAndReload();
-                builder.withDescription("All data in `BlacklistedChannels` has been cleared.");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("All data in `BlacklistedChannels` has been cleared."));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n" +
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n" +
                     "`settings command blacklistedchannels add [#channel/channel-name/channel-id]`\n" +
                     "`settings command blacklistedchannels remove [#channel/channel-name/channel-id]`\n" +
-                    "`settings command blacklistedchannels remove`");
+                    "`settings command blacklistedchannels remove`"));
         }
     }
 
@@ -403,13 +420,15 @@ public class SettingsManager
                 List<String> whitelist = CommandSettingsParser.getWhitelistedChannels();
                 if (whitelist.contains(newData))
                 {
+                    String newData_final = newData;
                     try
                     {
-                        builder.withDescription("Channel `" + Long.parseLong(newData) + "` already exists in `WhitelistedChannels`.");
+                        Long.parseLong(newData_final);
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `" + Long.parseLong(newData_final) + "` already exists in `WhitelistedChannels`."));
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("Channel `#" + newData + "` already exists in `WhitelistedChannels`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `#" + newData_final + "` already exists in `WhitelistedChannels`."));
                     }
                 }
                 else
@@ -418,19 +437,21 @@ public class SettingsManager
                     CommandSettingsParser.setWhitelistedChannels(whitelist);
                     commandSaveAndReload();
 
+                    String newData_final = newData;
                     try
                     {
-                        builder.withDescription("`WhitelistedChannels` added: `" + Long.parseLong(newData) + "`.");
+                        Long.parseLong(newData_final);
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`WhitelistedChannels` added: `" + Long.parseLong(newData_final) + "`."));
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("`WhitelistedChannels` added: `#" + newData + "`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`WhitelistedChannels` added: `#" + newData_final + "`."));
                     }
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings command whitelistedchannels add [#channel/channel-name/channel-id]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings command whitelistedchannels add [#channel/channel-name/channel-id]`"));
             }
         }
         else if (requestedType.equals("remove"))
@@ -447,24 +468,28 @@ public class SettingsManager
                 {
                     CommandSettingsParser.setWhitelistedChannels(whitelist);
                     commandSaveAndReload();
+                    String newData_final = newData;
                     try
                     {
-                        builder.withDescription("Channel `" + Long.parseLong(newData) + "` removed from `WhitelistedChannels`.");
+                        Long.parseLong(newData_final);
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `" + Long.parseLong(newData_final) + "` removed from `WhitelistedChannels`."));
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("Channel `#" + newData + "` removed from `WhitelistedChannels`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `#" + newData_final + "` removed from `WhitelistedChannels`."));
                     }
                 }
                 else
                 {
+                    String newData_final = newData;
                     try
                     {
-                        builder.withDescription("Channel `" + Long.parseLong(newData) + "` not found in `WhitelistedChannels`.");
+                        Long.parseLong(newData_final);
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `" + Long.parseLong(newData_final) + "` not found in `WhitelistedChannels`."));
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("Channel `#" + newData + "` not found in `WhitelistedChannels`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Channel `#" + newData_final + "` not found in `WhitelistedChannels`."));
                     }
                 }
             }
@@ -472,15 +497,15 @@ public class SettingsManager
             {
                 CommandSettingsParser.setWhitelistedChannels(Collections.emptyList());
                 commandSaveAndReload();
-                builder.withDescription("All data in `WhitelistedChannels` has been cleared.");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("All data in `WhitelistedChannels` has been cleared."));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n" +
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n" +
                     "`settings command whitelistedchannels add [#channel/channel-name/channel-id]`\n" +
                     "`settings command whitelistedchannels remove [#channel/channel-name/channel-id]`\n" +
-                    "`settings command whitelistedchannels remove`");
+                    "`settings command whitelistedchannels remove`"));
         }
     }
     //</editor-fold>
@@ -520,7 +545,7 @@ public class SettingsManager
         }
         else
         {
-            builder.withDescription(E_SETTING_DESCRIPTION);
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(E_SETTING_DESCRIPTION));
         }
     }
 
@@ -550,23 +575,23 @@ public class SettingsManager
                 }
                 else
                 {
-                    builder.withDescription("Command Error:\n`settings scout disableimages set [true/false]`");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout disableimages set [true/false]`"));
                 }
 
                 if (newData.equalsIgnoreCase("true") || newData.equalsIgnoreCase("false"))
                 {
                     scoutSaveAndReload();
-                    builder.withDescription("`DisableImages` set to: `" + ScoutSettingsParser.isDisableImages() + "`.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`DisableImages` set to: `" + ScoutSettingsParser.isDisableImages() + "`."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout disableimages set [true/false]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout disableimages set [true/false]`"));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings scout disableimages set [true/false]`");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout disableimages set [true/false]`"));
         }
     }
 
@@ -589,23 +614,23 @@ public class SettingsManager
                 }
                 else
                 {
-                    builder.withDescription("Command Error:\n`settings scout simplemessage set [true/false]`");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout simplemessage set [true/false]`"));
                 }
 
                 if (newData.equalsIgnoreCase("true") || newData.equalsIgnoreCase("false"))
                 {
                     scoutSaveAndReload();
-                    builder.withDescription("`SimpleMessage` set to: `" + ScoutSettingsParser.isSimpleMessage() + "`.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`SimpleMessage` set to: `" + ScoutSettingsParser.isSimpleMessage() + "`."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout simplemessage set [true/false]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout simplemessage set [true/false]`"));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings scout simplemessage set [true/false]`");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout simplemessage set [true/false]`"));
         }
     }
 
@@ -628,23 +653,23 @@ public class SettingsManager
                 }
                 else
                 {
-                    builder.withDescription("Command Error:\n`settings scout raritystars set [true/false]`");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout raritystars set [true/false]`"));
                 }
 
                 if (newData.equalsIgnoreCase("true") || newData.equalsIgnoreCase("false"))
                 {
                     scoutSaveAndReload();
-                    builder.withDescription("`RarityStars` set to: `" + ScoutSettingsParser.isRarityStars() + "`.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`RarityStars` set to: `" + ScoutSettingsParser.isRarityStars() + "`."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout raritystars set [true/false]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout raritystars set [true/false]`"));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings scout raritystars set [true/false]`");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout raritystars set [true/false]`"));
         }
     }
 
@@ -659,29 +684,29 @@ public class SettingsManager
             {
                 ScoutSettingsParser.setScoutMaster(newData);
                 scoutSaveAndReload();
-                builder.withDescription("`ScoutMaster` set to: `" + ScoutSettingsParser.getScoutMaster() + ".xml`.");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`ScoutMaster` set to: `" + ScoutSettingsParser.getScoutMaster() + ".xml`."));
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout scoutmaster set [file-name]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout scoutmaster set [file-name]`"));
             }
         }
         else if (requestedType.equals("remove"))
         {
             if (ScoutSettingsParser.getScoutMaster().isEmpty())
             {
-                builder.withDescription("`ScoutMaster` is already empty.");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`ScoutMaster` is already empty."));
             }
             else
             {
                 ScoutSettingsParser.setScoutMaster("");
                 scoutSaveAndReload();
-                builder.withDescription("`ScoutMaster` removed.");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`ScoutMaster` removed."));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings scout scoutmaster set [file-name]`\n`settings scout scoutmaster remove`");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout scoutmaster set [file-name]`\n`settings scout scoutmaster remove`"));
         }
     }
 
@@ -702,21 +727,21 @@ public class SettingsManager
                     {
                         ScoutSettingsParser.setCopperRate(newData_double);
                         scoutSaveAndReload();
-                        builder.withDescription("`Copper` set to: `" + ScoutSettingsParser.getCopperRate() + "`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`Copper` set to: `" + ScoutSettingsParser.getCopperRate() + "`."));
                     }
                     else
                     {
-                        builder.withDescription("Provided rate within `0` - `1.0`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate within `0` - `1.0`."));
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("Provided rate is not a number.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate is not a number."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout rates copper [percentage-in-decimal]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout rates copper [percentage-in-decimal]`"));
             }
         }
         else if (requestedType.equals("silver"))
@@ -730,21 +755,21 @@ public class SettingsManager
                     {
                         ScoutSettingsParser.setSilverRate(newData_double);
                         scoutSaveAndReload();
-                        builder.withDescription("`Silver` set to: `" + ScoutSettingsParser.getSilverRate() + "`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`Silver` set to: `" + ScoutSettingsParser.getSilverRate() + "`."));
                     }
                     else
                     {
-                        builder.withDescription("Provided rate within `0` - `1.0`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate within `0` - `1.0`."));
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("Provided rate is not a number.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate is not a number."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout rates silver [percentage-in-decimal]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout rates silver [percentage-in-decimal]`"));
             }
         }
         else if (requestedType.equals("gold"))
@@ -758,21 +783,21 @@ public class SettingsManager
                     {
                         ScoutSettingsParser.setGoldRate(newData_double);
                         scoutSaveAndReload();
-                        builder.withDescription("`Gold` set to: `" + ScoutSettingsParser.getGoldRate() + "`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`Gold` set to: `" + ScoutSettingsParser.getGoldRate() + "`."));
                     }
                     else
                     {
-                        builder.withDescription("Provided rate within `0` - `1.0`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate within `0` - `1.0`."));
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("Provided rate is not a number.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate is not a number."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout rates gold [percentage-in-decimal]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout rates gold [percentage-in-decimal]`"));
             }
         }
         else if (requestedType.equals("platinum"))
@@ -786,21 +811,21 @@ public class SettingsManager
                     {
                         ScoutSettingsParser.setPlatinumRate(newData_double);
                         scoutSaveAndReload();
-                        builder.withDescription("`Platinum` set to: `" + ScoutSettingsParser.getPlatinumRate() + "`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`Platinum` set to: `" + ScoutSettingsParser.getPlatinumRate() + "`."));
                     }
                     else
                     {
-                        builder.withDescription("Provided rate within `0` - `1.0`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate within `0` - `1.0`."));
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("Provided rate is not a number.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate is not a number."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout rates platinum [percentage-in-decimal]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout rates platinum [percentage-in-decimal]`"));
             }
         }
         else if (requestedType.equals("platinum6"))
@@ -814,30 +839,30 @@ public class SettingsManager
                     {
                         ScoutSettingsParser.setPlatinum6Rate(newData_double);
                         scoutSaveAndReload();
-                        builder.withDescription("`Platinum6` set to: `" + ScoutSettingsParser.getPlatinum6Rate() + "`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`Platinum6` set to: `" + ScoutSettingsParser.getPlatinum6Rate() + "`."));
                     }
                     else
                     {
-                        builder.withDescription("Provided rate within `0` - `1.0`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate within `0` - `1.0`."));
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("Provided rate is not a number.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate is not a number."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout rates platinum6 [percentage-in-decimal]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout rates platinum6 [percentage-in-decimal]`"));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings scout rates copper [percentage-in-decimal]`\n" +
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout rates copper [percentage-in-decimal]`\n" +
                     "`settings scout rates silver [percentage-in-decimal]`\n" +
                     "`settings scout rates gold [percentage-in-decimal]`\n" +
                     "`settings scout rates platinum [percentage-in-decimal]`\n" +
-                    "`settings scout rates platinum6 [percentage-in-decimal]`");
+                    "`settings scout rates platinum6 [percentage-in-decimal]`"));
         }
     }
 
@@ -853,7 +878,7 @@ public class SettingsManager
         }
         catch (NumberFormatException e)
         {
-            //builder.withDescription("RecordCrystal must be within `1` - `10`.");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("RecordCrystal must be within `1` - `10`."));
         }
 
         if (requestedType_int >= 1 && requestedType_int <= 10)
@@ -869,26 +894,27 @@ public class SettingsManager
                         recordCrystal.set(requestedType_int, newData_double);
                         ScoutSettingsParser.setRecordCrystalRates(recordCrystal);
                         scoutSaveAndReload();
-                        builder.withDescription("`RC " + requestedType_int + "` set to: `" + ScoutSettingsParser.getRecordCrystalRates().get(requestedType_int) + "`.");
+                        int requestedType_int_final = requestedType_int;
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`RC " + requestedType_int_final + "` set to: `" + ScoutSettingsParser.getRecordCrystalRates().get(requestedType_int_final) + "`."));
                     }
                     else
                     {
-                        builder.withDescription("Provided rate within `0` - `1.0`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate within `0` - `1.0`."));
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("Provided rate is not a number.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate is not a number."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout recordcrystal [1-10] [percentage-in-decimal]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout recordcrystal [1-10] [percentage-in-decimal]`"));
             }
         }
         else
         {
-            builder.withDescription("Record Crystal must be within `1` - `10`.");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Record Crystal must be within `1` - `10`."));
         }
     }
 
@@ -904,7 +930,7 @@ public class SettingsManager
         }
         catch (NumberFormatException e)
         {
-            //builder.withDescription("Circulating Record Crystal must be within `1` - `5`.");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Circulating Record Crystal must be within `1` - `5`."));
         }
 
         if (requestedType_int >= 1 && requestedType_int <= 5)
@@ -920,26 +946,27 @@ public class SettingsManager
                         cRecordCrystal.set(requestedType_int, newData_double);
                         ScoutSettingsParser.setCirculatingRecordCrystalRates(cRecordCrystal);
                         scoutSaveAndReload();
-                        builder.withDescription("`CRC " + requestedType_int + "` set to: `" + ScoutSettingsParser.getCirculatingRecordCrystalRates().get(requestedType_int) + "`.");
+                        int requestedType_int_final = requestedType_int;
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`CRC " + requestedType_int_final + "` set to: `" + ScoutSettingsParser.getCirculatingRecordCrystalRates().get(requestedType_int_final) + "`."));
                     }
                     else
                     {
-                        builder.withDescription("Provided rate within `0` - `1.0`.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate within `0` - `1.0`."));
                     }
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("Provided rate is not a number.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Provided rate is not a number."));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings scout circulatingrecordcrystal [1-5] [percentage-in-decimal]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings scout circulatingrecordcrystal [1-5] [percentage-in-decimal]`"));
             }
         }
         else
         {
-            builder.withDescription("Circulating Record Crystal must be within `1` - `5`.");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Circulating Record Crystal must be within `1` - `5`."));
         }
     }
     //</editor-fold>
@@ -959,7 +986,7 @@ public class SettingsManager
         }
         else
         {
-            builder.withDescription(E_SETTING_DESCRIPTION);
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(E_SETTING_DESCRIPTION));
         }
     }
 
@@ -989,21 +1016,21 @@ public class SettingsManager
 
                     ShopSettingsParser.setMaxShopLimit(newData_int);
                     shopSaveAndReload();
-                    builder.withDescription("`MaxShopLimit` set to: `" + ShopSettingsParser.getMaxShopLimit() + "`.");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`MaxShopLimit` set to: `" + ShopSettingsParser.getMaxShopLimit() + "`."));
                 }
                 catch (NumberFormatException e)
                 {
-                    builder.withDescription("Value must be greater than `0`");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Value must be greater than `0`"));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings shop maxshoplimit set [value]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings shop maxshoplimit set [value]`"));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings shop maxshoplimit set [value]`");
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings shop maxshoplimit set [value]`"));
         }
     }
 
@@ -1027,13 +1054,13 @@ public class SettingsManager
 
                         if (itemPrice_double < 0)
                         {
-                            builder.withDescription("`item-price` must be greater than `0`.");
+                            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`item-price` must be greater than `0`."));
                             return;
                         }
                     }
                     catch (NumberFormatException e)
                     {
-                        builder.withDescription("`item-price` must be a number.");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`item-price` must be a number."));
                         return;
                     }
 
@@ -1046,13 +1073,13 @@ public class SettingsManager
 
                             if (itemAmount_int < 0)
                             {
-                                builder.withDescription("`item-amount` must be greater than `0`.");
+                                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`item-amount` must be greater than `0`."));
                                 return;
                             }
                         }
                         catch (NumberFormatException e)
                         {
-                            builder.withDescription("`item-amount` must be a number.");
+                            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`item-amount` must be a number."));
                             return;
                         }
 
@@ -1072,29 +1099,29 @@ public class SettingsManager
                         shopSaveAndReload();
                         if (itemExists)
                         {
-                            builder.withDescription("`" + itemName_modified + "` listing edited to: [$`" + itemPrice_double + "`] : `" + itemAmount_int + "` MD");
+                            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`" + itemName_modified + "` listing edited to: [$`" + itemPrice_double + "`] : `" + itemAmount_int + "` MD"));
                         }
                         else
                         {
-                            builder.withDescription("\"`" + itemName_modified + "` [$`" + itemPrice_double + "`] : `" + itemAmount_int + "` MD\" added to `ShopItems`.");
+                            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("\"`" + itemName_modified + "` [$`" + itemPrice_double + "`] : `" + itemAmount_int + "` MD\" added to `ShopItems`."));
                         }
                     }
                     else
                     {
-                        builder.withDescription("Command Error:\n`settings shop shopitems add [item-name] [item-price] [item-amount]`\n" +
-                                "`settings shop shopitems add [item-name_with_underscores_for_spaces] [item-price] [item-amount]`\n");
+                        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings shop shopitems add [item-name] [item-price] [item-amount]`\n" +
+                                "`settings shop shopitems add [item-name_with_underscores_for_spaces] [item-price] [item-amount]`\n"));
                     }
                 }
                 else
                 {
-                    builder.withDescription("Command Error:\n`settings shop shopitems add [item-name] [item-price] [item-amount]`\n" +
-                            "`settings shop shopitems add [item-name_with_underscores_for_spaces] [item-price] [item-amount]`\n");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings shop shopitems add [item-name] [item-price] [item-amount]`\n" +
+                            "`settings shop shopitems add [item-name_with_underscores_for_spaces] [item-price] [item-amount]`\n"));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings shop shopitems add [item-name] [item-price] [item-amount]`\n" +
-                        "`settings shop shopitems add [item-name_with_underscores_for_spaces] [item-price] [item-amount]`\n");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings shop shopitems add [item-name] [item-price] [item-amount]`\n" +
+                        "`settings shop shopitems add [item-name_with_underscores_for_spaces] [item-price] [item-amount]`\n"));
             }
         }
         else if (requestedType.equals("remove"))
@@ -1107,25 +1134,25 @@ public class SettingsManager
                 {
                     ShopSettingsParser.setShopItems(shopItems);
                     shopSaveAndReload();
-                    builder.withDescription("`" + itemName_modified + "` removed from `ShopItems`");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`" + itemName_modified + "` removed from `ShopItems`"));
                 }
                 else
                 {
-                    builder.withDescription("`" + itemName_modified + "` could not be found in `ShopItems`");
+                    ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("`" + itemName_modified + "` could not be found in `ShopItems`"));
                 }
             }
             else
             {
-                builder.withDescription("Command Error:\n`settings shop shopitems remove [item-name]`\n" +
-                        "`settings shop shopitems remove [item-name_with_underscores_for_spaces]`");
+                ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings shop shopitems remove [item-name]`\n" +
+                        "`settings shop shopitems remove [item-name_with_underscores_for_spaces]`"));
             }
         }
         else
         {
-            builder.withDescription("Command Error:\n`settings shop shopitems add [item-name] [item-price] [item-amount]`\n" +
+            ecsTemplate = ecsTemplate.andThen(s -> s.setDescription("Command Error:\n`settings shop shopitems add [item-name] [item-price] [item-amount]`\n" +
                     "`settings shop shopitems add [item-name_with_underscores_for_spaces] [item-price] [item-amount]`\n" +
                     "`settings shop shopitems remove [item-name]`\n" +
-                    "`settings shop shopitems remove [item-name_with_underscores_for_spaces]`");
+                    "`settings shop shopitems remove [item-name_with_underscores_for_spaces]`"));
         }
     }
     //</editor-fold>
@@ -1152,7 +1179,7 @@ public class SettingsManager
             LS_DESCRIPTION = E_SETTING_DESCRIPTION;
         }
 
-        builder.withDescription(LS_DESCRIPTION);
+        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(LS_DESCRIPTION));
     }
 
     private void previewCommandSetting()
@@ -1231,7 +1258,8 @@ public class SettingsManager
             CS_DESCRIPTION = E_SETTING_DESCRIPTION;
         }
 
-        builder.withDescription(CS_DESCRIPTION);
+        String CS_DESCRIPTION_final = CS_DESCRIPTION;
+        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(CS_DESCRIPTION_final));
     }
 
     private void previewScoutSetting()
@@ -1323,7 +1351,8 @@ public class SettingsManager
             ScS_DESCRIPTION = E_SETTING_DESCRIPTION;
         }
 
-        builder.withDescription(ScS_DESCRIPTION);
+        String ScS_DESCRIPTION_final = ScS_DESCRIPTION;
+        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(ScS_DESCRIPTION_final));
     }
 
     private void previewShopSetting()
@@ -1366,16 +1395,19 @@ public class SettingsManager
             ShS_DESCRIPTION = E_SETTING_DESCRIPTION;
         }
 
-        builder.withDescription(ShS_DESCRIPTION);
+        String ShS_DESCRIPTION_final = ShS_DESCRIPTION;
+        ecsTemplate = ecsTemplate.andThen(s -> s.setDescription(ShS_DESCRIPTION_final));
     }
     //</editor-fold>
 
     //<editor-fold desc="Category Builders">
     private void buildCategories()
     {
-        builder.withDescription(C_DESCRIPTION);
-        builder.appendField(C_TITLE, C_CONTENT, false);
-        builder.withFooterText(C_FOOTER_TEXT);
+        ecsTemplate = ecsTemplate.andThen(s -> {
+            s.setDescription(C_DESCRIPTION);
+            s.addField(C_TITLE, C_CONTENT, false);
+            s.setFooter(C_FOOTER_TEXT, "");
+        });
     }
 
     private void buildLoginSettings()
@@ -1384,8 +1416,10 @@ public class SettingsManager
                             "`BotOwnerID` - " + LoginSettingsParser.getBotOwnerDiscordID() + " (`"+ botOwnerIDToString() + "`)" + "\n" +
                             "`GitHubDataRepository` - [Link](" + LoginSettingsParser.getGitHubRepoURL().replaceAll("https://raw.githubusercontent.com/", "https://github.com/").replaceAll("/master/", "") + ")";
 
-        builder.withDescription(S_DESCRIPTION);
-        builder.appendField(LS_TITLE, LS_CONTENT, false);
+        ecsTemplate = ecsTemplate.andThen(s -> {
+            s.setDescription(S_DESCRIPTION);
+            s.addField(LS_TITLE, LS_CONTENT, false);
+        });
     }
 
     private void buildCommandSettings()
@@ -1446,8 +1480,11 @@ public class SettingsManager
             }
         }
 
-        builder.withDescription(S_DESCRIPTION);
-        builder.appendField(CS_TITLE, CS_CONTENT, false);
+        String CS_CONTENT_final = CS_CONTENT;
+        ecsTemplate = ecsTemplate.andThen(s -> {
+            s.setDescription(S_DESCRIPTION);
+            s.addField(CS_TITLE, CS_CONTENT_final, false);
+        });
     }
 
     private void buildScoutSettings()
@@ -1513,9 +1550,6 @@ public class SettingsManager
             }
         }
 
-
-
-
         String ScS_WARNINGS = "";
         // CHECK SCOUT MASTER
         if (!scoutMasterName.isEmpty())
@@ -1575,10 +1609,14 @@ public class SettingsManager
         }
 
 
-        builder.withDescription(S_DESCRIPTION);
-        builder.appendField(ScS_TITLE, ScS_CONTENT, false);
-        if (!ScS_WARNINGS.isEmpty())
-            builder.appendField(S_WARNING_TITLE, ScS_WARNINGS, false);
+        String ScS_CONTENT_final = ScS_CONTENT;
+        String ScS_WARNINGS_final = ScS_WARNINGS;
+        ecsTemplate = ecsTemplate.andThen(s -> {
+            s.setDescription(S_DESCRIPTION);
+            s.addField(ScS_TITLE, ScS_CONTENT_final, false);
+            if (!ScS_WARNINGS_final.isEmpty())
+                s.addField(S_WARNING_TITLE, ScS_WARNINGS_final, false);
+        });
     }
 
     private void buildShopSettings()
@@ -1610,23 +1648,26 @@ public class SettingsManager
             }
         }
 
-        builder.withDescription(S_DESCRIPTION);
-        builder.appendField(ShS_TITLE, ShS_CONTENT, false);
+        String ShS_CONTENT_final = ShS_CONTENT;
+        ecsTemplate = ecsTemplate.andThen(s -> {
+            s.setDescription(S_DESCRIPTION);
+            s.addField(ShS_TITLE, ShS_CONTENT_final, false);
+        });
     }
     // </editor-fold>
 
     // <editor-fold desc="Utilities">
     private void sendEmbed()
     {
-        channel.sendMessage(builder.build());
+        Sargo.sendEmbed(textChannel, ecsTemplate);
     }
 
     private String botOwnerIDToString()
     {
         try
         {
-            IUser botOwner = channel.getGuild().getUserByID(Long.parseLong(LoginSettingsParser.getBotOwnerDiscordID()));
-            return botOwner.getName() + "#" + botOwner.getDiscriminator();
+            Member botOwner = textChannel.getGuild().block().getMemberById(Snowflake.of(Long.parseLong(LoginSettingsParser.getBotOwnerDiscordID()))).block();
+            return botOwner.getUsername() + "#" + botOwner.getDiscriminator();
         }
         catch (NullPointerException e)
         {
@@ -1642,7 +1683,7 @@ public class SettingsManager
             try
             {
                 // CHANNEL (LONG) EXISTS IN SERVER
-                channel.getGuild().getChannelByID(channelLong).getName();
+                textChannel.getGuild().block().getChannelById(Snowflake.of(channelLong)).block().getName();
                 return "<#" + channelLong + ">";
             }
             catch (NullPointerException e1)

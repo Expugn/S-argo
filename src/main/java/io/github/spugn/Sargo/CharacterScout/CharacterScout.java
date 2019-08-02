@@ -1,8 +1,16 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
+import discord4j.core.object.util.Snowflake;
+import discord4j.core.spec.EmbedCreateSpec;
 import io.github.spugn.Sargo.Managers.CommandManager;
-import io.github.spugn.Sargo.Objects.*;
+import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
+import io.github.spugn.Sargo.Objects.CopperCharacter;
+import io.github.spugn.Sargo.Objects.SilverCharacter;
+import io.github.spugn.Sargo.Sargo;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.Utilities.ImageEditor;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
@@ -11,16 +19,13 @@ import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.util.EmbedBuilder;
-import sx.blah.discord.util.RateLimitException;
 
+import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 /**
  * CHARACTER SCOUT
@@ -42,7 +47,7 @@ import java.util.Random;
 abstract class CharacterScout
 {
     /* PACKAGE-PRIVATE VARIABLES */
-    IChannel CHANNEL;
+    TextChannel TEXT_CHANNEL;
     int BANNER_ID;
     String CHOICE;
     List<Banner> BANNERS;
@@ -60,7 +65,7 @@ abstract class CharacterScout
     Random RNG;
     Banner SELECTED_BANNER;
     int bannerTypeData;
-    EmbedBuilder scoutMenu;
+    Consumer<EmbedCreateSpec> sMenu;
     String simpleMessage;
     int rcGet;
     boolean guaranteedScout;
@@ -99,9 +104,9 @@ abstract class CharacterScout
     /* PROTECTED VARIABLES */
     protected List<Character> characters;
 
-    CharacterScout(IChannel channel, int bannerID, String choice, String discordID)
+    CharacterScout(Message message, int bannerID, String choice, String discordID)
     {
-        CHANNEL = channel;
+        TEXT_CHANNEL = (TextChannel) message.getChannel().block();
         BANNER_ID = bannerID - 1;
         CHOICE = choice;
         DISCORD_ID = discordID;
@@ -152,7 +157,7 @@ abstract class CharacterScout
         randomizeResults = false;
         characterString = "";
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
-        scoutMenu = new EmbedBuilder();
+        //scoutMenu = new EmbedBuilder();
         simpleMessage = "";
 
         /* MEMORY DIAMOND PRICES */
@@ -705,58 +710,38 @@ abstract class CharacterScout
     void displayAndSave()
     {
         ScoutMasterParser smp = new ScoutMasterParser();
+        Member member = TEXT_CHANNEL.getGuild().block().getMemberById(Snowflake.of(Long.parseLong(DISCORD_ID))).block();
+        String username = member.getUsername() + "#" + member.getDiscriminator();
         if (!SIMPLE_MESSAGE)
         {
-            scoutMenu.withAuthorName(SELECTED_BANNER.getBannerName());
+            sMenu = s -> s.setColor(new Color(244, 233, 167));
+
             setupScoutMenu();
-            if (!generateImage || IMAGE_DISABLED)
-                scoutMenu.appendField("- Scout Result -", characterString, false);
-            scoutMenu.withDesc(smp.getQuote());
-            scoutMenu.withAuthorIcon(new GitHubImage("images/System/Scout_Icon.png").getURL());
-            scoutMenu.withColor(244, 233, 167);
-            // IF SELECTED BANNER IS OLDER THAN STEP UP V7 AND NOT EVENT...
-            // DISPLAY SAO ARGO ONLY, OTHERWISE USE BOTH SAO AND ALO ARGOS
-            if (SELECTED_BANNER.getBannerType() < 17 && SELECTED_BANNER.getBannerType() != 9)
-            {
-                scoutMenu.withThumbnail(smp.getImage(highestRarity, true));
-            }
-            else
-            {
-                scoutMenu.withThumbnail(smp.getImage(highestRarity));
-            }
-            scoutMenu.withFooterIcon(new GitHubImage("images/System/Memory_Diamond_Icon.png").getURL());
-            scoutMenu.withFooterText((CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator()) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left");
+            sMenu = sMenu.andThen(s -> {
+                if (!generateImage || IMAGE_DISABLED)
+                    s.addField("- Scout Result -", characterString, false);
+                s.setDescription(smp.getQuote());
+                s.setAuthor(SELECTED_BANNER.getBannerName(), "", new GitHubImage("images/System/Scout_Icon.png").getURL());
+
+                // IF SELECTED BANNER IS OLDER THAN STEP UP V7 AND NOT EVENT...
+                // DISPLAY SAO ARGO ONLY, OTHERWISE USE BOTH SAO AND ALO ARGOS
+                if (SELECTED_BANNER.getBannerType() < 17 && SELECTED_BANNER.getBannerType() != 9)
+                {
+                    s.setThumbnail(smp.getImage(highestRarity, true));
+                }
+                else
+                {
+                    s.setThumbnail(smp.getImage(highestRarity));
+                }
+                s.setFooter((username) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left", new GitHubImage("images/System/Memory_Diamond_Icon.png").getURL());
+            });
 
             LOGGER.debug("Displaying Scout Result...");
-            IMessage display = null;
-            try
-            {
-                if (generateImage && !IMAGE_DISABLED)
-                    display = CHANNEL.sendFile(scoutMenu.build(), new File(tempUserDirectory + "/results.png"));
-                else
-                    display = CHANNEL.sendMessage(scoutMenu.build());
-            }
-            catch (FileNotFoundException e)
-            {
-                CHANNEL.sendMessage(new WarningMessage("FAILED TO GENERATE IMAGE", "Unable to display scout result.").get().build());
-                display.delete();
-                deleteTempDirectory();
-                return;
-            }
-            catch (RateLimitException e)
-            {
-                EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
-                try
-                {
-                    display.edit(rateLimited.build());
-                }
-                catch (NullPointerException a)
-                {
-                    // DO SOMETHING
-                }
-                deleteTempDirectory();
-                return;
-            }
+
+            if (generateImage && !IMAGE_DISABLED)
+                Sargo.sendEmbed(TEXT_CHANNEL, sMenu, new File(tempUserDirectory + "/results.png"));
+            else
+                Sargo.sendEmbed(TEXT_CHANNEL, sMenu);
         }
         else
         {
@@ -768,42 +753,16 @@ abstract class CharacterScout
                 simpleMessage += "**- Scout Result -**" + "\n";
                 simpleMessage += characterString;
             }
-            simpleMessage += (CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator()) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left";
+            simpleMessage += (username) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left";
 
             LOGGER.debug("Displaying Scout Result...");
-            IMessage display = null;
-            try
+            if (generateImage && !IMAGE_DISABLED)
             {
-                if (generateImage && !IMAGE_DISABLED)
-                {
-                    display = CHANNEL.sendFile(simpleMessage, new File(tempUserDirectory + "/results.png"));
-                }
-                else
-                {
-                    display = CHANNEL.sendMessage(simpleMessage);
-                }
-
+                Sargo.replyToMessage(TEXT_CHANNEL, simpleMessage, new File(tempUserDirectory + "/results.png"));
             }
-            catch (FileNotFoundException e)
+            else
             {
-                CHANNEL.sendMessage(new WarningMessage("FAILED TO GENERATE IMAGE", "Unable to display scout result.").get().build());
-                display.delete();
-                deleteTempDirectory();
-                return;
-            }
-            catch (RateLimitException e)
-            {
-                EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
-                try
-                {
-                    display.edit(rateLimited.build());
-                }
-                catch (NullPointerException a)
-                {
-                    // DO SOMETHING
-                }
-                deleteTempDirectory();
-                return;
+                Sargo.replyToMessage(TEXT_CHANNEL, simpleMessage);
             }
         }
 
@@ -814,39 +773,39 @@ abstract class CharacterScout
 
     void print_NotEnoughMemoryDiamonds_Single_Message()
     {
-        CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS",
+        Sargo.replyToMessage_Warning(TEXT_CHANNEL, "NOT ENOUGH MEMORY DIAMONDS",
                 "You need **" + singleScoutPrice + "** Memory Diamonds to scout.\nUse `" + CommandManager.getCommandPrefix() + "shop` to get more Memory Diamonds (**it's free!**).",
-                SELECTED_BANNER.getBannerName()).get().build());
+                SELECTED_BANNER.getBannerName());
     }
 
     void print_NotEnoughMemoryDiamonds_Multi_Message()
     {
-        CHANNEL.sendMessage(new WarningMessage("NOT ENOUGH MEMORY DIAMONDS",
+        Sargo.replyToMessage_Warning(TEXT_CHANNEL, "NOT ENOUGH MEMORY DIAMONDS",
                 "You need **" + multiScoutPrice + "** Memory Diamonds to scout.\nUse `" + CommandManager.getCommandPrefix() + "shop` to get more Memory Diamonds (**it's free!**).",
-                SELECTED_BANNER.getBannerName()).get().build());
+                SELECTED_BANNER.getBannerName());
     }
 
     void print_NotEnoughRecordCrystals_Message()
     {
-        CHANNEL.sendMessage(new WarningMessage("INSUFFICIENT RECORD CRYSTALS",
+        Sargo.replyToMessage_Warning(TEXT_CHANNEL, "INSUFFICIENT RECORD CRYSTALS",
                 "You need `10` record crystals to do a record crystal scout.\n\n" +
                         "You currently have `" + (userRecordCrystals >= 0 ? userRecordCrystals : "0") + "` `" + SELECTED_BANNER.getBannerName() + "` Record Crystals.",
-                SELECTED_BANNER.getBannerName()).get().build());
+                SELECTED_BANNER.getBannerName());
     }
 
     void print_UnknownScoutType_s_Message()
     {
-        CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
+        Sargo.replyToMessage_Warning(TEXT_CHANNEL, "UNKNOWN/UNAVAILABLE SCOUT TYPE",
                 "Only `single` scouts are available.\n\n" +
                         "**SINGLE SCOUTS**\n" +
                         "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " s`\n" +
                         "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " si`",
-                SELECTED_BANNER.getBannerName()).get().build());
+                SELECTED_BANNER.getBannerName());
     }
 
     void print_UnknownScoutType_sm_Message()
     {
-        CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
+        Sargo.replyToMessage_Warning(TEXT_CHANNEL, "UNKNOWN/UNAVAILABLE SCOUT TYPE",
                 "Only `single` and `multi` scouts are available.\n\n" +
                         "**SINGLE SCOUTS**\n" +
                         "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " s`\n" +
@@ -855,12 +814,12 @@ abstract class CharacterScout
                         "**MULTI SCOUTS**\n" +
                         "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " m`\n" +
                         "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " mi`",
-                SELECTED_BANNER.getBannerName()).get().build());
+                SELECTED_BANNER.getBannerName());
     }
 
     void print_UnknownScoutType_smrc_Message()
     {
-        CHANNEL.sendMessage(new WarningMessage("UNKNOWN/UNAVAILABLE SCOUT TYPE",
+        Sargo.replyToMessage_Warning(TEXT_CHANNEL, "UNKNOWN/UNAVAILABLE SCOUT TYPE",
                 "Only `single`, `multi`, and `record crystal` scouts are available.\n\n" +
                         "**SINGLE SCOUTS**\n" +
                         "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " s`\n" +
@@ -873,7 +832,7 @@ abstract class CharacterScout
                         "**RECORD CRYSTAL SCOUTS**\n" +
                         "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " rc`\n" +
                         "`" + CommandManager.getCommandPrefix() + "scout " + (BANNER_ID + 1) + " rci`",
-                SELECTED_BANNER.getBannerName()).get().build());
+                SELECTED_BANNER.getBannerName());
     }
 
     /**

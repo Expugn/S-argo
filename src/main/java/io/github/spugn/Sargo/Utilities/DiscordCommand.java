@@ -1,22 +1,21 @@
 package io.github.spugn.Sargo.Utilities;
 
-import sx.blah.discord.api.IDiscordClient;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.handle.obj.IUser;
+import discord4j.core.DiscordClient;
+import discord4j.core.object.entity.Message;
+import io.github.spugn.Sargo.Sargo;
 
 public class DiscordCommand
 {
-    private IDiscordClient CLIENT;
-    private IUser USER;
+    private DiscordClient CLIENT;
+    private String clientID;
 
     private boolean USE_MENTION = false;
     private boolean DELETE_USER_MESSAGE = false;
     private char COMMAND_PREFIX = '/';
 
-    public DiscordCommand(IDiscordClient botClient)
+    public DiscordCommand()
     {
-        this.CLIENT = botClient;
-        this.USER = CLIENT.getOurUser();
+        this.clientID = Sargo.getCLIENT().getSelf().block().getId().asString();
     }
 
     public void setUseMention(boolean b)
@@ -54,7 +53,7 @@ public class DiscordCommand
     {
         if (USE_MENTION)
         {
-            if (message.startsWith("<@" + USER.getLongID() + ">") || message.startsWith("<@!" + USER.getLongID() + ">"))
+            if (message.startsWith("<@" + clientID + ">") || message.startsWith("<@!" + clientID + ">"))
             {
                 return new CommandLine(message, 1);
             }
@@ -69,29 +68,29 @@ public class DiscordCommand
         return null;
     }
 
-    public CommandLine meetsConditions(IMessage message)
+    public CommandLine meetsConditions(Message message)
     {
         if (USE_MENTION)
         {
-            if (message.getContent().startsWith("<@" + USER.getLongID() + ">") || message.getContent().startsWith("<@!" + USER.getLongID() + ">"))
+            if (message.getContent().orElse("").startsWith("<@" + clientID + ">") || message.getContent().orElse("").startsWith("<@!" + clientID + ">"))
             {
                 if (DELETE_USER_MESSAGE)
                 {
                     message.delete();
                 }
-                return new CommandLine(message.getContent(), 1);
+                return new CommandLine(message.getContent().orElse(""), 1);
             }
         }
         else
         {
 
-            if (message.getContent().indexOf(COMMAND_PREFIX) == 0)
+            if (message.getContent().orElse("").indexOf(COMMAND_PREFIX) == 0)
             {
                 if (DELETE_USER_MESSAGE)
                 {
                     message.delete();
                 }
-                return new CommandLine(message.getContent(), COMMAND_PREFIX);
+                return new CommandLine(message.getContent().orElse(""), COMMAND_PREFIX);
             }
         }
         return null;

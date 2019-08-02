@@ -1,8 +1,11 @@
 package io.github.spugn.Sargo.Objects;
 
+import discord4j.core.spec.EmbedCreateSpec;
 import io.github.spugn.Sargo.Managers.CommandManager;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
-import sx.blah.discord.util.EmbedBuilder;
+
+import java.awt.*;
+import java.util.function.Consumer;
 
 /**
  * BANNER LIST MENU
@@ -17,7 +20,7 @@ import sx.blah.discord.util.EmbedBuilder;
  */
 public class BannerListMenu
 {
-    private EmbedBuilder builder;
+    Consumer<EmbedCreateSpec> ecsTemplate;
     private int bannerCount;
     private String bannerList;
     private int currentPage;
@@ -25,25 +28,25 @@ public class BannerListMenu
 
     public BannerListMenu()
     {
-        builder = new EmbedBuilder();
+        //builder = new EmbedBuilder();
     }
 
     private void build()
     {
-        builder.withAuthorName("Banner List (Page " + currentPage + " of " + highestPage + ")");
-        builder.withDesc(bannerCount + " banners available.");
-        builder.withThumbnail(new GitHubImage("images/System/Scout_Icon.png").getURL());
-        builder.withColor(255, 0, 255);
-
-        builder.appendField("- Banners -", bannerList, false);
-
-        builder.withFooterText("'" + CommandManager.getCommandPrefix() + "scout [Banner ID]' for more banner info.  |  '" + CommandManager.getCommandPrefix() + "scout p[Page]' to view another page.");
+        ecsTemplate = s -> {
+            s.setAuthor("Banner List (Page " + currentPage + " of " + highestPage + ")", "", "");
+            s.setDescription(bannerCount + " banners available.");
+            s.setThumbnail(new GitHubImage("images/System/Scout_Icon.png").getURL());
+            s.setColor(new Color(255, 0, 255));
+            s.addField("- Banners -", bannerList, false);
+            s.setFooter("'" + CommandManager.getCommandPrefix() + "scout [Banner ID]' for more banner info.  |  '" + CommandManager.getCommandPrefix() + "scout p[Page]' to view another page.", "");
+        };
     }
 
-    public EmbedBuilder get()
+    public Consumer<EmbedCreateSpec> get()
     {
         build();
-        return builder;
+        return ecsTemplate;
     }
 
     public void setBannerCount(int bannerCount)

@@ -1,8 +1,8 @@
 package io.github.spugn.Sargo.CharacterScout;
 
+import discord4j.core.object.entity.Message;
 import io.github.spugn.Sargo.Objects.Banner;
 import io.github.spugn.Sargo.Objects.Character;
-import sx.blah.discord.handle.obj.IChannel;
 
 import java.util.List;
 
@@ -37,9 +37,9 @@ import java.util.List;
  */
 public class BirthdayStepUp extends CharacterScout
 {
-    public BirthdayStepUp(IChannel channel, int bannerID, String choice, String discordID)
+    public BirthdayStepUp(Message message, int bannerID, String choice, String discordID)
     {
-        super(channel, bannerID, choice, discordID);
+        super(message, bannerID, choice, discordID);
         run();
     }
 
@@ -115,14 +115,14 @@ public class BirthdayStepUp extends CharacterScout
             {
                 case "s":
                 case "si":
-                    scoutMenu.withTitle("Single Pull");
+                    sMenu = sMenu.andThen(s -> s.setTitle("Single Pull"));
                     break;
                 case "m":
                 case "mi":
-                    scoutMenu.withTitle("[Birthday Step Up] - Step " + bannerTypeData);
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Birthday Step Up] - Step " + bannerTypeData));
                     break;
                 default:
-                    scoutMenu.withTitle("[Birthday Step Up] - Unknown");
+                    sMenu = sMenu.andThen(s -> s.setTitle("[Birthday Step Up] - Unknown"));
                     break;
             }
         }

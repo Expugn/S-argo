@@ -1,6 +1,15 @@
 package io.github.spugn.Sargo.WeaponScout;
 
-import io.github.spugn.Sargo.Objects.*;
+import discord4j.core.object.entity.Member;
+import discord4j.core.object.entity.Message;
+import discord4j.core.object.entity.TextChannel;
+import discord4j.core.object.util.Snowflake;
+import discord4j.core.spec.EmbedCreateSpec;
+import io.github.spugn.Sargo.Objects.Banner;
+import io.github.spugn.Sargo.Objects.CopperWeapon;
+import io.github.spugn.Sargo.Objects.SilverWeapon;
+import io.github.spugn.Sargo.Objects.Weapon;
+import io.github.spugn.Sargo.Sargo;
 import io.github.spugn.Sargo.Utilities.GitHubImage;
 import io.github.spugn.Sargo.Utilities.ImageEditor;
 import io.github.spugn.Sargo.XMLParsers.BannerParser;
@@ -8,16 +17,13 @@ import io.github.spugn.Sargo.XMLParsers.ScoutSettingsParser;
 import io.github.spugn.Sargo.XMLParsers.UserParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sx.blah.discord.handle.obj.IChannel;
-import sx.blah.discord.handle.obj.IMessage;
-import sx.blah.discord.util.EmbedBuilder;
-import sx.blah.discord.util.RateLimitException;
 
+import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 /**
  * WEAPON SCOUT
@@ -37,7 +43,7 @@ import java.util.Random;
 abstract class WeaponScout
 {
     /* PACKAGE-PRIVATE VARIABLES */
-    IChannel CHANNEL;
+    TextChannel TEXT_CHANNEL;
     int BANNER_ID;
     String CHOICE;
     UserParser USER;
@@ -47,10 +53,11 @@ abstract class WeaponScout
     boolean SIMPLE_MESSAGE;
     Banner SELECTED_BANNER;
     int bannerTypeData;
-    EmbedBuilder scoutMenu;
+    Consumer<EmbedCreateSpec> sMenu;
     String simpleMessage;
     boolean guaranteeAutomaticRifle;
     boolean guaranteeOneGold;
+    boolean guaranteeSpecificWeapon;
     int userMemoryDiamonds;
     int singleScoutPrice;
     int multiScoutPrice;
@@ -68,14 +75,15 @@ abstract class WeaponScout
     private File tempUserDirectory;
     private int userColBalance;
     private String weaponString;
+    private int bannerType;
     private static final Logger LOGGER = LoggerFactory.getLogger(WeaponScout.class);
 
     /* PROTECTED VARIABLES */
     protected List<Weapon> weapons;
 
-    WeaponScout(IChannel channel, int bannerID, String choice, String discordID)
+    WeaponScout(Message message, int bannerID, String choice, String discordID)
     {
-        CHANNEL = channel;
+        TEXT_CHANNEL = (TextChannel) message.getChannel().block();
         BANNER_ID = bannerID - 1;
         CHOICE = choice;
         DISCORD_ID = discordID;
@@ -90,26 +98,10 @@ abstract class WeaponScout
     private void init()
     {
         /* FILES */
-        //SettingsParser SETTINGS = new SettingsParser();
-        //List<Banner> BANNERS = new BannerParser().getBanners();
         List<Banner> BANNERS = BannerParser.getBanners();
         USER = new UserParser(DISCORD_ID);
 
         /* SETTINGS */
-        //IS_RARITY_STARS = SETTINGS.isRarityStars();
-        //COPPER = (int) ((SETTINGS.getCopperRates() * 100) + (SETTINGS.getPlatinumRates() * 100));
-        //SILVER = (int) (SETTINGS.getSilverRates() * 100);
-        //GOLD = (int) (SETTINGS.getGoldRates() * 100);
-        //IMAGE_DISABLED = SETTINGS.isDisableImages();
-        //SIMPLE_MESSAGE = SETTINGS.isSimpleMessage();
-
-        //IS_RARITY_STARS = SettingsParser.isRarityStars();
-        //COPPER = (int) ((SettingsParser.getCopperRates() * 100) + (SettingsParser.getPlatinumRates() * 100));
-        //SILVER = (int) (SettingsParser.getSilverRates() * 100);
-        //GOLD = (int) (SettingsParser.getGoldRates() * 100);
-        //IMAGE_DISABLED = SettingsParser.isDisableImages();
-        //SIMPLE_MESSAGE = SettingsParser.isSimpleMessage();
-
         IS_RARITY_STARS = ScoutSettingsParser.isRarityStars();
         COPPER = (int) ((ScoutSettingsParser.getCopperRate() * 100) + (ScoutSettingsParser.getPlatinumRate() * 100));
         SILVER = (int) (ScoutSettingsParser.getSilverRate() * 100);
@@ -127,10 +119,10 @@ abstract class WeaponScout
         weapons = new ArrayList<>();
         weaponString = "";
         tempUserDirectory = new File("images/temp_" + DISCORD_ID);
-        scoutMenu = new EmbedBuilder();
         simpleMessage = "";
         guaranteeAutomaticRifle = false;
         guaranteeOneGold = false;
+        guaranteeSpecificWeapon = false;
 
         /* MEMORY DIAMOND PRICES */
         singleScoutPrice = 15;
@@ -141,6 +133,7 @@ abstract class WeaponScout
         {
             SELECTED_BANNER = BANNERS.get(BANNER_ID);
             BANNER_WEAPONS = SELECTED_BANNER.getWeapons();
+            bannerType = SELECTED_BANNER.getBannerWepType();
 
             bannerTypeData = USER.getBannerData(SELECTED_BANNER.getBannerName() + " Weapons");
 
@@ -313,7 +306,42 @@ abstract class WeaponScout
         }
         else
         {
-            weapon = BANNER_WEAPONS.get(RNG.nextInt(BANNER_WEAPONS.size()));
+            // WEAPON STEP UP V3 - STEP 5: FIRST WEAPON IN BANNER IS GUARANTEED
+            if (bannerType == 4 && guaranteeSpecificWeapon)
+            {
+                weapon = BANNER_WEAPONS.get(0);
+                guaranteeSpecificWeapon = false;
+            }
+            else
+            {
+                // WEAPON STEP UP V3 - FIRST WEAPON HAS 1/2 OF THE GOLD WEAPON RATES, EVERYONE ELSE SHARES THE OTHER HALF.
+                if (bannerType == 4)
+                {
+                    double d = RNG.nextDouble();
+                    if (d < 0.5)
+                    {
+                        weapon = BANNER_WEAPONS.get(0);
+                    }
+                    else
+                    {
+                        // CHECK IF THERE IS MORE THAN ONE GOLD WEAPON
+                        if (BANNER_WEAPONS.size() > 1)
+                        {
+                            // GET A WEAPON FROM INDEX 1 -> WHATEVER AMOUNT ARE IN THE BANNER
+                            weapon = BANNER_WEAPONS.get(RNG.nextInt(BANNER_WEAPONS.size() - 1) + 1);
+                        }
+                        else
+                        {
+                            // LESS THAN ONE GOLD WEAPON?... BUSINESS AS USUAL
+                            weapon = BANNER_WEAPONS.get(RNG.nextInt(BANNER_WEAPONS.size()));
+                        }
+                    }
+                }
+                else
+                {
+                    weapon = BANNER_WEAPONS.get(RNG.nextInt(BANNER_WEAPONS.size()));
+                }
+            }
         }
 
         giveCol(weapon);
@@ -356,53 +384,34 @@ abstract class WeaponScout
      */
     void displayAndSave()
     {
+        Member member = TEXT_CHANNEL.getGuild().block().getMemberById(Snowflake.of(Long.parseLong(DISCORD_ID))).block();
+        String username = member.getUsername() + "#" + member.getDiscriminator();
         if (!SIMPLE_MESSAGE)
         {
-            scoutMenu.withAuthorName(SELECTED_BANNER.getBannerName());
+            sMenu = s -> {
+                s.setColor(new Color(139, 69, 19));
+                s.setAuthor(SELECTED_BANNER.getBannerName(), "", "");
+            };
+
             setupScoutMenu();
-            if (!generateImage || IMAGE_DISABLED)
-                scoutMenu.appendField("- Weapon Result -", weaponString, false);
-            scoutMenu.withAuthorIcon(new GitHubImage("images/System/Scout_Icon.png").getURL());
-            scoutMenu.withColor(139, 69, 19);
-            if (weapons.get(0).getRarity() == 2)
-                scoutMenu.withThumbnail(new GitHubImage("images/System/Brown_Chest.png").getURL());
-            else if (weapons.get(0).getRarity() == 3)
-                scoutMenu.withThumbnail(new GitHubImage("images/System/Blue_Chest.png").getURL());
-            else if (weapons.get(0).getRarity() == 4)
-                scoutMenu.withThumbnail(new GitHubImage("images/System/Red_Chest.png").getURL());
-            scoutMenu.withFooterIcon(new GitHubImage("images/System/Memory_Diamond_Icon.png").getURL());
-            scoutMenu.withFooterText((CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator()) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left");
+            sMenu = sMenu.andThen(s -> {
+                if (!generateImage || IMAGE_DISABLED)
+                    s.addField("- Weapon Result -", weaponString, false);
+                s.setAuthor(SELECTED_BANNER.getBannerName(), "", new GitHubImage("images/System/Scout_Icon.png").getURL());
+                if (weapons.get(0).getRarity() == 2)
+                    s.setThumbnail(new GitHubImage("images/System/Brown_Chest.png").getURL());
+                else if (weapons.get(0).getRarity() == 3)
+                    s.setThumbnail(new GitHubImage("images/System/Blue_Chest.png").getURL());
+                else if (weapons.get(0).getRarity() == 4)
+                    s.setThumbnail(new GitHubImage("images/System/Red_Chest.png").getURL());
+                s.setFooter((username) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left", new GitHubImage("images/System/Memory_Diamond_Icon.png").getURL());
+            });
 
             LOGGER.debug("Displaying Scout Result...");
-            IMessage display = null;
-            try
-            {
-                if (generateImage && !IMAGE_DISABLED)
-                    display = CHANNEL.sendFile(scoutMenu.build(), new File(tempUserDirectory + "/results.png"));
-                else
-                    display = CHANNEL.sendMessage(scoutMenu.build());
-            }
-            catch (FileNotFoundException e)
-            {
-                CHANNEL.sendMessage(new WarningMessage("FAILED TO GENERATE IMAGE", "Unable to display scout result.").get().build());
-                display.delete();
-                deleteTempDirectory();
-                return;
-            }
-            catch (RateLimitException e)
-            {
-                EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
-                try
-                {
-                    display.edit(rateLimited.build());
-                }
-                catch (NullPointerException a)
-                {
-                    // DO SOMETHING
-                }
-                deleteTempDirectory();
-                return;
-            }
+            if (generateImage && !IMAGE_DISABLED)
+                Sargo.sendEmbed(TEXT_CHANNEL, sMenu, new File(tempUserDirectory + "/results.png"));
+            else
+                Sargo.sendEmbed(TEXT_CHANNEL, sMenu);
         }
         else
         {
@@ -413,42 +422,16 @@ abstract class WeaponScout
                 simpleMessage += "**- Weapon Result -**" + "\n";
                 simpleMessage += weaponString;
             }
-            simpleMessage += (CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getName() + "#" + CHANNEL.getGuild().getUserByID(Long.parseLong(DISCORD_ID)).getDiscriminator()) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left";
+            simpleMessage += (username) + " | " + USER.getMemoryDiamonds() + " Memory Diamonds Left";
 
             LOGGER.debug("Displaying Scout Result...");
-            IMessage display = null;
-            try
+            if (generateImage && !IMAGE_DISABLED)
             {
-                if (generateImage && !IMAGE_DISABLED)
-                {
-                    display = CHANNEL.sendFile(simpleMessage, new File(tempUserDirectory + "/results.png"));
-                }
-                else
-                {
-                    display = CHANNEL.sendMessage(simpleMessage);
-                }
-
+                Sargo.replyToMessage(TEXT_CHANNEL, simpleMessage, new File(tempUserDirectory + "/results.png"));
             }
-            catch (FileNotFoundException e)
+            else
             {
-                CHANNEL.sendMessage(new WarningMessage("FAILED TO GENERATE IMAGE", "Unable to display scout result.").get().build());
-                display.delete();
-                deleteTempDirectory();
-                return;
-            }
-            catch (RateLimitException e)
-            {
-                EmbedBuilder rateLimited = new WarningMessage("RATE LIMIT EXCEPTION", "Slow down on the requests!").get();
-                try
-                {
-                    display.edit(rateLimited.build());
-                }
-                catch (NullPointerException a)
-                {
-                    // DO SOMETHING
-                }
-                deleteTempDirectory();
-                return;
+                Sargo.replyToMessage(TEXT_CHANNEL, simpleMessage);
             }
         }
 

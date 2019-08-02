@@ -34,9 +34,9 @@
 
         <!-- Discord4J -->
         <dependency>
-            <groupId>com.github.austinv11</groupId>
-            <artifactId>Discord4J</artifactId>
-            <version>2.10.0</version>
+            <groupId>com.discord4j</groupId>
+            <artifactId>discord4j-core</artifactId>
+            <version>3.0.7</version>
         </dependency>
 
         <!-- Allows you to log events from Discord4J -->
