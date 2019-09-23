@@ -1,3 +1,22 @@
+# NOTICE
+I have quit *Sword Art Online: Memory Defrag* around December 10, 2018. 
+
+I no longer have any motivation to play this game because all my friends moved on or were hit by the massive ban wave that targeted people who used 3rd party services for discount memory diamonds.
+
+While I will provide occasional updates to the banners file, they will not be as frequent as they were when I actively played the game.  
+I also am trying to avoid having to update this bot any more than I have to.
+
+If someone else wants to take on this project actively, **feel free to do so**.
+
+To my fellow guild members:  
+Thanks for the memories. You guys were awesome.
+
+![Image](https://cdn.discordapp.com/attachments/230961810453299201/625658446557216768/Screenshot_20190923-044105_SAO_MD.jpg)  
+![Image](https://cdn.discordapp.com/attachments/230961810453299201/625660372212383744/Screenshot_20190923-044946_SAO_MD.jpg)  
+Thank you, **Fatality** members and the NA Legacy guild branch. 
+
+-----
+
 ![S'argo Logo](https://raw.githubusercontent.com/Expugn/S-argo_Data_v2/master/wiki/readme/S'argo_Banner_Animated.gif)
 _[The .GIF version of the banner doesn't do it justice. Higher quality version here.](https://giant.gfycat.com/GoldenInnocentAustralianfreshwatercrocodile.webm)_
 
